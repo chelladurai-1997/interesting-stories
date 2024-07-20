@@ -1,7 +1,7 @@
 // app/components/Tabs.js
 "use client";
 import { useState } from "react";
-import StoryList from "./StoryList";
+import StoryList from "./storyList";
 
 const Tabs = () => {
   const [activeTab, setActiveTab] = useState("All");
