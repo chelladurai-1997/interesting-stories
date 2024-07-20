@@ -1,6 +1,6 @@
 // app/api/stories/[id]/route.js
 
-export async function GET(req, { params }) {
+export async function GET(_: any, { params }) {
   const { id } = params;
 
   // Mock story data for demonstration
