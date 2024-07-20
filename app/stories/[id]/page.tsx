@@ -8,7 +8,7 @@ const StoryDetailPage = () => {
   const params = useParams();
   const id = params?.id;
 
-  const [story, setStory] = useState(null);
+  const [story, setStory] = useState<any>(null);
 
   useEffect(() => {
     if (id) {
@@ -19,9 +19,9 @@ const StoryDetailPage = () => {
     }
   }, [id]);
 
-  const handleNavigate = (direction) => {
+  const handleNavigate = (direction: any) => {
     if (story) {
-      const newId = direction === "prev" ? story.prevId : story.nextId;
+      const newId = direction === "prev" ? story?.prevId : story?.nextId;
       if (newId) {
         router.push(`/stories/${newId}`);
       }

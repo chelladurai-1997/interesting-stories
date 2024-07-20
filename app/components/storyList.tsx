@@ -2,10 +2,10 @@
 "use client";
 import { useRouter } from "next/navigation";
 
-const StoryList = ({ stories }) => {
+const StoryList = ({ stories }: any) => {
   const router = useRouter();
 
-  const handleStoryClick = (id) => {
+  const handleStoryClick = (id: any) => {
     router.push(`/stories/${id}`);
   };
 
@@ -16,7 +16,7 @@ const StoryList = ({ stories }) => {
         {stories.length === 0 ? (
           <li className="text-gray-500">No stories available</li>
         ) : (
-          stories.map((story) => (
+          stories.map((story: any) => (
             <li
               key={story.id}
               className="flex flex-col sm:flex-row items-center justify-between p-4 border-b border-gray-200 last:border-b-0"
