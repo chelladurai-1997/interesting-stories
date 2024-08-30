@@ -42,7 +42,9 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
 );
 
 const Sidebar: React.FC = () => {
-  return <aside className="w-64 h-screen bg-gray-100 shadow-lg"></aside>;
+  return (
+    <aside className="w-64 h-screen bg-gray-100 shadow-lg size-min:"></aside>
+  );
 };
 
 export default Sidebar;
