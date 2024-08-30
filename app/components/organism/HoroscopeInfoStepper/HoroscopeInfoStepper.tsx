@@ -123,7 +123,7 @@ const HoroscopeForm = () => (
 );
 
 // FormField Component
-const FormField = ({ label, id, placeholder, options }) => (
+const FormField = ({ label, id, placeholder, options }: any) => (
   <div className="mb-6">
     <label htmlFor={id} className="block text-gray-700">
       {label} <span className="text-red-500">*</span>
@@ -136,7 +136,7 @@ const FormField = ({ label, id, placeholder, options }) => (
       <option value="" disabled>
         {placeholder}
       </option>
-      {options.map((option, index) => (
+      {options.map((option: any, index: number) => (
         <option key={index} value={option}>
           {option}
         </option>
@@ -146,7 +146,7 @@ const FormField = ({ label, id, placeholder, options }) => (
 );
 
 // TextField Component
-const TextField = ({ label, id, placeholder }) => (
+const TextField = ({ label, id, placeholder }: any) => (
   <div className="mb-6">
     <label htmlFor={id} className="block text-gray-700">
       {label} <span className="text-red-500">*</span>

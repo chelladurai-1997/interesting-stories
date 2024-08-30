@@ -1,5 +1,4 @@
-import BasicProfileStepper from "@/app/components/organism/BasicProfileStepper/BasicProfileStepper";
-import Dashboard from "../components/organism/Dashboard/dashboard";
+import Dashboard from "../components/organism/Dashboard/Dashboard";
 
 export default function Page() {
   return <Dashboard />;

@@ -13,7 +13,7 @@ const FamilyInfoStepper = () => {
   return (
     <main>
       <Header />
-      <ExpectationForm onBack={handleBack} />
+      <ExpectationForm />
     </main>
   );
 };
@@ -34,7 +34,7 @@ const Header = () => (
   </section>
 );
 
-const ExpectationForm = ({ onBack }) => (
+const ExpectationForm = () => (
   <section className="bg-white p-6 mt-10 rounded-lg shadow-lg">
     <div className="container mx-auto">
       <form className="space-y-6">
@@ -42,7 +42,6 @@ const ExpectationForm = ({ onBack }) => (
         <div className="text-left mb-6">
           <button
             type="button"
-            onClick={onBack}
             className="inline-flex items-center text-yellow-500 hover:text-yellow-600 focus:outline-none"
           >
             <svg

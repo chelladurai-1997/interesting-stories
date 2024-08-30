@@ -13,7 +13,7 @@ const ExpectationSection = () => {
   return (
     <main>
       <Header />
-      <ExpectationForm onBack={handleBack} />
+      <ExpectationForm />
     </main>
   );
 };

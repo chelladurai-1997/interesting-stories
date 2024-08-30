@@ -176,9 +176,7 @@ const BasicInfoForm = () => {
                   <option value="parent">Parent - (பெற்றோர்)</option>
                   <option value="sibling">Sibling - (உடன்பிறப்பு)</option>
                   <option value="guardian">Guardian - (பாதுகாவலர்)</option>
-                  <option value="myself" defaultValue>
-                    Myself - (நானே)
-                  </option>
+                  <option value="myself">Myself - (நானே)</option>
                 </select>
               </div>
             </div>
@@ -197,9 +195,7 @@ const BasicInfoForm = () => {
                 <option value="single">Single - (திருமணம் ஆகாதவர்)</option>
                 <option value="married">Married - (திருமணமானவர்)</option>
                 <option value="divorced">Divorced - (விவாகரத்து ஆனவர்)</option>
-                <option value="widowed" defaultValue>
-                  Widowed - (துணையை இழந்தவர்)
-                </option>
+                <option value="widowed">Widowed - (துணையை இழந்தவர்)</option>
               </select>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -217,9 +213,7 @@ const BasicInfoForm = () => {
                   <option value="none">none</option>
                   <option value="1">1</option>
                   <option value="2">2</option>
-                  <option value="3" defaultValue>
-                    3
-                  </option>
+                  <option value="3">3</option>
                   <option value="4+">4+</option>
                 </select>
               </div>
