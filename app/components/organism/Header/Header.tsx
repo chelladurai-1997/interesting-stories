@@ -13,7 +13,7 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => (
           <div className="text-yellow-300">
             <i className="font-bold text-lg">#1</i> Matrimony
           </div>
-          <Title text="Sign In to" highlightedText="Right Away" />
+          <Title text="Sign In" highlightedText="Right Away" />
           <Paragraph text="Most trusted Kongu Vellalar Gounder's Matrimony" />
         </div>
       </div>

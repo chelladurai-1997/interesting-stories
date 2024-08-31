@@ -4,7 +4,7 @@ import FormField from "../../molecules/FormField/FormField";
 const SignUpForm = () => (
   <div className="form-tit mb-6">
     <h4 className="text-lg font-semibold">Start for free</h4>
-    <h1 className="text-2xl font-bold">Sign up to MeetYourSoul</h1>
+    <h1 className="text-2xl font-bold">Get Started</h1>
     <p className="text-sm mt-2">
       Already a member?{" "}
       <Link href="/login" className="text-yellow-500 hover:underline">

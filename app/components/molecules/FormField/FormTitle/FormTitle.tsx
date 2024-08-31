@@ -16,9 +16,7 @@ const FormTitle: React.FC<FormTitleProps> = ({
     <h4 className="text-lg font-semibold text-yellow-500">
       Never miss the update
     </h4>
-    <h1 className="text-2xl font-bold text-gray-800">
-      Sign in to MeetYourSoul
-    </h1>
+    <h1 className="text-2xl font-bold text-gray-800">Sign in</h1>
     <p className="text-sm text-gray-600">
       Don't have an account?{" "}
       <Link href={"/signup"} className="text-yellow-500 hover:underline">

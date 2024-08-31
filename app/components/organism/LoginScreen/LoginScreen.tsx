@@ -36,7 +36,7 @@ const LoginForm = () => (
       <form className="max-w-md mx-auto space-y-6">
         <div className="form-tit text-center mb-6 space-y-3">
           <h4 className="text-lg font-semibold">Never miss the update</h4>
-          <h1 className="text-2xl font-bold">Sign in to MeetYourSoul</h1>
+          <h1 className="text-2xl font-bold">Sign in </h1>
           <p className="text-sm">
             Don't have an account?{" "}
             <a className="text-yellow-500 hover:underline">Register</a>
