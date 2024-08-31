@@ -1,5 +1,15 @@
-import PersonalInfoStepper from "../../components/organism/PersonalInfoStepper/PersonalInfoStepper";
+import Header from "@/app/components/organism/Header/Header";
+import PersonalDetailsForm from "@/app/components/organism/PersonalDetailsForm/PersonalDetailsForm";
 
 export default function Page() {
-  return <PersonalInfoStepper />;
+  return (
+    <main>
+      <Header
+        profileUpdateMode
+        title="Step 2 of 7"
+        highlightedText="Personal Information"
+      />
+      <PersonalDetailsForm />
+    </main>
+  );
 }

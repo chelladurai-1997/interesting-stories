@@ -67,3 +67,25 @@ export const districtOptions: string[] = [
   "Viluppuram - விழுப்புரம்",
   "Virudhunagar - விருதுநகர்",
 ];
+
+export const profileCreatedByOptions = [
+  "Parent - (பெற்றோர்)",
+  "Sibling - (உடன்பிறப்பு)",
+  "Guardian - (பாதுகாவலர்)",
+  "Myself - (நானே)",
+];
+
+export const maritalStatusOptions = [
+  "Single - (திருமணம் ஆகாதவர்)",
+  "Married - (திருமணமானவர்)",
+  "Divorced - (விவாகரத்து ஆனவர்)",
+  "Widowed - (துணையை இழந்தவர்)",
+];
+export const noOfChildrensOptions = ["1", "2", "3", "4+"];
+
+export const childrenLivingStatusOptions = [
+  "Living with me",
+  "Not living with me",
+  "Not applicable",
+];
+export const genderLabelOptions = ["Male", "Female"];
