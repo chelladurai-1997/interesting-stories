@@ -2,7 +2,10 @@ import Paragraph from "../../atoms/Paragraph/Paragraph";
 import Title from "../../atoms/Title/Title";
 import SearchForm from "../SearchForm/SearchForm";
 
-const Header: React.FC = ({ showSearchForm }) => (
+interface HeaderProps {
+  showSearchForm?: boolean;
+}
+const Header: React.FC<HeaderProps> = ({ showSearchForm }) => (
   <section>
     <div className="bg-gray-800 py-10">
       <div className="container mx-auto">

@@ -21,7 +21,7 @@ const FormField: React.FC<FormFieldProps> = ({
   options,
   placeholder,
   type = "text",
-  name,
+  name = "",
   labelClassName,
   className,
 }) => (
