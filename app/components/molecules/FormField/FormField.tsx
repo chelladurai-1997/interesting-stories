@@ -55,10 +55,11 @@ const FormField: React.FC<FormFieldProps> = ({
                   required
                   value="living"
                 />
-                <label
+
+                <Label
+                  text={typeof option === "string" ? option : ""}
+                  htmlFor={id}
                   className="form-check-label"
-                  htmlFor={`${id}${index}`}
-                  title={typeof option === "string" ? option : ""}
                 />
               </div>
             );
