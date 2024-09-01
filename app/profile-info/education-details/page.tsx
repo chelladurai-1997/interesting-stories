@@ -1,5 +1,11 @@
-import EducationOccupationScreen from "@/app/components/organism/EducationOccupationStepper/EducationOccupationStepper";
+import EducationOccupationForm from "@/app/components/organism/EducationOccupationForm/EducationOccupationForm";
+import Header from "@/app/components/organism/Header/Header";
 
 export default function Page() {
-  return <EducationOccupationScreen />;
+  return (
+    <main>
+      <Header />
+      <EducationOccupationForm />
+    </main>
+  );
 }

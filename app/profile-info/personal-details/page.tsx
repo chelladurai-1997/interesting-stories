@@ -4,11 +4,7 @@ import PersonalDetailsForm from "@/app/components/organism/PersonalDetailsForm/P
 export default function Page() {
   return (
     <main>
-      <Header
-        profileUpdateMode
-        title="Step 2 of 7"
-        highlightedText="Personal Information"
-      />
+      <Header />
       <PersonalDetailsForm />
     </main>
   );

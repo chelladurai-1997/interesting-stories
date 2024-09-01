@@ -1,0 +1,110 @@
+import Link from "next/link";
+import Button from "../../atoms/Button/Button";
+import FormField from "../../molecules/FormField/FormField";
+import {
+  raasiOptions,
+  nachathiramOptions,
+  lagnamOptions,
+  dhosamOptions,
+} from "@/app/lib/constants/global.constant";
+
+const HoroscopeForm = () => {
+  return (
+    <section className="bg-white p-6 sm:p-10 border rounded-xl max-w-[800px] mx-auto shadow-lg transition-transform transform  hover:shadow-2xl">
+      <div className="text-center mb-6 space-y-3">
+        <h4 className="text-lg font-semibold">Step 5 of 7</h4>
+        <h1 className="text-2xl font-bold">Education & Occupation</h1>
+        <p className="text-sm">We won't share it unnecessarily!</p>
+      </div>
+      <div className="form-login">
+        <form autoComplete="off">
+          <div className="space-y-6">
+            {/* 2 columns on medium screens and up, 1 column on smaller screens */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Raasi */}
+              <FormField
+                label="Raasi (ராசி)"
+                id="raasi"
+                name="raasi"
+                placeholder="Select Raasi"
+                options={raasiOptions}
+                type="select"
+              />
+
+              {/* Star */}
+              <FormField
+                label="Star (நட்சத்திரம்)"
+                id="nachathiram"
+                name="nachathiram"
+                placeholder="Select Nachathiram"
+                options={nachathiramOptions}
+                type="select"
+              />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Lagnam */}
+              <FormField
+                label="Lagnam (லக்னம்)"
+                id="lagnam"
+                name="lagnam"
+                placeholder="Select Lagnam"
+                options={lagnamOptions}
+                type="select"
+              />
+
+              {/* Dhisai Irupu */}
+              <FormField
+                label="Dhisai Irupu (திசை இருப்பு)"
+                id="dhisai_irupu"
+                name="dhisai_irupu"
+                placeholder="Dhisai Irupu"
+              />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Jaadhagam Status */}
+              <FormField
+                label="Jaadhagam Status (ஜாதகத்தின் நிலை)"
+                id="dhosam"
+                name="dhosam"
+                placeholder="Select Dhosam"
+                options={dhosamOptions}
+                type="select"
+              />
+              <FormField
+                label="Upload Horoscope (ஜாதகம் பதிவேற்றம்)"
+                id="upload"
+                name="upload"
+                type="file"
+                placeholder="Select Horoscope file"
+              />
+            </div>
+          </div>
+
+          <div className="flex justify-end mt-8">
+            <Link href={"/profile-info/expectation-details"} className="w-full">
+              <Button
+                text="Save & Proceed"
+                type="submit"
+                icon={
+                  <svg
+                    stroke="currentColor"
+                    fill="currentColor"
+                    strokeWidth="0"
+                    viewBox="0 0 448 512"
+                    className="h-5 w-5"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"></path>
+                  </svg>
+                }
+              />
+            </Link>
+          </div>
+        </form>
+      </div>
+    </section>
+  );
+};
+
+export default HoroscopeForm;

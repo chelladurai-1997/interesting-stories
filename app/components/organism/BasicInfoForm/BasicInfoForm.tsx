@@ -7,10 +7,16 @@ import {
 } from "@/app/lib/constants/global.constant";
 import FormField from "../../molecules/FormField/FormField";
 import Button from "../../atoms/Button/Button";
+import Link from "next/link";
 
 const BasicInfoForm = () => {
   return (
     <section className="bg-white p-6 sm:p-10 border rounded-xl max-w-[800px] mx-auto shadow-lg transition-transform transform  hover:shadow-2xl">
+      <div className="text-center mb-6 space-y-3">
+        <h4 className="text-lg font-semibold">Step 1 of 7</h4>
+        <h1 className="text-2xl font-bold">Basic Information</h1>
+        <p className="text-sm">Let's get started, Enter your details!</p>
+      </div>
       <div className="form-login">
         <form autoComplete="off">
           <div className="space-y-6">
@@ -99,28 +105,30 @@ const BasicInfoForm = () => {
             />
           </div>
 
-          <p className="text-gray-500 text-sm mt-6">
+          <p className="text-gray-500 text-sm mt-1">
             Note: This information will be displayed publicly so be careful with
             your information.
           </p>
 
           <div className="flex justify-end mt-8">
-            <Button
-              text="Save & Proceed"
-              type="submit"
-              icon={
-                <svg
-                  stroke="currentColor"
-                  fill="currentColor"
-                  strokeWidth="0"
-                  viewBox="0 0 448 512"
-                  className="h-5 w-5"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"></path>
-                </svg>
-              }
-            />
+            <Link href={"/profile-info/personal-details"} className="w-full">
+              <Button
+                text="Save & Proceed"
+                type="submit"
+                icon={
+                  <svg
+                    stroke="currentColor"
+                    fill="currentColor"
+                    strokeWidth="0"
+                    viewBox="0 0 448 512"
+                    className="h-5 w-5"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"></path>
+                  </svg>
+                }
+              />
+            </Link>
           </div>
         </form>
       </div>

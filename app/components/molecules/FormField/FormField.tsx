@@ -18,7 +18,8 @@ interface FormFieldProps {
     | "datetime-local"
     | "radio"
     | "date"
-    | "textarea";
+    | "textarea"
+    | "file";
   name?: string;
   className?: string;
   labelClassName?: string;

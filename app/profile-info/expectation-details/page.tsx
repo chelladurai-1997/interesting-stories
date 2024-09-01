@@ -1,5 +1,11 @@
-import ExpectationSection from "@/app/components/organism/ExpectationStepper/ExpectationStepper";
+import ExpectationForm from "@/app/components/organism/ExpectationForm/ExpectationForm";
+import Header from "@/app/components/organism/Header/Header";
 
 export default function Page() {
-  return <ExpectationSection />;
+  return (
+    <main>
+      <Header />
+      <ExpectationForm />
+    </main>
+  );
 }

@@ -1,5 +1,11 @@
-import ContactInformationSection from "@/app/components/organism/ContactInfoStepper/ContactInfoStepper";
+import ContactInfoForm from "@/app/components/organism/ContactInfoForm/ContactInfoForm";
+import Header from "@/app/components/organism/Header/Header";
 
 export default function Page() {
-  return <ContactInformationSection />;
+  return (
+    <main>
+      <Header />
+      <ContactInfoForm />
+    </main>
+  );
 }

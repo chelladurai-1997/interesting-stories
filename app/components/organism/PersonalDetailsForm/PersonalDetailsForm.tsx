@@ -1,58 +1,153 @@
 import FormField from "../../molecules/FormField/FormField";
 import Button from "../../atoms/Button/Button";
+import Link from "next/link";
+import {
+  bloodGroupOptions,
+  casteOptions,
+  complexionOptions,
+  heightOptions,
+  physicallyChallengedOptions,
+  religionOptions,
+  weightOptions,
+} from "@/app/lib/constants/global.constant";
 
 const PersonalDetailsForm = () => {
-  // Define the options for gender in a variable
-  const genderOptions = [
-    { value: "", label: "Select Gender", disabled: true },
-    { value: "male", label: "Male" },
-    { value: "female", label: "Female" },
-    { value: "other", label: "Other" },
-  ];
-
   return (
-    <section className="bg-white p-6 mt-10 rounded-xl shadow-lg transition-transform transform hover:scale-105 hover:shadow-2xl max-w-xl mx-auto">
-      <div className="container mx-auto">
-        <form className="max-w-md mx-auto space-y-6">
-          <div className="form-details">
-            <div className="space-y-6">
+    <section className="bg-white p-6 sm:p-10 border rounded-xl max-w-[800px] mx-auto shadow-lg transition-transform transform  hover:shadow-2xl">
+      <div className="text-center mb-6 space-y-3">
+        <h4 className="text-lg font-semibold">Step 2 of 7</h4>
+        <h1 className="text-2xl font-bold">Personal Information</h1>
+        <p className="text-sm">We won't share it unnecessarily!</p>
+      </div>
+      <div className="form-login">
+        <form autoComplete="off">
+          <div className="space-y-6">
+            {/* 2 columns on medium screens and up, 1 column on smaller screens */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <FormField
-                label="Full Name:"
-                id="fullName"
-                name="fullName"
-                placeholder="Full Name"
+                label="Religion (மதம்): *"
+                id="religion"
+                name="religion"
+                placeholder="Select Religion"
+                type="select"
+                options={religionOptions}
+                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
+              />
+
+              <FormField
+                label="Caste (சாதி): *"
+                className="form-select mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
+                type="select"
+                name="caste"
+                id="caste"
+                options={casteOptions}
+                placeholder="Select Caste"
+              />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <FormField
+                label="Kulam (குலம்): *"
+                id="kulam"
+                name="kulam"
+                placeholder="Select Caste"
+                type="select"
+                options={[]}
+                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
+              />
+
+              <FormField
+                label="Kula Deivam (கோயில்): *"
+                className="form-select mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
+                id="kula_deivam"
+                name="kula_deivam"
+                type="select"
+                options={[]}
+                placeholder="Select Kula Deivam"
+              />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <FormField
+                label="Height (உயரம்): *"
+                className="form-select mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
+                id="height"
+                name="height"
+                options={heightOptions}
+                placeholder="Select Height"
+                type="select"
+              />
+              <FormField
+                label="Complexion (நிறம்): *"
+                type="select"
+                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
+                id="complexion"
+                name="complexion"
+                placeholder="Select Complexion"
+                options={complexionOptions}
+              />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <FormField
+                label="Weight (in kg) (எடை): *"
+                className="form-select mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
+                id="weight"
+                name="weight"
+                options={weightOptions}
+                placeholder="Select Weight"
+                type="select"
+              />
+
+              <FormField
+                id="blood_group"
+                label="Blood Group (இரத்த வகை): *"
+                className="form-select mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
+                type="select"
+                name="blood_group"
+                options={bloodGroupOptions}
+                placeholder="Select Blood Group"
+              />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <FormField
+                label="Are you Physically Challenged Person? (மாற்றுத் திறனாளி): *"
+                type="radio"
+                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
+                id="physically_challenged"
+                name="physically_challenged"
+                options={physicallyChallengedOptions}
+              />
+              <FormField
+                label="Specify details: *"
                 type="text"
                 className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
+                id="physical_challenge_details"
+                name="physical_challenge_details"
+                options={physicallyChallengedOptions}
+                placeholder="Enter special abilities"
               />
-
-              <FormField
-                label="Date of Birth:"
-                id="dob"
-                name="dob"
-                type="date"
-                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
-              />
-
-              <FormField
-                label="Gender:"
-                id="gender"
-                name="gender"
-                type="select"
-                options={genderOptions}
-                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
-              />
-
-              <FormField
-                label="Address:"
-                id="address"
-                name="address"
-                type="textarea"
-                placeholder="Address"
-                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
-              />
-
-              <Button text="Save Details" type="submit" />
             </div>
+          </div>
+
+          <div className="flex justify-end mt-8">
+            <Link href={"/profile-info/education-details"} className="w-full">
+              <Button
+                text="Save & Proceed"
+                type="submit"
+                icon={
+                  <svg
+                    stroke="currentColor"
+                    fill="currentColor"
+                    strokeWidth="0"
+                    viewBox="0 0 448 512"
+                    className="h-5 w-5"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"></path>
+                  </svg>
+                }
+              />
+            </Link>
           </div>
         </form>
       </div>
