@@ -6,15 +6,16 @@ import {
   OCCUPATION_OPTIONS,
   MONTHLY_INCOME_OPTIONS,
 } from "@/app/lib/constants/global.constant";
+import SectionHeader from "../../molecules/SectionHeader/SectionHeader";
 
 const EducationOccupationForm = () => {
   return (
     <section className="bg-white p-6 sm:p-10 border rounded-xl max-w-[800px] mx-auto shadow-lg transition-transform transform  hover:shadow-2xl">
-      <div className="text-center mb-6 space-y-3">
-        <h4 className="text-lg font-semibold">Step 3 of 7</h4>
-        <h1 className="text-2xl font-bold">Education & Occupation</h1>
-        <p className="text-sm">We won't share it unnecessarily!</p>
-      </div>
+      <SectionHeader
+        subtitle="We won't share it unnecessarily!"
+        step="Step 3 of 7"
+        title="Education & Occupation"
+      />
       <div className="form-login">
         <form autoComplete="off">
           <div className="space-y-6">
@@ -27,7 +28,6 @@ const EducationOccupationForm = () => {
                 type="select"
                 options={EDUCATION_OPTIONS}
                 placeholder="Select Education"
-                className="form-select mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
               />
 
               <FormField
@@ -36,7 +36,6 @@ const EducationOccupationForm = () => {
                 name="educationInfo"
                 type="text"
                 placeholder="Education Information"
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
               />
             </div>
 
@@ -48,7 +47,6 @@ const EducationOccupationForm = () => {
                 type="select"
                 options={OCCUPATION_OPTIONS}
                 placeholder="Select Occupation"
-                className="form-select mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
               />
 
               <FormField
@@ -57,7 +55,6 @@ const EducationOccupationForm = () => {
                 name="occupationInfo"
                 type="text"
                 placeholder="Occupation Information"
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
               />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -67,7 +64,6 @@ const EducationOccupationForm = () => {
                 name="workingPlace"
                 type="text"
                 placeholder="Working Place"
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
               />
 
               <FormField
@@ -77,7 +73,6 @@ const EducationOccupationForm = () => {
                 type="select"
                 options={MONTHLY_INCOME_OPTIONS}
                 placeholder="Select Monthly Income"
-                className="form-select mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
               />
             </div>
           </div>

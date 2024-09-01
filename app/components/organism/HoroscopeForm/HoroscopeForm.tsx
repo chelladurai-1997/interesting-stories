@@ -7,15 +7,16 @@ import {
   lagnamOptions,
   dhosamOptions,
 } from "@/app/lib/constants/global.constant";
+import SectionHeader from "../../molecules/SectionHeader/SectionHeader";
 
 const HoroscopeForm = () => {
   return (
     <section className="bg-white p-6 sm:p-10 border rounded-xl max-w-[800px] mx-auto shadow-lg transition-transform transform  hover:shadow-2xl">
-      <div className="text-center mb-6 space-y-3">
-        <h4 className="text-lg font-semibold">Step 5 of 7</h4>
-        <h1 className="text-2xl font-bold">Education & Occupation</h1>
-        <p className="text-sm">We won't share it unnecessarily!</p>
-      </div>
+      <SectionHeader
+        subtitle="We won't share it unnecessarily!"
+        step="Step 5 of 7"
+        title="Education & Occupation"
+      />
       <div className="form-login">
         <form autoComplete="off">
           <div className="space-y-6">

@@ -1,15 +1,16 @@
 import FormField from "../../molecules/FormField/FormField";
 import Button from "../../atoms/Button/Button";
 import Link from "next/link";
+import SectionHeader from "../../molecules/SectionHeader/SectionHeader";
 
 const FamilyInfoForm = () => {
   return (
     <section className="bg-white p-6 sm:p-10 border rounded-xl max-w-[800px] mx-auto shadow-lg transition-transform transform  hover:shadow-2xl">
-      <div className="text-center mb-6 space-y-3">
-        <h4 className="text-lg font-semibold">Step 4 of 7</h4>
-        <h1 className="text-2xl font-bold">Family Information</h1>
-        <p className="text-sm">A little about your family!</p>
-      </div>
+      <SectionHeader
+        subtitle="A little about your family!"
+        step="Step 4 of 7"
+        title="Family Information"
+      />
       <div className="form-login">
         <form autoComplete="off">
           <div className="space-y-6">

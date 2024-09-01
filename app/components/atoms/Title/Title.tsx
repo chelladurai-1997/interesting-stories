@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 type TitleProps = {
   text: string;
   highlightedText?: string;
@@ -7,15 +9,17 @@ type TitleProps = {
 const Title: React.FC<TitleProps> = ({ text, highlightedText, level = 1 }) => {
   const Tag = `h${level}` as keyof JSX.IntrinsicElements;
   return (
-    <Tag className={`text-${level * 4}xl font-bold text-white`}>
-      {text}
-      {highlightedText && (
-        <>
-          <br />
-          <b className="text-yellow-300">{highlightedText}</b>
-        </>
-      )}
-    </Tag>
+    <Link href="/">
+      <Tag className={`text-${level * 4}xl font-bold text-white`}>
+        {text}
+        {highlightedText && (
+          <>
+            <br />
+            <b className="text-yellow-300">{highlightedText}</b>
+          </>
+        )}
+      </Tag>
+    </Link>
   );
 };
 

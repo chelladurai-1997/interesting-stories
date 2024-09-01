@@ -3,7 +3,7 @@ const QuickAccess: React.FC = () => (
     <div className="container mx-auto text-center">
       <div>
         <h2 className="text-3xl font-bold text-gray-700">Our Services</h2>
-        <p className="text-gray-500 mt-2">Quick Access</p>
+        <p className="text-gray-500 mt-2">Coming Soon!</p>
       </div>
     </div>
   </section>

@@ -7,15 +7,16 @@ import {
   workingPlaceOptions,
 } from "@/app/lib/constants/global.constant";
 import Link from "next/link";
+import SectionHeader from "../../molecules/SectionHeader/SectionHeader";
 
 const ExpectationForm = () => {
   return (
     <section className="bg-white p-6 sm:p-10 border rounded-xl max-w-[800px] mx-auto shadow-lg transition-transform transform  hover:shadow-2xl">
-      <div className="text-center mb-6 space-y-3">
-        <h4 className="text-lg font-semibold">Step 6 of 7</h4>
-        <h1 className="text-2xl font-bold">Expectation</h1>
-        <p className="text-sm">Profile Expectation!</p>
-      </div>
+      <SectionHeader
+        subtitle="Profile Expectation!"
+        step="Step 6 of 7"
+        title="Expectation"
+      />
       <div className="form-login">
         <form autoComplete="off">
           <div className="space-y-6">

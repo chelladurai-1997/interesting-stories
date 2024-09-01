@@ -86,7 +86,7 @@ const FormField: React.FC<FormFieldProps> = ({
             id={id}
             options={options || []}
             placeholder={placeholder || ""}
-            className={className}
+            className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
           />
         ) : (
           <Input
@@ -94,7 +94,7 @@ const FormField: React.FC<FormFieldProps> = ({
             name={name}
             placeholder={placeholder || ""}
             type={type}
-            className={className}
+            className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
           />
         )}
       </>
