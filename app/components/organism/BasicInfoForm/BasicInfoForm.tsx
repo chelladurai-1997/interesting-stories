@@ -13,6 +13,8 @@ import { useRouter } from "next/navigation";
 import { onBasicInfoFormSubmit } from "@/app/lib/actions/basicInfo.action";
 import { useServerAction } from "@/app/lib/hooks/useServerAction";
 import LoadingIndicator from "../../molecules/LoadingIndicator/LoadingIndicator";
+import SectionContainer from "../../molecules/SectionContainer/SectionContainer";
+import ResponsiveGridContainer from "../../molecules/ResponsiveGridContainer/ResponsiveGridContainer";
 
 const BasicInfoForm = () => {
   const [runAction, isRunning] = useServerAction(onBasicInfoFormSubmit);
@@ -29,7 +31,7 @@ const BasicInfoForm = () => {
     } catch (error) {}
   };
   return (
-    <section className="bg-white p-6 sm:p-10 border rounded-xl max-w-[800px] mx-auto shadow-lg transition-transform transform  hover:shadow-2xl">
+    <SectionContainer>
       <SectionHeader
         subtitle="Let's get started, Enter your details!"
         step="Step 1 of 7"
@@ -39,7 +41,7 @@ const BasicInfoForm = () => {
         <form autoComplete="off" action={onSubmit}>
           <div className="space-y-6">
             {/* 2 columns on medium screens and up, 1 column on smaller screens */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <ResponsiveGridContainer>
               <FormField
                 label="Full Name (முழு பெயர்):"
                 id="name"
@@ -47,7 +49,6 @@ const BasicInfoForm = () => {
                 placeholder="Enter your full name"
                 type="text"
               />
-
               <FormField
                 label="Gender (பாலினம்):"
                 type="radio"
@@ -56,9 +57,9 @@ const BasicInfoForm = () => {
                 options={genderLabelOptions}
                 placeholder="Select Gender"
               />
-            </div>
+            </ResponsiveGridContainer>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <ResponsiveGridContainer>
               <FormField
                 label="D.O.B (பிறந்த நாள்):"
                 id="dob"
@@ -76,7 +77,7 @@ const BasicInfoForm = () => {
                 options={profileCreatedByOptions}
                 placeholder="Select Created by"
               />
-            </div>
+            </ResponsiveGridContainer>
 
             <FormField
               label="Marital Status (திருமண நிலை):"
@@ -87,7 +88,7 @@ const BasicInfoForm = () => {
               type="select"
             />
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <ResponsiveGridContainer>
               <FormField
                 label="No. of. Children (குழந்தைகள்):"
                 id="children"
@@ -105,7 +106,7 @@ const BasicInfoForm = () => {
                 options={childrenLivingStatusOptions}
                 placeholder="Select Children Living Status"
               />
-            </div>
+            </ResponsiveGridContainer>
 
             <FormField
               label="Profile Bio (சுயவிவர தகவல்):"
@@ -116,7 +117,7 @@ const BasicInfoForm = () => {
             />
           </div>
 
-          <p className="text-gray-500 text-sm mt-1">
+          <p className="text-gray-500 text-sm mt-2">
             Note: This information will be displayed publicly so be careful with
             your information.
           </p>
@@ -144,7 +145,7 @@ const BasicInfoForm = () => {
         </form>
       </div>
       {isRunning && <LoadingIndicator />}{" "}
-    </section>
+    </SectionContainer>
   );
 };
 

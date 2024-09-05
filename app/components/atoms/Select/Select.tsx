@@ -8,6 +8,7 @@ export interface SelectProps {
   options: SelectOption[] | string[];
   placeholder: string;
   className?: string;
+  searchable?: Boolean;
 }
 
 const Select: React.FC<SelectProps> = ({
@@ -16,26 +17,54 @@ const Select: React.FC<SelectProps> = ({
   options,
   placeholder,
   className,
+  searchable = false,
 }) => (
-  <select
-    id={id}
-    name={name}
-    className={"w-full mt-2 p-2 border border-gray-300 rounded" + className}
-    defaultValue=""
-    required
-  >
-    <option value="" disabled>
-      {placeholder}
-    </option>
-    {options.map((option, index) => (
-      <option
-        key={index}
-        value={typeof option === "string" ? option : option.value}
+  <>
+    {searchable ? (
+      <>
+        <input
+          id={id + "_search_input"}
+          name={name}
+          className={
+            "w-full mt-1 p-2 border border-gray-300 rounded" + className
+          }
+          placeholder={placeholder}
+          required
+          list={name}
+          type="search"
+        />
+
+        <datalist id={name}>
+          {options.map((option, index) => (
+            <option
+              key={index}
+              value={typeof option === "string" ? option : option.value}
+            />
+          ))}
+        </datalist>
+      </>
+    ) : (
+      <select
+        id={id}
+        name={name}
+        className={"w-full mt-1 p-2 border border-gray-300 rounded" + className}
+        defaultValue=""
+        required
       >
-        {typeof option === "string" ? option : option.label || option.value}
-      </option>
-    ))}
-  </select>
+        <option value="" disabled>
+          {placeholder}
+        </option>
+        {options.map((option, index) => (
+          <option
+            key={index}
+            value={typeof option === "string" ? option : option.value}
+          >
+            {typeof option === "string" ? option : option.label || option.value}
+          </option>
+        ))}
+      </select>
+    )}
+  </>
 );
 
 export default Select;

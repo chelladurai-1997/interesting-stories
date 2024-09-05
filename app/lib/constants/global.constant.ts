@@ -304,6 +304,369 @@ export const casteOptions = [
   { value: "Other", label: "Other" },
 ];
 
+export const kulamOptions = [
+  {
+    label: "Aanthuvan Kulam - அந்துவன் குலம்",
+    value: "Aanthuvan Kulam - அந்துவன் குலம்",
+  },
+  {
+    label: "Azhagu Kulam - அழகு குலம்",
+    value: "Azhagu Kulam - அழகு குலம்",
+  },
+  {
+    label: "Aathe Kulam - ஆதி குலம்",
+    value: "Aathe Kulam - ஆதி குலம்",
+  },
+  {
+    label: "Aanthai Kulam - ஆந்தை குலம்",
+    value: "Aanthai Kulam - ஆந்தை குலம்",
+  },
+  {
+    label: "Aadar Kulam - ஆடர் குலம்",
+    value: "Aadar Kulam - ஆடர் குலம்",
+  },
+  {
+    label: "Aavan Kulam - ஆவன் குலம்",
+    value: "Aavan Kulam - ஆவன் குலம்",
+  },
+  {
+    label: "Eenjan Kulam - ஈஞ்சன் குலம்",
+    value: "Eenjan Kulam - ஈஞ்சன் குலம்",
+  },
+  {
+    label: "Ozukkar Kulam - ஒழுக்கர் குலம்",
+    value: "Ozukkar Kulam - ஒழுக்கர் குலம்",
+  },
+  {
+    label: "Oothaalar Kulam - ஓதாளர் குலம்",
+    value: "Oothaalar Kulam - ஓதாளர் குலம்",
+  },
+  {
+    label: "Kannakkan Kulam - கணக்கன் குலம்",
+    value: "Kannakkan Kulam - கணக்கன் குலம்",
+  },
+  {
+    label: "Kannan Kulam - கண்ணன் குலம்",
+    value: "Kannan Kulam - கண்ணன் குலம்",
+  },
+  {
+    label: "Kannanthai -  கண்ணந்தை குலம்",
+    value: "Kannanthai -  கண்ணந்தை குலம்",
+  },
+  {
+    label: "Kaadai Kulam - காடை குலம்",
+    value: "Kaadai Kulam - காடை குலம்",
+  },
+  {
+    label: "Kaari Kulam - காரி குலம்",
+    value: "Kaari Kulam - காரி குலம்",
+  },
+  {
+    label: "Keeran Kulam - கீரன் குலம்",
+    value: "Keeran Kulam - கீரன் குலம்",
+  },
+  {
+    label: "Kuzhlaayan Kulam - குழையன் குலம்",
+    value: "Kuzhlaayan Kulam - குழையன் குலம்",
+  },
+  {
+    label: "Koorai Kulam - கூறை குலம்",
+    value: "Koorai Kulam - கூறை குலம்",
+  },
+  {
+    label: "Koovendhar Kulam - கோவேந்தர் குலம்",
+    value: "Koovendhar Kulam - கோவேந்தர் குலம்",
+  },
+  {
+    label: "Saathanthai Kulam - சாத்தந்தை குலம்",
+    value: "Saathanthai Kulam - சாத்தந்தை குலம்",
+  },
+  {
+    label: "Sellan Kulam - செல்லன் குலம்",
+    value: "Sellan Kulam - செல்லன் குலம்",
+  },
+  {
+    label: "Semban Kulam - செம்பன் குலம்",
+    value: "Semban Kulam - செம்பன் குலம்",
+  },
+  {
+    label: "Sengkannan Kulam - செங்கண்ணன் குலம்",
+    value: "Sengkannan Kulam - செங்கண்ணன் குலம்",
+  },
+  {
+    label: "Sembuthan Kulam - செம்பூத்தன் குலம்",
+    value: "Sembuthan Kulam - செம்பூத்தன் குலம்",
+  },
+  {
+    label: "Senkunnier - செங்குன்னியர் குலம்",
+    value: "Senkunnier - செங்குன்னியர் குலம்",
+  },
+  {
+    label: "Sevvaayar Kulam - செவ்வாயர் குலம்",
+    value: "Sevvaayar Kulam - செவ்வாயர் குலம்",
+  },
+  {
+    label: "Cheran Kulam - சேரன் குலம்",
+    value: "Cheran Kulam - சேரன் குலம்",
+  },
+  {
+    label: "Chedan Kulam - சேடன் குலம்",
+    value: "Chedan Kulam - சேடன் குலம்",
+  },
+  {
+    label: "Dananjayan Kulam - தனஞ்செயன் குலம்",
+    value: "Dananjayan Kulam - தனஞ்செயன் குலம்",
+  },
+  {
+    label: "Thazhinji Kulam - தழிஞ்சி குலம்",
+    value: "Thazhinji Kulam - தழிஞ்சி குலம்",
+  },
+  {
+    label: "Thooran Kulam - தூரன் குலம்",
+    value: "Thooran Kulam - தூரன் குலம்",
+  },
+  {
+    label: "Devendran Kulam - தேவேந்திரன் குலம்",
+    value: "Devendran Kulam - தேவேந்திரன் குலம்",
+  },
+  {
+    label: "Thooda Kulam - தோட குலம்",
+    value: "Thooda Kulam - தோட குலம்",
+  },
+  {
+    label: "Neerunniyar Kulam - நீருண்ணியர் குலம்",
+    value: "Neerunniyar Kulam - நீருண்ணியர் குலம்",
+  },
+  {
+    label: "Pavazhalar Kulam - பவழர்குலம்(பவளன்)",
+    value: "Pavazhalar Kulam - பவழர்குலம்(பவளன்)",
+  },
+  {
+    label: "Panayan Kulam - பனையன் குலம்",
+    value: "Panayan Kulam - பனையன் குலம்",
+  },
+  {
+    label: "Pathuman Kulam - பதுமன் குலம்",
+    value: "Pathuman Kulam - பதுமன் குலம்",
+  },
+  {
+    label: "Payiran Kulam - பயிரன் குலம்",
+    value: "Payiran Kulam - பயிரன் குலம்",
+  },
+  {
+    label: "Panagkaadar Kulam - பனங்காடர் குலம்",
+    value: "Panagkaadar Kulam - பனங்காடர் குலம்",
+  },
+  {
+    label: "Pathariar Kulam - பதறியர் குலம்",
+    value: "Pathariar Kulam - பதறியர் குலம்",
+  },
+  {
+    label: "Pandiyan Kulam - பாண்டியன் குலம்",
+    value: "Pandiyan Kulam - பாண்டியன் குலம்",
+  },
+  {
+    label: "Pillan Kulam - பில்லன் குலம்",
+    value: "Pillan Kulam - பில்லன் குலம்",
+  },
+  {
+    label: "Poosan Kulam - பூசன் குலம்",
+    value: "Poosan Kulam - பூசன் குலம்",
+  },
+  {
+    label: "Poochanthai Kulam - பூச்சந்தை குலம்",
+    value: "Poochanthai Kulam - பூச்சந்தை குலம்",
+  },
+  {
+    label: "Periyan Kulam - பெரியன் குலம்",
+    value: "Periyan Kulam - பெரியன் குலம்",
+  },
+  {
+    label: "Perunkudiyaan - பெருங்குடியான் குலம்",
+    value: "Perunkudiyaan - பெருங்குடியான் குலம்",
+  },
+  {
+    label: "Porul thantha - பொருள் தந்த குலம்",
+    value: "Porul thantha - பொருள் தந்த குலம்",
+  },
+  {
+    label: "Ponnar Kulam - பொன்னர் குலம்",
+    value: "Ponnar Kulam - பொன்னர் குலம்",
+  },
+  {
+    label: "Maniyan Kulam - மணியன் குலம்",
+    value: "Maniyan Kulam - மணியன் குலம்",
+  },
+  {
+    label: "Mayilar Kulam - மயிலர் குலம்",
+    value: "Mayilar Kulam - மயிலர் குலம்",
+  },
+  {
+    label: "Maadar Kulam - மாடர் குலம்",
+    value: "Maadar Kulam - மாடர் குலம்",
+  },
+  {
+    label: "Mutthan Kulam - முத்தன் குலம்",
+    value: "Mutthan Kulam - முத்தன் குலம்",
+  },
+  {
+    label: "Muzhukathan - முழுக்காதன் குலம்",
+    value: "Muzhukathan - முழுக்காதன் குலம்",
+  },
+  {
+    label: "Medhi Kulam - மேதி குலம்",
+    value: "Medhi Kulam - மேதி குலம்",
+  },
+  {
+    label: "Vannakkan Kulam - வண்ணக்கன் குலம்",
+    value: "Vannakkan Kulam - வண்ணக்கன் குலம்",
+  },
+  {
+    label: "Villiyar Kulam - வில்லியர் குலம்",
+    value: "Villiyar Kulam - வில்லியர் குலம்",
+  },
+  {
+    label: "Vilayan Kulam - விளையன் குலம்",
+    value: "Vilayan Kulam - விளையன் குலம்",
+  },
+  {
+    label: "Vizhiyar Kulam - விழியர் குலம்",
+    value: "Vizhiyar Kulam - விழியர் குலம்",
+  },
+  {
+    label: "Venduvan Kulam - வெண்டுவன் குலம்",
+    value: "Venduvan Kulam - வெண்டுவன் குலம்",
+  },
+  {
+    label: "Vennag Kulam - வெண்ணங் குலம்",
+    value: "Vennag Kulam - வெண்ணங் குலம்",
+  },
+  {
+    label: "Vellampar Kulam - வெள்ளம்பர் குலம்",
+    value: "Vellampar Kulam - வெள்ளம்பர் குலம்",
+  },
+  {
+    label: "Vendhan Kulam - வேந்தன் குலம்",
+    value: "Vendhan Kulam - வேந்தன் குலம்",
+  },
+  {
+    label: "Ilankambur - இளங்கம்பன் குலம்",
+    value: "Ilankambur - இளங்கம்பன் குலம்",
+  },
+  {
+    label: "Yennan - ஏனன் குலம்",
+    value: "Yennan - ஏனன் குலம்",
+  },
+  {
+    label: "Karee - காரி குலம்",
+    value: "Karee - காரி குலம்",
+  },
+  {
+    label: "Yennai - எண்ண குலம்",
+    value: "Yennai - எண்ண குலம்",
+  },
+  {
+    label: "Kanavalan - கணவாளன் குலம்",
+    value: "Kanavalan - கணவாளன் குலம்",
+  },
+  {
+    label: "Keerai - கீரை குலம்",
+    value: "Keerai - கீரை குலம்",
+  },
+  {
+    label: "Kovar - கோவர் குலம்",
+    value: "Kovar - கோவர் குலம்",
+  },
+  {
+    label: "Silamban - சிலம்பன் குலம்",
+    value: "Silamban - சிலம்பன் குலம்",
+  },
+  {
+    label: "Senganni - செங்கண்ணி குலம்",
+    value: "Senganni - செங்கண்ணி குலம்",
+  },
+  {
+    label: "Sevanthi - செவ்வந்தி குலம்",
+    value: "Sevanthi - செவ்வந்தி குலம்",
+  },
+  {
+    label: "Serar - சேரர் (அ) சேரலன் குலம்",
+    value: "Serar - சேரர் (அ) சேரலன் குலம்",
+  },
+  {
+    label: "Nachanthai - நச்சந்தை குலம்",
+    value: "Nachanthai - நச்சந்தை குலம்",
+  },
+  {
+    label: "Pannai - பண்ணை குலம்",
+    value: "Pannai - பண்ணை குலம்",
+  },
+  {
+    label: "poonthai - பூந்தை குலம்",
+    value: "poonthai - பூந்தை குலம்",
+  },
+  {
+    label: "Paithali - பைதலி குலம்",
+    value: "Paithali - பைதலி குலம்",
+  },
+  {
+    label: "Parilanthan - பேரிழந்தான் குலம்",
+    value: "Parilanthan - பேரிழந்தான் குலம்",
+  },
+  {
+    label: "Podiyan - பொடியன் குலம்",
+    value: "Podiyan - பொடியன் குலம்",
+  },
+  {
+    label: "Malu azhar - மழு அழகர் குலம்",
+    value: "Malu azhar - மழு அழகர் குலம்",
+  },
+  {
+    label: "Maluvan - மழுவன் குலம்",
+    value: "Maluvan - மழுவன் குலம்",
+  },
+  {
+    label: "Mayavar - மாயவர் குலம்",
+    value: "Mayavar - மாயவர் குலம்",
+  },
+  {
+    label: "Moolan - மூலன் குலம்",
+    value: "Moolan - மூலன் குலம்",
+  },
+  {
+    label: "Vaanan - வாணன் குலம்",
+    value: "Vaanan - வாணன் குலம்",
+  },
+  {
+    label: "Vennai - வெண்னை குலம்",
+    value: "Vennai - வெண்னை குலம்",
+  },
+  {
+    label: "Venduzhavar - வெண்டுழவர் குலம்",
+    value: "Venduzhavar - வெண்டுழவர் குலம்",
+  },
+  {
+    label: "Vizliyan - விளியன் குலம்",
+    value: "Vizliyan - விளியன் குலம்",
+  },
+  {
+    label: "Thambataai - தம்பட்டை குலம்",
+    value: "Thambataai - தம்பட்டை குலம்",
+  },
+  {
+    label: "Mullai - முல்லை குலம்",
+    value: "Mullai - முல்லை குலம்",
+  },
+  {
+    label: "Pillai - பிள்ளை குலம்",
+    value: "Pillai - பிள்ளை குலம்",
+  },
+  {
+    label: "Others - மற்றவைகள்",
+    value: "Others - மற்றவைகள்",
+  },
+];
+
 export const religionOptions = [
   { value: "", label: "Select Religion" },
   { value: "hinduism", label: "Hinduism" },

@@ -18,7 +18,10 @@ export default function RootLayout({
   connectMongo();
   return (
     <html lang="en">
-      <body className={inter.className} suppressHydrationWarning={true}>
+      <body
+        className={inter.className + " max-w-screen-xl mx-auto"}
+        suppressHydrationWarning={true}
+      >
         {children}
       </body>
     </html>
