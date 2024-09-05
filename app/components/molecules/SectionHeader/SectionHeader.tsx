@@ -18,7 +18,9 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
 
       <div className="flex justify-between mb-1">
         <p className="text-sm text-[#70757a]">{step}</p>
-        <span className="text-sm font-medium text-[#70757a] ">45%</span>
+        <span className="text-sm font-medium text-[#70757a] ">
+          45% Completed
+        </span>
       </div>
       <div className="w-full bg-gray-200 rounded-full h-2.5">
         <div

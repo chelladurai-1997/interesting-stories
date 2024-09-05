@@ -49,7 +49,7 @@ const FormField: React.FC<FormFieldProps> = ({
       ) : type === "radio" ? (
         <div className="flex flex-col">
           <Label text={label} htmlFor={id} className={labelClassName} />
-          <div className="flex flex-row mt-1">
+          <div className="flex flex-row mt-2">
             {options?.map((option, index: number) => {
               return (
                 <div className="form-check me-4" key={index}>
@@ -76,7 +76,7 @@ const FormField: React.FC<FormFieldProps> = ({
         <>
           <Label text={label} htmlFor={id} className={labelClassName} />
           <textarea
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
+            className="mt-2 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
             id="profile_bio"
             name="profile_bio"
             placeholder="Profile Biography"
@@ -93,7 +93,7 @@ const FormField: React.FC<FormFieldProps> = ({
               options={options || []}
               placeholder={placeholder || ""}
               searchable={searchable}
-              className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
+              className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm mt-2"
             />
           ) : (
             <Input
@@ -102,7 +102,7 @@ const FormField: React.FC<FormFieldProps> = ({
               placeholder={placeholder || ""}
               type={type}
               {...(type === "datetime-local" ? { max: maxDate } : {})}
-              className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
+              className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm mt-2"
             />
           )}
         </>
