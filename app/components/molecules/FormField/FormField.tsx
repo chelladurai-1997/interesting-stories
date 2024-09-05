@@ -23,6 +23,7 @@ interface FormFieldProps {
   name?: string;
   className?: string;
   labelClassName?: string;
+  maxDate?: string;
 }
 
 const FormField: React.FC<FormFieldProps> = ({
@@ -34,6 +35,7 @@ const FormField: React.FC<FormFieldProps> = ({
   name = "",
   labelClassName,
   className,
+  maxDate,
 }) => (
   <div className={`w-full ${type === "checkbox" ? "flex items-center" : ""}`}>
     {type === "checkbox" ? (
@@ -45,16 +47,16 @@ const FormField: React.FC<FormFieldProps> = ({
       <div className="flex flex-col">
         <Label text={label} htmlFor={id} className={labelClassName} />
         <div className="flex flex-row mt-2">
-          {options?.map((option: unknown, index: number) => {
+          {options?.map((option, index: number) => {
             return (
-              <div className="form-check me-4">
+              <div className="form-check me-4" key={index}>
                 <input
                   className="form-check-input mr-2"
                   type="radio"
                   name={name}
                   id={`${id}${index}`}
                   required
-                  value="living"
+                  value={option.toString()}
                 />
 
                 <Label
@@ -84,6 +86,7 @@ const FormField: React.FC<FormFieldProps> = ({
         {type === "select" ? (
           <Select
             id={id}
+            name={name}
             options={options || []}
             placeholder={placeholder || ""}
             className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
@@ -94,6 +97,7 @@ const FormField: React.FC<FormFieldProps> = ({
             name={name}
             placeholder={placeholder || ""}
             type={type}
+            {...(type === "datetime-local" ? { max: maxDate } : {})}
             className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
           />
         )}

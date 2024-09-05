@@ -69,19 +69,34 @@ export const districtOptions: string[] = [
 ];
 
 export const profileCreatedByOptions = [
-  "Parent - (பெற்றோர்)",
-  "Sibling - (உடன்பிறப்பு)",
-  "Guardian - (பாதுகாவலர்)",
-  "Myself - (நானே)",
+  { value: "Parent - (பெற்றோர்)", label: "Parent - (பெற்றோர்)" },
+  { value: "Sibling - (உடன்பிறப்பு)", label: "Sibling - (உடன்பிறப்பு)" },
+  { value: "Guardian - (பாதுகாவலர்)", label: "Guardian - (பாதுகாவலர்)" },
+  { value: "Myself - (நானே)", label: "Myself - (நானே)" },
 ];
 
 export const maritalStatusOptions = [
-  "Single - (திருமணம் ஆகாதவர்)",
-  "Married - (திருமணமானவர்)",
-  "Divorced - (விவாகரத்து ஆனவர்)",
-  "Widowed - (துணையை இழந்தவர்)",
+  {
+    value: "Single - (திருமணம் ஆகாதவர்)",
+    label: "Single - (திருமணம் ஆகாதவர்)",
+  },
+  { value: "Married - (திருமணமானவர்)", label: "Married - (திருமணமானவர்)" },
+  {
+    value: "Divorced - (விவாகரத்து ஆனவர்)",
+    label: "Divorced - (விவாகரத்து ஆனவர்)",
+  },
+  {
+    value: "Widowed - (துணையை இழந்தவர்)",
+    label: "Widowed - (துணையை இழந்தவர்)",
+  },
 ];
-export const noOfChildrensOptions = ["1", "2", "3", "4+"];
+
+export const noOfChildrensOptions = [
+  { value: "1", label: "1" },
+  { value: "2", label: "2" },
+  { value: "3", label: "3" },
+  { value: "4+", label: "4+" },
+];
 
 export const childrenLivingStatusOptions = [
   "Living with me",

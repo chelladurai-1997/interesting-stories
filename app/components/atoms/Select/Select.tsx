@@ -4,6 +4,7 @@ export interface SelectOption {
 }
 export interface SelectProps {
   id: string;
+  name: string;
   options: SelectOption[] | string[];
   placeholder: string;
   className?: string;
@@ -11,12 +12,14 @@ export interface SelectProps {
 
 const Select: React.FC<SelectProps> = ({
   id,
+  name,
   options,
   placeholder,
   className,
 }) => (
   <select
     id={id}
+    name={name}
     className={"w-full mt-2 p-2 border border-gray-300 rounded" + className}
     defaultValue=""
     required

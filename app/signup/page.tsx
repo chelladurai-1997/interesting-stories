@@ -1,3 +1,4 @@
+import { onSignUpFormSubmit } from "@/app/lib/actions/signup.action";
 import SignUpForm from "../components/organism/SignUpForm/SignUpForm";
 import SignUpHeader from "../components/organism/SignUpHeader/SignUpHeader";
 import SignUpImage from "../components/organism/SignUpImage/SignUpImage";
@@ -13,7 +14,7 @@ export default function Page() {
           </div>
 
           <div className="w-full md:w-1/2 p-6">
-            <SignUpForm />
+            <SignUpForm onSignUpFormSubmit={onSignUpFormSubmit} />
           </div>
         </div>
       </section>
