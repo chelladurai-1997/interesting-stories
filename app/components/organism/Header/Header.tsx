@@ -14,7 +14,7 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => (
   <section className="relative">
     <div className="bg-gray-800 py-10 relative">
       <div className="container mx-auto">
-        <div className="text-center">
+        <div className="pl-4 md:text-center">
           <Title text="" highlightedText="KonguVengai.com" />
           <Paragraph text="Most trusted Kongu Vellalar Gounder's Matrimony" />
         </div>
