@@ -15,15 +15,15 @@ export async function onSignUpFormSubmit(
     // Create a new user
     const newUser = new User({
       username: username,
-      password: password, // Store hashed password
+      password: password,
       mobile,
       agreeToTermsAndConditions,
     });
 
     // Save the user to the database
-    const res = await newUser.save();
-    console.log("res", res);
-    return { message: "success", error: false };
+    const result = await newUser.save();
+
+    return { message: "success", error: false, userId: result.toJSON()?.id };
   } catch (error) {
     return { message: "Something went wrong!", error: true };
   }
