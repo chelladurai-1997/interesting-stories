@@ -14,7 +14,7 @@ export default function Page() {
           </div>
 
           <div className="w-full md:w-1/2 p-6">
-            <SignUpForm onSignUpFormSubmit={onSignUpFormSubmit} />
+            <SignUpForm />
           </div>
         </div>
       </section>
