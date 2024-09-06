@@ -6,11 +6,14 @@ export interface IHoroscopeDetails extends Document {
   lagnam: string;
   dhisaiIrupu: string;
   dhosam: string;
-  upload: string; // Assuming this stores the file path or URL
+  upload: string;
+  userId: string;
 }
 
 const HoroscopeDetailsSchema = new Schema<IHoroscopeDetails>(
   {
+    userId: { type: String, required: true },
+
     raasi: {
       type: String,
       required: true,

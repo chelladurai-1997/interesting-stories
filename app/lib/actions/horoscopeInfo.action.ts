@@ -4,6 +4,7 @@ import connectMongo from "../constants/mongodb";
 import HoroscopeInfo from "../models/horoscopeInfo.model";
 import fs from "fs";
 import path from "path";
+import { getUserFromSessionToken } from "../utils/getUserFromSessionToken";
 
 const uploadPath = path.join(__dirname, "../uploads/");
 
@@ -11,6 +12,12 @@ export async function onHoroscopeInfoFormSubmit(
   _prevData: unknown,
   formData: FormData
 ) {
+  // Get the user from the session token
+  const { userId, error } = await getUserFromSessionToken();
+
+  if (error || !userId) {
+    return { message: error || "User not found", error: true };
+  }
   const data = {
     raasi: formData.get("raasi"),
     nachathiram: formData.get("nachathiram"),
@@ -47,10 +54,10 @@ export async function onHoroscopeInfoFormSubmit(
       dhisaiIrupu: data.dhisaiIrupu,
       dhosam: data.dhosam,
       upload: filePath, // Save the path or URL of the file
+      userId,
     });
 
-    const res = await basicInfo.save();
-    console.log("Save Result:", res);
+    await basicInfo.save();
 
     return { message: "success", error: false };
   } catch (error) {

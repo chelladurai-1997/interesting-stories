@@ -22,7 +22,7 @@ const ContactInfoForm = () => {
       if (response?.error) {
         alert("Something went wrong!");
       } else {
-        // router.push("/profile-info/contact-details");
+        router.push("/dashboard");
       }
     } catch (error) {}
   };

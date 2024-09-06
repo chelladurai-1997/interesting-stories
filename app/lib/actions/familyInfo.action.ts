@@ -2,11 +2,19 @@
 
 import connectMongo from "../constants/mongodb";
 import FamilyDetails from "../models/familyInfo.model";
+import { getUserFromSessionToken } from "../utils/getUserFromSessionToken";
 
 export async function onFamilyInfoFormSubmit(
   _prevData: unknown,
   formData: FormData
 ) {
+  // Get the user from the session token
+  const { userId, error } = await getUserFromSessionToken();
+
+  if (error || !userId) {
+    return { message: error || "User not found", error: true };
+  }
+
   const data = {
     fatherName: formData.get("father_name"),
     fatherStatus: formData.get("father_status"),
@@ -23,17 +31,14 @@ export async function onFamilyInfoFormSubmit(
     noOfSistersMarried: formData.get("no_of_sisters_married"),
     property: formData.get("property"),
     propertyInfo: formData.get("property_info"),
+    userId,
   };
-
-  // Handle your form data (e.g., save to database)
-  console.log("Form Data:", data);
 
   try {
     await connectMongo();
     // Save the user to the database
     const basicInfo = new FamilyDetails(data);
     const res = await basicInfo.save();
-    console.log("res", res);
     return { message: "success", error: false };
   } catch (error) {
     console.log("err", error);

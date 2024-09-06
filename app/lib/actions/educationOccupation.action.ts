@@ -2,11 +2,19 @@
 
 import connectMongo from "../constants/mongodb";
 import EducationOccupation from "../models/educationOccupation.model";
+import { getUserFromSessionToken } from "../utils/getUserFromSessionToken";
 
 export async function onEduOccupationFormSubmit(
   _prevData: unknown,
   formData: FormData
 ) {
+  // Get the user from the session token
+  const { userId, error } = await getUserFromSessionToken();
+
+  if (error || !userId) {
+    return { message: error || "User not found", error: true };
+  }
+
   const education = formData.get("education");
   const educationInfo = formData.get("educationInfo");
   const occupation = formData.get("occupation");
@@ -21,37 +29,17 @@ export async function onEduOccupationFormSubmit(
     occupationInfo,
     workingPlace,
     monthlyIncome,
+    userId,
   };
-
-  // Handle your form data (e.g., save to database)
-  console.log("Form Data:", data);
 
   try {
     await connectMongo();
     // Save the user to the database
     const basicInfo = new EducationOccupation(data);
-    const res = await basicInfo.save();
-    console.log("res", res);
+    await basicInfo.save();
     return { message: "success", error: false };
   } catch (error) {
     console.log("err", error);
     return { message: "Something went wrong!", error: true };
   }
 }
-
-// Step 3: Retrieve form values
-// const education = formData.get("education");
-// const educationInfo = formData.get("educationInfo");
-// const occupation = formData.get("occupation");
-// const occupationInfo = formData.get("occupationInfo");
-// const workingPlace = formData.get("workingPlace");
-// const monthlyIncome = formData.get("monthlyIncome");
-
-// console.log("Form Submitted: ", {
-//   education,
-//   educationInfo,
-//   occupation,
-//   occupationInfo,
-//   workingPlace,
-//   monthlyIncome,
-// });

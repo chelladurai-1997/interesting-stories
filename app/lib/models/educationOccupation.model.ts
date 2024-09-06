@@ -7,10 +7,12 @@ export interface IEducationOccupation extends Document {
   occupationInfo: string;
   workingPlace: string;
   monthlyIncome: string;
+  userId: string;
 }
 
 const EducationOccupationSchema = new Schema<IEducationOccupation>(
   {
+    userId: { type: String, required: true },
     education: {
       type: String,
       required: true,

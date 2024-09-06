@@ -10,10 +10,15 @@ export interface IContactInfo extends Document {
   address: string;
   photo: string; // Assuming this stores the file path or URL
   pin_code: number;
+  userId: string;
 }
 
 const ContactInfoSchema = new Schema<IContactInfo>(
   {
+    userId: {
+      type: String,
+      required: true,
+    },
     mobile: {
       type: String,
       required: true,

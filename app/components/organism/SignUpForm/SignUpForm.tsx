@@ -5,9 +5,11 @@ import { Suspense } from "react";
 import { useRouter } from "next/navigation";
 import { onSignUpFormSubmit } from "@/app/lib/actions/signup.action";
 import { useServerAction } from "@/app/lib/hooks/useServerAction";
+import { useUser } from "@/app/lib/contexts/UserContext";
 
 const SignUpForm = () => {
   const router = useRouter();
+  const { updateUserProfile } = useUser();
   const [runAction, isRunning] = useServerAction(onSignUpFormSubmit);
 
   const onSubmit = async (formData: FormData) => {
@@ -16,6 +18,10 @@ const SignUpForm = () => {
       if (response?.error) {
         alert("Something went wrong!");
       } else {
+        updateUserProfile({
+          userId: response?.userId,
+          userName: response?.userName,
+        });
         router.push("/profile-info/basic-details");
       }
     } catch (error) {}

@@ -1,50 +1,112 @@
-import { getProfileData } from "@/app/lib/actions/getProfileData.action";
 import React from "react";
-import ProfileDetail from "../ProfileDetail/ProfileDetail";
 
-interface SidebarItemProps {
-  href: string;
-  icon: string;
-  text: string;
-  isActive?: boolean;
-  external?: boolean;
-  button?: boolean;
+// Define TypeScript interfaces for the data
+interface BasicInfo {
+  name: string;
+  userId: string;
+  gender: string;
+  dob: string;
+  profile_created_by: string;
+  marital_status: string;
+  children: string;
+  children_living_status: string;
+  profile_bio: string;
+  createdAt: string;
+  updatedAt: string;
+  id: string;
 }
 
-const SidebarItem: React.FC<SidebarItemProps> = ({
-  href,
-  icon,
-  text,
-  isActive,
-  external,
-  button,
-}) => (
-  <li
-    className={`hover:bg-blue-50 ${isActive ? "bg-blue-100" : ""} ${
-      button ? "cursor-pointer" : ""
-    }`}
-  >
-    {button ? (
-      <button className="w-full text-left px-4 py-2 flex items-center text-gray-700">
-        <i className={`fa ${icon} mr-3`} aria-hidden="true"></i>
-        {text}
-      </button>
-    ) : (
-      <a
-        href={href}
-        className="w-full  px-4 py-2 flex items-center text-gray-700"
-        target={external ? "_blank" : "_self"}
-        rel={external ? "noopener noreferrer" : ""}
-      >
-        <i className={`fa ${icon} mr-3`} aria-hidden="true"></i>
-        {text}
-      </a>
-    )}
-  </li>
-);
+interface ContactInfo {
+  userId: string;
+  mobile: string;
+  sameAsMobile: boolean;
+  whatsapp: string;
+  country: string;
+  state: string;
+  district: string;
+  address: string;
+  photo: string;
+  pin_code: number;
+  createdAt: string;
+  updatedAt: string;
+  id: string;
+}
 
-const Dashboard: React.FC = async () => {
-  const profileData: any = await getProfileData();
+interface EducationOccupation {
+  userId: string;
+  education: string;
+  educationInfo: string;
+  occupation: string;
+  occupationInfo: string;
+  workingPlace: string;
+  monthlyIncome: string;
+  createdAt: string;
+  updatedAt: string;
+  id: string;
+}
+
+interface Expectations {
+  userId: string;
+  jaadhagam: string;
+  marital_status: string;
+  working_place: string;
+  expecting_stars: string;
+  expectation_info: string;
+  createdAt: string;
+  updatedAt: string;
+  id: string;
+}
+
+interface FamilyDetails {
+  userId: string;
+  fatherName: string;
+  fatherStatus: string;
+  motherName: string;
+  motherStatus: string;
+  fatherOccupation: string;
+  motherOccupation: string;
+  motherKulam: string;
+  livingPlace: string;
+  nativePlace: string;
+  noOfBrothers: number;
+  noOfBrothersMarried: number;
+  noOfSisters: number;
+  noOfSistersMarried: number;
+  property: string;
+  propertyInfo: string | null;
+  createdAt: string;
+  updatedAt: string;
+  id: string;
+}
+
+interface HoroscopeInfo {
+  userId: string;
+  raasi: string;
+  nachathiram: string;
+  lagnam: string;
+  dhisaiIrupu: string;
+  dhosam: string;
+  upload: string;
+  createdAt: string;
+  updatedAt: string;
+  id: string;
+}
+
+// Define the prop type for the ProfileDetail component
+interface ProfileDetailProps {
+  data: {
+    basicInfo: BasicInfo;
+    contactInfo: ContactInfo;
+    educationOccupation: EducationOccupation;
+    expectations: Expectations;
+    familyDetails: FamilyDetails;
+    horoscopeInfo: HoroscopeInfo;
+  };
+}
+
+const ProfileDetail: React.FC<ProfileDetailProps | undefined> = ({
+  data,
+}: any) => {
   const {
     basicInfo,
     contactInfo,
@@ -52,7 +114,7 @@ const Dashboard: React.FC = async () => {
     expectations,
     familyDetails,
     horoscopeInfo,
-  } = profileData?.data;
+  } = data;
 
   return (
     <div className="container mx-auto p-6">
@@ -293,4 +355,5 @@ const Dashboard: React.FC = async () => {
     </div>
   );
 };
-export default Dashboard;
+
+export default ProfileDetail;

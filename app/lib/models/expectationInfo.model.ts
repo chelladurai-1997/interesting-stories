@@ -6,10 +6,13 @@ export interface IExpectations extends Document {
   working_place: string;
   expecting_stars: string;
   expectation_info: string;
+  userId: string;
 }
 
 const ExpectationsSchema = new Schema<IExpectations>(
   {
+    userId: { type: String, required: true },
+
     jaadhagam: {
       type: String,
       required: true,

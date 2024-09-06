@@ -16,10 +16,13 @@ export interface IFamilyDetails extends Document {
   noOfSistersMarried: number;
   property: string;
   propertyInfo: string;
+  userId: string;
 }
 
 const FamilyDetailsSchema = new Schema<IFamilyDetails>(
   {
+    userId: { type: String, required: true },
+
     fatherName: {
       type: String,
       required: true,

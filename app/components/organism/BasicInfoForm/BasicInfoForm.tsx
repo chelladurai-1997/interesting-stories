@@ -16,6 +16,7 @@ import LoadingIndicator from "../../molecules/LoadingIndicator/LoadingIndicator"
 import SectionContainer from "../../molecules/SectionContainer/SectionContainer";
 import ResponsiveGridContainer from "../../molecules/ResponsiveGridContainer/ResponsiveGridContainer";
 import { calculatePercentageCompleted } from "@/app/lib/utils/calculateCompletedPercent";
+import { useUser } from "@/app/lib/contexts/UserContext";
 
 const BasicInfoForm = () => {
   const [runAction, isRunning] = useServerAction(onBasicInfoFormSubmit);

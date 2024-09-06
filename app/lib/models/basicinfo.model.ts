@@ -9,6 +9,7 @@ export interface IProfile extends Document {
   children: string;
   children_living_status: string;
   profile_bio: string;
+  userId: string;
 }
 
 const ProfileSchema = new Schema<IProfile>(
@@ -19,6 +20,10 @@ const ProfileSchema = new Schema<IProfile>(
       trim: true, // Trim whitespace
       minlength: 3, // Ensures name has at least 3 characters
       maxlength: 100, // Sets a maximum length
+    },
+    userId: {
+      type: String,
+      required: true,
     },
     gender: {
       type: String,

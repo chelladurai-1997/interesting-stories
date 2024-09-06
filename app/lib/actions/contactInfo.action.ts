@@ -4,6 +4,7 @@ import connectMongo from "../constants/mongodb";
 import ContactInfo from "../models/contactInfo.model";
 import fs from "fs";
 import path from "path";
+import { getUserFromSessionToken } from "../utils/getUserFromSessionToken";
 
 const uploadPath = path.join(__dirname, "../uploads/profile-images");
 
@@ -11,6 +12,12 @@ export async function onContactInfoFormSubmit(
   _prevData: unknown,
   formData: FormData
 ) {
+  // Get the user from the session token
+  const { userId, error } = await getUserFromSessionToken();
+
+  if (error || !userId) {
+    return { message: error || "User not found", error: true };
+  }
   const data = {
     mobile: formData.get("mobile"),
     sameAsMobile: formData.get("sameAsMobile") === "on", // Checkbox value
@@ -21,8 +28,8 @@ export async function onContactInfoFormSubmit(
     address: formData.get("profile_address"),
     photo: formData.get("photo") as File, // This will be the file input
     pin_code: formData.get("pin_code"),
+    userId,
   };
-  console.log(Object.fromEntries(formData));
 
   let filePath = "";
 
@@ -54,10 +61,10 @@ export async function onContactInfoFormSubmit(
       address: formData.get("address"),
       photo: filePath, // This will be the file input
       pin_code: formData.get("pin_code"),
+      userId,
     });
 
-    const res = await contactInfo.save();
-    console.log("Save Result:", res);
+    await contactInfo.save();
 
     return { message: "success", error: false };
   } catch (error) {

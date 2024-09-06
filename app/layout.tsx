@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import connectMongo from "./lib/constants/mongodb";
+import { UserProvider } from "./lib/contexts/UserContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,7 +23,7 @@ export default function RootLayout({
         className={inter.className + " max-w-screen-xl mx-auto"}
         suppressHydrationWarning={true}
       >
-        {children}
+        <UserProvider>{children}</UserProvider>
       </body>
     </html>
   );

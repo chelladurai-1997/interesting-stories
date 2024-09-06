@@ -205,7 +205,19 @@ export const zodiacNakshatras = [
   { label: "Revathi - ரேவதி", value: "Revathi - ரேவதி" },
 ];
 
-export const countriesOptions = ["Option 1", "Option 2", "Option 3"];
+export const countriesOptions = [
+  {
+    label: "GREAT BRITAIN - இங்கிலாந்து",
+    value: "GREAT BRITAIN - இங்கிலாந்து",
+  },
+  { label: "U.S.A - அமெரிக்கா", value: "U.S.A - அமெரிக்கா" },
+  { label: "DUBAI - துபாய்", value: "DUBAI - துபாய்" },
+  { label: "INDIA - இந்தியா", value: "INDIA - இந்தியா" },
+  { label: "GERMANY - ஜெர்மனி", value: "GERMANY - ஜெர்மனி" },
+  { label: "CANADA - கனடா", value: "CANADA - கனடா" },
+  { label: "Others - மற்றவைகள்", value: "Others - மற்றவைகள்" },
+];
+
 export const physicallyChallengedOptions = ["Yes", "No"];
 
 export const bloodGroupOptions = [
