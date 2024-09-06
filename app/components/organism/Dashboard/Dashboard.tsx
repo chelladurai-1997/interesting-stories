@@ -1,6 +1,7 @@
+"use client";
+
 import { getProfileData } from "@/app/lib/actions/getProfileData.action";
-import React from "react";
-import ProfileDetail from "../ProfileDetail/ProfileDetail";
+import React, { useEffect, useState } from "react";
 
 interface SidebarItemProps {
   href: string;
@@ -44,7 +45,10 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
 );
 
 const Dashboard: React.FC = async () => {
-  const profileData: any = await getProfileData();
+  const [profileData, setProfileData] = useState<any>();
+  useEffect(() => {
+    getProfileData().then((c: any) => setProfileData(c));
+  }, []);
   const {
     basicInfo,
     contactInfo,
