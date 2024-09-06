@@ -49,6 +49,7 @@ const Dashboard: React.FC = async () => {
   useEffect(() => {
     getProfileData().then((c: any) => setProfileData(c));
   }, []);
+
   const {
     basicInfo,
     contactInfo,
