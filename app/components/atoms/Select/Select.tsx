@@ -9,6 +9,7 @@ export interface SelectProps {
   placeholder: string;
   className?: string;
   searchable?: Boolean;
+  multiselect?: Boolean;
 }
 
 const Select: React.FC<SelectProps> = ({

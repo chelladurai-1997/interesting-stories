@@ -25,6 +25,7 @@ interface FormFieldProps {
   labelClassName?: string;
   maxDate?: string;
   searchable?: boolean;
+  multiselect?: boolean;
 }
 
 const FormField: React.FC<FormFieldProps> = ({
@@ -37,6 +38,7 @@ const FormField: React.FC<FormFieldProps> = ({
   labelClassName,
   searchable,
   maxDate,
+  multiselect = false,
 }) => {
   // const labelClassName = "block text-sm font-medium text-gray-900 ";
   return (
@@ -77,9 +79,9 @@ const FormField: React.FC<FormFieldProps> = ({
           <Label text={label} htmlFor={id} className={labelClassName} />
           <textarea
             className="mt-2 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
-            id="profile_bio"
-            name="profile_bio"
-            placeholder="Profile Biography"
+            id={id}
+            name={name}
+            placeholder={placeholder}
             required
           />
         </>
@@ -93,6 +95,7 @@ const FormField: React.FC<FormFieldProps> = ({
               options={options || []}
               placeholder={placeholder || ""}
               searchable={searchable}
+              multiselect={multiselect}
               className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm mt-2"
             />
           ) : (

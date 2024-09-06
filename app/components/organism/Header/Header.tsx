@@ -16,7 +16,7 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => (
       <div className="container mx-auto">
         <div className="pl-4 md:text-center">
           <Title text="" highlightedText="KonguVengai.com" />
-          <Paragraph text="Most trusted Kongu Vellalar Gounder's Matrimony" />
+          <Paragraph text="The Most Trusted Matrimony for Kongu Vellalar Gounders" />
         </div>
       </div>
 

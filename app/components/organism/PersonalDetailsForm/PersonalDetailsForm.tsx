@@ -6,12 +6,14 @@ import {
   casteOptions,
   complexionOptions,
   heightOptions,
+  kulaDheivamOptions,
   kulamOptions,
   physicallyChallengedOptions,
   religionOptions,
   weightOptions,
 } from "@/app/lib/constants/global.constant";
 import SectionHeader from "../../molecules/SectionHeader/SectionHeader";
+import { calculatePercentageCompleted } from "@/app/lib/utils/calculateCompletedPercent";
 
 const PersonalDetailsForm = () => {
   return (
@@ -20,6 +22,7 @@ const PersonalDetailsForm = () => {
         subtitle="We won't share it unnecessarily!"
         step="Step 2 of 7"
         title="Personal Information"
+        registerPercentCompleted={calculatePercentageCompleted(1, 7)}
       />
       <div className="form-login">
         <form autoComplete="off">
@@ -65,7 +68,8 @@ const PersonalDetailsForm = () => {
                 id="kula_deivam"
                 name="kula_deivam"
                 type="select"
-                options={[]}
+                options={kulaDheivamOptions}
+                searchable
                 placeholder="Select Kula Deivam"
               />
             </div>

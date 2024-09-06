@@ -15,6 +15,7 @@ import { useServerAction } from "@/app/lib/hooks/useServerAction";
 import LoadingIndicator from "../../molecules/LoadingIndicator/LoadingIndicator";
 import SectionContainer from "../../molecules/SectionContainer/SectionContainer";
 import ResponsiveGridContainer from "../../molecules/ResponsiveGridContainer/ResponsiveGridContainer";
+import { calculatePercentageCompleted } from "@/app/lib/utils/calculateCompletedPercent";
 
 const BasicInfoForm = () => {
   const [runAction, isRunning] = useServerAction(onBasicInfoFormSubmit);
@@ -36,6 +37,7 @@ const BasicInfoForm = () => {
         subtitle="Let's get started, Enter your details!"
         step="Step 1 of 7"
         title="Basic Information"
+        registerPercentCompleted={calculatePercentageCompleted(0, 7)}
       />
       <div className="form-login">
         <form autoComplete="off" action={onSubmit}>

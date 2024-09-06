@@ -68,6 +68,14 @@ export const districtOptions: string[] = [
   "Virudhunagar - விருதுநகர்",
 ];
 
+export const stateOptions = [
+  { label: "Kerala - கேரளா", value: "Kerala - கேரளா" },
+  { label: "Karnataka - கர்நாடகா", value: "Karnataka - கர்நாடகா" },
+  { label: "Andhra - ஆந்திரா", value: "Andhra - ஆந்திரா" },
+  { label: "Tamil Nadu - தமிழ்நாடு", value: "Tamil Nadu - தமிழ்நாடு" },
+  { label: "Others - மற்றவர்கள்", value: "Others - மற்றவர்கள்" },
+];
+
 export const profileCreatedByOptions = [
   { value: "Parent - (பெற்றோர்)", label: "Parent - (பெற்றோர்)" },
   { value: "Sibling - (உடன்பிறப்பு)", label: "Sibling - (உடன்பிறப்பு)" },
@@ -161,12 +169,43 @@ export const workingPlaceOptions = [
   },
 ];
 
-export const raasiOptions = ["Option 1", "Option 2", "Option 3"];
-export const nachathiramOptions = ["Option 1", "Option 2", "Option 3"];
-export const lagnamOptions = ["Option 1", "Option 2", "Option 3"];
-export const dhosamOptions = ["Option 1", "Option 2", "Option 3"];
+export const zodiacNakshatras = [
+  { label: "Aswini - அஸ்வினி", value: "Aswini - அஸ்வினி" },
+  { label: "Bharani - பரணி", value: "Bharani - பரணி" },
+  { label: "Karthigai - கார்த்திகை", value: "Karthigai - கார்த்திகை" },
+  { label: "Rohini - ரோகிணி", value: "Rohini - ரோகிணி" },
+  {
+    label: "Mirigasirisam - மிருகசீரிடம்",
+    value: "Mirigasirisam - மிருகசீரிடம்",
+  },
+  { label: "Thiruvathirai - திருவாதிரை", value: "Thiruvathirai - திருவாதிரை" },
+  { label: "Punarpusam - புனர்பூசம்", value: "Punarpusam - புனர்பூசம்" },
+  { label: "Poosam - பூசம்", value: "Poosam - பூசம்" },
+  { label: "Ayilyam - ஆயில்யம்", value: "Ayilyam - ஆயில்யம்" },
+  { label: "Magam - மகம்", value: "Magam - மகம்" },
+  { label: "Pooram - பூர்ணம்", value: "Pooram - பூர்ணம்" },
+  { label: "Utthiram - உத்திரம்", value: "Utthiram - உத்திரம்" },
+  { label: "Astham - அஸ்தம்", value: "Astham - அஸ்தம்" },
+  { label: "Chittirai - சித்திரை", value: "Chittirai - சித்திரை" },
+  { label: "Swati - சுவாதி", value: "Swati - சுவாதி" },
+  { label: "Visakam - விசாகம்", value: "Visakam - விசாகம்" },
+  { label: "Anusham - அனுஷம்", value: "Anusham - அனுஷம்" },
+  { label: "Kettai - கேட்டை", value: "Kettai - கேட்டை" },
+  { label: "Moolam - மூலம்", value: "Moolam - மூலம்" },
+  { label: "Pooradam - பூராடம்", value: "Pooradam - பூராடம்" },
+  { label: "Utthiradam - உத்திராடம்", value: "Utthiradam - உத்திராடம்" },
+  { label: "Thiruvonam - திருவோணம்", value: "Thiruvonam - திருவோணம்" },
+  { label: "Avittam - அவிட்டம்", value: "Avittam - அவிட்டம்" },
+  { label: "Sathayam - சதயம்", value: "Sathayam - சதயம்" },
+  { label: "Pooratadhi - பூரட்டாதி", value: "Pooratadhi - பூரட்டாதி" },
+  {
+    label: "Utthiratadhi - உத்திரட்டாதி",
+    value: "Utthiratadhi - உத்திரட்டாதி",
+  },
+  { label: "Revathi - ரேவதி", value: "Revathi - ரேவதி" },
+];
+
 export const countriesOptions = ["Option 1", "Option 2", "Option 3"];
-export const statesOptions = ["Option 1", "Option 2", "Option 3"];
 export const physicallyChallengedOptions = ["Yes", "No"];
 
 export const bloodGroupOptions = [
@@ -667,6 +706,373 @@ export const kulamOptions = [
   },
 ];
 
+export const kulaDheivamOptions = [
+  {
+    label: "Ponnallagu nachiamman  - பொன்னழகு நாச்சியம்மன்",
+    value: "Ponnallagu nachiamman  - பொன்னழகு நாச்சியம்மன்",
+  },
+  {
+    label: "Periyanayakiamman - பெரியநாயகி அம்மன்",
+    value: "Periyanayakiamman - பெரியநாயகி அம்மன்",
+  },
+  {
+    label: "Sellandiamman - செல்லாண்டியம்மன்",
+    value: "Sellandiamman - செல்லாண்டியம்மன்",
+  },
+  {
+    label: "Kariyakaliamman - கரிய காளியம்மன்",
+    value: "Kariyakaliamman - கரிய காளியம்மன்",
+  },
+  {
+    label: "Selvanayakiamman - செல்வநாயகி அம்மன்",
+    value: "Selvanayakiamman - செல்வநாயகி அம்மன்",
+  },
+  {
+    label: "Goundachiamman - கவுண்டிச்சி அம்மன்",
+    value: "Goundachiamman - கவுண்டிச்சி அம்மன்",
+  },
+  {
+    label: "Ponkaliamman - பொன் காளியம்மன்",
+    value: "Ponkaliamman - பொன் காளியம்மன்",
+  },
+  {
+    label: "Seliamman - செல்லியம்மன்",
+    value: "Seliamman - செல்லியம்மன்",
+  },
+  {
+    label: "Angalaparmeswari amman - அங்காள பரமேஸ்வரி அம்மன்",
+    value: "Angalaparmeswari amman - அங்காள பரமேஸ்வரி அம்மன்",
+  },
+  {
+    label: "Thanganayakiamman - தங்கநாயகி அம்மன்",
+    value: "Thanganayakiamman - தங்கநாயகி அம்மன்",
+  },
+  {
+    label: "Nallpulliamman - நல்லபுள்ளி அம்மன்",
+    value: "Nallpulliamman - நல்லபுள்ளி அம்மன்",
+  },
+  {
+    label: "Sivaselvanayakiamman - சிவசெல்வநாயகி அம்மன்",
+    value: "Sivaselvanayakiamman - சிவசெல்வநாயகி அம்மன்",
+  },
+  {
+    label: "Kammachiamman - காமாட்சி அம்மன்",
+    value: "Kammachiamman - காமாட்சி அம்மன்",
+  },
+  {
+    label: "Aathanoor amman - ஆதனூர் அம்மன்",
+    value: "Aathanoor amman - ஆதனூர் அம்மன்",
+  },
+  {
+    label: "Aanooramman - ஆனூர் அம்மன்",
+    value: "Aanooramman - ஆனூர் அம்மன்",
+  },
+  {
+    label: "Nalliamman - நல்லி அம்மன்",
+    value: "Nalliamman - நல்லி அம்மன்",
+  },
+  {
+    label: "Athanur amman - அத்தனூர் அம்மன்",
+    value: "Athanur amman - அத்தனூர் அம்மன்",
+  },
+  {
+    label: "Velliamman - வெள்ளை அம்மன்",
+    value: "Velliamman - வெள்ளை அம்மன்",
+  },
+  {
+    label: "Kandiamman - கண்டியம்மன்",
+    value: "Kandiamman - கண்டியம்மன்",
+  },
+  {
+    label: "Thangamman - தங்கம்மன்",
+    value: "Thangamman - தங்கம்மன்",
+  },
+  {
+    label: "Arungariamman - அருங்கரை அம்மன்",
+    value: "Arungariamman - அருங்கரை அம்மன்",
+  },
+  {
+    label: "Parvathi sadiyappasamy - பார்வதி சடையப்ப சுவாமி",
+    value: "Parvathi sadiyappasamy - பார்வதி சடையப்ப சுவாமி",
+  },
+  {
+    label: "Powliamman - பவுளியம்மன்",
+    value: "Powliamman - பவுளியம்மன்",
+  },
+  {
+    label: "Vangalamman - வாங்கலம்மன்",
+    value: "Vangalamman - வாங்கலம்மன்",
+  },
+  {
+    label: "Ponnaiamman - பொன்னையம்மன்",
+    value: "Ponnaiamman - பொன்னையம்மன்",
+  },
+  {
+    label: "Murungaiamman - முருங்கையம்மன்",
+    value: "Murungaiamman - முருங்கையம்மன்",
+  },
+  {
+    label: "Thiruperatiamman - திருப்பிராட்டி அம்மன்",
+    value: "Thiruperatiamman - திருப்பிராட்டி அம்மன்",
+  },
+  {
+    label: "Chinnaponnachiamman - சின்ன பொன்னாச்சி அம்மன்",
+    value: "Chinnaponnachiamman - சின்ன பொன்னாச்சி அம்மன்",
+  },
+  {
+    label: "Pudhu vekkariamman - புது வெங்கரையம்மன்",
+    value: "Pudhu vekkariamman - புது வெங்கரையம்மன்",
+  },
+  {
+    label: "Ponachiamman - பொன்னாட்சி அம்மன்",
+    value: "Ponachiamman - பொன்னாட்சி அம்மன்",
+  },
+  {
+    label: "Pachinayakiamman - பச்சைநாயகி அம்மன்",
+    value: "Pachinayakiamman - பச்சைநாயகி அம்மன்",
+  },
+  {
+    label: "Aayiamman - ஆயி அம்மன்",
+    value: "Aayiamman - ஆயி அம்மன்",
+  },
+  {
+    label: "Kaliamman - காளியம்மன்",
+    value: "Kaliamman - காளியம்மன்",
+  },
+  {
+    label: "Chinnamman - சின்னம்மன்",
+    value: "Chinnamman - சின்னம்மன்",
+  },
+  {
+    label: "Periyamman - பெரியம்மன்",
+    value: "Periyamman - பெரியம்மன்",
+  },
+  {
+    label: "Puthu vangallamman - புது வாங்கலம்மன்",
+    value: "Puthu vangallamman - புது வாங்கலம்மன்",
+  },
+  {
+    label: "Nallathal udhthami devi - நல்லாத்தாள் உத்தமி தேவி",
+    value: "Nallathal udhthami devi - நல்லாத்தாள் உத்தமி தேவி",
+  },
+  {
+    label: "Pathrakaliamman - பத்ரகாளியம்மன்",
+    value: "Pathrakaliamman - பத்ரகாளியம்மன்",
+  },
+  {
+    label: "Madhurakaliamman - மதுரகாளியம்மன்",
+    value: "Madhurakaliamman - மதுரகாளியம்மன்",
+  },
+  {
+    label: "Kariyaperumal - கரியபெருமாள்",
+    value: "Kariyaperumal - கரியபெருமாள்",
+  },
+  {
+    label: "Ponachiamman - பொன்னாச்சி அம்மன்",
+    value: "Ponachiamman - பொன்னாச்சி அம்மன்",
+  },
+  {
+    label: "Periyanaiyakiamman - பெரியநாயகி அம்மன்",
+    value: "Periyanaiyakiamman - பெரியநாயகி அம்மன்",
+  },
+  {
+    label: "Malayamulunkiyamman - மலையா முழுங்கியம்மன்",
+    value: "Malayamulunkiyamman - மலையா முழுங்கியம்மன்",
+  },
+  {
+    label: "Peratiyamman - பிராட்டியம்மன்",
+    value: "Peratiyamman - பிராட்டியம்மன்",
+  },
+  {
+    label: "Thiruneellakandiyamman - திருநீல கண்டியம்மன்",
+    value: "Thiruneellakandiyamman - திருநீல கண்டியம்மன்",
+  },
+  {
+    label: "Soliyamman - சோழியம்மன்",
+    value: "Soliyamman - சோழியம்மன்",
+  },
+  {
+    label: "Sawmundieswari - சாமுண்டீஸ்வரி",
+    value: "Sawmundieswari - சாமுண்டீஸ்வரி",
+  },
+  {
+    label: "Thampuratiamman - தம்புராட்டியம்மன்",
+    value: "Thampuratiamman - தம்புராட்டியம்மன்",
+  },
+  {
+    label: "Kaliamman - காளியம்மன்",
+    value: "Kaliamman - காளியம்மன்",
+  },
+  {
+    label: "Kagathaliamman - காகத்தலையம்மன்",
+    value: "Kagathaliamman - காகத்தலையம்மன்",
+  },
+  {
+    label: "Angalaamman - அங்காளம்ம",
+    value: "Angalaamman - அங்காளம்ம",
+  },
+  {
+    label: "Masiriamman - மசிரியம்மன்",
+    value: "Masiriamman - மசிரியம்மன்",
+  },
+  {
+    label: "Kullaliyamman - குழலியம்மன்",
+    value: "Kullaliyamman - குழலியம்மன்",
+  },
+  {
+    label: "Sokkanayakiamman - சொக்கநாயகியம்மன்",
+    value: "Sokkanayakiamman - சொக்கநாயகியம்மன்",
+  },
+  {
+    label: "Kullavillaguamman - குலவிளக்கம்மன்",
+    value: "Kullavillaguamman - குலவிளக்கம்மன்",
+  },
+  {
+    label: "Appathall - அப்பத்தாள்",
+    value: "Appathall - அப்பத்தாள்",
+  },
+  {
+    label: "Srideviamman - ஸ்ரீதேவியம்மன்",
+    value: "Srideviamman - ஸ்ரீதேவியம்மன்",
+  },
+  {
+    label: "Ponkaliamman - பொன் காளியம்மன்",
+    value: "Ponkaliamman - பொன் காளியம்மன்",
+  },
+  {
+    label: "Sawmuniyamman - சாமுண்டியம்மன்",
+    value: "Sawmuniyamman - சாமுண்டியம்மன்",
+  },
+  {
+    label: "Rajanayakiamman - இராஜநாயகியம்மன்",
+    value: "Rajanayakiamman - இராஜநாயகியம்மன்",
+  },
+  {
+    label: "Ukkirandiyamman - உக்கிராண்டியம்மன்",
+    value: "Ukkirandiyamman - உக்கிராண்டியம்மன்",
+  },
+  {
+    label: "Chinnathal - சின்னாத்தாள்",
+    value: "Chinnathal - சின்னாத்தாள்",
+  },
+  {
+    label: "Poovathal - பூவாத்தாள்",
+    value: "Poovathal - பூவாத்தாள்",
+  },
+  {
+    label: "Thaliyamman - தல்லியம்மன்",
+    value: "Thaliyamman - தல்லியம்மன்",
+  },
+  {
+    label: "Maruthakaliyamman - மருதகாளியம்மன்",
+    value: "Maruthakaliyamman - மருதகாளியம்மன்",
+  },
+  {
+    label: "Malaiyamman - மலையம்மன்",
+    value: "Malaiyamman - மலையம்மன்",
+  },
+  {
+    label: "Padaivediyamman - படைவெட்டியம்மன்",
+    value: "Padaivediyamman - படைவெட்டியம்மன்",
+  },
+  {
+    label: "Kongaalamman - கொங்காளம்மன்",
+    value: "Kongaalamman - கொங்காளம்மன்",
+  },
+  {
+    label: "Pachanachayamman - பச்சநாச்சயம்மன்",
+    value: "Pachanachayamman - பச்சநாச்சயம்மன்",
+  },
+  {
+    label: "Nallamangai - நல்லமங்கை",
+    value: "Nallamangai - நல்லமங்கை",
+  },
+  {
+    label: "Vagaithulluvuamman - வாகைதொழுவு அம்மன்",
+    value: "Vagaithulluvuamman - வாகைதொழுவு அம்மன்",
+  },
+  {
+    label: "Muchiliyamman - முச்சிலியம்மன்",
+    value: "Muchiliyamman - முச்சிலியம்மன்",
+  },
+  {
+    label: "Vellathal - வேலாத்தாள்",
+    value: "Vellathal - வேலாத்தாள்",
+  },
+  {
+    label: "Nallammal,periyammai - நல்லம்மாள்,பெரியம்மை",
+    value: "Nallammal,periyammai - நல்லம்மாள்,பெரியம்மை",
+  },
+  {
+    label: "Vanniyamman - வன்னியம்மன்",
+    value: "Vanniyamman - வன்னியம்மன்",
+  },
+  {
+    label: "Goniyamman - கோனியம்மன்",
+    value: "Goniyamman - கோனியம்மன்",
+  },
+  {
+    label: "Veeramathiyamman - வீரமாத்தியம்மன்",
+    value: "Veeramathiyamman - வீரமாத்தியம்மன்",
+  },
+  {
+    label: "Kothanooramman - கொத்தனூர் அம்மன்",
+    value: "Kothanooramman - கொத்தனூர் அம்மன்",
+  },
+  {
+    label: "Kapiliyamman - காம்பிலியம்மன்",
+    value: "Kapiliyamman - காம்பிலியம்மன்",
+  },
+  {
+    label: "Periyanachiyamman - பெரியநாச்சியம்மன்",
+    value: "Periyanachiyamman - பெரியநாச்சியம்மன்",
+  },
+  {
+    label: "Nalliyamman - நல்லியம்மாள்",
+    value: "Nalliyamman - நல்லியம்மாள்",
+  },
+  {
+    label: "Pagavathiyamman - பகவதியம்மன்",
+    value: "Pagavathiyamman - பகவதியம்மன்",
+  },
+  {
+    label: "Eddukkaiyamman - எட்டுக்கை அம்மன்",
+    value: "Eddukkaiyamman - எட்டுக்கை அம்மன்",
+  },
+  {
+    label: "Neeliyamman - நீலியம்மன்",
+    value: "Neeliyamman - நீலியம்மன்",
+  },
+  {
+    label: "Veeranachiyamman - வீரநாச்சியம்மன்",
+    value: "Veeranachiyamman - வீரநாச்சியம்மன்",
+  },
+  {
+    label: "Veeramachiyamman - வீரமாட்சியம்மன்",
+    value: "Veeramachiyamman - வீரமாட்சியம்மன்",
+  },
+  {
+    label: "Vanchiyamman - வஞ்சியம்மன்",
+    value: "Vanchiyamman - வஞ்சியம்மன்",
+  },
+  {
+    label: "Pachiyamman - பச்சையம்மன்",
+    value: "Pachiyamman - பச்சையம்மன்",
+  },
+  {
+    label: "Patharakaliyamman - பத்ரகாளியம்மன்",
+    value: "Patharakaliyamman - பத்ரகாளியம்மன்",
+  },
+  {
+    label: "Ponkaliyamman - பொன் காளியம்மன்",
+    value: "Ponkaliyamman - பொன் காளியம்மன்",
+  },
+  {
+    label: "Others - இதர கோயிலினர்",
+    value: "Others - இதர கோயிலினர்",
+  },
+];
+
 export const religionOptions = [
   { value: "", label: "Select Religion" },
   { value: "hinduism", label: "Hinduism" },
@@ -676,4 +1082,33 @@ export const religionOptions = [
   { value: "buddhism", label: "Buddhism" },
   { value: "jainism", label: "Jainism" },
   { value: "other", label: "Other" },
+];
+
+export const zodiacSigns = [
+  { label: "Aries - மேஷம்", value: "Aries" },
+  { label: "Taurus - ரிஷபம்", value: "Taurus" },
+  { label: "Gemini - மிதுனம்", value: "Gemini" },
+  { label: "Cancer - கடகம்", value: "Cancer" },
+  { label: "Leo - சிம்மம்", value: "Leo" },
+  { label: "Virgo - கன்னி", value: "Virgo" },
+  { label: "Libra - துலாம்", value: "Libra" },
+  { label: "Scorpio - விருச்சிகம்", value: "Scorpio" },
+  { label: "Sagittarius - தனுசு", value: "Sagittarius" },
+  { label: "Capricorn - மகரம்", value: "Capricorn" },
+  { label: "Aquarius - கும்பம்", value: "Aquarius" },
+  { label: "Pisces - மீனம்", value: "Pisces" },
+];
+
+export const jathagamStatusOptions = [
+  {
+    label: "Sutha Jathagam - சுத்த ஜாதகம்",
+    value: "Sutha Jathagam - சுத்த ஜாதகம்",
+  },
+  { label: "Sevvai - செவ்வாய்", value: "Sevvai - செவ்வாய்" },
+  { label: "Ragu Kedhu - இராகு கேது", value: "Ragu Kedhu - இராகு கேது" },
+  {
+    label: "Ragu Kedhu Sevvai - இராகு கேது செவ்வாய்",
+    value: "Ragu Kedhu Sevvai - இராகு கேது செவ்வாய்",
+  },
+  { label: "Others - மற்றவைகள்", value: "Others - மற்றவைகள்" },
 ];

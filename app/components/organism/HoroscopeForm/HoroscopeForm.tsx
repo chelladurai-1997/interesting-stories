@@ -1,24 +1,41 @@
-import Link from "next/link";
+"use client";
 import Button from "../../atoms/Button/Button";
 import FormField from "../../molecules/FormField/FormField";
 import {
-  raasiOptions,
-  nachathiramOptions,
-  lagnamOptions,
-  dhosamOptions,
+  zodiacSigns,
+  zodiacNakshatras,
+  jathagamStatusOptions,
 } from "@/app/lib/constants/global.constant";
 import SectionHeader from "../../molecules/SectionHeader/SectionHeader";
+import { calculatePercentageCompleted } from "@/app/lib/utils/calculateCompletedPercent";
+import { useRouter } from "next/navigation";
+import { useServerAction } from "@/app/lib/hooks/useServerAction";
+import { onHoroscopeInfoFormSubmit } from "@/app/lib/actions/horoscopeInfo.action";
 
 const HoroscopeForm = () => {
+  const router = useRouter();
+  const [runAction, isRunning] = useServerAction(onHoroscopeInfoFormSubmit);
+
+  const onSubmit = async (formData: FormData) => {
+    try {
+      const response = await runAction(null, formData);
+      if (response?.error) {
+        alert("Something went wrong!");
+      } else {
+        router.push("/profile-info/expectation-details");
+      }
+    } catch (error) {}
+  };
   return (
     <section className="bg-white p-6 sm:p-10 border rounded-xl max-w-[800px] mx-auto shadow-lg transition-transform transform  hover:shadow-2xl">
       <SectionHeader
-        subtitle="We won't share it unnecessarily!"
+        subtitle="Astrology, a divine power!"
         step="Step 5 of 7"
-        title="Education & Occupation"
+        title="HoroScope Information"
+        registerPercentCompleted={calculatePercentageCompleted(4, 7)}
       />
       <div className="form-login">
-        <form autoComplete="off">
+        <form autoComplete="off" action={onSubmit}>
           <div className="space-y-6">
             {/* 2 columns on medium screens and up, 1 column on smaller screens */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -28,7 +45,7 @@ const HoroscopeForm = () => {
                 id="raasi"
                 name="raasi"
                 placeholder="Select Raasi"
-                options={raasiOptions}
+                options={zodiacSigns}
                 type="select"
               />
 
@@ -38,7 +55,7 @@ const HoroscopeForm = () => {
                 id="nachathiram"
                 name="nachathiram"
                 placeholder="Select Nachathiram"
-                options={nachathiramOptions}
+                options={zodiacNakshatras}
                 type="select"
               />
             </div>
@@ -50,7 +67,7 @@ const HoroscopeForm = () => {
                 id="lagnam"
                 name="lagnam"
                 placeholder="Select Lagnam"
-                options={lagnamOptions}
+                options={zodiacSigns}
                 type="select"
               />
 
@@ -69,7 +86,7 @@ const HoroscopeForm = () => {
                 id="dhosam"
                 name="dhosam"
                 placeholder="Select Dhosam"
-                options={dhosamOptions}
+                options={jathagamStatusOptions}
                 type="select"
               />
               <FormField
@@ -83,24 +100,24 @@ const HoroscopeForm = () => {
           </div>
 
           <div className="flex justify-end mt-8">
-            <Link href={"/profile-info/expectation-details"} className="w-full">
-              <Button
-                text="Save & Proceed"
-                type="submit"
-                icon={
-                  <svg
-                    stroke="currentColor"
-                    fill="currentColor"
-                    strokeWidth="0"
-                    viewBox="0 0 448 512"
-                    className="h-5 w-5"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"></path>
-                  </svg>
-                }
-              />
-            </Link>
+            {/* <Link href={"/profile-info/expectation-details"} className="w-full"> */}
+            <Button
+              text={isRunning ? "Saving..." : "Save & Proceed"}
+              type="submit"
+              icon={
+                <svg
+                  stroke="currentColor"
+                  fill="currentColor"
+                  strokeWidth="0"
+                  viewBox="0 0 448 512"
+                  className="h-5 w-5"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"></path>
+                </svg>
+              }
+            />
+            {/* </Link> */}
           </div>
         </form>
       </div>
