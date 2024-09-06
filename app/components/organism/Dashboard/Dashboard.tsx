@@ -52,7 +52,14 @@ const Dashboard: React.FC = async () => {
     expectations,
     familyDetails,
     horoscopeInfo,
-  } = profileData?.data;
+  } = profileData?.data || {
+    basicInfo: {},
+    contactInfo: {},
+    educationOccupation: {},
+    expectations: {},
+    familyDetails: {},
+    horoscopeInfo: {},
+  };
 
   return (
     <div className="container mx-auto p-6">
