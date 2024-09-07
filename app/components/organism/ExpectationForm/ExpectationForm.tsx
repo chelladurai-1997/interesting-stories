@@ -31,7 +31,7 @@ const ExpectationForm = () => {
   return (
     <section className="bg-white p-6 sm:p-10 border rounded-xl max-w-[800px] mx-auto shadow-lg transition-transform transform  hover:shadow-2xl">
       <SectionHeader
-        subtitle="Profile Expectation!"
+        subtitle="Share Your Expectations with Us"
         step="Step 6 of 7"
         title="Expectation"
         registerPercentCompleted={calculatePercentageCompleted(4, 7)}

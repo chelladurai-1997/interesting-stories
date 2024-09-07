@@ -25,7 +25,7 @@ const FamilyInfoForm = () => {
   return (
     <section className="bg-white p-6 sm:p-10 border rounded-xl max-w-[800px] mx-auto shadow-lg transition-transform transform  hover:shadow-2xl">
       <SectionHeader
-        subtitle="A little about your family!"
+        subtitle="Tell us a bit about your family!"
         step="Step 4 of 7"
         title="Family Information"
         registerPercentCompleted={calculatePercentageCompleted(3, 7)}

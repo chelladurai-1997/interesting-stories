@@ -41,8 +41,7 @@ export async function GET() {
       HoroscopeInfo.findOne({ userId }),
     ]);
 
-    // Return the profile data
-    return NextResponse.json({
+    const response = NextResponse.json({
       message: "Profile data fetched successfully",
       data: {
         basicInfo,
@@ -54,6 +53,12 @@ export async function GET() {
       },
       error: false,
     });
+
+    // Set Cache-Control headers to instruct the browser to cache the response
+    response.headers.set("Cache-Control", "public, max-age=3600"); // Cache for 1 hour (3600 seconds)
+
+    // Return the profile data
+    return response;
   } catch (error) {
     console.error("Error fetching profile data:", error);
 

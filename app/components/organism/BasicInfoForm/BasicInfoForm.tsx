@@ -35,7 +35,7 @@ const BasicInfoForm = () => {
   return (
     <SectionContainer>
       <SectionHeader
-        subtitle="Let's get started, Enter your details!"
+        subtitle="Let's begin! Please enter your details."
         step="Step 1 of 7"
         title="Basic Information"
         registerPercentCompleted={calculatePercentageCompleted(0, 7)}

@@ -29,7 +29,7 @@ const HoroscopeForm = () => {
   return (
     <section className="bg-white p-6 sm:p-10 border rounded-xl max-w-[800px] mx-auto shadow-lg transition-transform transform  hover:shadow-2xl">
       <SectionHeader
-        subtitle="Astrology, a divine power!"
+        subtitle="Astrology, a guiding force from the stars!"
         step="Step 5 of 7"
         title="HoroScope Information"
         registerPercentCompleted={calculatePercentageCompleted(4, 7)}
