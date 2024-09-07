@@ -5,17 +5,17 @@ import EducationOccupation from "@/app/lib/models/educationOccupation.model";
 import Expectations from "@/app/lib/models/expectationInfo.model";
 import FamilyDetails from "@/app/lib/models/familyInfo.model";
 import HoroscopeInfo from "@/app/lib/models/horoscopeInfo.model";
-import { getUserFromSessionToken } from "@/app/lib/utils/getUserFromSessionToken";
 import { NextResponse } from "next/server";
 
 // Handler for fetching profile data
-export async function GET() {
-  // Get the user from the session token
-  const { userId, error } = await getUserFromSessionToken();
+export async function GET(request: Request) {
+  // Extract userId from URL parameters
+  const url = new URL(request.url);
+  const userId = url.searchParams.get("id");
 
-  if (error || !userId) {
+  if (!userId) {
     return NextResponse.json(
-      { message: error || "User not found", error: true },
+      { message: "User ID is required", error: true },
       { status: 400 }
     );
   }
