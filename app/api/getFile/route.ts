@@ -34,11 +34,10 @@ type FileDetails = {
 
 // The main GET function to handle file retrieval
 export async function GET(request: Request): Promise<NextResponse> {
+  // Parse the URL to get query params
+  const { searchParams } = new URL(request.url);
+  const gridFSId = searchParams.get("gridFSId");
   try {
-    // Parse the URL to get query params
-    const { searchParams } = new URL(request.url);
-    const gridFSId = searchParams.get("gridFSId");
-
     if (!gridFSId) {
       return NextResponse.json(
         { message: "File ID is required" },
