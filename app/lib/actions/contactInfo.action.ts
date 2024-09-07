@@ -1,12 +1,15 @@
 "use server";
 
-import connectMongo from "../constants/mongodb";
+import connectMongo, { MONGO_URI } from "../constants/mongodb";
 import ContactInfo from "../models/contactInfo.model";
-import fs from "fs";
-import path from "path";
 import { getUserFromSessionToken } from "../utils/getUserFromSessionToken";
+import { GridFSBucket, MongoClient } from "mongodb";
 
-const uploadPath = path.join(__dirname, "../uploads/profile-images");
+async function getMongoNativeConnection() {
+  const client = new MongoClient(MONGO_URI as string);
+  await client.connect();
+  return client.db(); // Return the database instance
+}
 
 export async function onContactInfoFormSubmit(
   _prevData: unknown,
@@ -18,6 +21,7 @@ export async function onContactInfoFormSubmit(
   if (error || !userId) {
     return { message: error || "User not found", error: true };
   }
+
   const data = {
     mobile: formData.get("mobile"),
     sameAsMobile: formData.get("sameAsMobile") === "on", // Checkbox value
@@ -31,26 +35,40 @@ export async function onContactInfoFormSubmit(
     userId,
   };
 
-  let filePath = "";
-
   try {
-    // Ensure the upload directory exists
-    if (!fs.existsSync(uploadPath)) {
-      fs.mkdirSync(uploadPath, { recursive: true });
-    }
-
-    // Handle file upload
-    const uploadFile = data.photo as File;
-    if (uploadFile) {
-      const fileBuffer = Buffer.from(await uploadFile.arrayBuffer());
-      filePath = path.join(uploadPath, uploadFile.name);
-      fs.writeFileSync(filePath, fileBuffer);
-    }
-
-    // Connect to MongoDB
+    // Connect to MongoDB through Mongoose (for your models)
     await connectMongo();
 
-    // Save to database
+    // Get the native MongoDB connection for GridFS
+    const db = await getMongoNativeConnection(); // Use the native MongoDB driver
+
+    // Set up GridFS
+    const bucket = new GridFSBucket(db, {
+      bucketName: "profileImages",
+    });
+
+    // Handle file upload to GridFS
+    const uploadFile = data.photo as File;
+    let imageUrl = null;
+
+    if (uploadFile) {
+      const uploadStream = bucket.openUploadStream(uploadFile.name, {
+        contentType: uploadFile.type,
+        metadata: {
+          originalName: uploadFile.name,
+          uploadedBy: userId,
+          size: uploadFile.size, // You can add any custom metadata here
+        },
+      });
+
+      const fileBuffer = Buffer.from(await uploadFile.arrayBuffer());
+      uploadStream.end(fileBuffer);
+
+      // Generate the image URL
+      imageUrl = `/api/getFile?gridFSId=${uploadStream.id}`; // Store the URL for retrieval
+    }
+
+    // Save to database using Mongoose
     const contactInfo = new ContactInfo({
       mobile: formData.get("mobile"),
       sameAsMobile: formData.get("sameAsMobile") === "on", // Checkbox value
@@ -59,10 +77,12 @@ export async function onContactInfoFormSubmit(
       state: formData.get("state"),
       district: formData.get("district"),
       address: formData.get("address"),
-      photo: filePath, // This will be the file input
+      photo: imageUrl, // Save the image URL instead of GridFS file ID
       pin_code: formData.get("pin_code"),
       userId,
     });
+
+    console.log("contactInfo", contactInfo);
 
     await contactInfo.save();
 

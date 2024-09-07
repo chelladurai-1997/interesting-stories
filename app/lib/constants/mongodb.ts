@@ -1,6 +1,7 @@
+import { MongoClient } from "mongodb";
 import mongoose from "mongoose";
 
-const MONGO_URI = process.env.MONGODB_URI;
+export const MONGO_URI = process.env.MONGODB_URI;
 
 const cached: {
   connection?: typeof mongoose;
