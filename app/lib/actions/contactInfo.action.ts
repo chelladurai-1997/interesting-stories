@@ -1,11 +1,5 @@
 "use server";
 
-import {
-  S3Client,
-  PutObjectCommand,
-  ObjectCannedACL,
-} from "@aws-sdk/client-s3";
-import { v4 as uuidv4 } from "uuid";
 import connectMongo from "../constants/mongodb";
 import ContactInfo from "../models/contactInfo.model";
 import { getUserFromSessionToken } from "../utils/getUserFromSessionToken";
@@ -34,7 +28,7 @@ export async function onContactInfoFormSubmit(
 
   try {
     // 1. Generate a unique key for the file
-    const fileKey = uuidv4(); // Unique file key for the S3 object
+    // const fileKey = uuidv4(); // Unique file key for the S3 object
 
     // 2. Upload the file directly to S3
     // const uploadParams = {

@@ -3,7 +3,7 @@ import FormField from "../../molecules/FormField/FormField";
 import FormTitle from "../../molecules/FormField/FormTitle/FormTitle";
 
 const LoginForm: React.FC = () => (
-  <section className="bg-white p-6  rounded-lg shadow-lg">
+  <section className="bg-white p-6 ">
     <div className="container mx-auto">
       <form className="max-w-md mx-auto space-y-4">
         <FormTitle

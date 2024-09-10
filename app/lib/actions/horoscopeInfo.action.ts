@@ -1,11 +1,5 @@
 "use server";
 
-import {
-  S3Client,
-  PutObjectCommand,
-  ObjectCannedACL,
-} from "@aws-sdk/client-s3";
-import { v4 as uuidv4 } from "uuid";
 import connectMongo from "../constants/mongodb";
 import HoroscopeInfo from "../models/horoscopeInfo.model";
 import { getUserFromSessionToken } from "../utils/getUserFromSessionToken";
