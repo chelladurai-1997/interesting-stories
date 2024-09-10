@@ -16,7 +16,7 @@ import LoadingIndicator from "../../molecules/LoadingIndicator/LoadingIndicator"
 import SectionContainer from "../../molecules/SectionContainer/SectionContainer";
 import ResponsiveGridContainer from "../../molecules/ResponsiveGridContainer/ResponsiveGridContainer";
 import { calculatePercentageCompleted } from "@/app/lib/utils/calculateCompletedPercent";
-import { useUser } from "@/app/lib/contexts/UserContext";
+import { getMaxDateForAge } from "@/app/lib/utils/dateUtils";
 
 const BasicInfoForm = () => {
   const [runAction, isRunning] = useServerAction(onBasicInfoFormSubmit);
@@ -68,8 +68,8 @@ const BasicInfoForm = () => {
                 id="dob"
                 name="dob"
                 placeholder="D.O.B"
-                type="datetime-local"
-                // maxDate={getMaxDateForAge(18)}
+                type="date"
+                maxDate={getMaxDateForAge(18)}
               />
 
               <FormField
@@ -131,23 +131,24 @@ const BasicInfoForm = () => {
               text={isRunning ? "Loading..." : "Save & Proceed"}
               type="submit"
               icon={
-                <svg
-                  stroke="currentColor"
-                  fill="currentColor"
-                  strokeWidth="0"
-                  viewBox="0 0 448 512"
-                  className="h-5 w-5"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"></path>
-                </svg>
+                !isRunning && (
+                  <svg
+                    stroke="currentColor"
+                    fill="currentColor"
+                    strokeWidth="0"
+                    viewBox="0 0 448 512"
+                    className="h-5 w-5"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"></path>
+                  </svg>
+                )
               }
             />
             {/* </Link> */}
           </div>
         </form>
       </div>
-      {isRunning && <LoadingIndicator />}{" "}
     </SectionContainer>
   );
 };

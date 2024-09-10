@@ -11,6 +11,7 @@ import { calculatePercentageCompleted } from "@/app/lib/utils/calculateCompleted
 import { useRouter } from "next/navigation";
 import { useServerAction } from "@/app/lib/hooks/useServerAction";
 import { onHoroscopeInfoFormSubmit } from "@/app/lib/actions/horoscopeInfo.action";
+import LoadingIndicator from "../../molecules/LoadingIndicator/LoadingIndicator";
 
 const HoroscopeForm = () => {
   const router = useRouter();
@@ -31,7 +32,7 @@ const HoroscopeForm = () => {
       <SectionHeader
         subtitle="Astrology, a guiding force from the stars!"
         step="Step 5 of 7"
-        title="HoroScope Information"
+        title="Horoscope Information"
         registerPercentCompleted={calculatePercentageCompleted(4, 7)}
       />
       <div className="form-login">
@@ -89,13 +90,13 @@ const HoroscopeForm = () => {
                 options={jathagamStatusOptions}
                 type="select"
               />
-              <FormField
+              {/* <FormField
                 label="Upload Horoscope (ஜாதகம் பதிவேற்றம்)"
                 id="upload"
                 name="upload"
                 type="file"
                 placeholder="Select Horoscope file"
-              />
+              /> */}
             </div>
           </div>
 
@@ -105,16 +106,18 @@ const HoroscopeForm = () => {
               text={isRunning ? "Saving..." : "Save & Proceed"}
               type="submit"
               icon={
-                <svg
-                  stroke="currentColor"
-                  fill="currentColor"
-                  strokeWidth="0"
-                  viewBox="0 0 448 512"
-                  className="h-5 w-5"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"></path>
-                </svg>
+                !isRunning && (
+                  <svg
+                    stroke="currentColor"
+                    fill="currentColor"
+                    strokeWidth="0"
+                    viewBox="0 0 448 512"
+                    className="h-5 w-5"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"></path>
+                  </svg>
+                )
               }
             />
             {/* </Link> */}

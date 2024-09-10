@@ -10,6 +10,7 @@ export interface SelectProps {
   className?: string;
   searchable?: Boolean;
   multiselect?: Boolean;
+  required?: Boolean;
 }
 
 const Select: React.FC<SelectProps> = ({
@@ -19,6 +20,7 @@ const Select: React.FC<SelectProps> = ({
   placeholder,
   className,
   searchable = false,
+  required = false,
 }) => (
   <>
     {searchable ? (
@@ -50,7 +52,7 @@ const Select: React.FC<SelectProps> = ({
         name={name}
         className={"w-full mt-1 p-2 border border-gray-300 rounded" + className}
         defaultValue=""
-        required
+        required={typeof required === "boolean" ? required : false}
       >
         <option value="" disabled>
           {placeholder}

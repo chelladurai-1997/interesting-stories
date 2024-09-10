@@ -96,6 +96,7 @@ const FormField: React.FC<FormFieldProps> = ({
               placeholder={placeholder || ""}
               searchable={searchable}
               multiselect={multiselect}
+              required={true}
               className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm mt-2"
             />
           ) : (
@@ -106,6 +107,7 @@ const FormField: React.FC<FormFieldProps> = ({
               type={type}
               {...(type === "datetime-local" ? { max: maxDate } : {})}
               {...(type === "file" ? { accept: "image/*" } : {})}
+              max={maxDate}
               className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm mt-2"
             />
           )}

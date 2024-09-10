@@ -115,7 +115,6 @@ export const genderLabelOptions = ["Male", "Female"];
 
 // Dropdown options
 export const EDUCATION_OPTIONS = [
-  "Select Education",
   "High School",
   "Associate Degree",
   "Bachelor's Degree",
@@ -124,7 +123,6 @@ export const EDUCATION_OPTIONS = [
 ];
 
 export const OCCUPATION_OPTIONS = [
-  "Select Occupation",
   "Engineer",
   "Doctor",
   "Teacher",
@@ -133,7 +131,6 @@ export const OCCUPATION_OPTIONS = [
 ];
 
 export const MONTHLY_INCOME_OPTIONS = [
-  "Select Monthly Income",
   "Below 10,000",
   "10,000 - 25,000",
   "25,000 - 50,000",
@@ -147,7 +144,6 @@ export const jaadhagamOptions = {
 };
 
 export const workingPlaceOptions = [
-  { value: "", label: "Select Working Place", disabled: true },
   { value: "Tamil nadu - தமிழ்நாடு", label: "Tamil Nadu - தமிழ்நாடு" },
   { value: "Other state - வெளிமாநிலம்", label: "Other State - வெளிமாநிலம்" },
   { value: "Other country - வெளிநாடு", label: "Other Country - வெளிநாடு" },
@@ -313,7 +309,6 @@ export const weightOptions = [
 ];
 
 export const heightOptions = [
-  { value: "", label: "Select Height" },
   { value: "4ft 6in / 137 cms", label: "4ft 6in / 137 cms" },
   { value: "4ft 7in / 139 cms", label: "4ft 7in / 139 cms" },
   { value: "4ft 8in / 142 cms", label: "4ft 8in / 142 cms" },
@@ -350,7 +345,6 @@ export const heightOptions = [
 ];
 
 export const casteOptions = [
-  { value: "", label: "Select Caste" },
   { value: "Kongu Vellalar Gounder", label: "Kongu Vellalar Gounder" },
   { value: "Other", label: "Other" },
 ];
@@ -1086,7 +1080,6 @@ export const kulaDheivamOptions = [
 ];
 
 export const religionOptions = [
-  { value: "", label: "Select Religion" },
   { value: "hinduism", label: "Hinduism" },
   { value: "islam", label: "Islam" },
   { value: "christianity", label: "Christianity" },

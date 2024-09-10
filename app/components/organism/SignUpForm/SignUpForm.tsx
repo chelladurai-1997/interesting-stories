@@ -29,16 +29,16 @@ const SignUpForm = () => {
 
   return (
     <div className="form-tit mb-6">
-      <h4 className="text-lg font-semibold">Start for free</h4>
-      <h1 className="text-2xl font-bold">Get Started</h1>
+      <h4 className="text-lg font-semibold">Try for Free</h4>
+      <h1 className="text-2xl font-bold">Start Your Journey</h1>
       <p className="text-sm mt-2">
-        Already a member?{" "}
+        Already signed up?{" "}
         <Link href="/login" className="text-yellow-500 hover:underline">
           Login
         </Link>
       </p>
 
-      <div className="form-login bg-white p-6 rounded-lg shadow-lg">
+      <div className="form-login bg-white p-6">
         <Suspense fallback={<div>Loading ......</div>}>
           <form className="space-y-4" action={onSubmit} autoComplete="off">
             <FormField

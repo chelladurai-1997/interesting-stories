@@ -9,7 +9,7 @@ import Button from "../../atoms/Button/Button";
 
 const SearchForm: React.FC = () => {
   return (
-    <div className="bg-white p-6 mt-10 rounded-lg shadow-lg">
+    <div className="bg-white p-6 mt-10 rounded-lg shadow-lg md:max-w-[75%] mx-auto">
       <form className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <FormField
           label="I'm looking for"
@@ -20,7 +20,7 @@ const SearchForm: React.FC = () => {
           name="gender"
         />
         <FormField
-          label="Age (வயது)"
+          label="Age"
           id="age"
           options={ageOptions}
           placeholder="Age"
@@ -43,7 +43,9 @@ const SearchForm: React.FC = () => {
           type="select"
           name="district"
         />
-        <Button text="Search" />
+        <div className="">
+          <Button text="Search" />
+        </div>
       </form>
     </div>
   );

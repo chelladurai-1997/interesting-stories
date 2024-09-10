@@ -14,15 +14,29 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => (
   <section className="relative">
     <div className="bg-gray-800 py-10 relative">
       <div className="container mx-auto">
-        <div className="pl-4 md:text-center">
-          <Title text="" highlightedText="KonguVengai.com" />
-          <Paragraph text="The Most Trusted Matrimony for Kongu Vellalar Gounders" />
+        <div className="pl-4 text-center">
+          <Title text="" highlightedText="Linking Hearts" />
+          <Paragraph text="Uniting Kongu Families" />
         </div>
       </div>
 
       {showSearchForm && <SearchForm />}
     </div>
     <div className="absolute top-0 right-0 mt-4 mr-6 flex space-x-4">
+      <Link
+        href="/login"
+        className="text-white hover:underline"
+        aria-label="Login"
+      >
+        Home
+      </Link>
+      <Link
+        href="/login"
+        className="text-white hover:underline"
+        aria-label="Login"
+      >
+        About us
+      </Link>
       <Link
         href="/login"
         className="text-white hover:underline"

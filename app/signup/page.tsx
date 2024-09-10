@@ -8,12 +8,12 @@ export default function Page() {
     <main>
       <section className="bg-gray-50 py-10">
         <div className="container mx-auto flex flex-col md:flex-row">
-          <div className="w-full md:w-1/2 flex flex-col items-center md:items-start p-6">
+          <div className="w-full  flex flex-col items-center md:items-start p-6">
             <SignUpHeader />
             <SignUpImage />
           </div>
 
-          <div className="w-full md:w-1/2 p-6">
+          <div className="w-full px-6 pt-2">
             <SignUpForm />
           </div>
         </div>

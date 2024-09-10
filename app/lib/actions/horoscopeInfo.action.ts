@@ -1,28 +1,30 @@
 "use server";
 
-import connectMongo, { MONGO_URI } from "../constants/mongodb";
+import {
+  S3Client,
+  PutObjectCommand,
+  ObjectCannedACL,
+} from "@aws-sdk/client-s3";
+import { v4 as uuidv4 } from "uuid";
+import connectMongo from "../constants/mongodb";
 import HoroscopeInfo from "../models/horoscopeInfo.model";
 import { getUserFromSessionToken } from "../utils/getUserFromSessionToken";
-import { GridFSBucket, MongoClient } from "mongodb";
 
-// Function to get a native MongoDB connection for GridFS
-async function getMongoNativeConnection() {
-  const client = new MongoClient(MONGO_URI as string);
-  await client.connect();
-  return client.db(); // Return the database instance
-}
+// AWS S3 Client
+// const s3Client = new S3Client({ region: process.env.AWS_REGION }); // Enable this if AWS account is activated
 
 export async function onHoroscopeInfoFormSubmit(
   _prevData: unknown,
   formData: FormData
 ) {
+  // Extract form data
   const data = {
     raasi: formData.get("raasi"),
     nachathiram: formData.get("nachathiram"),
     lagnam: formData.get("lagnam"),
     dhisaiIrupu: formData.get("dhisai_irupu"),
     dhosam: formData.get("dhosam"),
-    upload: formData.get("upload") as File,
+    // upload: formData.get("upload") as File,
   };
 
   // Get the user from the session token
@@ -31,50 +33,44 @@ export async function onHoroscopeInfoFormSubmit(
   if (error || !userId) {
     return { message: error || "User not found", error: true };
   }
-  // Connect to MongoDB through Mongoose (for your models)
-  await connectMongo();
 
-  // Get the native MongoDB connection for GridFS
-  const db = await getMongoNativeConnection(); // Use the native MongoDB driver
-
-  // Set up GridFS
-  const bucket = new GridFSBucket(db, {
-    bucketName: "profileImages",
-  });
-
-  // Handle file upload to GridFS
-  const uploadFile = data.upload as File;
-  let imageUrl = null;
-
-  if (uploadFile) {
-    const uploadStream = bucket.openUploadStream(uploadFile.name, {
-      contentType: uploadFile.type,
-      metadata: {
-        originalName: uploadFile.name,
-        uploadedBy: userId,
-        size: uploadFile.size, // You can add any custom metadata here
-      },
-    });
-
-    const fileBuffer = Buffer.from(await uploadFile.arrayBuffer());
-    uploadStream.end(fileBuffer);
-
-    // Generate the image URL
-    imageUrl = `/api/getFile?gridFSId=${uploadStream.id}`; // Store the URL for retrieval
-  }
+  // Ensure a file was uploaded
+  // const uploadFile = data.upload;
+  // if (!uploadFile) {
+  //   return { message: "File upload is required", error: true };
+  // }
 
   try {
+    // Generate a unique key for the file
+    // const fileKey = uuidv4();
+
+    // Upload the file to S3
+    // const uploadParams = {
+    //   Bucket: process.env.AWS_BUCKET_NAME,
+    //   Key: fileKey,
+    //   Body: uploadFile,
+    //   ACL: "public-read" as ObjectCannedACL, // Cast to the correct type
+    //   ContentType: uploadFile.type,
+    // };
+
+    // await s3Client.send(new PutObjectCommand(uploadParams));
+
+    // Construct the permanent URL of the uploaded image
+    // const imageUrl = `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${fileKey}`;
+
+    const imageUrl =
+      "https://media.istockphoto.com/id/1344523047/photo/zodiac-signs-inside-of-horoscope-circle-astrology-in-the-sky-with-many-stars-and-moons.jpg?s=1024x1024&w=is&k=20&c=beMk5e5ZC8pHGyJ8d1MJasvokv98918VPwWSFIGVA-k=";
     // Connect to MongoDB through Mongoose
     await connectMongo();
 
-    // Save horoscope info with the file URL to MongoDB
+    // Save horoscope info along with the image URL to MongoDB
     const horoscopeInfo = new HoroscopeInfo({
       raasi: data.raasi,
       nachathiram: data.nachathiram,
       lagnam: data.lagnam,
       dhisaiIrupu: data.dhisaiIrupu,
       dhosam: data.dhosam,
-      upload: imageUrl, // Save the GridFS URL instead of the local file path
+      upload: imageUrl, // Save the permanent S3 image URL
       userId,
     });
 
