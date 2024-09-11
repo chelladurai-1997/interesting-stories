@@ -1,8 +1,4 @@
 "use server";
-import bcrypt from "bcrypt";
-import { cookies } from "next/headers";
-import User from "@/app/lib/models/user.model";
-import connectMongo from "@/app/lib/constants/mongodb";
 
 export async function onSignUpFormSubmit(
   _prevData: unknown,
@@ -12,46 +8,43 @@ export async function onSignUpFormSubmit(
     const username = formData.get("name")?.toString().trim();
     const password = formData.get("password")?.toString().trim();
     const mobile = formData.get("mobileNo")?.toString().trim();
-    const agreeToTermsAndConditions = formData.get("agree") === "on";
+    const agree = formData.get("agree") === "on";
 
-    if (!username || !password || !mobile) {
+    if (!username || !password || !mobile || !agree) {
       return { message: "Invalid form submission", error: true };
     }
 
-    // Connect to MongoDB
-    await connectMongo();
+    // Build the absolute URL
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+    const apiUrl = `${baseUrl}/api/auth/signup`;
 
-    // Hash the password using bcrypt
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-
-    // Create a new user
-    const newUser = new User({
-      username,
-      password: hashedPassword,
-      mobile,
-      agreeToTermsAndConditions,
+    // Call the signup API using the absolute URL
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: username,
+        password,
+        mobileNo: mobile,
+        agree: "on",
+      }),
     });
 
-    // Save the user to the database
-    const result = await newUser.save();
+    // Parse the response
+    const data = await response.json();
 
-    // Set the login cookie (valid for 1 hour)
-    const cookieExpirationTime = 60 * 60; // 1 hour in seconds
-    cookies().set({
-      name: "sessionToken", // You can name it "sessionToken" or something similar
-      value: result.toJSON()?.id, // Store the user ID or session token
-      maxAge: cookieExpirationTime, // Expiration time (1 hour)
-      path: "/", // Set to "/" to make the cookie available to all routes
-      httpOnly: true, // Make cookie accessible only by the server (for security)
-      secure: true, // Use secure cookies in production (HTTPS)
-    });
+    if (!response.ok) {
+      return { message: data.message || "Signup failed", error: true };
+    }
 
+    // Return success response with user data
     return {
       message: "success",
       error: false,
-      userId: result.toJSON()?.id,
-      userName: result.toJSON()?.username,
+      userId: data.userId,
+      userName: data.userName,
     };
   } catch (error) {
     console.error("Error during sign up:", error);

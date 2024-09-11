@@ -5,7 +5,11 @@ interface LabelProps extends React.LabelHTMLAttributes<HTMLLabelElement> {
 }
 
 const Label: React.FC<LabelProps> = ({ text, htmlFor, ...props }) => (
-  <label className="block text-sm text-gray-700" htmlFor={htmlFor} {...props}>
+  <label
+    className="block text-sm text-[rgba(0,0,0,.87)]"
+    htmlFor={htmlFor}
+    {...props}
+  >
     {text}
   </label>
 );

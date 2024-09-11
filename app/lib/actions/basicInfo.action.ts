@@ -2,6 +2,7 @@
 
 import connectMongo from "../constants/mongodb";
 import BasicInformation from "../models/basicinfo.model";
+import User from "../models/user.model";
 import { getUserFromSessionToken } from "../utils/getUserFromSessionToken";
 
 export async function onBasicInfoFormSubmit(
@@ -33,6 +34,12 @@ export async function onBasicInfoFormSubmit(
     // Save the user to the database
     const basicInfo = new BasicInformation(data);
     await basicInfo.save();
+    const datal = await User.findByIdAndUpdate(
+      userId,
+      { lastCompletedStep: 1 },
+      { new: true } // Return the updated document
+    );
+    console.log(datal);
     return { message: "success", error: false };
   } catch (error) {
     console.log("err", error);

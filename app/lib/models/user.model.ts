@@ -5,6 +5,7 @@ export interface IUser extends Document {
   mobile: string;
   password: string;
   agreeToTermsAndConditions: boolean;
+  lastCompletedStep: number;
   comparePassword: (candidatePassword: string) => Promise<boolean>;
 }
 
@@ -13,6 +14,7 @@ const UserSchema = new Schema<IUser>(
     username: { type: String, required: true },
     mobile: { type: String, required: true },
     password: { type: String, required: true },
+    lastCompletedStep: { type: Number },
     agreeToTermsAndConditions: { type: Boolean, required: true },
   },
   {

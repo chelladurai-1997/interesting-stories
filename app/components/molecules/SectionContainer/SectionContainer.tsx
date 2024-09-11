@@ -1,10 +1,10 @@
 import React, { ReactNode } from "react";
 
-interface SectionContainerProps {
+interface FormContainerProps {
   children: ReactNode;
 }
 
-const SectionContainer: React.FC<SectionContainerProps> = ({ children }) => {
+const FormContainer: React.FC<FormContainerProps> = ({ children }) => {
   return (
     <section className="bg-white p-6 sm:p-10 border max-w-[800px] mx-auto">
       {children}
@@ -12,4 +12,4 @@ const SectionContainer: React.FC<SectionContainerProps> = ({ children }) => {
   );
 };
 
-export default SectionContainer;
+export default FormContainer;
