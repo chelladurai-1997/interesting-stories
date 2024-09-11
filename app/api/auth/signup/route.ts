@@ -16,11 +16,11 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       password,
       mobileNo,
       agree,
-    }: { name: string; password: string; mobileNo: string; agree: string } =
+    }: { name: string; password: string; mobileNo: string; agree: boolean } =
       await request.json();
 
     // Validate request
-    if (!name || !password || !mobileNo || agree !== "on") {
+    if (!name || !password || !mobileNo || typeof agree !== "boolean") {
       return NextResponse.json(
         { message: "Invalid form submission" },
         { status: 400 }

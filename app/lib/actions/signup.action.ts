@@ -28,7 +28,7 @@ export async function onSignUpFormSubmit(
         name: username,
         password,
         mobileNo: mobile,
-        agree: "on",
+        agree,
       }),
     });
 
