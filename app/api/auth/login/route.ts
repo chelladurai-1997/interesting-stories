@@ -44,7 +44,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
     // Generate access and refresh tokens
     const accessToken = generateAccessToken(user);
-    const refreshToken = generateRefreshToken(user);
+    const refreshToken = generateRefreshToken(user); // This will be implemented post R1.0
 
     // Create a response and set the refresh token in an HttpOnly cookie
     const response = NextResponse.json({

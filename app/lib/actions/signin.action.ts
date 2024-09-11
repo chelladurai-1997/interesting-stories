@@ -1,5 +1,7 @@
 "use server";
 
+import { cookies } from "next/headers";
+
 // POST handler for sign-in
 export async function onSignInFormSubmit(
   _prevData: unknown,
@@ -38,6 +40,17 @@ export async function onSignInFormSubmit(
       // Handle API errors
       return { message: data.message || "Something went wrong!", error: true };
     }
+
+    // Set the login cookie (valid for 1 hour)
+    const cookieExpirationTime = 60 * 60; // 1 hour in seconds
+    cookies().set({
+      name: "sessionToken", // You can name it "sessionToken" or something similar
+      value: data.userId, // Store the user ID or session token
+      maxAge: cookieExpirationTime, // Expiration time (1 hour)
+      path: "/", // Set to "/" to make the cookie available to all routes
+      httpOnly: true, // Make cookie accessible only by the server (for security)
+      secure: true, // Use secure cookies in production (HTTPS)
+    });
 
     // Return successful response
     return {

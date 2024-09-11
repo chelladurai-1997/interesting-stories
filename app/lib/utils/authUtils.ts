@@ -62,3 +62,22 @@ export function generateRefreshToken(
     { expiresIn: REFRESH_TOKEN_EXPIRATION }
   );
 }
+
+// Function to verify if the token is expired and valid
+export function verifyToken(
+  token: string,
+  secret: string
+): { isValid: boolean; payload?: any; message?: string } {
+  try {
+    const payload = jwt.verify(token, secret);
+    return { isValid: true, payload };
+  } catch (error) {
+    if (error instanceof jwt.TokenExpiredError) {
+      return { isValid: false, message: "Token has expired" };
+    }
+    if (error instanceof jwt.JsonWebTokenError) {
+      return { isValid: false, message: "Invalid token" };
+    }
+    return { isValid: false, message: "Token verification failed" };
+  }
+}
