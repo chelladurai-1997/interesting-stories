@@ -1,6 +1,7 @@
 // contexts/UserContext.tsx
 "use client";
 
+import { useRouter } from "next/navigation";
 import {
   createContext,
   useState,
@@ -41,6 +42,7 @@ interface UserProviderProps {
 
 export const UserProvider = ({ children }: UserProviderProps) => {
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const storedUser = localStorage.getItem("userProfile");
@@ -56,11 +58,13 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   const logout = () => {
     setUserProfile(null);
+
     toast.success(`We're sad to see you go. Hope to see you back soon! 🌟`, {
       duration: 5000,
     });
 
     localStorage.removeItem("userProfile");
+    router.push("/");
   };
 
   return (

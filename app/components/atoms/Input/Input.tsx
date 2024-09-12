@@ -14,7 +14,7 @@ const Input: React.FC<InputProps> = ({
   name,
   placeholder,
   type,
-  required = true,
+  required,
   className,
   max,
   accept,

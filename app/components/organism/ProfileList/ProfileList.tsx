@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import ProfileCard from "../ProfileCard/ProfileCard";
+import SkeletonLoader from "../../molecules/SkeletonLoader/SkeletonLoader";
 
 type Profile = {
   name: string;
@@ -19,13 +20,14 @@ type Profile = {
   contactInfo: {
     profileImgUrl: string;
   };
+  userId: string;
 };
 
 const ProfileList: React.FC = () => {
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  console.log("profiles", profiles);
+
   // Fetch profiles from the API
   useEffect(() => {
     const fetchProfiles = async () => {
@@ -47,13 +49,12 @@ const ProfileList: React.FC = () => {
   }, []);
 
   if (loading) {
-    return <p>Loading profiles...</p>;
+    return <SkeletonLoader type="card" />;
   }
 
   if (error) {
     return <p>{error}</p>;
   }
-
   return (
     <div className="flex justify-center mx-auto">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-screen-xl w-full p-4">
@@ -67,6 +68,7 @@ const ProfileList: React.FC = () => {
             height={profile?.personalDetails?.height}
             kulam={profile?.personalDetails?.kulam}
             profileImgUrl={profile?.contactInfo?.profileImgUrl}
+            userId={profile?.userId}
           />
         ))}
       </div>

@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { calculateAge } from "@/app/lib/utils/calculateAge";
+import Link from "next/link";
 
 type ProfileCardProps = {
   name: string;
@@ -10,6 +11,7 @@ type ProfileCardProps = {
   height: string;
   kulam: string;
   profileImgUrl: string;
+  userId: string;
 };
 
 const ProfileCard: React.FC<ProfileCardProps> = ({
@@ -20,6 +22,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
   height,
   kulam,
   profileImgUrl,
+  userId,
 }) => {
   // Calculate age
   const age = calculateAge(dob);
@@ -57,9 +60,11 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
 
         {/* Optional Button/Call to Action */}
         <div className="mt-4 text-center">
-          <button className="bg-teal-600 text-white py-2 px-4 rounded-md hover:bg-teal-700 transition-colors duration-300">
-            View Full Profile
-          </button>
+          <Link href={"/profiles/" + userId}>
+            <button className="bg-teal-600 text-white py-2 px-4 rounded-md hover:bg-teal-700 transition-colors duration-300">
+              View Full Profile
+            </button>
+          </Link>
         </div>
       </div>
     </div>

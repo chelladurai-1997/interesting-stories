@@ -6,8 +6,10 @@ import FormTitle from "../../molecules/FormField/FormTitle/FormTitle";
 import { onSignInFormSubmit } from "@/app/lib/actions/signin.action";
 import { useServerAction } from "@/app/lib/hooks/useServerAction";
 import toast from "react-hot-toast";
+import { useUser } from "@/app/lib/contexts/UserContext";
 
 const LoginForm: React.FC = () => {
+  const { updateUserProfile } = useUser();
   const [runAction, isRunning] = useServerAction(onSignInFormSubmit);
   const router = useRouter();
 
@@ -17,6 +19,10 @@ const LoginForm: React.FC = () => {
       if (response?.error) {
         toast.error(response?.message);
       } else {
+        updateUserProfile({
+          userId: response?.userId,
+          userName: response?.userName,
+        });
         toast.success(
           `Welcome, ${response?.userName}! We're glad to have you here. Enjoy exploring! 😊`,
           { duration: 5000 }

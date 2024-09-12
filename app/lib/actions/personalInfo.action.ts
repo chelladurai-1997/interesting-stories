@@ -33,8 +33,8 @@ export async function onPersonalInfoFormSubmit(
     await connectMongo();
     // Save the user to the database
     const personalInfo = new PersonalDetails(data);
-    const res = await personalInfo.save();
-    console.log(res);
+    await personalInfo.save();
+
     return { message: "success", error: false };
   } catch (error) {
     console.log("err", error);

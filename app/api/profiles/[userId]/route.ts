@@ -47,6 +47,16 @@ export async function GET(
       PersonalDetails.findOne({ userId }),
     ]);
 
+    console.log({
+      basicInfo,
+      contactInfo,
+      educationOccupation,
+      expectations,
+      familyDetails,
+      horoscopeInfo,
+      personalDetails,
+    });
+
     const response = NextResponse.json({
       message: "Profile data fetched successfully",
       data: {
@@ -60,6 +70,8 @@ export async function GET(
       },
       error: false,
     });
+
+    console.log("done");
 
     response.headers.set("Cache-Control", "public, max-age=3600"); // Cache for 1 hour
     return response;

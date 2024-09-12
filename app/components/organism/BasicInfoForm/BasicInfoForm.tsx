@@ -20,6 +20,7 @@ import { getMaxDateForAge } from "@/app/lib/utils/dateUtils";
 import Container from "../../molecules/Container/Container";
 import FormContainer from "../../molecules/SectionContainer/SectionContainer";
 import toast from "react-hot-toast";
+import { useUser } from "@/app/lib/contexts/UserContext";
 
 const BasicInfoForm = () => {
   const [runAction, isRunning] = useServerAction(onBasicInfoFormSubmit);
