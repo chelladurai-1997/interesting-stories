@@ -8,6 +8,7 @@ import {
   useEffect,
   ReactNode,
 } from "react";
+import toast from "react-hot-toast";
 
 // Define the shape of the user profile data
 interface UserProfile {
@@ -55,6 +56,10 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   const logout = () => {
     setUserProfile(null);
+    toast.success(`We're sad to see you go. Hope to see you back soon! 🌟`, {
+      duration: 5000,
+    });
+
     localStorage.removeItem("userProfile");
   };
 

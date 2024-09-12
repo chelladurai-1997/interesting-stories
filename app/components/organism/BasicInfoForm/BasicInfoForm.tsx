@@ -19,6 +19,7 @@ import { calculatePercentageCompleted } from "@/app/lib/utils/calculateCompleted
 import { getMaxDateForAge } from "@/app/lib/utils/dateUtils";
 import Container from "../../molecules/Container/Container";
 import FormContainer from "../../molecules/SectionContainer/SectionContainer";
+import toast from "react-hot-toast";
 
 const BasicInfoForm = () => {
   const [runAction, isRunning] = useServerAction(onBasicInfoFormSubmit);
@@ -28,7 +29,7 @@ const BasicInfoForm = () => {
     try {
       const response = await runAction(null, formData);
       if (response?.error) {
-        alert("Something went wrong!");
+        toast.error(response?.message);
       } else {
         router.push("/profile-info/personal-details");
       }

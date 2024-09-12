@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import { useServerAction } from "@/app/lib/hooks/useServerAction";
 import { onHoroscopeInfoFormSubmit } from "@/app/lib/actions/horoscopeInfo.action";
 import LoadingIndicator from "../../molecules/LoadingIndicator/LoadingIndicator";
+import toast from "react-hot-toast";
 
 const HoroscopeForm = () => {
   const router = useRouter();
@@ -21,7 +22,7 @@ const HoroscopeForm = () => {
     try {
       const response = await runAction(null, formData);
       if (response?.error) {
-        alert("Something went wrong!");
+        toast.error(response?.message);
       } else {
         router.push("/profile-info/expectation-details");
       }

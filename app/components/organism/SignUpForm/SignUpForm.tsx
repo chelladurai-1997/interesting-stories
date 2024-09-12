@@ -7,6 +7,7 @@ import { onSignUpFormSubmit } from "@/app/lib/actions/signup.action";
 import { useServerAction } from "@/app/lib/hooks/useServerAction";
 import { useUser } from "@/app/lib/contexts/UserContext";
 import Container from "../../molecules/Container/Container";
+import toast from "react-hot-toast";
 
 const SignUpForm = () => {
   const router = useRouter();
@@ -17,7 +18,7 @@ const SignUpForm = () => {
     try {
       const response = await runAction(null, formData);
       if (response?.error) {
-        alert(response?.message);
+        toast.error(response?.message);
       } else {
         updateUserProfile({
           userId: response?.userId,

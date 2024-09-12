@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 import { useServerAction } from "@/app/lib/hooks/useServerAction";
 import { onExpectationsInfoFormSubmit } from "@/app/lib/actions/expectationInfo.action";
 import LoadingIndicator from "../../molecules/LoadingIndicator/LoadingIndicator";
+import toast from "react-hot-toast";
 
 const ExpectationForm = () => {
   const [runAction, isRunning] = useServerAction(onExpectationsInfoFormSubmit);
@@ -23,7 +24,7 @@ const ExpectationForm = () => {
     try {
       const response = await runAction(null, formData);
       if (response?.error) {
-        alert("Something went wrong!");
+        toast.error(response?.message);
       } else {
         router.push("/profile-info/contact-details");
       }

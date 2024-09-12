@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import { useServerAction } from "@/app/lib/hooks/useServerAction";
 import { onContactInfoFormSubmit } from "@/app/lib/actions/contactInfo.action";
 import LoadingIndicator from "../../molecules/LoadingIndicator/LoadingIndicator";
+import toast from "react-hot-toast";
 
 const ContactInfoForm = () => {
   const [runAction, isRunning] = useServerAction(onContactInfoFormSubmit);
@@ -21,7 +22,7 @@ const ContactInfoForm = () => {
     try {
       const response = await runAction(null, formData);
       if (response?.error) {
-        alert("Something went wrong!");
+        toast.error(response?.message);
       } else {
         router.push("/dashboard");
       }

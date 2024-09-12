@@ -1,3 +1,5 @@
+// app/api/profiles/[userId]/route.ts
+
 import connectMongo from "@/app/lib/constants/mongodb";
 import BasicInformation from "@/app/lib/models/basicinfo.model";
 import ContactInfo from "@/app/lib/models/contactInfo.model";
@@ -5,13 +7,15 @@ import EducationOccupation from "@/app/lib/models/educationOccupation.model";
 import Expectations from "@/app/lib/models/expectationInfo.model";
 import FamilyDetails from "@/app/lib/models/familyInfo.model";
 import HoroscopeInfo from "@/app/lib/models/horoscopeInfo.model";
+import PersonalDetails from "@/app/lib/models/personalInfo.model";
 import { NextResponse } from "next/server";
 
-// Handler for fetching profile data
-export async function GET(request: Request) {
-  // Extract userId from URL parameters
-  const url = new URL(request.url);
-  const userId = url.searchParams.get("id");
+// Handler for fetching profile data for a specific user
+export async function GET(
+  request: Request,
+  { params }: { params: { userId: string } }
+) {
+  const { userId } = params;
 
   if (!userId) {
     return NextResponse.json(
@@ -32,6 +36,7 @@ export async function GET(request: Request) {
       expectations,
       familyDetails,
       horoscopeInfo,
+      personalDetails,
     ] = await Promise.all([
       BasicInformation.findOne({ userId }),
       ContactInfo.findOne({ userId }),
@@ -39,6 +44,7 @@ export async function GET(request: Request) {
       Expectations.findOne({ userId }),
       FamilyDetails.findOne({ userId }),
       HoroscopeInfo.findOne({ userId }),
+      PersonalDetails.findOne({ userId }),
     ]);
 
     const response = NextResponse.json({
@@ -50,14 +56,12 @@ export async function GET(request: Request) {
         expectations,
         familyDetails,
         horoscopeInfo,
+        personalDetails,
       },
       error: false,
     });
 
-    // Set Cache-Control headers to instruct the browser to cache the response
-    response.headers.set("Cache-Control", "public, max-age=3600"); // Cache for 1 hour (3600 seconds)
-
-    // Return the profile data
+    response.headers.set("Cache-Control", "public, max-age=3600"); // Cache for 1 hour
     return response;
   } catch (error) {
     console.error("Error fetching profile data:", error);
@@ -71,7 +75,6 @@ export async function GET(request: Request) {
       }
     }
 
-    // Return an error response
     return NextResponse.json(
       { message: errorMessage, error: true },
       { status: 500 }

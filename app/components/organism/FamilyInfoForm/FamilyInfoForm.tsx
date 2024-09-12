@@ -8,6 +8,7 @@ import { useServerAction } from "@/app/lib/hooks/useServerAction";
 import { onFamilyInfoFormSubmit } from "@/app/lib/actions/familyInfo.action";
 import { kulamOptions } from "@/app/lib/constants/global.constant";
 import LoadingIndicator from "../../molecules/LoadingIndicator/LoadingIndicator";
+import toast from "react-hot-toast";
 
 const FamilyInfoForm = () => {
   const router = useRouter();
@@ -17,7 +18,7 @@ const FamilyInfoForm = () => {
     try {
       const response = await runAction(null, formData);
       if (response?.error) {
-        alert("Something went wrong!");
+        toast.error(response?.message);
       } else {
         router.push("/profile-info/horoscope-details");
       }

@@ -2,9 +2,9 @@ import connectMongo from "@/app/lib/constants/mongodb";
 import BasicInformation from "@/app/lib/models/basicinfo.model";
 import ContactInfo from "@/app/lib/models/contactInfo.model";
 import EducationOccupation from "@/app/lib/models/educationOccupation.model";
-import Expectations from "@/app/lib/models/expectationInfo.model";
 import FamilyDetails from "@/app/lib/models/familyInfo.model";
 import HoroscopeInfo from "@/app/lib/models/horoscopeInfo.model";
+import PersonalDetails from "@/app/lib/models/personalInfo.model";
 import { NextResponse } from "next/server";
 
 // Handler for fetching paginated profiles data
@@ -21,10 +21,10 @@ export async function GET(request: Request) {
     const profiles = await BasicInformation.aggregate([
       {
         $lookup: {
-          from: ContactInfo.collection.name,
+          from: PersonalDetails.collection.name,
           localField: "userId",
           foreignField: "userId",
-          as: "contactInfo",
+          as: "personalInfo",
         },
       },
       {
@@ -37,18 +37,18 @@ export async function GET(request: Request) {
       },
       {
         $lookup: {
-          from: Expectations.collection.name,
-          localField: "userId",
-          foreignField: "userId",
-          as: "expectations",
-        },
-      },
-      {
-        $lookup: {
           from: FamilyDetails.collection.name,
           localField: "userId",
           foreignField: "userId",
           as: "familyDetails",
+        },
+      },
+      {
+        $lookup: {
+          from: ContactInfo.collection.name,
+          localField: "userId",
+          foreignField: "userId",
+          as: "contactInfo",
         },
       },
       {
@@ -64,33 +64,69 @@ export async function GET(request: Request) {
           _id: 0, // Exclude _id field
           userId: 1,
           name: 1,
-          gender: 1,
           dob: 1,
-          profile_created_by: 1,
           marital_status: 1,
-          children: 1,
-          children_living_status: 1,
-          profile_bio: 1,
-          contactInfo: {
+          educationOccupation: {
             $arrayElemAt: [
               {
                 $map: {
-                  input: "$contactInfo",
-                  as: "contact",
+                  input: "$educationOccupation",
+                  as: "educationOccupation",
                   in: {
-                    // Include fields except _id
-                    phoneNumber: "$$contact.mobile",
-                    whatsapp: "$$contact.whatsapp",
+                    education: "$$educationOccupation.education",
+                    occupation: "$$educationOccupation.occupation",
                   },
                 },
               },
               0,
             ],
           },
-          educationOccupation: { $arrayElemAt: ["$educationOccupation", 0] },
-          expectations: { $arrayElemAt: ["$expectations", 0] },
-          familyDetails: { $arrayElemAt: ["$familyDetails", 0] },
-          horoscopeInfo: { $arrayElemAt: ["$horoscopeInfo", 0] },
+
+          familyDetails: {
+            $arrayElemAt: [
+              {
+                $map: {
+                  input: "$familyDetails",
+                  as: "familyDetails",
+                  in: {
+                    livingPlace: "$$familyDetails.livingPlace",
+                  },
+                },
+              },
+              0,
+            ],
+          },
+
+          personalDetails: {
+            $arrayElemAt: [
+              {
+                $map: {
+                  input: "$personalInfo",
+                  as: "personalInfo",
+                  in: {
+                    height: "$$personalInfo.height",
+                    kulaDeivam: "$$personalInfo.kula_deivam",
+                    kulam: "$$personalInfo.kulam",
+                  },
+                },
+              },
+              0,
+            ],
+          },
+          contactInfo: {
+            $arrayElemAt: [
+              {
+                $map: {
+                  input: "$contactInfo",
+                  as: "contactInfo",
+                  in: {
+                    profileImgUrl: "$$contactInfo.photo",
+                  },
+                },
+              },
+              0,
+            ],
+          },
         },
       },
       {

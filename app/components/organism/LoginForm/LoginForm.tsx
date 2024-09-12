@@ -5,6 +5,7 @@ import FormField from "../../molecules/FormField/FormField";
 import FormTitle from "../../molecules/FormField/FormTitle/FormTitle";
 import { onSignInFormSubmit } from "@/app/lib/actions/signin.action";
 import { useServerAction } from "@/app/lib/hooks/useServerAction";
+import toast from "react-hot-toast";
 
 const LoginForm: React.FC = () => {
   const [runAction, isRunning] = useServerAction(onSignInFormSubmit);
@@ -14,8 +15,12 @@ const LoginForm: React.FC = () => {
     try {
       const response = await runAction(null, formData);
       if (response?.error) {
-        alert("Something went wrong!");
+        toast.error(response?.message);
       } else {
+        toast.success(
+          `Welcome, ${response?.userName}! We're glad to have you here. Enjoy exploring! 😊`,
+          { duration: 5000 }
+        );
         router.push("/dashboard");
       }
     } catch (error) {}
@@ -49,7 +54,7 @@ const LoginForm: React.FC = () => {
             name="agree"
             type="checkbox"
           />
-          <Button text={"Login"} />
+          <Button text={isRunning ? "Logging in ..." : "Login"} />
         </form>
       </div>
     </section>

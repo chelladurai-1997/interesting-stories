@@ -3,7 +3,7 @@ interface ParagraphProps {
 }
 
 const Paragraph: React.FC<ParagraphProps> = ({ text }) => (
-  <p className="text-white mt-2 ">{text}</p>
+  <p className="  mt-2 animate-smooth-color">{text}</p>
 );
 
 export default Paragraph;

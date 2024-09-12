@@ -17,7 +17,7 @@ import { calculatePercentageCompleted } from "@/app/lib/utils/calculateCompleted
 import { useServerAction } from "@/app/lib/hooks/useServerAction";
 import { onPersonalInfoFormSubmit } from "@/app/lib/actions/personalInfo.action";
 import { useRouter } from "next/navigation";
-import LoadingIndicator from "../../molecules/LoadingIndicator/LoadingIndicator";
+import toast from "react-hot-toast";
 
 const PersonalDetailsForm = () => {
   const [runAction, isRunning] = useServerAction(onPersonalInfoFormSubmit);
@@ -27,7 +27,7 @@ const PersonalDetailsForm = () => {
     try {
       const response = await runAction(null, formData);
       if (response?.error) {
-        alert("Something went wrong!");
+        toast.error(response?.message);
       } else {
         router.push("/profile-info/education-details");
       }

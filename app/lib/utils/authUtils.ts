@@ -30,12 +30,21 @@ export async function authenticateUser(
 }> {
   const user = await User.findOne({ mobile: mobileNo });
   if (!user) {
-    return { user: null, message: "User not found", error: true };
+    return {
+      user: null,
+      message: "Sorry, The user you're looking for doesn't exist.",
+      error: true,
+    };
   }
 
   const isPasswordMatch = await bcrypt.compare(password, user.password);
   if (!isPasswordMatch) {
-    return { user: null, message: "Invalid credentials", error: true };
+    return {
+      user: null,
+      message:
+        "It looks like something went wrong with your login. Double-check your info and give it another shot! 🔍",
+      error: true,
+    };
   }
 
   return { user, message: "Authenticated", error: false };

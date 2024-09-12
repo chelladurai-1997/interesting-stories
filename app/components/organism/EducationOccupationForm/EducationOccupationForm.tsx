@@ -12,6 +12,7 @@ import { useServerAction } from "@/app/lib/hooks/useServerAction";
 import { onEduOccupationFormSubmit } from "@/app/lib/actions/educationOccupation.action";
 import { useRouter } from "next/navigation";
 import LoadingIndicator from "../../molecules/LoadingIndicator/LoadingIndicator";
+import toast from "react-hot-toast";
 
 const EducationOccupationForm = () => {
   const [runAction, isRunning] = useServerAction(onEduOccupationFormSubmit);
@@ -21,7 +22,7 @@ const EducationOccupationForm = () => {
     try {
       const response = await runAction(null, formData);
       if (response?.error) {
-        alert("Something went wrong!");
+        toast.error(response?.message);
       } else {
         router.push("/profile-info/family-details");
       }
