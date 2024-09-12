@@ -17,7 +17,7 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
 
   return (
     <section className="relative">
-      <div className="bg-gray-800 p-10 relative">
+      <div className="bg-gray-800 p-4 relative">
         <div className="container mx-auto">
           <div className="pl-4 text-center">
             <Title
