@@ -26,6 +26,7 @@ interface FormFieldProps {
   maxDate?: string;
   searchable?: boolean;
   multiselect?: boolean;
+  required?: boolean;
 }
 
 const FormField: React.FC<FormFieldProps> = ({
