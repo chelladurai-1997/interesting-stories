@@ -20,10 +20,7 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
       <div className="bg-gray-800 p-4 relative">
         <div className="container mx-auto">
           <div className="pl-4 text-center">
-            <Title
-              text={userProfile ? "Welcome to" : ""}
-              highlightedText="Linking Hearts"
-            />
+            <Title text="" highlightedText="Linking Hearts" />
             <Paragraph text="Uniting Kongu Families" />
           </div>
         </div>
