@@ -185,11 +185,7 @@ const Page: React.FC = () => {
   }, [id]);
 
   if (loading) {
-    return (
-      <div className="p-6">
-        <SkeletonLoader type="card" />
-      </div>
-    );
+    return <SkeletonLoader type="card" />;
   }
 
   if (error) {
@@ -201,21 +197,22 @@ const Page: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col lg:flex-row lg:space-x-4">
+    <div className="flex flex-col lg:flex-row lg:space-x-4 p-6">
       {/* Sticky Image Gallery */}
-      <div className="hidden lg:block lg:w-1/4 lg:sticky lg:top-0">
+      <div className="hidden lg:block lg:w-1/4 lg:sticky lg:top-6 lg:space-y-4">
         <ImageGallery
-          images={[profile?.contactInfo?.photo, profile?.contactInfo?.photo]}
+          images={[
+            "https://media.istockphoto.com/id/1283895185/photo/hindu-indian-young-bride-holding-deepa.jpg?s=1024x1024&w=is&k=20&c=vGodoL_hhKP1Q11f7tgFSxddz7O6csnn2AGyitTQ6Yk=",
+            "https://media.istockphoto.com/id/521805790/photo/close-up-of-groom-holding-brides-hand.webp?s=612x612&w=is&k=20&c=af6OmoS3qjc58B2utOQxe5NPetF35jL9PeGZA4Ukbo4=",
+          ]}
         />
       </div>
 
       {/* Scrollable Content */}
-      <div className="flex-1 overflow-y-auto p-6 space-y-4">
-        <div className="flex justify-center lg:hidden">
-          <ImageGallery
-            images={[profile?.contactInfo?.photo, profile?.contactInfo?.photo]}
-          />
-        </div>
+      <div className="flex-1 overflow-y-auto space-y-6 p-4 bg-white shadow-lg rounded-lg">
+        <h1 className="text-2xl font-extrabold text-gray-800 mb-6 text-center">
+          Profile Details
+        </h1>
 
         <Accordion
           title="Basic Information"
