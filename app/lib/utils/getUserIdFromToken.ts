@@ -3,7 +3,7 @@ import { extractTokenFromHeader } from "./extractTokenFromHeader";
 
 export const getUserIdFromToken = (): {
   userId: string | null;
-  message?: string;
+  message: string;
   error: boolean;
 } => {
   // Extract the token from the header
@@ -23,5 +23,5 @@ export const getUserIdFromToken = (): {
   }
 
   // If everything is fine, return the userId
-  return { userId: payload.userId, error: false };
+  return { userId: payload.userId, message: "success", error: false };
 };
