@@ -68,8 +68,6 @@ export async function onContactInfoFormSubmit(
       userId,
     });
 
-    console.log("contactInfo", contactInfo);
-
     await contactInfo.save();
 
     return { message: "success", error: false };

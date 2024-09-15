@@ -44,12 +44,21 @@ export async function onSignUpFormSubmit(
     // Set the login cookie (valid for 1 hour)
     const cookieExpirationTime = 60 * 60; // 1 hour in seconds
     cookies().set({
-      name: "sessionToken", // You can name it "sessionToken" or something similar
-      value: data.userId, // Store the user ID or session token
-      maxAge: cookieExpirationTime, // Expiration time (1 hour)
-      path: "/", // Set to "/" to make the cookie available to all routes
-      httpOnly: true, // Make cookie accessible only by the server (for security)
-      secure: true, // Use secure cookies in production (HTTPS)
+      name: "accessToken", // Name for session token
+      value: data.accessToken, // Store the user ID or session token
+      maxAge: cookieExpirationTime, // Expiration time (1 hour or as needed)
+      path: "/", // Make it available to all routes
+      httpOnly: true, // Only accessible by the server
+      secure: true, // Use secure cookies for HTTPS
+    });
+
+    cookies().set({
+      name: "refreshToken", // Name for refresh token
+      value: data.refreshToken, // Store the refresh token value
+      maxAge: data, // Expiration time for refresh token (longer, like a day or more)
+      path: "/", // Available to all routes
+      httpOnly: true, // Only accessible by the server for security
+      secure: true, // Use secure cookies for HTTPS
     });
 
     // Return success response with user data
@@ -58,6 +67,8 @@ export async function onSignUpFormSubmit(
       error: false,
       userId: data.userId,
       userName: data.userName,
+      accessToken: data.accessToken,
+      refreshToken: data.refreshToken,
     };
   } catch (error) {
     console.error("Error during sign up:", error);

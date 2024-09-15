@@ -22,7 +22,7 @@ export async function onSignInFormSubmit(
     };
 
     // Build the absolute URL
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
     const apiUrl = `${baseUrl}/api/auth/login`;
 
     // Send a POST request to the login API
@@ -41,22 +41,38 @@ export async function onSignInFormSubmit(
       return { message: data.message || "Something went wrong!", error: true };
     }
 
-    // Set the login cookie (valid for 1 hour)
-    const cookieExpirationTime = 60 * 60; // 1 hour in seconds
+    // Set the refresh token as HttpOnly cookie (valid for 7 days)
+    const refreshTokenExpirationTime = 7 * 24 * 60 * 60; // 7 days in seconds
+    if (data.refreshToken) {
+      cookies().set({
+        name: "refreshToken",
+        value: data.refreshToken,
+        maxAge: refreshTokenExpirationTime, // 7 days
+        path: "/",
+        httpOnly: true, // Accessible only by the server (for security)
+        secure: process.env.NODE_ENV === "production", // Use secure cookies in production (HTTPS)
+        sameSite: "strict", // Prevent CSRF attacks
+      });
+    }
+
+    // Set the access token as HttpOnly cookie (valid for 15 minutes)
+    const accessTokenExpirationTime = 15 * 60; // 15 minutes in seconds
     cookies().set({
-      name: "sessionToken", // You can name it "sessionToken" or something similar
-      value: data.userId, // Store the user ID or session token
-      maxAge: cookieExpirationTime, // Expiration time (1 hour)
-      path: "/", // Set to "/" to make the cookie available to all routes
-      httpOnly: true, // Make cookie accessible only by the server (for security)
-      secure: true, // Use secure cookies in production (HTTPS)
+      name: "accessToken",
+      value: data.accessToken,
+      maxAge: accessTokenExpirationTime, // 15 minutes
+      path: "/",
+      httpOnly: true, // Accessible only by the server (for security)
+      secure: process.env.NODE_ENV === "production", // Use secure cookies in production (HTTPS)
+      sameSite: "strict", // Prevent CSRF attacks
     });
 
-    // Return successful response
+    // Return successful response with user details
     return {
       message: data.message,
       error: false,
       accessToken: data.accessToken,
+      refreshToken: data.refreshToken, // In case you need to store or log it
       userId: data.userId,
       userName: data.userName,
     };

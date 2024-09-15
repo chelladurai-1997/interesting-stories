@@ -22,10 +22,11 @@ const LoginForm: React.FC = () => {
         updateUserProfile({
           userId: response?.userId,
           userName: response?.userName,
+          accessToken: response?.accessToken,
+          refreshToken: response?.refreshToken,
         });
         toast.success(
-          `Welcome, ${response?.userName}! We're glad to have you here. Enjoy exploring! 😊`,
-          { duration: 5000 }
+          `Welcome, ${response?.userName}! We're glad to have you here. Enjoy exploring! 😊`
         );
         router.push("/dashboard");
       }

@@ -3,7 +3,8 @@
 import connectMongo from "../constants/mongodb";
 import BasicInformation from "../models/basicinfo.model";
 import User from "../models/user.model";
-import { getUserFromSessionToken } from "../utils/getUserFromSessionToken";
+import { headers } from "next/headers";
+import { verifyToken } from "../utils/authUtils";
 
 export async function onBasicInfoFormSubmit(
   _prevData: unknown,
@@ -12,11 +13,22 @@ export async function onBasicInfoFormSubmit(
   try {
     await connectMongo();
 
-    // Get the user from the session token
-    const { userId, error } = await getUserFromSessionToken();
+    // Get headers using the 'headers' utility
+    const headersList = headers();
+    const authHeader = headersList.get("Authorization");
 
-    if (error || !userId) {
-      return { message: error || "User not found", error: true };
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return { message: "Unauthorized", error: true };
+    }
+
+    const token = authHeader.split(" ")[1];
+
+    // Verify the token and get userId
+    const secret = process.env.JWT_SECRET as string; // Retrieve your secret from environment variables
+    const { isValid, payload, message } = verifyToken(token);
+
+    if (!isValid || !payload?.userId) {
+      return { message: message || "User not found", error: true };
     }
 
     const data = {
@@ -28,18 +40,21 @@ export async function onBasicInfoFormSubmit(
       children: formData.get("children") as string,
       children_living_status: formData.get("children_living_status") as string,
       profile_bio: formData.get("profile_bio") as string,
-      userId: userId,
+      userId: payload.userId, // Use the userId from the payload
     };
 
     // Save the user to the database
     const basicInfo = new BasicInformation(data);
     await basicInfo.save();
-    const datal = await User.findByIdAndUpdate(
-      userId,
-      { lastCompletedStep: 1 },
-      { new: true } // Return the updated document
-    );
-    console.log(datal);
+
+    // Optionally update the User document to reflect the completed step
+    // const datal = await User.findByIdAndUpdate(
+    //   payload.userId,
+    //   { lastCompletedStep: 1 },
+    //   { new: true } // Return the updated document
+    // );
+    // console.log(datal);
+
     return { message: "success", error: false };
   } catch (error) {
     console.log("err", error);

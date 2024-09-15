@@ -23,6 +23,8 @@ const SignUpForm = () => {
         updateUserProfile({
           userId: response?.userId,
           userName: response?.userName,
+          accessToken: response?.accessToken,
+          refreshToken: response?.refreshToken, // In case you need to store or log it
         });
         router.push("/profile-info/basic-details");
       }

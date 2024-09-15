@@ -4,6 +4,7 @@ import "./globals.css";
 import { UserProvider } from "./lib/contexts/UserContext";
 import Footer from "./components/organism/Footer/Footer";
 import { Toaster } from "react-hot-toast";
+import SessionMonitor from "./components/organism/SessionMonitor/SessionMonitor";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,8 +21,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className} suppressHydrationWarning={true}>
-        <UserProvider>{children}</UserProvider>
+        <UserProvider>
+          {children}
+          <SessionMonitor />
+        </UserProvider>
         <Toaster position="top-right" />
+
         <Footer />
       </body>
     </html>

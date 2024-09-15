@@ -32,7 +32,10 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
       {/* Profile Image Section */}
       <div className="h-48 flex-none relative">
         <Image
-          src={profileImgUrl}
+          // src={profileImgUrl}
+          src={
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjS-cPyRj_YLrNtLlClPT2pfGuo2thpdTGSQ&s"
+          }
           alt={`${name}'s Profile Picture`}
           className="w-full h-full object-cover"
           width={400} // Adjusted width for better scaling

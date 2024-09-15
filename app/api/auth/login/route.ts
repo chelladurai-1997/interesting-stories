@@ -1,29 +1,23 @@
 // app/api/auth/login/route.ts
-
 import { NextRequest, NextResponse } from "next/server";
+import bcrypt from "bcrypt";
+import User from "@/app/lib/models/user.model";
 import {
-  authenticateUser,
   generateAccessToken,
   generateRefreshToken,
 } from "@/app/lib/utils/authUtils";
 import connectMongo from "@/app/lib/constants/mongodb";
 
-// Define type for the login request body
-interface LoginRequestBody {
-  mobileNo: string;
-  password: string;
-}
-
-// POST handler for login
+// POST handler for user login
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
-    // Parse the request body
-    const { mobileNo, password }: LoginRequestBody = await request.json();
+    const { mobileNo, password }: { mobileNo: string; password: string } =
+      await request.json();
 
-    // Validate the request body
+    // Validate request
     if (!mobileNo || !password) {
       return NextResponse.json(
-        { message: "Invalid form submission" },
+        { message: "Invalid login credentials" },
         { status: 400 }
       );
     }
@@ -31,42 +25,63 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     // Connect to MongoDB
     await connectMongo();
 
-    // Authenticate the user
-    const authResult = await authenticateUser(mobileNo, password);
-    if (authResult.error || !authResult.user) {
+    // Find the user by mobile number
+    const existingUser = await User.findOne({ mobile: mobileNo });
+    if (!existingUser) {
       return NextResponse.json(
-        { message: authResult.message },
+        { message: "User with this mobile number does not exist" },
+        { status: 400 }
+      );
+    }
+
+    // Check if the password is correct
+    const isPasswordValid = await bcrypt.compare(
+      password,
+      existingUser.password
+    );
+    if (!isPasswordValid) {
+      return NextResponse.json(
+        { message: "Invalid password" },
         { status: 401 }
       );
     }
 
-    const user = authResult.user; // User is guaranteed to be non-null
-
     // Generate access and refresh tokens
-    const accessToken = generateAccessToken(user);
-    const refreshToken = generateRefreshToken(user); // This will be implemented post R1.0
+    const accessToken = generateAccessToken(existingUser);
+    const refreshToken = generateRefreshToken(existingUser);
 
-    // Create a response and set the refresh token in an HttpOnly cookie
+    // Create the response object
     const response = NextResponse.json({
       message: "success",
       accessToken,
-      userId: user._id.toString(),
-      userName: user.username,
+      refreshToken,
+      userId: existingUser._id.toString(),
+      userName: existingUser.username,
     });
 
-    response.cookies.set("refreshToken", refreshToken, {
-      httpOnly: true, // Prevents client-side access
-      maxAge: 7 * 24 * 60 * 60, // 7 days
+    // Set refresh token as HttpOnly cookie (if needed)
+    // response.cookies.set("refreshToken", refreshToken, {
+    //   httpOnly: true,
+    //   maxAge: 7 * 24 * 60 * 60, // 7 days
+    //   path: "/",
+    //   secure: true,
+    //   sameSite: "strict",
+    // });
+
+    // Set access token as HttpOnly cookie
+    response.cookies.set("accessToken", accessToken, {
+      httpOnly: true,
+      maxAge: 15 * 60, // 15 minutes
       path: "/",
-      secure: true, // Use secure cookies in production
-      sameSite: "strict", // Prevents CSRF attacks
+      secure: true,
+      sameSite: "strict",
     });
 
     return response;
   } catch (error) {
     console.error("Error during login:", error);
     return NextResponse.json(
-      { message: "Something went wrong" },
+      { message: "Something went wrong!" },
       { status: 500 }
     );
   }

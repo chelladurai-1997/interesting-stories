@@ -67,13 +67,13 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     });
 
     // Set refresh token as HttpOnly cookie
-    response.cookies.set("refreshToken", refreshToken, {
-      httpOnly: true,
-      maxAge: 7 * 24 * 60 * 60, // 7 days
-      path: "/",
-      secure: true,
-      sameSite: "strict",
-    });
+    // response.cookies.set("refreshToken", refreshToken, {
+    //   httpOnly: true,
+    //   maxAge: 7 * 24 * 60 * 60, // 7 days
+    //   path: "/",
+    //   secure: true,
+    //   sameSite: "strict",
+    // });
 
     // Set access token as HttpOnly cookie
     response.cookies.set("accessToken", accessToken, {
