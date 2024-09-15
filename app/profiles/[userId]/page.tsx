@@ -185,7 +185,11 @@ const Page: React.FC = () => {
   }, [id]);
 
   if (loading) {
-    return <SkeletonLoader type="card" />;
+    return (
+      <div className="p-6">
+        <SkeletonLoader type="card" />
+      </div>
+    );
   }
 
   if (error) {
