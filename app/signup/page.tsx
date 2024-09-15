@@ -9,7 +9,6 @@ export default function Page() {
       <section className="bg-gray-50 py-10">
         <div className="container mx-auto flex flex-col md:flex-row">
           <div className="w-full  flex flex-col items-center md:items-start p-6">
-            <SignUpHeader />
             <SignUpImage />
           </div>
 

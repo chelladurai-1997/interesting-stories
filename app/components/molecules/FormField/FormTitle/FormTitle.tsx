@@ -13,9 +13,6 @@ const FormTitle: React.FC<FormTitleProps> = ({
   description,
 }) => (
   <div className="form-tit text-center mb-6 space-y-3">
-    <h4 className="text-lg font-semibold text-yellow-500">
-      Stay Ahead with the Latest Updates
-    </h4>
     <h1 className="text-2xl font-bold text-gray-800">Sign in</h1>
     <p className="text-sm text-gray-600">
       Don't have an account?{" "}

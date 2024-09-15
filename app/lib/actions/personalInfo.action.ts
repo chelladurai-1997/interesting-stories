@@ -2,17 +2,15 @@
 
 import connectMongo from "../constants/mongodb";
 import PersonalDetails from "../models/personalInfo.model";
-import { getUserFromSessionToken } from "../utils/getUserFromSessionToken";
+import { getUserIdFromToken } from "../utils/getUserIdFromToken";
 
 export async function onPersonalInfoFormSubmit(
   _prevData: unknown,
   formData: FormData
 ) {
-  // Get the user from the session token
-  const { userId, error } = await getUserFromSessionToken();
-
-  if (error || !userId) {
-    return { message: error || "User not found", error: true };
+  const { userId, error, message } = getUserIdFromToken();
+  if (error) {
+    return { message, error };
   }
 
   const data = {

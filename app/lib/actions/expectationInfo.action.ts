@@ -2,17 +2,15 @@
 
 import connectMongo from "../constants/mongodb";
 import Expectations from "../models/expectationInfo.model";
-import { getUserFromSessionToken } from "../utils/getUserFromSessionToken";
+import { getUserIdFromToken } from "../utils/getUserIdFromToken";
 
 export async function onExpectationsInfoFormSubmit(
   _prevData: unknown,
   formData: FormData
 ) {
-  // Get the user from the session token
-  const { userId, error } = await getUserFromSessionToken();
-
-  if (error || !userId) {
-    return { message: error || "User not found", error: true };
+  const { userId, error, message } = getUserIdFromToken();
+  if (error) {
+    return { message, error };
   }
 
   const data = {
@@ -28,7 +26,7 @@ export async function onExpectationsInfoFormSubmit(
     await connectMongo();
     // Save the user to the database
     const expectationsInfo = new Expectations(data);
-    const res = await expectationsInfo.save();
+    await expectationsInfo.save();
     return { message: "success", error: false };
   } catch (error) {
     console.log("err", error);

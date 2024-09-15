@@ -2,7 +2,7 @@
 
 import connectMongo from "../constants/mongodb";
 import HoroscopeInfo from "../models/horoscopeInfo.model";
-import { getUserFromSessionToken } from "../utils/getUserFromSessionToken";
+import { getUserIdFromToken } from "../utils/getUserIdFromToken";
 
 // AWS S3 Client
 // const s3Client = new S3Client({ region: process.env.AWS_REGION }); // Enable this if AWS account is activated
@@ -11,6 +11,11 @@ export async function onHoroscopeInfoFormSubmit(
   _prevData: unknown,
   formData: FormData
 ) {
+  const { userId, error, message } = getUserIdFromToken();
+  if (error) {
+    return { message, error };
+  }
+
   // Extract form data
   const data = {
     raasi: formData.get("raasi"),
@@ -20,13 +25,6 @@ export async function onHoroscopeInfoFormSubmit(
     dhosam: formData.get("dhosam"),
     // upload: formData.get("upload") as File,
   };
-
-  // Get the user from the session token
-  const { userId, error } = await getUserFromSessionToken();
-
-  if (error || !userId) {
-    return { message: error || "User not found", error: true };
-  }
 
   // Ensure a file was uploaded
   // const uploadFile = data.upload;

@@ -2,7 +2,7 @@
 
 import connectMongo from "../constants/mongodb";
 import ContactInfo from "../models/contactInfo.model";
-import { getUserFromSessionToken } from "../utils/getUserFromSessionToken";
+import { getUserIdFromToken } from "../utils/getUserIdFromToken";
 
 // AWS S3 Client
 // const s3Client = new S3Client({ region: process.env.AWS_REGION });
@@ -12,10 +12,9 @@ export async function onContactInfoFormSubmit(
   formData: FormData
 ) {
   // Get the user from the session token
-  const { userId, error } = await getUserFromSessionToken();
-
-  if (error || !userId) {
-    return { message: error || "User not found", error: true };
+  const { userId, error, message } = getUserIdFromToken();
+  if (error) {
+    return { message, error };
   }
 
   // Extract the photo (file) from the form data
