@@ -40,7 +40,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
           className="w-full h-full object-cover"
           width={400} // Adjusted width for better scaling
           height={400} // Adjusted height for better scaling
-          quality={90} // Optimizes image quality
+          quality={90}
         />
       </div>
 
