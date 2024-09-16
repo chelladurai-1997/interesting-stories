@@ -3,6 +3,7 @@
 import connectMongo from "../constants/mongodb";
 import Expectations from "../models/expectationInfo.model";
 import { getUserIdFromToken } from "../utils/getUserIdFromToken";
+import { updateUserLastCompletedStep } from "../utils/userUtils";
 
 export async function onExpectationsInfoFormSubmit(
   _prevData: unknown,
@@ -27,6 +28,10 @@ export async function onExpectationsInfoFormSubmit(
     // Save the user to the database
     const expectationsInfo = new Expectations(data);
     await expectationsInfo.save();
+
+    // Call the utility function but don't wait for it
+    updateUserLastCompletedStep({ userId: userId!, step: 6 });
+
     return { message: "success", error: false };
   } catch (error) {
     console.log("err", error);

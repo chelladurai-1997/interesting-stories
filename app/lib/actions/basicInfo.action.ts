@@ -3,6 +3,7 @@
 import connectMongo from "../constants/mongodb";
 import BasicInformation from "../models/basicinfo.model";
 import { getUserIdFromToken } from "../utils/getUserIdFromToken";
+import { updateUserLastCompletedStep } from "../utils/userUtils";
 
 export async function onBasicInfoFormSubmit(
   _prevData: unknown,
@@ -32,13 +33,7 @@ export async function onBasicInfoFormSubmit(
     const basicInfo = new BasicInformation(data);
     await basicInfo.save();
 
-    // Optionally update the User document to reflect the completed step
-    // const datal = await User.findByIdAndUpdate(
-    //   payload.userId,
-    //   { lastCompletedStep: 1 },
-    //   { new: true } // Return the updated document
-    // );
-    // console.log(datal);
+    updateUserLastCompletedStep({ userId: userId!, step: 1 });
 
     return { message: "success", error: false };
   } catch (error) {

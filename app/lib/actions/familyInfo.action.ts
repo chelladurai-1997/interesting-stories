@@ -3,6 +3,7 @@
 import connectMongo from "../constants/mongodb";
 import FamilyDetails from "../models/familyInfo.model";
 import { getUserIdFromToken } from "../utils/getUserIdFromToken";
+import { updateUserLastCompletedStep } from "../utils/userUtils";
 
 export async function onFamilyInfoFormSubmit(
   _prevData: unknown,
@@ -36,7 +37,10 @@ export async function onFamilyInfoFormSubmit(
     await connectMongo();
     // Save the user to the database
     const basicInfo = new FamilyDetails(data);
-    const res = await basicInfo.save();
+    await basicInfo.save();
+
+    // Call the utility function but don't wait for it
+    updateUserLastCompletedStep({ userId: userId!, step: 4 });
     return { message: "success", error: false };
   } catch (error) {
     console.log("err", error);

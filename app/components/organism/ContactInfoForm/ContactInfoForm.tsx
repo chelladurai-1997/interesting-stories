@@ -11,7 +11,6 @@ import { calculatePercentageCompleted } from "@/app/lib/utils/calculateCompleted
 import { useRouter } from "next/navigation";
 import { useServerAction } from "@/app/lib/hooks/useServerAction";
 import { onContactInfoFormSubmit } from "@/app/lib/actions/contactInfo.action";
-import LoadingIndicator from "../../molecules/LoadingIndicator/LoadingIndicator";
 import toast from "react-hot-toast";
 
 const ContactInfoForm = () => {

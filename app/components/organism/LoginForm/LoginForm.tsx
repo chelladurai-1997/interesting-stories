@@ -7,11 +7,12 @@ import { onSignInFormSubmit } from "@/app/lib/actions/signin.action";
 import { useServerAction } from "@/app/lib/hooks/useServerAction";
 import toast from "react-hot-toast";
 import { useUser } from "@/app/lib/contexts/UserContext";
+import { useRegistrationNavigation } from "@/app/lib/hooks/useRegistrationNavigation";
 
 const LoginForm: React.FC = () => {
   const { updateUserProfile } = useUser();
   const [runAction, isRunning] = useServerAction(onSignInFormSubmit);
-  const router = useRouter();
+  const { navigateToStep } = useRegistrationNavigation();
 
   const onSubmit = async (formData: FormData) => {
     try {
@@ -28,7 +29,7 @@ const LoginForm: React.FC = () => {
         toast.success(
           `Welcome, ${response?.userName}! We're glad to have you here. Enjoy exploring! 😊`
         );
-        router.push("/dashboard");
+        navigateToStep(response?.lastCompletedStep);
       }
     } catch (error) {}
   };

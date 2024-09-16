@@ -3,6 +3,7 @@
 import connectMongo from "../constants/mongodb";
 import ContactInfo from "../models/contactInfo.model";
 import { getUserIdFromToken } from "../utils/getUserIdFromToken";
+import { updateUserLastCompletedStep } from "../utils/userUtils";
 
 // AWS S3 Client
 // const s3Client = new S3Client({ region: process.env.AWS_REGION });
@@ -68,6 +69,9 @@ export async function onContactInfoFormSubmit(
     });
 
     await contactInfo.save();
+
+    // Call the utility function but don't wait for it
+    updateUserLastCompletedStep({ userId: userId!, step: 7 });
 
     return { message: "success", error: false };
   } catch (error) {

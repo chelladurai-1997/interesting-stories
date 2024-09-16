@@ -3,6 +3,7 @@
 import connectMongo from "../constants/mongodb";
 import HoroscopeInfo from "../models/horoscopeInfo.model";
 import { getUserIdFromToken } from "../utils/getUserIdFromToken";
+import { updateUserLastCompletedStep } from "../utils/userUtils";
 
 // AWS S3 Client
 // const s3Client = new S3Client({ region: process.env.AWS_REGION }); // Enable this if AWS account is activated
@@ -67,6 +68,9 @@ export async function onHoroscopeInfoFormSubmit(
     });
 
     await horoscopeInfo.save();
+
+    // Call the utility function but don't wait for it
+    updateUserLastCompletedStep({ userId: userId!, step: 5 });
 
     return { message: "success", error: false };
   } catch (error) {

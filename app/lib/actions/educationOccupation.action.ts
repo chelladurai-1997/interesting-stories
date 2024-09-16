@@ -3,6 +3,7 @@
 import connectMongo from "../constants/mongodb";
 import EducationOccupation from "../models/educationOccupation.model";
 import { getUserIdFromToken } from "../utils/getUserIdFromToken";
+import { updateUserLastCompletedStep } from "../utils/userUtils";
 
 export async function onEduOccupationFormSubmit(
   _prevData: unknown,
@@ -35,6 +36,10 @@ export async function onEduOccupationFormSubmit(
     // Save the user to the database
     const basicInfo = new EducationOccupation(data);
     await basicInfo.save();
+
+    // Call the utility function but don't wait for it
+    updateUserLastCompletedStep({ userId: userId!, step: 3 });
+
     return { message: "success", error: false };
   } catch (error) {
     console.log("err", error);
