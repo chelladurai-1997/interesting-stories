@@ -94,13 +94,23 @@ const ContactInfoForm = () => {
                 className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
               />
 
-              {/* <FormField
+              <FormField
                 label="Photo (புகைப்படம்):"
                 id="photo"
                 name="photo"
                 type="file"
                 className="border border-gray-300 rounded-md p-2"
+              />
+              {/* <FormField
+                label="Pincode (அஞ்சல் குறியீடு):"
+                id="pin_code"
+                name="pin_code"
+                placeholder="Pincode"
+                type="number"
+                className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
               /> */}
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <FormField
                 label="Pincode (அஞ்சல் குறியீடு):"
                 id="pin_code"
@@ -109,16 +119,6 @@ const ContactInfoForm = () => {
                 type="number"
                 className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
               />
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* <FormField
-                label="Pincode (அஞ்சல் குறியீடு):"
-                id="pin_code"
-                name="pin_code"
-                placeholder="Pincode"
-                type="number"
-                className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
-              /> */}
             </div>
           </div>
 

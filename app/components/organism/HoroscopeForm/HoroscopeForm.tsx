@@ -76,13 +76,13 @@ const HoroscopeForm = () => {
                 options={jathagamStatusOptions}
                 type="select"
               />
-              {/* <FormField
+              <FormField
                 label="Upload Horoscope (ஜாதகம் பதிவேற்றம்)"
                 id="upload"
                 name="upload"
                 type="file"
                 placeholder="Select Horoscope file"
-              /> */}
+              />
             </div>
           </div>
 

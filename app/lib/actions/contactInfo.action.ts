@@ -1,96 +1,123 @@
 "use server";
 
-import connectMongo from "../constants/mongodb";
+import connectMongo, { MONGO_URI } from "../constants/mongodb";
 import ContactInfo from "../models/contactInfo.model";
+import sharp from "sharp"; // Ensure sharp is imported in a server-only context
+import { GridFSBucket, MongoClient } from "mongodb";
 import { getUserIdFromToken } from "../utils/getUserIdFromToken";
 import { updateUserLastCompletedStep } from "../utils/userUtils";
 
-// AWS S3 Client
-// const s3Client = new S3Client({ region: process.env.AWS_REGION });
+// Define a type for the data extracted from FormData
+interface ContactFormData {
+  mobile: string | null;
+  sameAsMobile: boolean;
+  whatsapp: string | null;
+  country: string | null;
+  state: string | null;
+  district: string | null;
+  address: string | null;
+  pin_code: string | null;
+  photo: File | null;
+}
 
+// Function to handle image compression using sharp
+async function compressImage(file: File): Promise<Buffer> {
+  const buffer = Buffer.from(await file.arrayBuffer());
+
+  // Use sharp to resize and compress the image
+  const compressedImage = await sharp(buffer)
+    .resize(800) // Resize the image based on your needs
+    .jpeg({ quality: 80 }) // Compress to reduce file size
+    .toBuffer();
+
+  return compressedImage;
+}
+
+// Function to get a native MongoDB connection for GridFS
+async function getMongoNativeConnection() {
+  const client = new MongoClient(MONGO_URI!);
+  await client.connect();
+  return client.db(); // Return the database instance
+}
+
+// Server Action to handle contact info form submission
 export async function onContactInfoFormSubmit(
   _prevData: unknown,
   formData: FormData
-) {
-  // Get the user from the session token
-  const { userId, error, message } = getUserIdFromToken();
-  if (error) {
-    return { message, error };
+): Promise<{ message: string; error: boolean }> {
+  const { userId, error } = getUserIdFromToken();
+  if (error || !userId) {
+    return { message: "Unauthorized", error: true };
   }
 
-  // Extract the photo (file) from the form data
-  const photo = formData.get("photo") as File;
+  // Extract form data and type-cast to the interface
+  const data: ContactFormData = {
+    mobile: formData.get("mobile") as string | null,
+    sameAsMobile: formData.get("sameAsMobile") === "on",
+    whatsapp: formData.get("whatsapp") as string | null,
+    country: formData.get("country") as string | null,
+    state: formData.get("state") as string | null,
+    district: formData.get("district") as string | null,
+    address: formData.get("address") as string | null,
+    pin_code: formData.get("pin_code") as string | null,
+    photo: formData.get("photo") as File | null,
+  };
 
-  // If no photo is uploaded, handle appropriately
-  // if (!photo) {
-  //   return { message: "Photo is required", error: true };
-  // }
+  if (!data.photo) {
+    return { message: "File upload is required", error: true };
+  }
 
   try {
-    // 1. Generate a unique key for the file
-    // const fileKey = uuidv4(); // Unique file key for the S3 object
-
-    // 2. Upload the file directly to S3
-    // const uploadParams = {
-    //   Bucket: process.env.AWS_BUCKET_NAME as string,
-    //   Key: fileKey,
-    //   Body: photo,
-    //   ACL: "public-read" as ObjectCannedACL, // Cast to the correct type
-    //   ContentType: photo.type, // Ensure correct content type
-    // };
-
-    // const s3Response = await s3Client.send(new PutObjectCommand(uploadParams));
-
-    // Check if the S3 upload was successful
-    // if (!s3Response || s3Response.$metadata.httpStatusCode !== 200) {
-    //   throw new Error("Failed to upload image to S3");
-    // }
-
-    // 3. Construct the image URL
-    // const imageUrl = `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${fileKey}`;
-
-    const imageUrl = `https://plus.unsplash.com/premium_photo-1664540415069-bc45ce3e711e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8Z3Jvb218ZW58MHx8MHx8fDA%3D`;
-
-    // 4. Connect to MongoDB through Mongoose (for your models)
+    // Connect to MongoDB
     await connectMongo();
 
-    // 5. Save the form data and image URL to the database
+    // Compress the uploaded photo using sharp
+    const compressedPhoto = await compressImage(data.photo);
+
+    // Use MongoDB's native connection for GridFS
+    const db = await getMongoNativeConnection();
+    const bucket = new GridFSBucket(db, { bucketName: "profileImages" });
+
+    // Upload the compressed image to GridFS
+    const uploadStream = bucket.openUploadStream(data.photo.name, {
+      contentType: data.photo.type,
+      metadata: { originalName: data.photo.name, uploadedBy: userId },
+    });
+
+    uploadStream.end(compressedPhoto);
+
+    // Generate the image URL
+    const imageUrl = `/api/file/${uploadStream.id}`;
+
+    // Save contact info along with the photo URL to MongoDB
     const contactInfo = new ContactInfo({
-      mobile: formData.get("mobile"),
-      sameAsMobile: formData.get("sameAsMobile") === "on", // Checkbox value
-      whatsapp: formData.get("whatsapp"),
-      country: formData.get("country"),
-      state: formData.get("state"),
-      district: formData.get("district"),
-      address: formData.get("address"),
-      photo: imageUrl, // Save the S3 image URL in the database
-      pin_code: formData.get("pin_code"),
+      mobile: data.mobile,
+      sameAsMobile: data.sameAsMobile,
+      whatsapp: data.whatsapp,
+      country: data.country,
+      state: data.state,
+      district: data.district,
+      address: data.address,
+      pin_code: data.pin_code,
+      photo: imageUrl, // Store the GridFS image URL
       userId,
     });
 
     await contactInfo.save();
 
-    // Call the utility function but don't wait for it
-    updateUserLastCompletedStep({ userId: userId!, step: 7 });
+    // Update user step (e.g., update the last completed step for the user)
+    updateUserLastCompletedStep({ userId, step: 7 });
 
-    return { message: "success", error: false };
+    return { message: "Contact info saved successfully", error: false };
   } catch (error) {
-    console.error("Error Details:", error);
+    console.error("Error occurred:", error);
 
-    let errorMessage = "An unknown error occurred.";
-
-    if (error instanceof Error) {
-      if (error.message.includes("ENOENT")) {
-        errorMessage = "File not found or path issue.";
-      } else if (error.message.includes("EACCES")) {
-        errorMessage = "Permission denied while accessing file.";
-      } else if (error.message.includes("MongoError")) {
-        errorMessage = "Database error occurred.";
-      } else {
-        errorMessage = error.message;
-      }
-    }
-
-    return { message: errorMessage, error: true };
+    return {
+      message:
+        error instanceof Error
+          ? error.message
+          : "An error occurred while saving the contact info.",
+      error: true,
+    };
   }
 }

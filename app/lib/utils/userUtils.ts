@@ -22,7 +22,7 @@ export const updateUserLastCompletedStep = ({
       lastCompletedStep: step,
     })
       .then(() => {
-        console.log(`Successfully updated user step for userId: ${userId}`);
+        console.log(`Successfully updated user step`);
       })
       .catch((error) => {
         // Something went wrong. But don't panic, we've got retries.

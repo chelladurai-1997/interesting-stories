@@ -1,95 +1,114 @@
 "use server";
 
-import connectMongo from "../constants/mongodb";
+import connectMongo, { MONGO_URI } from "../constants/mongodb";
 import HoroscopeInfo from "../models/horoscopeInfo.model";
+import sharp from "sharp"; // Ensure sharp is imported in a server-only context
+import { GridFSBucket, MongoClient } from "mongodb";
 import { getUserIdFromToken } from "../utils/getUserIdFromToken";
 import { updateUserLastCompletedStep } from "../utils/userUtils";
 
-// AWS S3 Client
-// const s3Client = new S3Client({ region: process.env.AWS_REGION }); // Enable this if AWS account is activated
+// Define a type for the data extracted from FormData
+interface HoroscopeFormData {
+  raasi: string | null;
+  nachathiram: string | null;
+  lagnam: string | null;
+  dhisaiIrupu: string | null;
+  dhosam: string | null;
+  upload: File | null;
+}
 
+// Function to handle the image compression
+async function compressImage(file: File): Promise<Buffer> {
+  const buffer = Buffer.from(await file.arrayBuffer());
+
+  // Use sharp to resize and compress the image
+  const compressedImage = await sharp(buffer)
+    .resize(800) // Resize based on your needs
+    .jpeg({ quality: 80 }) // Compress to ~300KB
+    .toBuffer();
+
+  return compressedImage;
+}
+
+// Server Action to handle the horoscope form submission
 export async function onHoroscopeInfoFormSubmit(
   _prevData: unknown,
   formData: FormData
-) {
-  const { userId, error, message } = getUserIdFromToken();
-  if (error) {
-    return { message, error };
+): Promise<{ message: string; error: boolean }> {
+  // Function to get a native MongoDB connection for GridFS
+  async function getMongoNativeConnection() {
+    const client = new MongoClient(MONGO_URI!);
+    await client.connect();
+    return client.db(); // Return the database instance
   }
 
-  // Extract form data
-  const data = {
-    raasi: formData.get("raasi"),
-    nachathiram: formData.get("nachathiram"),
-    lagnam: formData.get("lagnam"),
-    dhisaiIrupu: formData.get("dhisai_irupu"),
-    dhosam: formData.get("dhosam"),
-    // upload: formData.get("upload") as File,
+  const { userId, error } = getUserIdFromToken();
+  if (error || !userId) {
+    return { message: "Unauthorized", error: true };
+  }
+
+  // Extract the form data and type-cast to the interface
+  const data: HoroscopeFormData = {
+    raasi: formData.get("raasi") as string | null,
+    nachathiram: formData.get("nachathiram") as string | null,
+    lagnam: formData.get("lagnam") as string | null,
+    dhisaiIrupu: formData.get("dhisai_irupu") as string | null,
+    dhosam: formData.get("dhosam") as string | null,
+    upload: formData.get("upload") as File | null,
   };
 
-  // Ensure a file was uploaded
-  // const uploadFile = data.upload;
-  // if (!uploadFile) {
-  //   return { message: "File upload is required", error: true };
-  // }
+  if (!data.upload) {
+    return { message: "File upload is required", error: true };
+  }
 
   try {
-    // Generate a unique key for the file
-    // const fileKey = uuidv4();
-
-    // Upload the file to S3
-    // const uploadParams = {
-    //   Bucket: process.env.AWS_BUCKET_NAME,
-    //   Key: fileKey,
-    //   Body: uploadFile,
-    //   ACL: "public-read" as ObjectCannedACL, // Cast to the correct type
-    //   ContentType: uploadFile.type,
-    // };
-
-    // await s3Client.send(new PutObjectCommand(uploadParams));
-
-    // Construct the permanent URL of the uploaded image
-    // const imageUrl = `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${fileKey}`;
-
-    const imageUrl =
-      "https://media.istockphoto.com/id/1344523047/photo/zodiac-signs-inside-of-horoscope-circle-astrology-in-the-sky-with-many-stars-and-moons.jpg?s=1024x1024&w=is&k=20&c=beMk5e5ZC8pHGyJ8d1MJasvokv98918VPwWSFIGVA-k=";
-    // Connect to MongoDB through Mongoose
+    // Connect to MongoDB
     await connectMongo();
 
-    // Save horoscope info along with the image URL to MongoDB
+    // Compress the uploaded image using sharp
+    const compressedImage = await compressImage(data.upload);
+
+    // Use MongoDB's native connection for GridFS
+    const db = await getMongoNativeConnection();
+    const bucket = new GridFSBucket(db, { bucketName: "profileImages" });
+
+    // Upload to GridFS
+    const uploadStream = bucket.openUploadStream(data.upload.name, {
+      contentType: data.upload.type,
+      metadata: { originalName: data.upload.name, uploadedBy: userId },
+    });
+
+    uploadStream.end(compressedImage);
+
+    // Generate the image URL
+    const imageUrl = `/api/file/${uploadStream.id}`;
+
+    // Save horoscope info in MongoDB
     const horoscopeInfo = new HoroscopeInfo({
       raasi: data.raasi,
       nachathiram: data.nachathiram,
       lagnam: data.lagnam,
       dhisaiIrupu: data.dhisaiIrupu,
       dhosam: data.dhosam,
-      upload: imageUrl, // Save the permanent S3 image URL
+      upload: imageUrl, // Store the image URL
       userId,
     });
 
     await horoscopeInfo.save();
 
-    // Call the utility function but don't wait for it
-    updateUserLastCompletedStep({ userId: userId!, step: 5 });
+    // Update user step (e.g., update the last completed step for the user)
+    updateUserLastCompletedStep({ userId, step: 5 });
 
-    return { message: "success", error: false };
+    return { message: "Horoscope info saved successfully", error: false };
   } catch (error) {
-    console.error("Error Details:", error);
+    console.error("Error occurred:", error);
 
-    let errorMessage = "An unknown error occurred.";
-
-    if (error instanceof Error) {
-      if (error.message.includes("ENOENT")) {
-        errorMessage = "File not found or path issue.";
-      } else if (error.message.includes("EACCES")) {
-        errorMessage = "Permission denied while accessing file.";
-      } else if (error.message.includes("MongoError")) {
-        errorMessage = "Database error occurred.";
-      } else {
-        errorMessage = error.message;
-      }
-    }
-
-    return { message: errorMessage, error: true };
+    return {
+      message:
+        error instanceof Error
+          ? error.message
+          : "An error occurred while saving the horoscope info.",
+      error: true,
+    };
   }
 }

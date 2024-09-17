@@ -200,12 +200,7 @@ const Page: React.FC = () => {
     <div className="flex flex-col lg:flex-row lg:space-x-4 p-6">
       {/* Sticky Image Gallery */}
       <div className="lg:w-1/4 lg:sticky lg:top-6 lg:space-y-4 mb-4 lg:mb-0">
-        <ImageGallery
-          images={[
-            "https://media.istockphoto.com/id/1283895185/photo/hindu-indian-young-bride-holding-deepa.jpg?s=1024x1024&w=is&k=20&c=vGodoL_hhKP1Q11f7tgFSxddz7O6csnn2AGyitTQ6Yk=",
-            "https://media.istockphoto.com/id/521805790/photo/close-up-of-groom-holding-brides-hand.webp?s=612x612&w=is&k=20&c=af6OmoS3qjc58B2utOQxe5NPetF35jL9PeGZA4Ukbo4=",
-          ]}
-        />
+        <ImageGallery images={[profile.contactInfo.photo]} />
       </div>
 
       {/* Scrollable Content */}
