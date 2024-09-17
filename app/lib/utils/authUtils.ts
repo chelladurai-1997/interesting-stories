@@ -46,7 +46,7 @@ export async function authenticateUser(
 // Function to generate access token
 export function generateAccessToken(user: { _id: string }): string {
   return jwt.sign({ userId: user._id }, process.env.JWT_ACCESS_SECRET!, {
-    expiresIn: process.env.ACCESS_TOKEN_EXPIRATION || "15m",
+    expiresIn: process.env.ACCESS_TOKEN_EXPIRATION!,
   });
 }
 
@@ -58,19 +58,20 @@ export function generateRefreshToken(user: {
   return jwt.sign(
     { userId: user._id, username: user.username },
     process.env.JWT_REFRESH_SECRET!,
-    { expiresIn: process.env.REFRESH_TOKEN_EXPIRATION || "7d" }
+    { expiresIn: process.env.REFRESH_TOKEN_EXPIRATION! }
   );
 }
 
 // Function to verify if the token is expired and valid
 export function verifyToken(
   token: string,
-  secret?: string
+  secret: string
 ): { isValid: boolean; payload?: { userId: string }; message?: string } {
   try {
     const payload = jwt.verify(
       token,
-      process.env.JWT_ACCESS_SECRET!
+      // secret ? secret : process.env.JWT_ACCESS_SECRET!
+      secret
     ) as jwt.JwtPayload;
 
     const userId = payload.userId as string;

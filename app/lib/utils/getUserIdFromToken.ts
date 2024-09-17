@@ -15,7 +15,10 @@ export const getUserIdFromToken = (): {
   }
 
   // Verify the token
-  const { isValid, payload, message } = verifyToken(token);
+  const { isValid, payload, message } = verifyToken(
+    token,
+    process.env.JWT_ACCESS_SECRET!
+  );
 
   // If the token is invalid or userId is missing, return an object with error details
   if (!isValid || !payload?.userId) {
