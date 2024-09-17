@@ -3,6 +3,7 @@ const nextConfig = {
   eslint: { ignoreDuringBuilds: true },
   pageExtensions: ["ts", "tsx"],
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: "https",
