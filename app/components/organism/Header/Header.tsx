@@ -44,7 +44,7 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
         {userProfile ? (
           <>
             <button
-              onClick={logout}
+              onClick={() => logout()}
               className="text-white hover:underline"
               aria-label="Logout"
             >

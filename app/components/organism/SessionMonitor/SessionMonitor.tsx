@@ -4,10 +4,12 @@ import { useState, useEffect } from "react";
 import SessionExpiryPopup from "../SessionExpiryPopup/SessionExpiryPopup";
 import { useUser } from "@/app/lib/contexts/UserContext";
 import { getExpiryTimeFromToken } from "@/app/lib/utils/getExpiryInfoFromToken";
+import { useRouter } from "next/navigation";
 
 const SessionMonitor: React.FC = () => {
   const { userProfile, logout } = useUser();
   const [expiryTime, setExpiryTime] = useState<number | null>(null);
+  const route = useRouter();
 
   useEffect(() => {
     if (userProfile?.accessToken) {
@@ -19,16 +21,24 @@ const SessionMonitor: React.FC = () => {
     }
   }, [userProfile?.accessToken]);
 
+  const handleContinueBrowsingClick = () => {
+    setExpiryTime(null);
+    logout(true);
+    route.push("/");
+  };
+
+  const handleSessionExpired = () => {
+    setExpiryTime(null);
+    logout();
+  };
+
   return (
     <>
       {typeof expiryTime === "number" && expiryTime > 0 && (
         <SessionExpiryPopup
           expiryTime={expiryTime}
-          onContinueBrowsingClick={() => setExpiryTime(null)}
-          onSessionExpired={() => {
-            setExpiryTime(null);
-            logout();
-          }}
+          onContinueBrowsingClick={handleContinueBrowsingClick}
+          onSessionExpired={handleSessionExpired}
         />
       )}
     </>

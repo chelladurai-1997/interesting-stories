@@ -23,7 +23,7 @@ interface UserContextType {
   userProfile: UserProfile | null;
   updateUserProfile: (data: UserProfile) => void;
   refreshAccessToken: () => Promise<void>;
-  logout: () => void;
+  logout: (ignoreNavigation?: boolean) => void;
 }
 
 // Create a context for managing user state
@@ -106,10 +106,10 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   };
 
   // Log out function to clear the user profile and redirect to the login page
-  const logout = () => {
+  const logout = (ignoreNavigation = false) => {
     setUserProfile(null);
     localStorage.removeItem("userProfile");
-    router.push("/login");
+    !ignoreNavigation && router.push("/login");
   };
 
   // Provide the context to the rest of the application
