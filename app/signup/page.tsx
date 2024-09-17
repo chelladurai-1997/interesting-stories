@@ -6,11 +6,11 @@ export default function Page() {
     <main>
       <section className="bg-gray-50  mb-10 md:mb-0">
         <div className="container mx-auto flex flex-col md:flex-row">
-          <div className="w-full flex flex-col items-center md:items-start mb-2 md:mb-0">
+          <div className="w-full flex flex-col items-center md:items-start">
             <ImageCarousel />
           </div>
 
-          <div className="w-full px-6 lg:p-6">
+          <div className="w-full p-4">
             <SignUpForm />
           </div>
         </div>
