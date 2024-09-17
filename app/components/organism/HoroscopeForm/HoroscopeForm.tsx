@@ -9,6 +9,7 @@ import {
 import SectionHeader from "../../molecules/SectionHeader/SectionHeader";
 import { calculatePercentageCompleted } from "@/app/lib/utils/calculateCompletedPercent";
 import { useHoroscopeForm } from "@/app/lib/hooks/useHoroscope";
+import ArrowRightIcon from "../../icons/ArrowRightIcon";
 
 const HoroscopeForm = () => {
   const { isRunning, onSubmit } = useHoroscopeForm();
@@ -86,26 +87,12 @@ const HoroscopeForm = () => {
           </div>
 
           <div className="flex justify-end mt-8">
-            {/* <Link href={"/profile-info/expectation-details"} className="w-full"> */}
             <Button
-              text={isRunning ? "Saving..." : "Save & Proceed"}
+              text={"Save & Proceed"}
               type="submit"
-              icon={
-                !isRunning && (
-                  <svg
-                    stroke="currentColor"
-                    fill="currentColor"
-                    strokeWidth="0"
-                    viewBox="0 0 448 512"
-                    className="h-5 w-5"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"></path>
-                  </svg>
-                )
-              }
+              icon={<ArrowRightIcon />}
+              isPending={isRunning}
             />
-            {/* </Link> */}
           </div>
         </form>
       </div>
