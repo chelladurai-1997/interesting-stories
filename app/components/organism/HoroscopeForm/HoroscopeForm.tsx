@@ -8,26 +8,10 @@ import {
 } from "@/app/lib/constants/global.constant";
 import SectionHeader from "../../molecules/SectionHeader/SectionHeader";
 import { calculatePercentageCompleted } from "@/app/lib/utils/calculateCompletedPercent";
-import { useRouter } from "next/navigation";
-import { useServerAction } from "@/app/lib/hooks/useServerAction";
-import { onHoroscopeInfoFormSubmit } from "@/app/lib/actions/horoscopeInfo.action";
-import LoadingIndicator from "../../molecules/LoadingIndicator/LoadingIndicator";
-import toast from "react-hot-toast";
+import { useHoroscopeForm } from "@/app/lib/hooks/useHoroscope";
 
 const HoroscopeForm = () => {
-  const router = useRouter();
-  const [runAction, isRunning] = useServerAction(onHoroscopeInfoFormSubmit);
-
-  const onSubmit = async (formData: FormData) => {
-    try {
-      const response = await runAction(null, formData);
-      if (response?.error) {
-        toast.error(response?.message);
-      } else {
-        router.push("/profile-info/expectation-details");
-      }
-    } catch (error) {}
-  };
+  const { isRunning, onSubmit } = useHoroscopeForm();
   return (
     <section className="bg-white p-6 sm:p-10 border rounded-xl max-w-[800px] mx-auto shadow-lg transition-transform transform  hover:shadow-2xl">
       <SectionHeader

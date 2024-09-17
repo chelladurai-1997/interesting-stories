@@ -8,25 +8,10 @@ import {
 } from "@/app/lib/constants/global.constant";
 import SectionHeader from "../../molecules/SectionHeader/SectionHeader";
 import { calculatePercentageCompleted } from "@/app/lib/utils/calculateCompletedPercent";
-import { useRouter } from "next/navigation";
-import { useServerAction } from "@/app/lib/hooks/useServerAction";
-import { onContactInfoFormSubmit } from "@/app/lib/actions/contactInfo.action";
-import toast from "react-hot-toast";
+import { useContactInfoForm } from "@/app/lib/hooks/useContactInfoForm";
 
 const ContactInfoForm = () => {
-  const [runAction, isRunning] = useServerAction(onContactInfoFormSubmit);
-  const router = useRouter();
-
-  const onSubmit = async (formData: FormData) => {
-    try {
-      const response = await runAction(null, formData);
-      if (response?.error) {
-        toast.error(response?.message);
-      } else {
-        router.push("/dashboard");
-      }
-    } catch (error) {}
-  };
+  const { isRunning, onSubmit } = useContactInfoForm();
   return (
     <section className="bg-white p-6 sm:p-10 border rounded-xl max-w-[800px] mx-auto shadow-lg transition-transform transform  hover:shadow-2xl">
       <SectionHeader

@@ -14,25 +14,11 @@ import {
 } from "@/app/lib/constants/global.constant";
 import SectionHeader from "../../molecules/SectionHeader/SectionHeader";
 import { calculatePercentageCompleted } from "@/app/lib/utils/calculateCompletedPercent";
-import { useServerAction } from "@/app/lib/hooks/useServerAction";
-import { onPersonalInfoFormSubmit } from "@/app/lib/actions/personalInfo.action";
-import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
+import { usePersonalDetailsForm } from "@/app/lib/hooks/usePersonalDetailsForm";
 
 const PersonalDetailsForm = () => {
-  const [runAction, isRunning] = useServerAction(onPersonalInfoFormSubmit);
-  const router = useRouter();
+  const { onSubmit, isRunning } = usePersonalDetailsForm();
 
-  const onSubmit = async (formData: FormData) => {
-    try {
-      const response = await runAction(null, formData);
-      if (response?.error) {
-        toast.error(response?.message);
-      } else {
-        router.push("/profile-info/education-details");
-      }
-    } catch (error) {}
-  };
   return (
     <section className="bg-white p-6 sm:p-10 border rounded-xl max-w-[800px] mx-auto shadow-lg transition-transform transform  hover:shadow-2xl">
       <SectionHeader

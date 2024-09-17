@@ -2,6 +2,7 @@ import { useRouter } from "next/navigation";
 
 // Enum for profile routes
 export enum ProfileRoutes {
+  BasicDetails = "/profile-info/basic-details",
   PersonalDetails = "/profile-info/personal-details",
   EducationDetails = "/profile-info/education-details",
   FamilyDetails = "/profile-info/family-details",
@@ -38,7 +39,7 @@ export const useRegistrationNavigation = () => {
   const router = useRouter();
 
   const navigateToStep = (step: ProfileSteps) => {
-    const route = stepToRouteMap[step] || ProfileRoutes.PersonalDetails;
+    const route = stepToRouteMap[step] || ProfileRoutes.BasicDetails;
     router.push(route);
   };
 

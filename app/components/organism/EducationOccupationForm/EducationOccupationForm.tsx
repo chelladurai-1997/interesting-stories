@@ -8,26 +8,11 @@ import {
 } from "@/app/lib/constants/global.constant";
 import SectionHeader from "../../molecules/SectionHeader/SectionHeader";
 import { calculatePercentageCompleted } from "@/app/lib/utils/calculateCompletedPercent";
-import { useServerAction } from "@/app/lib/hooks/useServerAction";
-import { onEduOccupationFormSubmit } from "@/app/lib/actions/educationOccupation.action";
-import { useRouter } from "next/navigation";
 import LoadingIndicator from "../../molecules/LoadingIndicator/LoadingIndicator";
-import toast from "react-hot-toast";
+import { useEducationOccupationForm } from "@/app/lib/hooks/useEducationOccupationForm";
 
 const EducationOccupationForm = () => {
-  const [runAction, isRunning] = useServerAction(onEduOccupationFormSubmit);
-  const router = useRouter();
-
-  const onSubmit = async (formData: FormData) => {
-    try {
-      const response = await runAction(null, formData);
-      if (response?.error) {
-        toast.error(response?.message);
-      } else {
-        router.push("/profile-info/family-details");
-      }
-    } catch (error) {}
-  };
+  const { isRunning, onSubmit } = useEducationOccupationForm();
   return (
     <section className="bg-white p-6 sm:p-10 border rounded-xl max-w-[800px] mx-auto shadow-lg transition-transform transform  hover:shadow-2xl">
       <SectionHeader

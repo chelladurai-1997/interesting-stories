@@ -9,33 +9,16 @@ import {
 import FormField from "../../molecules/FormField/FormField";
 import Button from "../../atoms/Button/Button";
 import SectionHeader from "../../molecules/SectionHeader/SectionHeader";
-import { useRouter } from "next/navigation";
-import { onBasicInfoFormSubmit } from "@/app/lib/actions/basicInfo.action";
-import { useServerAction } from "@/app/lib/hooks/useServerAction";
-import LoadingIndicator from "../../molecules/LoadingIndicator/LoadingIndicator";
-import SectionContainer from "../../molecules/SectionContainer/SectionContainer";
 import ResponsiveGridContainer from "../../molecules/ResponsiveGridContainer/ResponsiveGridContainer";
 import { calculatePercentageCompleted } from "@/app/lib/utils/calculateCompletedPercent";
 import { getMaxDateForAge } from "@/app/lib/utils/dateUtils";
 import Container from "../../molecules/Container/Container";
 import FormContainer from "../../molecules/SectionContainer/SectionContainer";
-import toast from "react-hot-toast";
-import { useUser } from "@/app/lib/contexts/UserContext";
+import { useBasicInfoForm } from "@/app/lib/hooks/useBasicInfoForm";
 
 const BasicInfoForm = () => {
-  const [runAction, isRunning] = useServerAction(onBasicInfoFormSubmit);
-  const router = useRouter();
+  const { onSubmit, isRunning } = useBasicInfoForm();
 
-  const onSubmit = async (formData: FormData) => {
-    try {
-      const response = await runAction(null, formData);
-      if (response?.error) {
-        toast.error(response?.message);
-      } else {
-        router.push("/profile-info/personal-details");
-      }
-    } catch (error) {}
-  };
   return (
     <Container>
       <FormContainer>
@@ -48,7 +31,6 @@ const BasicInfoForm = () => {
         <div className="form-login">
           <form autoComplete="off" action={onSubmit}>
             <div className="space-y-6">
-              {/* 2 columns on medium screens and up, 1 column on smaller screens */}
               <ResponsiveGridContainer>
                 <FormField
                   label="Full Name (முழு பெயர்):"
@@ -126,12 +108,11 @@ const BasicInfoForm = () => {
             </div>
 
             <p className="text-gray-500 text-sm mt-2">
-              Note: This information will be displayed publicly so be careful
+              Note: This information will be displayed publicly, so be careful
               with your information.
             </p>
 
             <div className="flex justify-end mt-8">
-              {/* <Link href={"/profile-info/personal-details"} className="w-full"> */}
               <Button
                 text={isRunning ? "Loading..." : "Save & Proceed"}
                 type="submit"
@@ -150,7 +131,6 @@ const BasicInfoForm = () => {
                   )
                 }
               />
-              {/* </Link> */}
             </div>
           </form>
         </div>

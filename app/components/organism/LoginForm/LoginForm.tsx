@@ -1,71 +1,62 @@
 "use client";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import Button from "../../atoms/Button/Button";
 import FormField from "../../molecules/FormField/FormField";
-import FormTitle from "../../molecules/FormField/FormTitle/FormTitle";
-import { onSignInFormSubmit } from "@/app/lib/actions/signin.action";
-import { useServerAction } from "@/app/lib/hooks/useServerAction";
-import toast from "react-hot-toast";
-import { useUser } from "@/app/lib/contexts/UserContext";
-import { useRegistrationNavigation } from "@/app/lib/hooks/useRegistrationNavigation";
+import { useLoginForm } from "@/app/lib/hooks/useLoginForm";
+import Container from "../../molecules/Container/Container";
 
 const LoginForm: React.FC = () => {
-  const { updateUserProfile } = useUser();
-  const [runAction, isRunning] = useServerAction(onSignInFormSubmit);
-  const { navigateToStep } = useRegistrationNavigation();
+  const { isRunning, onSubmit } = useLoginForm();
 
-  const onSubmit = async (formData: FormData) => {
-    try {
-      const response = await runAction(null, formData);
-      if (response?.error) {
-        toast.error(response?.message);
-      } else {
-        updateUserProfile({
-          userId: response?.userId,
-          userName: response?.userName,
-          accessToken: response?.accessToken,
-          refreshToken: response?.refreshToken,
-        });
-        toast.success(
-          `Welcome, ${response?.userName}! We're glad to have you here. Enjoy exploring! 😊`
-        );
-        navigateToStep(response?.lastCompletedStep);
-      }
-    } catch (error) {}
-  };
   return (
-    <section className="bg-white p-6 ">
-      <div className="container mx-auto">
-        <form className="max-w-md mx-auto space-y-4" action={onSubmit}>
-          <FormTitle
-            title="Sign in to MeetYourSoul"
-            subtitle="Never miss the update"
-            description="Don't have an account?"
-          />
+    <Container>
+      <div className="form-tit">
+        <h4 className="text-lg font-semibold">Welcome Back</h4>
+        <h1 className="text-2xl font-bold">Sign In to Your Account</h1>
+        <p className="text-sm mt-2">
+          Don't have an account?{" "}
+          <Link href="/signup" className="text-yellow-500 hover:underline">
+            Sign Up
+          </Link>
+        </p>
+
+        <form className="space-y-4" action={onSubmit} autoComplete="off">
           <FormField
-            label="Mobile no:"
             id="mobileNo"
             name="mobileNo"
-            placeholder="Mobile No"
+            placeholder="Enter your mobile number"
+            label="Mobile no:"
             type="text"
+            labelClassName="block text-gray-700"
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
           />
+
           <FormField
             label="Password:"
             id="password"
             name="password"
             placeholder="Enter password"
             type="password"
+            labelClassName="block text-gray-700"
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
           />
-          <FormField
-            label="Remember me"
-            id="agree"
-            name="agree"
-            type="checkbox"
-          />
+
+          <div className="flex items-center">
+            <input
+              type="checkbox"
+              id="rememberMe"
+              name="rememberMe"
+              className="form-check-input h-4 w-4 border-gray-300 rounded text-yellow-600 focus:ring-yellow-500"
+            />
+            <label htmlFor="rememberMe" className="ml-2 text-sm text-gray-700">
+              Remember me
+            </label>
+          </div>
+
           <Button text={isRunning ? "Logging in ..." : "Login"} />
         </form>
       </div>
-    </section>
+    </Container>
   );
 };
 

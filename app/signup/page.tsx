@@ -1,18 +1,16 @@
-import { onSignUpFormSubmit } from "@/app/lib/actions/signup.action";
 import SignUpForm from "../components/organism/SignUpForm/SignUpForm";
-import SignUpHeader from "../components/organism/SignUpHeader/SignUpHeader";
-import SignUpImage from "../components/organism/SignUpImage/SignUpImage";
+import ImageCarousel from "../components/organism/ImageCarousel/ImageCarousel";
 
 export default function Page() {
   return (
     <main>
-      <section className="bg-gray-50 py-10">
+      <section className="bg-gray-50 lg:p-4 mb-10 md:mb-0">
         <div className="container mx-auto flex flex-col md:flex-row">
-          <div className="w-full  flex flex-col items-center md:items-start p-6">
-            <SignUpImage />
+          <div className="w-full flex flex-col items-center md:items-start mb-2 md:mb-0">
+            <ImageCarousel />
           </div>
 
-          <div className="w-full px-6 pt-2">
+          <div className="w-full px-6">
             <SignUpForm />
           </div>
         </div>
