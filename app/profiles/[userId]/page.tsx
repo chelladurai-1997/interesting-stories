@@ -1,9 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import Image from "next/image";
 import SkeletonLoader from "@/app/components/molecules/SkeletonLoader/SkeletonLoader";
 import ImageGallery from "@/app/components/organism/ImageGallery/ImageGallery";
+import { Accordion } from "@/app/components/molecules/Accordion/Accordion";
 
 // Define types for profile data
 interface Profile {
@@ -95,67 +95,6 @@ interface Profile {
   };
 }
 
-// SVG Icons
-const UpIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    fill="none"
-    viewBox="0 0 24 24"
-    strokeWidth="1.5"
-    stroke="currentColor"
-    className="w-6 h-6"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M19.5 15l-7.5-7.5L4.5 15"
-    />
-  </svg>
-);
-
-const DownIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    fill="none"
-    viewBox="0 0 24 24"
-    strokeWidth="1.5"
-    stroke="currentColor"
-    className="w-6 h-6"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M4.5 9l7.5 7.5L19.5 9"
-    />
-  </svg>
-);
-
-const Accordion: React.FC<{
-  title: string;
-  children: React.ReactNode;
-  isOpen: boolean;
-  onClick: () => void;
-}> = ({ title, children, isOpen, onClick }) => {
-  return (
-    <div className="border-b border-gray-300">
-      <button
-        onClick={onClick}
-        className="flex justify-between w-full p-4 font-medium text-left text-gray-900 bg-gray-100 hover:bg-gray-200 focus:outline-none focus-visible:ring focus-visible:ring-gray-500"
-      >
-        {title}
-        {isOpen ? <UpIcon /> : <DownIcon />}
-      </button>
-      <div
-        className={`transition-all duration-500 ease-in-out overflow-hidden ${
-          isOpen ? "max-h-[1000px] p-4" : "max-h-0 p-0"
-        }`}
-      >
-        {children}
-      </div>
-    </div>
-  );
-};
-
 const Page: React.FC = () => {
   const params = useParams();
   const [openSection, setOpenSection] = useState<string>("basicInfo");
@@ -206,7 +145,7 @@ const Page: React.FC = () => {
       </div>
 
       {/* Scrollable Content */}
-      <div className="flex-1 overflow-y-auto space-y-6 p-4 bg-white shadow-lg rounded-lg">
+      <div className="flex-1 overflow-y-auto  p-4 bg-white shadow-lg rounded-lg">
         <h1 className="text-2xl font-extrabold text-gray-800 mb-6 text-center">
           Profile Details
         </h1>
@@ -219,31 +158,31 @@ const Page: React.FC = () => {
           }
         >
           <div className="space-y-2 text-gray-800">
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-blue-200 text-blue-800">
               <strong>Name:</strong> {profile.basicInfo.name}
             </p>
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-green-200 text-green-800">
               <strong>Date of Birth:</strong> {profile.basicInfo.dob}
             </p>
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-yellow-200 text-yellow-800">
               <strong>Gender:</strong> {profile.basicInfo.gender}
             </p>
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-indigo-200 text-indigo-800">
               <strong>Profile Created By:</strong>{" "}
               {profile.basicInfo.profile_created_by}
             </p>
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-purple-200 text-purple-800">
               <strong>Marital Status:</strong>{" "}
               {profile.basicInfo.marital_status}
             </p>
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-pink-200 text-pink-800">
               <strong>Children:</strong> {profile.basicInfo.children}
             </p>
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-teal-200 text-teal-800">
               <strong>Children Living Status:</strong>{" "}
               {profile.basicInfo.children_living_status}
             </p>
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-gray-200 text-gray-800">
               <strong>Profile Bio:</strong> {profile.basicInfo.profile_bio}
             </p>
           </div>
@@ -257,25 +196,25 @@ const Page: React.FC = () => {
           }
         >
           <div className="space-y-2 text-gray-800">
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-blue-200 text-blue-800">
               <strong>Mobile:</strong> {profile.contactInfo.mobile}
             </p>
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-green-200 text-green-800">
               <strong>WhatsApp:</strong> {profile.contactInfo.whatsapp}
             </p>
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-yellow-200 text-yellow-800">
               <strong>Country:</strong> {profile.contactInfo.country}
             </p>
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-indigo-200 text-indigo-800">
               <strong>State:</strong> {profile.contactInfo.state}
             </p>
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-purple-200 text-purple-800">
               <strong>District:</strong> {profile.contactInfo.district}
             </p>
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-pink-200 text-pink-800">
               <strong>Address:</strong> {profile.contactInfo.address}
             </p>
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-teal-200 text-teal-800">
               <strong>Pin Code:</strong> {profile.contactInfo.pin_code}
             </p>
           </div>
@@ -291,27 +230,27 @@ const Page: React.FC = () => {
           }
         >
           <div className="space-y-2 text-gray-800">
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-blue-200 text-blue-800">
               <strong>Education:</strong>{" "}
               {profile.educationOccupation.education}
             </p>
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-green-200 text-green-800">
               <strong>Education Info:</strong>{" "}
               {profile.educationOccupation.educationInfo}
             </p>
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-yellow-200 text-yellow-800">
               <strong>Occupation:</strong>{" "}
               {profile.educationOccupation.occupation}
             </p>
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-indigo-200 text-indigo-800">
               <strong>Occupation Info:</strong>{" "}
               {profile.educationOccupation.occupationInfo}
             </p>
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-purple-200 text-purple-800">
               <strong>Working Place:</strong>{" "}
               {profile.educationOccupation.workingPlace}
             </p>
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-pink-200 text-pink-800">
               <strong>Monthly Income:</strong>{" "}
               {profile.educationOccupation.monthlyIncome}
             </p>
@@ -326,22 +265,22 @@ const Page: React.FC = () => {
           }
         >
           <div className="space-y-2 text-gray-800">
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-blue-200 text-blue-800">
               <strong>Jaadhagam:</strong> {profile.expectations.jaadhagam}
             </p>
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-green-200 text-green-800">
               <strong>Marital Status:</strong>{" "}
               {profile.expectations.marital_status}
             </p>
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-yellow-200 text-yellow-800">
               <strong>Working Place:</strong>{" "}
               {profile.expectations.working_place}
             </p>
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-indigo-200 text-indigo-800">
               <strong>Expecting Stars:</strong>{" "}
               {profile.expectations.expecting_stars}
             </p>
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-purple-200 text-purple-800">
               <strong>Expectation Info:</strong>{" "}
               {profile.expectations.expectation_info}
             </p>
@@ -358,55 +297,55 @@ const Page: React.FC = () => {
           }
         >
           <div className="space-y-2 text-gray-800">
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-blue-200 text-blue-800">
               <strong>Father's Name:</strong> {profile.familyDetails.fatherName}
             </p>
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-green-200 text-green-800">
               <strong>Father Status:</strong>{" "}
               {profile.familyDetails.fatherStatus}
             </p>
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-yellow-200 text-yellow-800">
               <strong>Mother's Name:</strong> {profile.familyDetails.motherName}
             </p>
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-indigo-200 text-indigo-800">
               <strong>Mother Status:</strong>{" "}
               {profile.familyDetails.motherStatus}
             </p>
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-purple-200 text-purple-800">
               <strong>Father's Occupation:</strong>{" "}
               {profile.familyDetails.fatherOccupation}
             </p>
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-pink-200 text-pink-800">
               <strong>Mother's Occupation:</strong>{" "}
               {profile.familyDetails.motherOccupation}
             </p>
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-teal-200 text-teal-800">
               <strong>Mother's Kulam:</strong>{" "}
               {profile.familyDetails.motherKulam}
             </p>
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-gray-200 text-gray-800">
               <strong>Living Place:</strong> {profile.familyDetails.livingPlace}
             </p>
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-red-200 text-red-800">
               <strong>Native Place:</strong> {profile.familyDetails.nativePlace}
             </p>
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-orange-200 text-orange-800">
               <strong>Number of Brothers:</strong>{" "}
               {profile.familyDetails.noOfBrothers}
             </p>
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-lime-200 text-lime-800">
               <strong>Number of Brothers Married:</strong>{" "}
               {profile.familyDetails.noOfBrothersMarried}
             </p>
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-cyan-200 text-cyan-800">
               <strong>Number of Sisters:</strong>{" "}
               {profile.familyDetails.noOfSisters}
             </p>
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-emerald-200 text-emerald-800">
               <strong>Number of Sisters Married:</strong>{" "}
               {profile.familyDetails.noOfSistersMarried}
             </p>
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-violet-200 text-violet-800">
               <strong>Property:</strong> {profile.familyDetails.property}
             </p>
           </div>
@@ -422,19 +361,19 @@ const Page: React.FC = () => {
           }
         >
           <div className="space-y-2 text-gray-800">
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-blue-200 text-blue-800">
               <strong>Raasi:</strong> {profile.horoscopeInfo.raasi}
             </p>
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-green-200 text-green-800">
               <strong>Nachathiram:</strong> {profile.horoscopeInfo.nachathiram}
             </p>
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-yellow-200 text-yellow-800">
               <strong>Lagnam:</strong> {profile.horoscopeInfo.lagnam}
             </p>
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-indigo-200 text-indigo-800">
               <strong>Dhisai Irupu:</strong> {profile.horoscopeInfo.dhisaiIrupu}
             </p>
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-purple-200 text-purple-800">
               <strong>Dhosam:</strong> {profile.horoscopeInfo.dhosam}
             </p>
           </div>
@@ -450,37 +389,37 @@ const Page: React.FC = () => {
           }
         >
           <div className="space-y-2 text-gray-800">
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-blue-200 text-blue-800">
               <strong>Religion:</strong> {profile.personalDetails.religion}
             </p>
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-green-200 text-green-800">
               <strong>Caste:</strong> {profile.personalDetails.caste}
             </p>
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-yellow-200 text-yellow-800">
               <strong>Kulam:</strong> {profile.personalDetails.kulam}
             </p>
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-indigo-200 text-indigo-800">
               <strong>Kula Deivam:</strong>{" "}
               {profile.personalDetails.kula_deivam}
             </p>
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-purple-200 text-purple-800">
               <strong>Height:</strong> {profile.personalDetails.height}
             </p>
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-pink-200 text-pink-800">
               <strong>Complexion:</strong> {profile.personalDetails.complexion}
             </p>
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-teal-200 text-teal-800">
               <strong>Weight:</strong> {profile.personalDetails.weight}
             </p>
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-gray-200 text-gray-800">
               <strong>Blood Group:</strong>{" "}
               {profile.personalDetails.blood_group}
             </p>
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-red-200 text-red-800">
               <strong>Physically Challenged:</strong>{" "}
               {profile.personalDetails.physically_challenged ? "Yes" : "No"}
             </p>
-            <p>
+            <p className="inline-block px-3 py-1 rounded-full bg-orange-200 text-orange-800">
               <strong>Physical Challenge Details:</strong>{" "}
               {profile.personalDetails.physical_challenge_details}
             </p>
