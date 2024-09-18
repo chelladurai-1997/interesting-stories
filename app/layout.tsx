@@ -25,7 +25,7 @@ export default function RootLayout({
           {children}
           <SessionMonitor />
         </UserProvider>
-        <Toaster position="top-right" />
+        <Toaster position="top-center" />
 
         {/* <Footer /> */}
       </body>

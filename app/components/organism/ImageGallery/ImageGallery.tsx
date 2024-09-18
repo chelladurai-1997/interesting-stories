@@ -24,24 +24,6 @@ const CloseIcon = () => (
   </svg>
 );
 
-// Custom SVG for the scroll indicator
-const ScrollIndicator = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    fill="none"
-    viewBox="0 0 24 24"
-    strokeWidth="1.5"
-    stroke="currentColor"
-    className="w-6 h-6 text-gray-600 animate-bounce"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M12 4v16m-7-7l7 7 7-7"
-    />
-  </svg>
-);
-
 const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -156,14 +138,13 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
           layout="responsive"
           width={800} // Adjusted width for better visibility
           height={600} // Adjusted height for better visibility
-          className="w-full h-auto object-cover rounded"
+          className="w-full h-[250px] md:h-auto object-cover rounded aspect-square md:aspect-auto"
         />
         {images.length > 1 && (
           <div className="absolute bottom-2 right-2 flex items-center space-x-2">
             <span className="bg-gray-800 text-white px-2 py-1 text-xs rounded">
               View More ({images.length})
             </span>
-            <ScrollIndicator />
           </div>
         )}
       </div>
@@ -203,7 +184,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
                 layout="responsive"
                 width={1200}
                 height={800}
-                className="max-w-full max-h-[80vh] object-contain"
+                className="max-w-full max-h-[80vh] object-contain "
               />
             </div>
 
