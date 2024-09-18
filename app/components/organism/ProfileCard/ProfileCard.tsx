@@ -28,43 +28,48 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
   const age = calculateAge(dob);
 
   return (
-    <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-      <Link href={"/profiles/" + userId}>
-        <Image
-          src={profileImgUrl}
-          alt={`${name}'s Profile Picture`}
-          className="p-8 rounded-t-lg"
-          width={400} // Adjust as needed
-          height={400} // Adjust as needed
-          quality={90}
-        />
-      </Link>
+    <Link href={"/profiles/" + userId}>
+      <div className="max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg w-full bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 ease-in-out mx-auto">
+        {/* Profile Image Section */}
+        <div className="h-48 flex-none relative">
+          <Image
+            src={profileImgUrl}
+            alt={`${name}'s Profile Picture`}
+            className="w-full h-full object-cover"
+            width={400}
+            height={400}
+            quality={90}
+          />
+        </div>
 
-      <div className="px-5 pb-5">
-        <Link href={"/profiles/" + userId}>
-          <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-            {name}, {age} years old
-          </h5>
-        </Link>
+        {/* Profile Details Section */}
+        <div className="p-4 flex flex-col justify-between">
+          {/* Name with 'View more' */}
+          <div className="flex items-center text-xl font-bold text-gray-800 overflow-hidden">
+            <span className="overflow-hidden text-ellipsis whitespace-nowrap flex-grow">
+              {name}
+            </span>
+            <Link href={"/profiles/" + userId}>
+              <span className="text-teal-600 underline ml-2 whitespace-nowrap text-base">
+                View more
+              </span>
+            </Link>
+          </div>
 
-        {/* Occupation, Kulam, Living Place */}
-        <p className="mt-2 text-gray-700 dark:text-gray-400">
-          <span className="font-medium">{occupation}</span>,{" "}
-          <span className="font-medium">{kulam}</span>,{" "}
-          <span className="font-medium">{livingPlace}</span>, {height}
-        </p>
+          {/* Age and Height */}
+          <p className="text-sm text-teal-600">
+            {age} years old, {height}
+          </p>
 
-        {/* Button */}
-        <div className="flex items-center justify-between">
-          <Link
-            href={"/profiles/" + userId}
-            className="text-white bg-teal-600 hover:bg-teal-700 focus:ring-4 focus:outline-none focus:ring-teal-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-teal-500 dark:hover:bg-teal-600 dark:focus:ring-teal-800"
-          >
-            View Full Profile
-          </Link>
+          {/* Other Information (comma-separated and different colors) */}
+          <p className="text-sm text-gray-700">
+            <span className="font-medium text-teal-500">{occupation}</span>,{" "}
+            <span className="font-medium text-teal-500">{kulam}</span>,{" "}
+            <span className="font-medium text-teal-500">{livingPlace}</span>
+          </p>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
