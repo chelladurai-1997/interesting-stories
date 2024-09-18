@@ -8,7 +8,6 @@ import {
 } from "@/app/lib/constants/global.constant";
 import SectionHeader from "../../molecules/SectionHeader/SectionHeader";
 import { calculatePercentageCompleted } from "@/app/lib/utils/calculateCompletedPercent";
-import LoadingIndicator from "../../molecules/LoadingIndicator/LoadingIndicator";
 import { useEducationOccupationForm } from "@/app/lib/hooks/useEducationOccupationForm";
 import ArrowRightIcon from "../../icons/ArrowRightIcon";
 
@@ -93,7 +92,6 @@ const EducationOccupationForm = () => {
           </div>
         </form>
       </div>
-      {isRunning && <LoadingIndicator />}
     </section>
   );
 };

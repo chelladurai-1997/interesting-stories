@@ -3,6 +3,7 @@ import Link from "next/link";
 import FormField from "../../molecules/FormField/FormField";
 import Container from "../../molecules/Container/Container";
 import { useSignUpForm } from "@/app/lib/hooks/useSignUpForm";
+import Button from "../../atoms/Button/Button";
 
 const SignUpForm = () => {
   const { onSubmit, isRunning } = useSignUpForm();
@@ -66,12 +67,8 @@ const SignUpForm = () => {
               .
             </label>
           </div>
-          <button
-            type="submit"
-            className="w-full bg-yellow-500 text-white p-2 rounded-lg shadow-md hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500"
-          >
-            {isRunning ? "Loading..." : "Create Account"}
-          </button>
+
+          <Button text="Create Account" isPending={isRunning} />
         </form>
       </div>
     </Container>

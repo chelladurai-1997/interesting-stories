@@ -53,7 +53,7 @@ const LoginForm: React.FC = () => {
             </label>
           </div>
 
-          <Button text={isRunning ? "Logging in ..." : "Login"} />
+          <Button text="Login" isPending={isRunning} />
         </form>
       </div>
     </Container>
