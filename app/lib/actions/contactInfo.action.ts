@@ -2,7 +2,6 @@
 
 import connectMongo, { MONGO_URI } from "../constants/mongodb";
 import ContactInfo from "../models/contactInfo.model";
-import sharp from "sharp"; // Ensure sharp is imported in a server-only context
 import { GridFSBucket, MongoClient } from "mongodb";
 import { getUserIdFromToken } from "../utils/getUserIdFromToken";
 import { updateUserLastCompletedStep } from "../utils/userUtils";
@@ -18,19 +17,6 @@ interface ContactFormData {
   address: string | null;
   pin_code: string | null;
   photo: File | null;
-}
-
-// Function to handle image compression using sharp
-async function compressImage(file: File): Promise<Buffer> {
-  const buffer = Buffer.from(await file.arrayBuffer());
-
-  // Use sharp to resize and compress the image
-  const compressedImage = await sharp(buffer)
-    .resize(800) // Resize the image based on your needs
-    .jpeg({ quality: 80 }) // Compress to reduce file size
-    .toBuffer();
-
-  return compressedImage;
 }
 
 // Function to get a native MongoDB connection for GridFS
@@ -71,23 +57,43 @@ export async function onContactInfoFormSubmit(
     // Connect to MongoDB
     await connectMongo();
 
-    // Compress the uploaded photo using sharp
-    const compressedPhoto = await compressImage(data.photo);
+    // Get the user from the session token
+    const { userId, error, message } = getUserIdFromToken();
+    if (error) {
+      return { message, error };
+    }
 
-    // Use MongoDB's native connection for GridFS
-    const db = await getMongoNativeConnection();
-    const bucket = new GridFSBucket(db, { bucketName: "profileImages" });
+    // Connect to MongoDB through Mongoose (for your models)
+    await connectMongo();
 
-    // Upload the compressed image to GridFS
-    const uploadStream = bucket.openUploadStream(data.photo.name, {
-      contentType: data.photo.type,
-      metadata: { originalName: data.photo.name, uploadedBy: userId },
+    // Get the native MongoDB connection for GridFS
+    const db = await getMongoNativeConnection(); // Use the native MongoDB driver
+
+    // Set up GridFS
+    const bucket = new GridFSBucket(db, {
+      bucketName: "profileImages",
     });
 
-    uploadStream.end(compressedPhoto);
+    // Handle file upload to GridFS
+    const uploadFile = data.photo as File;
+    let imageUrl = null;
 
-    // Generate the image URL
-    const imageUrl = `/api/file/${uploadStream.id}`;
+    if (uploadFile) {
+      const uploadStream = bucket.openUploadStream(uploadFile.name, {
+        contentType: uploadFile.type,
+        metadata: {
+          originalName: uploadFile.name,
+          uploadedBy: userId,
+          size: uploadFile.size, // You can add any custom metadata here
+        },
+      });
+
+      const fileBuffer = Buffer.from(await uploadFile.arrayBuffer());
+      uploadStream.end(fileBuffer);
+
+      // Generate the image URL
+      imageUrl = `/api/file/${uploadStream.id}`; // Store the URL for retrieval
+    }
 
     // Save contact info along with the photo URL to MongoDB
     const contactInfo = new ContactInfo({
@@ -106,7 +112,7 @@ export async function onContactInfoFormSubmit(
     await contactInfo.save();
 
     // Update user step (e.g., update the last completed step for the user)
-    updateUserLastCompletedStep({ userId, step: 7 });
+    updateUserLastCompletedStep({ userId: userId!, step: 7 });
 
     return { message: "Contact info saved successfully", error: false };
   } catch (error) {

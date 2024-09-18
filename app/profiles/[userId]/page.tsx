@@ -200,7 +200,9 @@ const Page: React.FC = () => {
     <div className="flex flex-col lg:flex-row lg:space-x-4 p-6">
       {/* Sticky Image Gallery */}
       <div className="lg:w-1/4 lg:sticky lg:top-6 lg:space-y-4 mb-4 lg:mb-0">
-        <ImageGallery images={[profile.contactInfo.photo]} />
+        <ImageGallery
+          images={[profile.contactInfo.photo, profile.horoscopeInfo.upload]}
+        />
       </div>
 
       {/* Scrollable Content */}
