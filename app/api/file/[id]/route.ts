@@ -1,12 +1,24 @@
 import { NextResponse } from "next/server";
 import { MongoClient, GridFSBucket, ObjectId, Db } from "mongodb";
 import { MONGO_URI } from "@/app/lib/constants/mongodb";
+import { LRUCache } from "lru-cache";
 
 // Define types for MongoDB connection and GridFS Bucket
 let cachedDb: Db | null = null;
 
-// In-memory cache for files
-const fileCache = new Map<string, { buffer: Buffer; contentType: string }>();
+// In-memory LRU cache for files with size limit
+const fileCache = new LRUCache<string, { buffer: Buffer; contentType: string }>(
+  {
+    max: 100, // Maximum number of items in cache
+    ttl: 1000 * 60 * 60, // Cache TTL: 1 hour (in ms)
+    maxSize: 500 * 1024 * 1024, // Maximum memory size of 500MB
+    sizeCalculation: (value) => value.buffer.length, // Calculate size based on buffer size
+    dispose: (value, key) => {
+      console.log(`Evicting file with ID: ${key}`);
+      // You can clean up resources here if needed
+    },
+  }
+);
 
 // Function to establish connection to MongoDB
 async function getMongoNativeConnection(): Promise<Db> {
@@ -50,7 +62,7 @@ export async function GET(
       );
     }
 
-    // Check if file is already in cache
+    // Check if file is already in the LRU cache
     if (fileCache.has(gridFSId)) {
       const cachedFile = fileCache.get(gridFSId)!;
 
