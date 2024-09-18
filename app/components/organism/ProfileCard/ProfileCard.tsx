@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { calculateAge } from "@/app/lib/utils/calculateAge";
 import Link from "next/link";
+import toast from "react-hot-toast";
 
 type ProfileCardProps = {
   name: string;
@@ -28,48 +29,59 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
   const age = calculateAge(dob);
 
   return (
-    <Link href={"/profiles/" + userId}>
-      <div className="max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg w-full bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 ease-in-out mx-auto">
-        {/* Profile Image Section */}
-        <div className="h-48 flex-none relative">
-          <Image
-            src={profileImgUrl}
-            alt={`${name}'s Profile Picture`}
-            className="w-full h-full object-cover"
-            width={400}
-            height={400}
-            quality={90}
-          />
+    <div className="w-full max-w-md bg-white shadow-lg rounded-lg overflow-hidden border border-gray-200 mx-auto">
+      {/* Profile Image Section */}
+      <div className="relative w-full h-48">
+        <Image
+          src={profileImgUrl}
+          alt={`${name}'s Profile Picture`}
+          className="w-full h-full object-cover"
+          width={400}
+          height={267} // Adjusted height for a good aspect ratio
+          quality={90}
+        />
+      </div>
+
+      {/* Profile Details Section */}
+      <div className="p-4">
+        {/* Name */}
+        <div className="text-xl font-bold text-gray-900 ">
+          <span>{name}</span>
         </div>
 
-        {/* Profile Details Section */}
-        <div className="p-4 flex flex-col justify-between">
-          {/* Name with 'View more' */}
-          <div className="flex items-center text-xl font-bold text-gray-800 overflow-hidden">
-            <span className="overflow-hidden text-ellipsis whitespace-nowrap flex-grow">
-              {name}
-            </span>
-            <Link href={"/profiles/" + userId}>
-              <span className="text-teal-600 underline ml-2 whitespace-nowrap text-base">
-                View more
-              </span>
-            </Link>
-          </div>
+        {/* Age and Height */}
+        <p className="text-sm text-gray-800 mb-1">
+          {age} years old • {height}
+        </p>
 
-          {/* Age and Height */}
-          <p className="text-sm text-teal-600">
-            {age} years old, {height}
-          </p>
+        {/* Other Information */}
+        <p className="text-sm text-gray-800 mb-4">
+          <span className="font-medium text-gray-700">{occupation}, </span>
+          <span className="font-medium text-gray-700">{livingPlace}, </span>
+          <span className="font-medium text-gray-700">{kulam}</span>
+        </p>
 
-          {/* Other Information (comma-separated and different colors) */}
-          <p className="text-sm text-gray-700">
-            <span className="font-medium text-teal-500">{occupation}</span>,{" "}
-            <span className="font-medium text-teal-500">{kulam}</span>,{" "}
-            <span className="font-medium text-teal-500">{livingPlace}</span>
-          </p>
+        {/* Buttons */}
+        <div className="flex gap-2">
+          <button
+            className="bg-teal-100 text-teal-600 px-4 py-2 rounded-lg hover:bg-teal-200 transition-colors duration-300 ease-in-out flex-grow"
+            onClick={() => {
+              toast.success(
+                `Hey! We're thrilled to have you here. Stay tuned, exciting features are coming soon!`
+              );
+            }}
+          >
+            Send Interest
+          </button>
+          <Link
+            href={"/profiles/" + userId}
+            className="bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-700 transition-colors duration-300 ease-in-out flex-grow text-center"
+          >
+            View More
+          </Link>
         </div>
       </div>
-    </Link>
+    </div>
   );
 };
 
