@@ -437,16 +437,6 @@ const Page: React.FC = () => {
             <p>
               <strong>Dhosam:</strong> {profile.horoscopeInfo.dhosam}
             </p>
-            <div>
-              <strong>Horoscope Image:</strong>{" "}
-              <Image
-                src={profile.horoscopeInfo.upload}
-                alt="Horoscope"
-                className="w-full h-auto rounded-md object-cover"
-                width={600}
-                height={400}
-              />
-            </div>
           </div>
         </Accordion>
 
