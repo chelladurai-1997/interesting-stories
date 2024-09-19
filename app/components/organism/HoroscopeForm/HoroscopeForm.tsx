@@ -10,6 +10,7 @@ import SectionHeader from "../../molecules/SectionHeader/SectionHeader";
 import { calculatePercentageCompleted } from "@/app/lib/utils/calculateCompletedPercent";
 import { useHoroscopeForm } from "@/app/lib/hooks/useHoroscope";
 import ArrowRightIcon from "../../icons/ArrowRightIcon";
+import LoadingIndicator from "../../molecules/LoadingIndicator/LoadingIndicator";
 
 const HoroscopeForm = () => {
   const { isRunning, onSubmit } = useHoroscopeForm();
@@ -93,6 +94,7 @@ const HoroscopeForm = () => {
               icon={<ArrowRightIcon />}
               isPending={isRunning}
             />
+            {isRunning && <LoadingIndicator />}
           </div>
         </form>
       </div>

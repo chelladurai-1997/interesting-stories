@@ -2,7 +2,6 @@
 
 import connectMongo, { MONGO_URI } from "../constants/mongodb";
 import HoroscopeInfo from "../models/horoscopeInfo.model";
-import { getUserFromSessionToken } from "../utils/getUserFromSessionToken";
 import { GridFSBucket, MongoClient } from "mongodb";
 import { getUserIdFromToken } from "../utils/getUserIdFromToken";
 
@@ -12,6 +11,7 @@ async function getMongoNativeConnection() {
     useUnifiedTopology: true,
   });
   await client.connect();
+  console.log("Connected to MongoDB for GridFS");
   return client.db(); // Return the database instance
 }
 
@@ -50,6 +50,8 @@ export async function onHoroscopeInfoFormSubmit(
   let imageUrl = null;
 
   if (uploadFile) {
+    console.log(`Starting upload for file: ${uploadFile.name}`);
+
     const uploadStream = bucket.openUploadStream(uploadFile.name, {
       contentType: uploadFile.type,
       metadata: {
@@ -60,16 +62,26 @@ export async function onHoroscopeInfoFormSubmit(
     });
 
     const fileBuffer = Buffer.from(await uploadFile.arrayBuffer());
-    uploadStream.end(fileBuffer);
 
-    // Generate the image URL
-    imageUrl = `/api/file/${uploadStream.id}`; // Store the URL for retrieval
+    // Wait for the upload to finish before proceeding
+    await new Promise<void>((resolve, reject) => {
+      uploadStream.end(fileBuffer);
+
+      uploadStream.on("finish", () => {
+        imageUrl = `/api/file/${uploadStream.id}`; // Store the URL for retrieval
+        console.log(`Upload completed for file: ${uploadFile.name}`);
+        console.log(`File ID: ${uploadStream.id}`);
+        resolve();
+      });
+
+      uploadStream.on("error", (error) => {
+        console.error(`Upload failed for file: ${uploadFile.name}`, error);
+        reject(error);
+      });
+    });
   }
 
   try {
-    // Connect to MongoDB through Mongoose
-    await connectMongo();
-
     // Save horoscope info with the file URL to MongoDB
     const horoscopeInfo = new HoroscopeInfo({
       raasi: data.raasi,
@@ -82,6 +94,8 @@ export async function onHoroscopeInfoFormSubmit(
     });
 
     await horoscopeInfo.save();
+
+    console.log("Horoscope info saved successfully to MongoDB");
 
     return { message: "success", error: false };
   } catch (error) {

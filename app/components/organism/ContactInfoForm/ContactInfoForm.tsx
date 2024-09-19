@@ -10,6 +10,7 @@ import SectionHeader from "../../molecules/SectionHeader/SectionHeader";
 import { calculatePercentageCompleted } from "@/app/lib/utils/calculateCompletedPercent";
 import { useContactInfoForm } from "@/app/lib/hooks/useContactInfoForm";
 import ArrowRightIcon from "../../icons/ArrowRightIcon";
+import LoadingIndicator from "../../molecules/LoadingIndicator/LoadingIndicator";
 
 const ContactInfoForm = () => {
   const { isRunning, onSubmit } = useContactInfoForm();
@@ -129,6 +130,7 @@ const ContactInfoForm = () => {
               icon={<ArrowRightIcon />}
               isPending={isRunning}
             />
+            {isRunning && <LoadingIndicator />}
           </div>
         </form>
       </div>

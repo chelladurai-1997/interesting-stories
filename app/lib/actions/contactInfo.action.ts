@@ -54,7 +54,7 @@ export async function onContactInfoFormSubmit(
   }
 
   try {
-    // Connect to MongoDB
+    // Connect to MongoDB through Mongoose (for your models)
     await connectMongo();
 
     // Get the user from the session token
@@ -62,9 +62,6 @@ export async function onContactInfoFormSubmit(
     if (error) {
       return { message, error };
     }
-
-    // Connect to MongoDB through Mongoose (for your models)
-    await connectMongo();
 
     // Get the native MongoDB connection for GridFS
     const db = await getMongoNativeConnection(); // Use the native MongoDB driver
@@ -89,10 +86,22 @@ export async function onContactInfoFormSubmit(
       });
 
       const fileBuffer = Buffer.from(await uploadFile.arrayBuffer());
-      uploadStream.end(fileBuffer);
+      console.log("uploadStream.started", uploadStream.id);
 
-      // Generate the image URL
-      imageUrl = `/api/file/${uploadStream.id}`; // Store the URL for retrieval
+      // Wait for the upload to finish before proceeding
+      await new Promise<void>((resolve, reject) => {
+        uploadStream.end(fileBuffer);
+        uploadStream.on("finish", () => {
+          console.log("uploadStream.success", uploadStream.id);
+          imageUrl = `/api/file/${uploadStream.id}`; // Store the URL for retrieval
+          resolve();
+        });
+        uploadStream.on("error", (error) => {
+          console.log("uploadStream.error", uploadStream.id);
+
+          reject(error);
+        });
+      });
     }
 
     // Save contact info along with the photo URL to MongoDB
