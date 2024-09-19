@@ -20,7 +20,7 @@ export const Accordion: React.FC<{
       </button>
       <div
         className={`transition-all duration-500 ease-in-out overflow-hidden ${
-          isOpen ? "max-h-[1000px] p-4" : "max-h-0 p-0"
+          isOpen ? "max-h-[1000px] py-4" : "max-h-0 p-0"
         }`}
       >
         {children}

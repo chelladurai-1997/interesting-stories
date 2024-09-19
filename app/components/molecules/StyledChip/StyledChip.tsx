@@ -14,10 +14,8 @@ const StyledChip: React.FC<StyledChipProps> = ({
   textColor,
 }) => {
   return (
-    <p
-      className={`inline-block px-3 py-1 rounded-full ${backgroundColor} ${textColor}`}
-    >
-      <strong>{label}:</strong> {value}
+    <p className={`inline-block px-3 py-1 rounded-sm mr-3 ${backgroundColor} `}>
+      <strong className={`${textColor}`}>{label}:</strong> {value}
     </p>
   );
 };
