@@ -21,7 +21,7 @@ interface ContactFormData {
 
 // Function to get a native MongoDB connection for GridFS
 async function getMongoNativeConnection() {
-  const client = new MongoClient(MONGO_URI!);
+  const client = new MongoClient(MONGO_URI!, { useUnifiedTopology: true });
   await client.connect();
   return client.db(); // Return the database instance
 }

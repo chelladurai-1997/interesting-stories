@@ -24,7 +24,9 @@ const fileCache = new LRUCache<string, { buffer: Buffer; contentType: string }>(
 async function getMongoNativeConnection(): Promise<Db> {
   if (cachedDb) return cachedDb;
 
-  const client = new MongoClient(MONGO_URI as string);
+  const client = new MongoClient(MONGO_URI as string, {
+    useUnifiedTopology: true,
+  });
   await client.connect();
   cachedDb = client.db();
   return cachedDb; // Return the database instance

@@ -8,7 +8,9 @@ import { getUserIdFromToken } from "../utils/getUserIdFromToken";
 
 // Function to get a native MongoDB connection for GridFS
 async function getMongoNativeConnection() {
-  const client = new MongoClient(MONGO_URI as string);
+  const client = new MongoClient(MONGO_URI as string, {
+    useUnifiedTopology: true,
+  });
   await client.connect();
   return client.db(); // Return the database instance
 }
