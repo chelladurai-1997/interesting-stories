@@ -19,6 +19,7 @@ const SessionExpiryPopup: React.FC<SessionExpiryPopupProps> = ({
   const [hasExpired, setHasExpired] = useState<boolean>(false); // Indicates if the session has expired
 
   const intervalRef = useRef<NodeJS.Timeout | null>(null); // Holds the interval reference for clearing it later
+  const logoutTimerRef = useRef<NodeJS.Timeout | null>(null); // Holds the logout timer reference
 
   const { refreshAccessToken, logout } = useUser(); // Using refreshAccessToken from the UserContext
   const router = useRouter();
@@ -40,7 +41,26 @@ const SessionExpiryPopup: React.FC<SessionExpiryPopupProps> = ({
       if (intervalRef.current) clearInterval(intervalRef.current); // Clear the interval
       setIsVisible(false); // Hide the popup
       setHasExpired(true); // Mark the session as expired
-      // onSessionExpired(); // Trigger the session expired callback
+      startLogoutTimer(); // Start the logout timer
+    }
+  };
+
+  /**
+   * Function to start the timer for automatic logout.
+   */
+  const startLogoutTimer = () => {
+    logoutTimerRef.current = setTimeout(() => {
+      logout(true); // Call the logout function after 30 seconds
+      router.push("/");
+    }, 30000); // 30 seconds in milliseconds
+  };
+
+  /**
+   * Function to handle user action that cancels the logout timer.
+   */
+  const handleUserAction = () => {
+    if (logoutTimerRef.current) {
+      clearTimeout(logoutTimerRef.current); // Clear the logout timer
     }
   };
 
@@ -49,8 +69,9 @@ const SessionExpiryPopup: React.FC<SessionExpiryPopupProps> = ({
     intervalRef.current = setInterval(checkExpiry, 1000);
 
     return () => {
-      // Clear the interval on component unmount
+      // Clear the interval and logout timer on component unmount
       if (intervalRef.current) clearInterval(intervalRef.current);
+      if (logoutTimerRef.current) clearTimeout(logoutTimerRef.current);
     };
   }, [expiryTime, isVisible, hasExpired]);
 
@@ -72,10 +93,22 @@ const SessionExpiryPopup: React.FC<SessionExpiryPopupProps> = ({
       // Reset the interval to monitor the new expiry time
       if (intervalRef.current) clearInterval(intervalRef.current);
       intervalRef.current = setInterval(() => checkExpiry(), 1000); // Restart interval
+
+      handleUserAction(); // Cancel logout timer on user action
     } catch (error) {
       console.error("Error refreshing token"); // Handle errors in token refresh
       setIsLoading(false); // Stop the loader
     }
+  };
+
+  const handleLogIn = () => {
+    handleUserAction(); // Cancel logout timer on user action
+    onSessionExpired(); // Call the session expired handler
+  };
+
+  const handleContinueBrowsing = () => {
+    handleUserAction(); // Cancel logout timer on user action
+    onContinueBrowsingClick(); // Call the continue browsing handler
   };
 
   return (
@@ -127,14 +160,14 @@ const SessionExpiryPopup: React.FC<SessionExpiryPopupProps> = ({
             </p>
             <div className="flex justify-center space-x-4">
               <button
-                onClick={onSessionExpired}
+                onClick={handleLogIn}
                 className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none"
               >
                 Log In
               </button>
               <button
                 className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded focus:outline-none"
-                onClick={onContinueBrowsingClick} // Handle "Continue Browsing"
+                onClick={handleContinueBrowsing} // Handle "Continue Browsing"
               >
                 Continue Browsing
               </button>
