@@ -69,6 +69,19 @@ const SignUpForm = () => {
           </div>
 
           <Button text="Create Account" isPending={isRunning} />
+          <p className="mt-4 text-center">
+            <Link
+              href="/"
+              className="text-gray-500 hover:underline"
+              style={{
+                color: "#202124",
+                textDecoration: "underline",
+                textDecorationColor: "#5e5e5e",
+              }}
+            >
+              Skip and Browse Profiles
+            </Link>
+          </p>
         </form>
       </div>
     </Container>

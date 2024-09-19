@@ -13,7 +13,7 @@ export const useContactInfoForm = () => {
       if (response?.error) {
         toast.error(response?.message);
       } else {
-        router.push("/dashboard");
+        router.push("/");
       }
     } catch (error) {
       toast.error("Something went wrong. Please try again!");
