@@ -75,7 +75,7 @@ export async function onSignInFormSubmit(
       refreshToken: data.refreshToken, // In case you need to store or log it
       userId: data.userId,
       userName: data.userName,
-      lastCompletedStep: data?.lastCompletedStep,
+      completedSections: data?.completedSections,
     };
   } catch (error) {
     console.error("Error during sign in:", error);

@@ -11,6 +11,8 @@ export interface SelectProps {
   searchable?: Boolean;
   multiselect?: Boolean;
   required?: Boolean;
+  disabled?: boolean;
+  onChange?: () => void;
 }
 
 const Select: React.FC<SelectProps> = ({
@@ -21,6 +23,8 @@ const Select: React.FC<SelectProps> = ({
   className,
   searchable = false,
   required = false,
+  disabled = false,
+  onChange,
 }) => (
   <>
     {searchable ? (
@@ -35,6 +39,8 @@ const Select: React.FC<SelectProps> = ({
           required
           list={name}
           type="search"
+          onChange={onChange}
+          disabled={disabled}
         />
 
         <datalist id={name}>
@@ -53,6 +59,8 @@ const Select: React.FC<SelectProps> = ({
         className={"w-full mt-1 p-2 border border-gray-300 rounded" + className}
         defaultValue=""
         required={typeof required === "boolean" ? required : false}
+        onChange={onChange}
+        disabled={disabled}
       >
         <option value="" disabled>
           {placeholder}

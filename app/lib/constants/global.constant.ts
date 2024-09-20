@@ -1145,3 +1145,13 @@ export const carouselImages = [
     alt: "a sunset over a city skyline.",
   },
 ];
+
+export const formSectionDefaultState = {
+  basicInfo: false,
+  personalDetails: false,
+  educationOccupation: false,
+  horoscope: false,
+  expectation: false,
+  familyDetails: false,
+  contactDetails: false,
+};

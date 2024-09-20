@@ -9,13 +9,24 @@ import {
 } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { calculateCompletionPercentage } from "../utils/calculateCompletedPercent";
 
-// Define the user profile interface
+// Define the user profile interface with completion percentage
 interface UserProfile {
   userId: string;
   userName: string;
   accessToken?: string;
   refreshToken?: string;
+  completedSections: {
+    basicInfo: boolean;
+    personalDetails: boolean;
+    educationOccupation: boolean;
+    horoscope: boolean;
+    expectation: boolean;
+    familyDetails: boolean;
+    contactDetails: boolean;
+  };
+  completionPercentage?: number; // Add completion percentage
 }
 
 // Define the context type, including the methods to update user profile, refresh the access token, and log out
@@ -53,8 +64,14 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   // Function to update user profile, which also stores the updated profile in localStorage
   const updateUserProfile = (data: UserProfile) => {
-    setUserProfile(data);
-    localStorage.setItem("userProfile", JSON.stringify(data));
+    const updatedProfile: UserProfile = {
+      ...data,
+      completionPercentage: calculateCompletionPercentage(
+        data.completedSections
+      ) as number,
+    };
+    setUserProfile(updatedProfile);
+    localStorage.setItem("userProfile", JSON.stringify(updatedProfile));
   };
 
   // Function to refresh the access token using the refresh token

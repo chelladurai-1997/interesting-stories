@@ -57,7 +57,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       refreshToken,
       userId: existingUser._id.toString(),
       userName: existingUser.username,
-      lastCompletedStep: existingUser?.lastCompletedStep,
+      completedSections: existingUser?.completedSections,
     });
 
     // Set refresh token as HttpOnly cookie (if needed)

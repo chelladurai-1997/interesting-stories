@@ -2,17 +2,27 @@ import { useRouter } from "next/navigation";
 import { useServerAction } from "@/app/lib/hooks/useServerAction";
 import { handleHoroscopeInfoSubmission } from "@/app/lib/actions/horoscopeInfo.action";
 import toast from "react-hot-toast";
+import { useUser } from "../contexts/UserContext";
 
 export const useHoroscopeForm = () => {
   const router = useRouter();
   const [runAction, isRunning] = useServerAction(handleHoroscopeInfoSubmission);
-
+  const { userProfile, updateUserProfile } = useUser();
   const onSubmit = async (formData: FormData) => {
     try {
       const response = await runAction(null, formData);
       if (response?.error) {
         toast.error(response?.message);
       } else {
+        if (userProfile?.completedSections) {
+          updateUserProfile({
+            ...(userProfile ?? {}),
+            completedSections: {
+              ...userProfile?.completedSections,
+              horoscope: true,
+            },
+          });
+        }
         router.push("/profile-info/expectation-details");
       }
     } catch (error) {

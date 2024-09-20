@@ -13,7 +13,6 @@ import {
   weightOptions,
 } from "@/app/lib/constants/global.constant";
 import SectionHeader from "../../molecules/SectionHeader/SectionHeader";
-import { calculatePercentageCompleted } from "@/app/lib/utils/calculateCompletedPercent";
 import { usePersonalDetailsForm } from "@/app/lib/hooks/usePersonalDetailsForm";
 import ArrowRightIcon from "../../icons/ArrowRightIcon";
 
@@ -26,7 +25,6 @@ const PersonalDetailsForm = () => {
         subtitle="Your information stays secure with us!"
         step="Step 2 of 7"
         title="Personal Information"
-        registerPercentCompleted={calculatePercentageCompleted(1, 7)}
       />
       <div className="form-login">
         <form autoComplete="off" action={onSubmit}>

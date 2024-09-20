@@ -27,6 +27,12 @@ interface FormFieldProps {
   searchable?: boolean;
   multiselect?: boolean;
   required?: boolean;
+  onChange?: (
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => void;
+  disabled?: boolean;
 }
 
 const FormField: React.FC<FormFieldProps> = ({
@@ -41,6 +47,8 @@ const FormField: React.FC<FormFieldProps> = ({
   maxDate,
   multiselect = false,
   required = true,
+  onChange,
+  disabled,
 }) => {
   // const labelClassName = "block text-sm font-medium text-gray-900 ";
   return (
@@ -48,11 +56,21 @@ const FormField: React.FC<FormFieldProps> = ({
       {type === "checkbox" ? (
         <>
           <Checkbox id={id} name={name} />
-          <Label text={label} htmlFor={id} className={labelClassName} />
+          <Label
+            text={label}
+            htmlFor={id}
+            className={labelClassName}
+            disabled={disabled}
+          />
         </>
       ) : type === "radio" ? (
         <div className="flex flex-col">
-          <Label text={label} htmlFor={id} className={labelClassName} />
+          <Label
+            text={label}
+            htmlFor={id}
+            className={labelClassName}
+            disabled={disabled}
+          />
           <div className="flex flex-row mt-2">
             {options?.map((option, index: number) => {
               return (
@@ -64,12 +82,15 @@ const FormField: React.FC<FormFieldProps> = ({
                     id={`${id}${index}`}
                     required={required}
                     value={option.toString()}
+                    onChange={onChange}
+                    disabled={disabled}
                   />
 
                   <Label
                     text={typeof option === "string" ? option : ""}
                     htmlFor={id}
                     className="form-check-label"
+                    disabled={disabled}
                   />
                 </div>
               );
@@ -78,18 +99,30 @@ const FormField: React.FC<FormFieldProps> = ({
         </div>
       ) : type === "textarea" ? (
         <>
-          <Label text={label} htmlFor={id} className={labelClassName} />
+          <Label
+            text={label}
+            htmlFor={id}
+            className={labelClassName}
+            disabled={disabled}
+          />
           <textarea
             className="mt-2 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
             id={id}
             name={name}
             placeholder={placeholder}
             required={required}
+            onChange={onChange}
+            disabled={disabled}
           />
         </>
       ) : (
         <>
-          <Label text={label} htmlFor={id} className={labelClassName} />
+          <Label
+            text={label}
+            htmlFor={id}
+            className={labelClassName}
+            disabled={disabled}
+          />
           {type === "select" ? (
             <Select
               id={id}
@@ -99,6 +132,8 @@ const FormField: React.FC<FormFieldProps> = ({
               searchable={searchable}
               multiselect={multiselect}
               required={required}
+              onChange={onChange}
+              disabled={disabled}
               className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm mt-2"
             />
           ) : (
@@ -111,6 +146,7 @@ const FormField: React.FC<FormFieldProps> = ({
               {...(type === "file" ? { accept: "image/*" } : {})}
               max={maxDate}
               required={required}
+              disabled={disabled}
               className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm mt-2"
             />
           )}

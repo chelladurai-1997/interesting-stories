@@ -7,7 +7,6 @@ import {
   districtOptions,
 } from "@/app/lib/constants/global.constant";
 import SectionHeader from "../../molecules/SectionHeader/SectionHeader";
-import { calculatePercentageCompleted } from "@/app/lib/utils/calculateCompletedPercent";
 import { useContactInfoForm } from "@/app/lib/hooks/useContactInfoForm";
 import ArrowRightIcon from "../../icons/ArrowRightIcon";
 import LoadingIndicator from "../../molecules/LoadingIndicator/LoadingIndicator";
@@ -20,7 +19,6 @@ const ContactInfoForm = () => {
         subtitle="This is the last bit of information we require."
         step="Step 7 of 7"
         title="Contact Information"
-        registerPercentCompleted={calculatePercentageCompleted(6, 7)}
       />
       <div className="form-login">
         <form autoComplete="off" action={onSubmit}>

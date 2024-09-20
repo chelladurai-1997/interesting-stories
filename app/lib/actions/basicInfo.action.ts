@@ -49,10 +49,9 @@ export async function handleBasicInfoSubmission(
       profile_created_by: getStringFromFormData(formData, "profile_created_by"),
       marital_status: getStringFromFormData(formData, "marital_status"),
       children: getStringFromFormData(formData, "children"),
-      children_living_status: getStringFromFormData(
-        formData,
-        "children_living_status"
-      ),
+      children_living_status:
+        getStringFromFormData(formData, "children_living_status") ??
+        "Not applicable",
       profile_bio: getStringFromFormData(formData, "profile_bio"),
       userId: userId,
     };

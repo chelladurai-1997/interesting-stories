@@ -1,9 +1,9 @@
-import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { onSignUpFormSubmit } from "@/app/lib/actions/signup.action";
 import { useServerAction } from "@/app/lib/hooks/useServerAction";
 import { useUser } from "@/app/lib/contexts/UserContext";
 import toast from "react-hot-toast";
+import { formSectionDefaultState } from "../constants/global.constant";
 
 export const useSignUpForm = () => {
   const router = useRouter();
@@ -20,7 +20,8 @@ export const useSignUpForm = () => {
           userId: response?.userId,
           userName: response?.userName,
           accessToken: response?.accessToken,
-          refreshToken: response?.refreshToken, // In case you need to store or log it
+          refreshToken: response?.refreshToken,
+          completedSections: formSectionDefaultState,
         });
         router.push("/profile-info/basic-details");
       }

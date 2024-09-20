@@ -2,7 +2,6 @@
 import FormField from "../../molecules/FormField/FormField";
 import Button from "../../atoms/Button/Button";
 import SectionHeader from "../../molecules/SectionHeader/SectionHeader";
-import { calculatePercentageCompleted } from "@/app/lib/utils/calculateCompletedPercent";
 import { kulamOptions } from "@/app/lib/constants/global.constant";
 import { useFamilyInfoForm } from "@/app/lib/hooks/useFamilyInfoForm";
 
@@ -14,7 +13,6 @@ const FamilyInfoForm = () => {
         subtitle="Tell us a bit about your family!"
         step="Step 4 of 7"
         title="Family Information"
-        registerPercentCompleted={calculatePercentageCompleted(3, 7)}
       />
       <div className="form-login">
         <form autoComplete="off" action={onSubmit}>

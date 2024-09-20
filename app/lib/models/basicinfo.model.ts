@@ -6,8 +6,8 @@ export interface IProfile extends Document {
   dob: Date;
   profile_created_by: "Parent" | "Sibling" | "Guardian" | "Myself";
   marital_status: "Single" | "Married" | "Divorced" | "Widowed";
-  children: string;
-  children_living_status: string;
+  children?: string;
+  children_living_status?: string;
   profile_bio: string;
   userId: string;
 }
@@ -50,11 +50,9 @@ const ProfileSchema = new Schema<IProfile>(
     },
     children: {
       type: String,
-      required: true,
     },
     children_living_status: {
       type: String,
-      required: true,
     },
     profile_bio: {
       type: String,

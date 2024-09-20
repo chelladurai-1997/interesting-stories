@@ -7,6 +7,7 @@ type InputProps = {
   className?: string;
   max?: string;
   accept?: string;
+  disabled?: boolean;
 };
 
 const Input: React.FC<InputProps> = ({
@@ -18,6 +19,7 @@ const Input: React.FC<InputProps> = ({
   className,
   max,
   accept,
+  disabled,
 }) => (
   <input
     id={id}
@@ -32,6 +34,7 @@ const Input: React.FC<InputProps> = ({
     }
     autoComplete="off"
     accept={accept}
+    disabled={disabled}
   />
 );
 

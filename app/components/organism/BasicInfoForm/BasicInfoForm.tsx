@@ -1,4 +1,5 @@
 "use client";
+import React, { useState } from "react"; // Import useState
 import {
   childrenLivingStatusOptions,
   genderLabelOptions,
@@ -10,7 +11,7 @@ import FormField from "../../molecules/FormField/FormField";
 import Button from "../../atoms/Button/Button";
 import SectionHeader from "../../molecules/SectionHeader/SectionHeader";
 import ResponsiveGridContainer from "../../molecules/ResponsiveGridContainer/ResponsiveGridContainer";
-import { calculatePercentageCompleted } from "@/app/lib/utils/calculateCompletedPercent";
+
 import { getMaxDateForAge } from "@/app/lib/utils/dateUtils";
 import Container from "../../molecules/Container/Container";
 import FormContainer from "../../molecules/SectionContainer/SectionContainer";
@@ -18,7 +19,13 @@ import { useBasicInfoForm } from "@/app/lib/hooks/useBasicInfoForm";
 import ArrowRightIcon from "../../icons/ArrowRightIcon";
 
 const BasicInfoForm = () => {
-  const { onSubmit, isRunning } = useBasicInfoForm();
+  const {
+    onSubmit,
+    isRunning,
+    handleMaritalStatusChange,
+    isMaritalStatusSingle,
+    maritalStatus,
+  } = useBasicInfoForm();
 
   return (
     <Container>
@@ -27,14 +34,13 @@ const BasicInfoForm = () => {
           subtitle="Let's begin! Please enter your details."
           step="Step 1 of 7"
           title="Basic Information"
-          registerPercentCompleted={calculatePercentageCompleted(0, 7)}
         />
         <div className="form-login">
           <form autoComplete="off" action={onSubmit}>
             <div className="space-y-6">
               <ResponsiveGridContainer>
                 <FormField
-                  label="Full Name (முழு பெயர்):"
+                  label="Display Name (முழு பெயர்):"
                   id="name"
                   name="name"
                   placeholder="Enter your full name"
@@ -77,27 +83,30 @@ const BasicInfoForm = () => {
                 options={maritalStatusOptions}
                 placeholder="Select Marital Status"
                 type="select"
+                onChange={handleMaritalStatusChange}
               />
 
-              <ResponsiveGridContainer>
-                <FormField
-                  label="No. of. Children (குழந்தைகள்):"
-                  id="children"
-                  name="children"
-                  options={noOfChildrensOptions}
-                  placeholder="Select No. of. Children"
-                  type="select"
-                />
+              {maritalStatus && !isMaritalStatusSingle && (
+                <ResponsiveGridContainer>
+                  <FormField
+                    label="No. of. Children (குழந்தைகள்):"
+                    id="children"
+                    name="children"
+                    options={noOfChildrensOptions}
+                    placeholder="Select No. of. Children"
+                    type="select"
+                  />
 
-                <FormField
-                  id="children_living_status"
-                  label="Children Living Status (குழந்தைகள் வசிப்பது):"
-                  type="radio"
-                  name="children_living_status"
-                  options={childrenLivingStatusOptions}
-                  placeholder="Select Children Living Status"
-                />
-              </ResponsiveGridContainer>
+                  <FormField
+                    id="children_living_status"
+                    label="Children Living Status (குழந்தைகள் வசிப்பது):"
+                    type="radio"
+                    name="children_living_status"
+                    options={childrenLivingStatusOptions}
+                    placeholder="Select Children Living Status"
+                  />
+                </ResponsiveGridContainer>
+              )}
 
               <FormField
                 label="Profile Bio (சுயவிவர தகவல்):"

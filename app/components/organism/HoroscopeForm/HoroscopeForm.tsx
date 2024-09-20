@@ -7,7 +7,6 @@ import {
   jathagamStatusOptions,
 } from "@/app/lib/constants/global.constant";
 import SectionHeader from "../../molecules/SectionHeader/SectionHeader";
-import { calculatePercentageCompleted } from "@/app/lib/utils/calculateCompletedPercent";
 import { useHoroscopeForm } from "@/app/lib/hooks/useHoroscope";
 import ArrowRightIcon from "../../icons/ArrowRightIcon";
 import LoadingIndicator from "../../molecules/LoadingIndicator/LoadingIndicator";
@@ -20,7 +19,6 @@ const HoroscopeForm = () => {
         subtitle="Astrology, a guiding force from the stars!"
         step="Step 5 of 7"
         title="Horoscope Information"
-        registerPercentCompleted={calculatePercentageCompleted(4, 7)}
       />
       <div className="form-login">
         <form autoComplete="off" action={onSubmit}>

@@ -7,7 +7,6 @@ import {
   MONTHLY_INCOME_OPTIONS,
 } from "@/app/lib/constants/global.constant";
 import SectionHeader from "../../molecules/SectionHeader/SectionHeader";
-import { calculatePercentageCompleted } from "@/app/lib/utils/calculateCompletedPercent";
 import { useEducationOccupationForm } from "@/app/lib/hooks/useEducationOccupationForm";
 import ArrowRightIcon from "../../icons/ArrowRightIcon";
 
@@ -19,7 +18,6 @@ const EducationOccupationForm = () => {
         subtitle="Your information stays private with us!"
         step="Step 3 of 7"
         title="Education & Occupation"
-        registerPercentCompleted={calculatePercentageCompleted(2, 7)}
       />
       <div className="form-login">
         <form autoComplete="off" action={onSubmit}>

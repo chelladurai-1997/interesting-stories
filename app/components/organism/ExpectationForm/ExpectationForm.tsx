@@ -2,14 +2,12 @@
 import Button from "../../atoms/Button/Button";
 import FormField from "../../molecules/FormField/FormField";
 import {
-  jaadhagamOptions,
   jathagamStatusOptions,
   maritalStatusOptions,
   workingPlaceOptions,
   zodiacNakshatras,
 } from "@/app/lib/constants/global.constant";
 import SectionHeader from "../../molecules/SectionHeader/SectionHeader";
-import { calculatePercentageCompleted } from "@/app/lib/utils/calculateCompletedPercent";
 
 import { useExpectationForm } from "@/app/lib/hooks/useExpectationForm";
 import ArrowRightIcon from "../../icons/ArrowRightIcon";
@@ -22,7 +20,6 @@ const ExpectationForm = () => {
         subtitle="Share Your Expectations with Us"
         step="Step 6 of 7"
         title="Expectation"
-        registerPercentCompleted={calculatePercentageCompleted(4, 7)}
       />
       <div className="form-login">
         <form autoComplete="off" action={onSubmit}>
