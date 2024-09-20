@@ -85,24 +85,30 @@ const ProfileFamilyDetails: React.FC<ProfileFamilyDetailsProps> = ({
           backgroundColor="bg-orange-200"
           textColor="text-orange-800"
         />
-        <StyledChip
-          label="Number of Brothers Married"
-          value={familyDetails.noOfBrothersMarried ?? ""}
-          backgroundColor="bg-lime-200"
-          textColor="text-lime-800"
-        />
+        {!isNaN(Number(familyDetails.noOfBrothers)) &&
+          Number(familyDetails.noOfBrothers) > 0 && (
+            <StyledChip
+              label="Number of Brothers Married"
+              value={familyDetails.noOfBrothersMarried ?? ""}
+              backgroundColor="bg-lime-200"
+              textColor="text-lime-800"
+            />
+          )}
         <StyledChip
           label="Number of Sisters"
           value={familyDetails.noOfSisters ?? ""}
           backgroundColor="bg-cyan-200"
           textColor="text-cyan-800"
         />
-        <StyledChip
-          label="Number of Sisters Married"
-          value={familyDetails.noOfSistersMarried ?? ""}
-          backgroundColor="bg-emerald-200"
-          textColor="text-emerald-800"
-        />
+        {!isNaN(Number(familyDetails.noOfSistersMarried)) &&
+          Number(familyDetails.noOfSistersMarried) > 0 && (
+            <StyledChip
+              label="Number of Sisters Married"
+              value={familyDetails.noOfSistersMarried ?? ""}
+              backgroundColor="bg-emerald-200"
+              textColor="text-emerald-800"
+            />
+          )}
         <StyledChip
           label="Property"
           value={familyDetails.property ?? ""}

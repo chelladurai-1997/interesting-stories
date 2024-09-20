@@ -21,7 +21,6 @@ export async function handleExpectationsInfoSubmission(
     const { userId, error, message } = getUserIdFromToken();
     if (error) {
       // Abort transaction in case of error
-      await session.abortTransaction();
       return { message, error };
     }
 
@@ -50,7 +49,7 @@ export async function handleExpectationsInfoSubmission(
     await session.commitTransaction();
     return { message: "Success", error: false };
   } catch (error) {
-    // Only abort the transaction in case of an error
+    // Abort the transaction if any error occurs
     await session.abortTransaction();
     console.error("Error during expectations info submission:", error);
 

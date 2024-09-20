@@ -35,9 +35,13 @@ export const useBasicInfoForm = () => {
   };
 
   const handleMaritalStatusChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
   ) => {
-    setMaritalStatus(event.target.value);
+    if (event.target instanceof HTMLSelectElement) {
+      setMaritalStatus(event.target.value);
+    }
   };
 
   const isMaritalStatusSingle = maritalStatus === "Single - (திருமணம் ஆகாதவர்)";

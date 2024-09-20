@@ -2,6 +2,7 @@ import React from "react";
 import StyledChip from "../../molecules/StyledChip/StyledChip";
 import { Accordion } from "../../molecules/Accordion/Accordion";
 import { Profile } from "@/app/profiles/profile.types";
+import { formatDate } from "@/app/lib/utils/dateUtils";
 
 interface ProfileBasicInfoProps {
   profile: Profile;
@@ -33,7 +34,7 @@ const ProfileBasicInfo: React.FC<ProfileBasicInfoProps> = ({
         />
         <StyledChip
           label="Date of Birth"
-          value={basicInfo.dob ?? ""}
+          value={formatDate(basicInfo.dob ?? "")}
           backgroundColor="bg-green-200"
           textColor="text-green-800"
         />

@@ -12,7 +12,12 @@ export interface SelectProps {
   multiselect?: Boolean;
   required?: Boolean;
   disabled?: boolean;
-  onChange?: () => void;
+  onChange?: (
+    event:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>
+      | React.ChangeEvent<HTMLSelectElement>
+  ) => void;
 }
 
 const Select: React.FC<SelectProps> = ({

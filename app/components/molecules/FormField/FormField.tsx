@@ -50,12 +50,27 @@ const FormField: React.FC<FormFieldProps> = ({
   onChange,
   disabled,
 }) => {
-  // const labelClassName = "block text-sm font-medium text-gray-900 ";
+  const handleChange = (
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    // Call the onChange function with the correct event type
+    if (onChange) {
+      onChange(event);
+    }
+  };
+
   return (
     <div className={`w-full ${type === "checkbox" ? "flex items-center" : ""}`}>
       {type === "checkbox" ? (
         <>
-          <Checkbox id={id} name={name} />
+          <Checkbox
+            id={id}
+            name={name}
+            onChange={handleChange}
+            disabled={disabled}
+          />
           <Label
             text={label}
             htmlFor={id}
@@ -72,29 +87,26 @@ const FormField: React.FC<FormFieldProps> = ({
             disabled={disabled}
           />
           <div className="flex flex-row mt-2">
-            {options?.map((option, index: number) => {
-              return (
-                <div className="form-check me-4" key={index}>
-                  <input
-                    className="form-check-input mr-2"
-                    type="radio"
-                    name={name}
-                    id={`${id}${index}`}
-                    required={required}
-                    value={option.toString()}
-                    onChange={onChange}
-                    disabled={disabled}
-                  />
-
-                  <Label
-                    text={typeof option === "string" ? option : ""}
-                    htmlFor={id}
-                    className="form-check-label"
-                    disabled={disabled}
-                  />
-                </div>
-              );
-            })}
+            {options?.map((option, index) => (
+              <div className="form-check me-4" key={index}>
+                <input
+                  className="form-check-input mr-2"
+                  type="radio"
+                  name={name}
+                  id={`${id}${index}`}
+                  required={required}
+                  value={option.toString()}
+                  onChange={handleChange}
+                  disabled={disabled}
+                />
+                <Label
+                  text={typeof option === "string" ? option : ""}
+                  htmlFor={`${id}${index}`}
+                  className="form-check-label"
+                  disabled={disabled}
+                />
+              </div>
+            ))}
           </div>
         </div>
       ) : type === "textarea" ? (
@@ -111,7 +123,7 @@ const FormField: React.FC<FormFieldProps> = ({
             name={name}
             placeholder={placeholder}
             required={required}
-            onChange={onChange}
+            onChange={handleChange}
             disabled={disabled}
           />
         </>
@@ -132,7 +144,7 @@ const FormField: React.FC<FormFieldProps> = ({
               searchable={searchable}
               multiselect={multiselect}
               required={required}
-              onChange={onChange}
+              onChange={handleChange}
               disabled={disabled}
               className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm mt-2"
             />
@@ -142,9 +154,8 @@ const FormField: React.FC<FormFieldProps> = ({
               name={name}
               placeholder={placeholder || ""}
               type={type}
-              {...(type === "datetime-local" ? { max: maxDate } : {})}
+              {...(type === "date" ? { max: maxDate } : {})}
               {...(type === "file" ? { accept: "image/*" } : {})}
-              max={maxDate}
               required={required}
               disabled={disabled}
               className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm mt-2"

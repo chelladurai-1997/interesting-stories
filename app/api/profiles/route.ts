@@ -145,7 +145,7 @@ export async function GET(request: Request) {
       limit,
       error: false,
     });
-    response.headers.set("Cache-Control", "public, max-age=900");
+    // response.headers.set("Cache-Control", "public, max-age=900");
 
     return response;
   } catch (error) {
