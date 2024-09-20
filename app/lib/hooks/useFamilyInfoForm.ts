@@ -1,11 +1,11 @@
 import { useRouter } from "next/navigation";
 import { useServerAction } from "@/app/lib/hooks/useServerAction";
-import { onFamilyInfoFormSubmit } from "@/app/lib/actions/familyInfo.action";
+import { handleFamilyInfoSubmission } from "@/app/lib/actions/familyInfo.action";
 import toast from "react-hot-toast";
 
 export const useFamilyInfoForm = () => {
   const router = useRouter();
-  const [runAction, isRunning] = useServerAction(onFamilyInfoFormSubmit);
+  const [runAction, isRunning] = useServerAction(handleFamilyInfoSubmission);
 
   const onSubmit = async (formData: FormData) => {
     try {

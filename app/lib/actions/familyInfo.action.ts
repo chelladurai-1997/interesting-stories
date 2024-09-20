@@ -1,49 +1,90 @@
 "use server";
 
+import mongoose from "mongoose";
 import connectMongo from "../constants/mongodb";
 import FamilyDetails from "../models/familyInfo.model";
+import User from "../models/user.model";
 import { getUserIdFromToken } from "../utils/getUserIdFromToken";
-import { updateUserLastCompletedStep } from "../utils/userUtils";
+import { getStringFromFormData } from "../utils/formUtils";
 
-export async function onFamilyInfoFormSubmit(
+// Function to handle family information form submission
+export async function handleFamilyInfoSubmission(
   _prevData: unknown,
   formData: FormData
 ) {
-  const { userId, error, message } = getUserIdFromToken();
-  if (error) {
-    return { message, error };
-  }
-
-  const data = {
-    fatherName: formData.get("father_name"),
-    fatherStatus: formData.get("father_status"),
-    motherName: formData.get("mother_name"),
-    motherStatus: formData.get("mother_status"),
-    fatherOccupation: formData.get("father_occupation"),
-    motherOccupation: formData.get("mother_occupation"),
-    motherKulam: formData.get("mother_kulam"),
-    livingPlace: formData.get("living_place"),
-    nativePlace: formData.get("native_place"),
-    noOfBrothers: formData.get("no_of_brothers"),
-    noOfBrothersMarried: formData.get("no_of_brothers_married"),
-    noOfSisters: formData.get("no_of_sisters"),
-    noOfSistersMarried: formData.get("no_of_sisters_married"),
-    property: formData.get("property"),
-    propertyInfo: formData.get("property_info"),
-    userId,
-  };
+  const session = await mongoose.startSession();
+  session.startTransaction();
 
   try {
     await connectMongo();
-    // Save the user to the database
-    const basicInfo = new FamilyDetails(data);
-    await basicInfo.save();
 
-    // Call the utility function but don't wait for it
-    updateUserLastCompletedStep({ userId: userId!, step: 4 });
-    return { message: "success", error: false };
+    // Extract userId from token
+    const { userId, error, message } = getUserIdFromToken();
+    if (error) {
+      await session.abortTransaction();
+      session.endSession();
+      return { message, error };
+    }
+
+    // Extract data from formData using the utility function
+    const data = {
+      fatherName: getStringFromFormData(formData, "father_name"),
+      fatherStatus: getStringFromFormData(formData, "father_status"),
+      motherName: getStringFromFormData(formData, "mother_name"),
+      motherStatus: getStringFromFormData(formData, "mother_status"),
+      fatherOccupation: getStringFromFormData(formData, "father_occupation"),
+      motherOccupation: getStringFromFormData(formData, "mother_occupation"),
+      motherKulam: getStringFromFormData(formData, "mother_kulam"),
+      livingPlace: getStringFromFormData(formData, "living_place"),
+      nativePlace: getStringFromFormData(formData, "native_place"),
+      noOfBrothers: getStringFromFormData(formData, "no_of_brothers"),
+      noOfBrothersMarried: getStringFromFormData(
+        formData,
+        "no_of_brothers_married"
+      ),
+      noOfSisters: getStringFromFormData(formData, "no_of_sisters"),
+      noOfSistersMarried: getStringFromFormData(
+        formData,
+        "no_of_sisters_married"
+      ),
+      property: getStringFromFormData(formData, "property"),
+      propertyInfo: getStringFromFormData(formData, "property_info"),
+      userId,
+    };
+
+    // Save the family details to the database
+    const familyDetails = new FamilyDetails(data);
+    await familyDetails.save({ session });
+
+    // Update the user's completedSections
+    await User.findByIdAndUpdate(
+      { _id: userId },
+      { $set: { "completedSections.familyDetails": true } },
+      { session }
+    );
+
+    await session.commitTransaction();
+    return { message: "Success", error: false };
   } catch (error) {
-    console.log("err", error);
-    return { message: "Something went wrong!", error: true };
+    await session.abortTransaction();
+    console.error("Error during family info submission:", error);
+
+    let errorMessage = "An unknown error occurred.";
+
+    if (error instanceof Error) {
+      if (error.message.includes("ENOENT")) {
+        errorMessage = "File not found or path issue.";
+      } else if (error.message.includes("EACCES")) {
+        errorMessage = "Permission denied while accessing file.";
+      } else if (error.message.includes("MongoError")) {
+        errorMessage = "Database error occurred.";
+      } else {
+        errorMessage = error.message;
+      }
+    }
+
+    return { message: errorMessage, error: true };
+  } finally {
+    session.endSession();
   }
 }

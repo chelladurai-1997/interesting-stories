@@ -9,7 +9,7 @@ export enum ProfileRoutes {
   HoroscopeDetails = "/profile-info/horoscope-details",
   ExpectationDetails = "/profile-info/expectation-details",
   ContactDetails = "/profile-info/contact-details",
-  Dashboard = "/dashboard",
+  Dashboard = "/",
 }
 
 // Enum for profile steps

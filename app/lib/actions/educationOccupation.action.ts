@@ -1,48 +1,74 @@
 "use server";
 
+import mongoose from "mongoose";
 import connectMongo from "../constants/mongodb";
 import EducationOccupation from "../models/educationOccupation.model";
+import User from "../models/user.model";
 import { getUserIdFromToken } from "../utils/getUserIdFromToken";
-import { updateUserLastCompletedStep } from "../utils/userUtils";
+import { getStringFromFormData } from "../utils/formUtils";
 
-export async function onEduOccupationFormSubmit(
+// Define an interface for Education and Occupation data
+interface EducationOccupationData {
+  education: string;
+  educationInfo: string;
+  occupation: string;
+  occupationInfo: string;
+  workingPlace: string;
+  monthlyIncome: string;
+  userId: string | unknown;
+}
+
+// Function to handle education and occupation form submission
+export async function handleEducationOccupationFormSubmit(
   _prevData: unknown,
   formData: FormData
 ) {
-  const { userId, error, message } = getUserIdFromToken();
-  if (error) {
-    return { message, error };
-  }
-
-  const education = formData.get("education");
-  const educationInfo = formData.get("educationInfo");
-  const occupation = formData.get("occupation");
-  const occupationInfo = formData.get("occupationInfo");
-  const workingPlace = formData.get("workingPlace");
-  const monthlyIncome = formData.get("monthlyIncome");
-
-  const data = {
-    education,
-    educationInfo,
-    occupation,
-    occupationInfo,
-    workingPlace,
-    monthlyIncome,
-    userId,
-  };
+  const session = await mongoose.startSession();
+  session.startTransaction();
 
   try {
     await connectMongo();
-    // Save the user to the database
-    const basicInfo = new EducationOccupation(data);
-    await basicInfo.save();
 
-    // Call the utility function but don't wait for it
-    updateUserLastCompletedStep({ userId: userId!, step: 3 });
+    // Extract userId from token
+    const { userId, error, message } = getUserIdFromToken();
+    if (error) {
+      await session.abortTransaction();
+      session.endSession();
+      return { message, error };
+    }
 
-    return { message: "success", error: false };
+    // Extract data from formData
+    const data: EducationOccupationData = {
+      education: getStringFromFormData(formData, "education"),
+      educationInfo: getStringFromFormData(formData, "educationInfo"),
+      occupation: getStringFromFormData(formData, "occupation"),
+      occupationInfo: getStringFromFormData(formData, "occupationInfo"),
+      workingPlace: getStringFromFormData(formData, "workingPlace"),
+      monthlyIncome: getStringFromFormData(formData, "monthlyIncome"),
+      userId: userId,
+    };
+
+    // Save the education and occupation information to the database
+    const educationOccupation = new EducationOccupation(data);
+    await educationOccupation.save({ session });
+
+    // Update the user's completedSections
+    await User.findByIdAndUpdate(
+      { _id: userId },
+      { $set: { "completedSections.educationOccupation": true } },
+      { session }
+    );
+
+    await session.commitTransaction();
+    return { message: "Success", error: false };
   } catch (error) {
-    console.log("err", error);
+    await session.abortTransaction();
+    console.error(
+      "Error during education and occupation info submission:",
+      error
+    );
     return { message: "Something went wrong!", error: true };
+  } finally {
+    session.endSession();
   }
 }

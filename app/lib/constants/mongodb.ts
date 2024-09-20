@@ -1,6 +1,17 @@
 import mongoose from "mongoose";
+import { MongoClient } from "mongodb";
 
 export const MONGO_URI = process.env.MONGODB_URI;
+
+// Function to get a native MongoDB connection for GridFS
+export async function getMongoNativeConnection() {
+  const client = new MongoClient(MONGO_URI as string, {
+    useUnifiedTopology: true,
+  });
+  await client.connect();
+  console.log("Connected to MongoDB for GridFS");
+  return client.db(); // Return the database instance
+}
 
 const cached: {
   connection?: typeof mongoose;
@@ -29,4 +40,5 @@ async function connectMongo() {
   }
   return cached.connection;
 }
+
 export default connectMongo;

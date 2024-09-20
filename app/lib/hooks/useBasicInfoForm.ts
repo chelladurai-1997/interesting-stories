@@ -1,11 +1,11 @@
 import { useRouter } from "next/navigation";
-import { onBasicInfoFormSubmit } from "@/app/lib/actions/basicInfo.action";
+import { handleBasicInfoSubmission } from "@/app/lib/actions/basicInfo.action";
 import { useServerAction } from "@/app/lib/hooks/useServerAction";
 import toast from "react-hot-toast";
 
 export const useBasicInfoForm = () => {
   const router = useRouter();
-  const [runAction, isRunning] = useServerAction(onBasicInfoFormSubmit);
+  const [runAction, isRunning] = useServerAction(handleBasicInfoSubmission);
 
   const onSubmit = async (formData: FormData) => {
     try {

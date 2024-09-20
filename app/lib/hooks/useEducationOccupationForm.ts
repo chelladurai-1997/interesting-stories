@@ -1,10 +1,12 @@
 import { useServerAction } from "@/app/lib/hooks/useServerAction";
-import { onEduOccupationFormSubmit } from "@/app/lib/actions/educationOccupation.action";
+import { handleEducationOccupationFormSubmit } from "@/app/lib/actions/educationOccupation.action";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
 export const useEducationOccupationForm = () => {
-  const [runAction, isRunning] = useServerAction(onEduOccupationFormSubmit);
+  const [runAction, isRunning] = useServerAction(
+    handleEducationOccupationFormSubmit
+  );
   const router = useRouter();
 
   const onSubmit = async (formData: FormData) => {

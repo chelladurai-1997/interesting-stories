@@ -1,10 +1,10 @@
 import { useServerAction } from "@/app/lib/hooks/useServerAction";
-import { onPersonalInfoFormSubmit } from "@/app/lib/actions/personalInfo.action";
+import { handlePersonalInfoFormSubmit } from "@/app/lib/actions/personalInfo.action";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
 export const usePersonalDetailsForm = () => {
-  const [runAction, isRunning] = useServerAction(onPersonalInfoFormSubmit);
+  const [runAction, isRunning] = useServerAction(handlePersonalInfoFormSubmit);
   const router = useRouter();
 
   const onSubmit = async (formData: FormData) => {

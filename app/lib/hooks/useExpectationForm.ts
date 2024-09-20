@@ -1,11 +1,13 @@
 import { useRouter } from "next/navigation";
 import { useServerAction } from "@/app/lib/hooks/useServerAction";
-import { onExpectationsInfoFormSubmit } from "@/app/lib/actions/expectationInfo.action";
+import { handleExpectationsInfoSubmission } from "@/app/lib/actions/expectationInfo.action";
 import toast from "react-hot-toast";
 
 export const useExpectationForm = () => {
   const router = useRouter();
-  const [runAction, isRunning] = useServerAction(onExpectationsInfoFormSubmit);
+  const [runAction, isRunning] = useServerAction(
+    handleExpectationsInfoSubmission
+  );
 
   const onSubmit = async (formData: FormData) => {
     try {

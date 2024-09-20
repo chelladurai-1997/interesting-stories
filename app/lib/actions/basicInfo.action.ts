@@ -1,43 +1,88 @@
 "use server";
 
+import mongoose from "mongoose";
 import connectMongo from "../constants/mongodb";
 import BasicInformation from "../models/basicinfo.model";
+import User from "../models/user.model";
 import { getUserIdFromToken } from "../utils/getUserIdFromToken";
-import { updateUserLastCompletedStep } from "../utils/userUtils";
+import { getStringFromFormData } from "../utils/formUtils";
 
-export async function onBasicInfoFormSubmit(
+// Define an interface for Basic Information data
+interface BasicInfoData {
+  name: string;
+  gender: string;
+  dob: string;
+  profile_created_by: string;
+  marital_status: string;
+  children: string;
+  children_living_status: string;
+  profile_bio: string;
+  userId: string | unknown;
+}
+
+// Main function to handle basic information submission
+export async function handleBasicInfoSubmission(
   _prevData: unknown,
   formData: FormData
 ) {
+  let session: mongoose.ClientSession | null = null;
+
   try {
     await connectMongo();
 
+    // Start a session and transaction
+    session = await mongoose.startSession();
+    session.startTransaction();
+
     const { userId, error, message } = getUserIdFromToken();
     if (error) {
+      await session.abortTransaction();
+      session.endSession();
       return { message, error };
     }
 
-    const data = {
-      name: formData.get("name") as string,
-      gender: formData.get("gender") as string,
-      dob: formData.get("dob") as string,
-      profile_created_by: formData.get("profile_created_by") as string,
-      marital_status: formData.get("marital_status") as string,
-      children: formData.get("children") as string,
-      children_living_status: formData.get("children_living_status") as string,
-      profile_bio: formData.get("profile_bio") as string,
-      userId: userId, // Use the userId from the payload
+    // Extract data from formData
+    const data: BasicInfoData = {
+      name: getStringFromFormData(formData, "name"),
+      gender: getStringFromFormData(formData, "gender"),
+      dob: getStringFromFormData(formData, "dob"),
+      profile_created_by: getStringFromFormData(formData, "profile_created_by"),
+      marital_status: getStringFromFormData(formData, "marital_status"),
+      children: getStringFromFormData(formData, "children"),
+      children_living_status: getStringFromFormData(
+        formData,
+        "children_living_status"
+      ),
+      profile_bio: getStringFromFormData(formData, "profile_bio"),
+      userId: userId,
     };
 
-    // Save the user to the database
+    // Save the basic information to the database
     const basicInfo = new BasicInformation(data);
-    await basicInfo.save();
+    await basicInfo.save({ session });
 
-    updateUserLastCompletedStep({ userId: userId!, step: 1 });
+    // Find and update the user's completedSections
+    const user = await User.findOneAndUpdate(
+      { _id: userId },
+      { $set: { "completedSections.basicInfo": true } },
+      { new: true, session } // Return the updated document
+    );
 
-    return { message: "success", error: false };
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    await session.commitTransaction();
+    return { message: "Success", error: false };
   } catch (error) {
-    console.log("err", error);
+    if (session) {
+      await session.abortTransaction();
+    }
+    console.error("Error during basic info submission:", error);
     return { message: "Something went wrong!", error: true };
+  } finally {
+    if (session) {
+      session.endSession();
+    }
   }
 }

@@ -1,11 +1,11 @@
 import { useRouter } from "next/navigation";
 import { useServerAction } from "@/app/lib/hooks/useServerAction";
-import { onHoroscopeInfoFormSubmit } from "@/app/lib/actions/horoscopeInfo.action";
+import { handleHoroscopeInfoSubmission } from "@/app/lib/actions/horoscopeInfo.action";
 import toast from "react-hot-toast";
 
 export const useHoroscopeForm = () => {
   const router = useRouter();
-  const [runAction, isRunning] = useServerAction(onHoroscopeInfoFormSubmit);
+  const [runAction, isRunning] = useServerAction(handleHoroscopeInfoSubmission);
 
   const onSubmit = async (formData: FormData) => {
     try {

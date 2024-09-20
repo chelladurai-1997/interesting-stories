@@ -1,11 +1,12 @@
 import { useRouter } from "next/navigation";
 import { useServerAction } from "@/app/lib/hooks/useServerAction";
-import { onContactInfoFormSubmit } from "@/app/lib/actions/contactInfo.action";
+import { handleContactInfoSubmission } from "@/app/lib/actions/contactInfo.action";
 import toast from "react-hot-toast";
+import { revalidatePath } from "next/cache";
 
 export const useContactInfoForm = () => {
   const router = useRouter();
-  const [runAction, isRunning] = useServerAction(onContactInfoFormSubmit);
+  const [runAction, isRunning] = useServerAction(handleContactInfoSubmission);
 
   const onSubmit = async (formData: FormData) => {
     try {
@@ -13,6 +14,7 @@ export const useContactInfoForm = () => {
       if (response?.error) {
         toast.error(response?.message);
       } else {
+        revalidatePath("/");
         router.push("/");
       }
     } catch (error) {
