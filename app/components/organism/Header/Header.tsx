@@ -55,14 +55,14 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
     <section className="relative bg-gray-900 pb-4">
       <nav className="border-gray-200 bg-gray-900">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-          <a href="/" className="flex flex-col items-center md:items-start">
+          <Link href="/" className="flex flex-col items-center md:items-start">
             <span className="text-2xl font-semibold text-[#ffd700]">
               Linking Hearts
             </span>
             <span className="text-sm text-[#fa8072]">
               Bringing Families Together
             </span>
-          </a>
+          </Link>
 
           <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
             {userProfile ? (
@@ -125,11 +125,18 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
                 )}
               </div>
             ) : (
-              <Link href="/login">
-                <button className="bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded hover:bg-gray-400 transition duration-300">
-                  Login
-                </button>
-              </Link>
+              <div className="flex space-x-2">
+                <Link href="/login">
+                  <button className="bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded hover:bg-gray-400 transition duration-300">
+                    Login
+                  </button>
+                </Link>
+                <Link href="/signup">
+                  <button className="bg-gray-200 text-gray-700 font-semibold py-2 px-4 rounded hover:bg-gray-400 transition duration-300">
+                    Register
+                  </button>
+                </Link>
+              </div>
             )}
 
             <button
@@ -214,7 +221,6 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
                 <a
                   href="#"
                   className="block py-2 px-3 text-white hover:text-[#ffd700] rounded md:bg-transparent md:p-0"
-                  aria-current="page"
                 >
                   Browse Profiles
                 </a>
@@ -223,7 +229,6 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
                 <a
                   href="#"
                   className="block py-2 px-3 text-white hover:text-[#ffd700] rounded md:bg-transparent md:p-0"
-                  aria-current="page"
                 >
                   Services
                 </a>
