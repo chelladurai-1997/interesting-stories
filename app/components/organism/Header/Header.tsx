@@ -55,7 +55,7 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
     <section className="relative bg-gray-900 pb-4">
       <nav className="border-gray-200 bg-gray-900 relative">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-          <Link href="/" className="flex flex-col items-center md:items-start">
+          <Link href="/" className="flex flex-col items-start">
             <span className="text-2xl font-semibold text-[#ffd700]">
               Linking Hearts
             </span>
