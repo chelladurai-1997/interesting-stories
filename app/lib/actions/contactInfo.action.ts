@@ -1,5 +1,5 @@
 "use server";
-
+import router from "next/cache";
 import mongoose from "mongoose";
 import connectMongo, { getMongoNativeConnection } from "../constants/mongodb";
 import ContactInfo from "../models/contactInfo.model";
@@ -93,7 +93,7 @@ export async function handleContactInfoSubmission(
         { session }
       );
     });
-
+    router.revalidatePath("/");
     return { message: "Contact info saved successfully", error: false };
   } catch (error) {
     console.error("Error during contact info submission:", error);

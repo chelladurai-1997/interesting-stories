@@ -1,6 +1,7 @@
 import connectMongo from "@/app/lib/constants/mongodb";
 import User from "@/app/lib/models/user.model";
 import { NextResponse } from "next/server";
+import router from "next/cache";
 
 // Handler for approving or rejecting a user
 export async function POST(request: Request) {
@@ -35,7 +36,7 @@ export async function POST(request: Request) {
         { status: 404 }
       );
     }
-
+    router.revalidatePath("/");
     return NextResponse.json({
       message: `User has been ${status}.`,
       error: false,

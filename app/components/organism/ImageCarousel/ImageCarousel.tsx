@@ -23,7 +23,7 @@ const ImageCarousel = () => {
         alt={carouselImages[currentImageIndex].alt}
         layout="fill"
         objectFit="cover"
-        priority
+        loading="lazy"
       />
     </div>
   );

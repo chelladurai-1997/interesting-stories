@@ -25,7 +25,7 @@ export default function RootLayout({
           {children}
           <SessionMonitor />
         </UserProvider>
-        <Toaster position="top-center" />
+        <Toaster position="top-center" toastOptions={{ duration: 4000 }} />
 
         {/* <Footer /> */}
       </body>

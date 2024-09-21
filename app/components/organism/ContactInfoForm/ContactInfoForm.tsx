@@ -131,10 +131,9 @@ const ContactInfoForm = () => {
               isPending={isRunning}
             />
             {isRunning && <LoadingIndicator />}
-            <SuccessPopup
-              isOpen={isSuccessPopupOpen}
-              onClose={handleSuccessPopupClose}
-            />
+            {isSuccessPopupOpen && (
+              <SuccessPopup isOpen={true} onClose={handleSuccessPopupClose} />
+            )}
           </div>
         </form>
       </div>

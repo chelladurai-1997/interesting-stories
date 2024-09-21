@@ -27,8 +27,9 @@ const SuccessPopup: React.FC<SuccessPopupProps> = ({ isOpen, onClose }) => {
       }`}
     >
       <div
-        className={`bg-white rounded-lg shadow-lg p-6 max-w-md mx-auto transform transition-transform duration-300 ease-in-out 
+        className={`absolute bg-white rounded-lg shadow-lg p-6 max-w-md mx-auto transform transition-transform duration-300 ease-in-out 
                     ${isAnimating ? "scale-100" : "scale-95"}`}
+        style={{ maxHeight: "90vh", overflowY: "auto" }} // Ensure it fits within the viewport
       >
         <h2 className="text-2xl font-bold text-center text-green-600 mb-4">
           🎉 Registration Successful!
