@@ -39,6 +39,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
           width={400}
           height={267} // Adjusted height for a good aspect ratio
           quality={90}
+          loading="lazy"
         />
       </div>
 
