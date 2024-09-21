@@ -115,7 +115,7 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
                         <Link
                           href="#"
                           className="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-600"
-                          onClick={logout}
+                          onClick={() => logout()}
                         >
                           Sign out
                         </Link>
