@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation"; // Import useRouter
 import Header from "../components/organism/Header/Header";
 
 interface CompletedSections {
@@ -26,6 +27,7 @@ const AdminUserApproval: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const router = useRouter(); // Initialize useRouter
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -72,6 +74,10 @@ const AdminUserApproval: React.FC = () => {
       );
       toast.error("Failed to update user status.");
     }
+  };
+
+  const handleViewProfile = (userId: string) => {
+    router.push(`/profiles/${userId}`); // Navigate to the user's profile
   };
 
   if (loading) return <div>Loading users...</div>;
@@ -136,6 +142,12 @@ const AdminUserApproval: React.FC = () => {
                         className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 w-full sm:w-auto"
                       >
                         Reject
+                      </button>
+                      <button
+                        onClick={() => handleViewProfile(user.id)}
+                        className="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 w-full sm:w-auto"
+                      >
+                        View
                       </button>
                     </td>
                   </tr>

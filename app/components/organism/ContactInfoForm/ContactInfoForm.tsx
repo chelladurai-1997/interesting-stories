@@ -10,9 +10,11 @@ import SectionHeader from "../../molecules/SectionHeader/SectionHeader";
 import { useContactInfoForm } from "@/app/lib/hooks/useContactInfoForm";
 import ArrowRightIcon from "../../icons/ArrowRightIcon";
 import LoadingIndicator from "../../molecules/LoadingIndicator/LoadingIndicator";
+import SuccessPopup from "../../molecules/SuccessPopup/SuccessPopup";
 
 const ContactInfoForm = () => {
-  const { isRunning, onSubmit } = useContactInfoForm();
+  const { isRunning, onSubmit, isSuccessPopupOpen, handleSuccessPopupClose } =
+    useContactInfoForm();
   return (
     <section className="bg-white p-6 sm:p-10 border rounded-xl max-w-[800px] mx-auto shadow-lg transition-transform transform  hover:shadow-2xl">
       <SectionHeader
@@ -129,6 +131,10 @@ const ContactInfoForm = () => {
               isPending={isRunning}
             />
             {isRunning && <LoadingIndicator />}
+            <SuccessPopup
+              isOpen={isSuccessPopupOpen}
+              onClose={handleSuccessPopupClose}
+            />
           </div>
         </form>
       </div>

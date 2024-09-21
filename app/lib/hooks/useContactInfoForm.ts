@@ -3,11 +3,18 @@ import { useServerAction } from "@/app/lib/hooks/useServerAction";
 import { handleContactInfoSubmission } from "@/app/lib/actions/contactInfo.action";
 import toast from "react-hot-toast";
 import { useUser } from "../contexts/UserContext";
+import { useState } from "react";
 
 export const useContactInfoForm = () => {
   const router = useRouter();
   const [runAction, isRunning] = useServerAction(handleContactInfoSubmission);
   const { userProfile, updateUserProfile } = useUser();
+  const [isSuccessPopupOpen, setIsSuccessPopupOpen] = useState(false);
+
+  const handleSuccessPopupClose = () => {
+    setIsSuccessPopupOpen(false);
+    router.push("/");
+  };
 
   const onSubmit = async (formData: FormData) => {
     try {
@@ -24,12 +31,12 @@ export const useContactInfoForm = () => {
             },
           });
         }
-        router.push("/");
+        setIsSuccessPopupOpen(true);
       }
     } catch (error) {
       toast.error("Something went wrong. Please try again!");
     }
   };
 
-  return { onSubmit, isRunning };
+  return { onSubmit, isRunning, isSuccessPopupOpen, handleSuccessPopupClose };
 };

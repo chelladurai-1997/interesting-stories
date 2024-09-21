@@ -130,7 +130,7 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
                     Login
                   </button>
                 </Link>
-                <Link href="/signup" className="hidden md:visible">
+                <Link href="/signup" className="hidden md:block">
                   <button className="bg-gray-200 text-gray-700 font-semibold py-2 px-4 rounded hover:bg-gray-400 transition duration-300">
                     Register
                   </button>
