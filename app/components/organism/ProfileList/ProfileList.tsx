@@ -57,22 +57,41 @@ const ProfileList: React.FC = () => {
   }
 
   if (error) {
-    return <p>{error}</p>;
+    return (
+      <div className="text-center p-6">
+        <h2 className="text-xl font-bold mb-4">Something went wrong!</h2>
+        <p className="text-gray-600">{error} Please try again later.</p>
+      </div>
+    );
   }
+
+  if (profiles.length === 0) {
+    return (
+      <div className="text-center p-6">
+        <h2 className="text-xl font-bold mb-4">Uh-oh! No Profiles Found!</h2>
+        <p className="text-gray-600">
+          It seems like the profiles are on a coffee break. ☕
+          <br />
+          Don’t worry, check back later to meet some awesome people!
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className="flex justify-center mx-auto">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-screen-xl w-full p-4">
         {profiles.map((profile) => (
           <ProfileCard
-            key={profile.name} // Ensure a unique key, e.g., a profile ID
+            key={profile.userId} // Use userId for unique key
             name={profile.name}
             dob={profile.dob}
-            occupation={profile?.educationOccupation?.occupation}
-            livingPlace={profile?.familyDetails?.livingPlace}
-            height={profile?.personalDetails?.height}
-            kulam={profile?.personalDetails?.kulam}
-            profileImgUrl={profile?.contactInfo?.profileImgUrl}
-            userId={profile?.userId}
+            occupation={profile.educationOccupation?.occupation}
+            livingPlace={profile.familyDetails?.livingPlace}
+            height={profile.personalDetails?.height}
+            kulam={profile.personalDetails?.kulam}
+            profileImgUrl={profile.contactInfo?.profileImgUrl}
+            userId={profile.userId}
           />
         ))}
       </div>

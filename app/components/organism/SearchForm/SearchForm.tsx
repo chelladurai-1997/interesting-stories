@@ -9,7 +9,7 @@ import Button from "../../atoms/Button/Button";
 
 const SearchForm: React.FC = () => {
   return (
-    <div className="bg-white p-6 mt-10 rounded-lg shadow-lg md:max-w-[95%] mx-auto">
+    <div className="bg-white p-6 my-10 mx-4 rounded-lg shadow-lg md:max-w-[98%] md:mx-auto">
       <form className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <FormField
           label="I'm looking for"
