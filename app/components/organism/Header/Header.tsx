@@ -168,14 +168,14 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
           <div
             className={`${
               isMobileMenuOpen ? "block" : "hidden"
-            } absolute top-full left-0 right-0 bg-gray-800 md:hidden `} // Set min width here
+            } absolute top-full left-0 right-0 bg-gray-800 border border-gray-700 rounded-lg shadow-lg md:hidden min-w-48`} // Set min width here
             ref={mobileMenuRef}
           >
-            <ul className="flex flex-col font-medium p-4 border rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 bg-gray-800 border-gray-200">
+            <ul className="flex flex-col font-medium p-4 space-y-2">
               <li>
                 <a
                   href="#"
-                  className="block py-2 px-3 text-white hover:bg-gray-700 rounded md:bg-transparent md:p-0"
+                  className="block py-2 px-3 text-white hover:bg-gray-600 rounded"
                   aria-current="page"
                 >
                   Home
@@ -184,16 +184,24 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
               <li>
                 <a
                   href="#"
-                  className="block py-2 px-3 text-white hover:bg-gray-700 rounded md:bg-transparent md:p-0"
+                  className="block py-2 px-3 text-white hover:bg-gray-600 rounded"
                   aria-current="page"
                 >
                   Services
                 </a>
               </li>
               <li>
+                <Link
+                  href="/signup"
+                  className="block py-2 px-3 text-white hover:bg-gray-600 rounded"
+                >
+                  Register
+                </Link>
+              </li>
+              <li>
                 <a
                   href="#"
-                  className="block py-2 px-3 text-white hover:bg-gray-700 rounded md:bg-transparent md:p-0"
+                  className="block py-2 px-3 text-white hover:bg-gray-600 rounded"
                 >
                   Contact
                 </a>
