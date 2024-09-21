@@ -27,18 +27,13 @@ export async function handlePersonalInfoFormSubmit(
   _prevData: unknown,
   formData: FormData
 ) {
+  await connectMongo(); // Ensure DB connection before starting session
   const session = await mongoose.startSession();
-  session.startTransaction();
 
   try {
-    await connectMongo();
-
-    // Extract userId from token
     const { userId, error, message } = getUserIdFromToken();
     if (error) {
-      await session.abortTransaction();
-      session.endSession();
-      return { message, error };
+      return { message, error }; // Handle token error gracefully
     }
 
     // Extract data from formData
@@ -60,24 +55,36 @@ export async function handlePersonalInfoFormSubmit(
       userId: userId,
     };
 
-    // Save the personal information to the database
-    const personalInfo = new PersonalDetails(data);
-    await personalInfo.save({ session });
+    // Use withTransaction to handle the transaction
+    await session.withTransaction(
+      async () => {
+        // Save the personal information to the database
+        const personalInfo = new PersonalDetails(data);
+        await personalInfo.save({ session });
 
-    // Update the user's completedSections
-    await User.findByIdAndUpdate(
-      { _id: userId },
-      { $set: { "completedSections.personalDetails": true } },
-      { session }
+        // Update the user's completedSections
+        const user = await User.findByIdAndUpdate(
+          { _id: userId },
+          { $set: { "completedSections.personalDetails": true } },
+          { session }
+        );
+
+        if (!user) {
+          throw new Error("User not found");
+        }
+      },
+      {
+        readConcern: { level: "local" },
+        writeConcern: { w: "majority" },
+        readPreference: "primary",
+      }
     );
 
-    await session.commitTransaction();
     return { message: "Success", error: false };
   } catch (error) {
-    await session.abortTransaction();
     console.error("Error during personal info submission:", error);
     return { message: "Something went wrong!", error: true };
   } finally {
-    session.endSession();
+    session.endSession(); // Ensure session ends
   }
 }

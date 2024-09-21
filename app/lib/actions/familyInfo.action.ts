@@ -13,78 +13,82 @@ export async function handleFamilyInfoSubmission(
   formData: FormData
 ) {
   const session = await mongoose.startSession();
-  session.startTransaction();
 
   try {
-    await connectMongo();
+    // Use withTransaction to handle the transaction
+    await session.withTransaction(
+      async () => {
+        await connectMongo(); // Ensure DB connection inside the transaction
 
-    // Extract userId from token
-    const { userId, error, message } = getUserIdFromToken();
-    if (error) {
-      await session.abortTransaction();
-      session.endSession();
-      return { message, error };
-    }
+        // Extract userId from token
+        const { userId, error, message } = getUserIdFromToken();
+        if (error) {
+          throw new Error(message); // Throw an error to abort the transaction
+        }
 
-    // Extract data from formData using the utility function
-    const data = {
-      fatherName: getStringFromFormData(formData, "father_name"),
-      fatherStatus: getStringFromFormData(formData, "father_status"),
-      motherName: getStringFromFormData(formData, "mother_name"),
-      motherStatus: getStringFromFormData(formData, "mother_status"),
-      fatherOccupation: getStringFromFormData(formData, "father_occupation"),
-      motherOccupation: getStringFromFormData(formData, "mother_occupation"),
-      motherKulam: getStringFromFormData(formData, "mother_kulam"),
-      livingPlace: getStringFromFormData(formData, "living_place"),
-      nativePlace: getStringFromFormData(formData, "native_place"),
-      noOfBrothers: getStringFromFormData(formData, "no_of_brothers"),
-      noOfBrothersMarried: getStringFromFormData(
-        formData,
-        "no_of_brothers_married"
-      ),
-      noOfSisters: getStringFromFormData(formData, "no_of_sisters"),
-      noOfSistersMarried: getStringFromFormData(
-        formData,
-        "no_of_sisters_married"
-      ),
-      property: getStringFromFormData(formData, "property"),
-      propertyInfo: getStringFromFormData(formData, "property_info"),
-      userId,
-    };
+        // Extract data from formData
+        const data = {
+          fatherName: getStringFromFormData(formData, "father_name"),
+          fatherStatus: getStringFromFormData(formData, "father_status"),
+          motherName: getStringFromFormData(formData, "mother_name"),
+          motherStatus: getStringFromFormData(formData, "mother_status"),
+          fatherOccupation: getStringFromFormData(
+            formData,
+            "father_occupation"
+          ),
+          motherOccupation: getStringFromFormData(
+            formData,
+            "mother_occupation"
+          ),
+          motherKulam: getStringFromFormData(formData, "mother_kulam"),
+          livingPlace: getStringFromFormData(formData, "living_place"),
+          nativePlace: getStringFromFormData(formData, "native_place"),
+          noOfBrothers: getStringFromFormData(formData, "no_of_brothers"),
+          noOfBrothersMarried: getStringFromFormData(
+            formData,
+            "no_of_brothers_married"
+          ),
+          noOfSisters: getStringFromFormData(formData, "no_of_sisters"),
+          noOfSistersMarried: getStringFromFormData(
+            formData,
+            "no_of_sisters_married"
+          ),
+          property: getStringFromFormData(formData, "property"),
+          propertyInfo: getStringFromFormData(formData, "property_info"),
+          userId,
+        };
 
-    // Save the family details to the database
-    const familyDetails = new FamilyDetails(data);
-    await familyDetails.save({ session });
+        // Save the family details to the database
+        const familyDetails = new FamilyDetails(data);
+        await familyDetails.save({ session });
 
-    // Update the user's completedSections
-    await User.findByIdAndUpdate(
-      { _id: userId },
-      { $set: { "completedSections.familyDetails": true } },
-      { session }
+        // Update the user's completedSections
+        const user = await User.findByIdAndUpdate(
+          { _id: userId },
+          { $set: { "completedSections.familyDetails": true } },
+          { new: true, session } // Return the updated document
+        );
+
+        if (!user) {
+          throw new Error("User not found");
+        }
+      },
+      {
+        readConcern: { level: "local" },
+        writeConcern: { w: "majority" },
+        readPreference: "primary",
+      }
     );
 
-    await session.commitTransaction();
     return { message: "Success", error: false };
   } catch (error) {
-    await session.abortTransaction();
     console.error("Error during family info submission:", error);
 
-    let errorMessage = "An unknown error occurred.";
-
-    if (error instanceof Error) {
-      if (error.message.includes("ENOENT")) {
-        errorMessage = "File not found or path issue.";
-      } else if (error.message.includes("EACCES")) {
-        errorMessage = "Permission denied while accessing file.";
-      } else if (error.message.includes("MongoError")) {
-        errorMessage = "Database error occurred.";
-      } else {
-        errorMessage = error.message;
-      }
-    }
-
-    return { message: errorMessage, error: true };
+    return {
+      message: error instanceof Error ? error.message : "Something went wrong!",
+      error: true,
+    };
   } finally {
-    session.endSession();
+    session.endSession(); // Ensure session ends
   }
 }

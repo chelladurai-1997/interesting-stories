@@ -5,6 +5,7 @@ import EducationOccupation from "@/app/lib/models/educationOccupation.model";
 import FamilyDetails from "@/app/lib/models/familyInfo.model";
 import HoroscopeInfo from "@/app/lib/models/horoscopeInfo.model";
 import PersonalDetails from "@/app/lib/models/personalInfo.model";
+import User from "@/app/lib/models/user.model";
 import { NextResponse } from "next/server";
 
 // Handler for fetching paginated profiles data
@@ -18,122 +19,96 @@ export async function GET(request: Request) {
     await connectMongo();
 
     // Aggregation pipeline to join data from multiple collections and format the output
-    const profiles = await BasicInformation.aggregate([
+    const profiles = await User.aggregate([
       {
-        $lookup: {
-          from: PersonalDetails.collection.name,
-          localField: "userId",
-          foreignField: "userId",
-          as: "personalInfo",
+        $match: {
+          adminApproved: true,
         },
       },
       {
         $lookup: {
+          from: BasicInformation.collection.name,
+          localField: "_id",
+          foreignField: "userId",
+          as: "basicInformation",
+        },
+      },
+      { $unwind: "$basicInformation" }, // Ensure basic information exists
+      {
+        $lookup: {
+          from: PersonalDetails.collection.name,
+          localField: "_id",
+          foreignField: "userId",
+          as: "personalInfo",
+        },
+      },
+      { $unwind: { path: "$personalInfo", preserveNullAndEmptyArrays: true } }, // Optional
+      {
+        $lookup: {
           from: EducationOccupation.collection.name,
-          localField: "userId",
+          localField: "_id",
           foreignField: "userId",
           as: "educationOccupation",
         },
       },
       {
+        $unwind: {
+          path: "$educationOccupation",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
         $lookup: {
           from: FamilyDetails.collection.name,
-          localField: "userId",
+          localField: "_id",
           foreignField: "userId",
           as: "familyDetails",
         },
       },
+      { $unwind: { path: "$familyDetails", preserveNullAndEmptyArrays: true } }, // Optional
       {
         $lookup: {
           from: ContactInfo.collection.name,
-          localField: "userId",
+          localField: "_id",
           foreignField: "userId",
           as: "contactInfo",
         },
       },
+      { $unwind: { path: "$contactInfo", preserveNullAndEmptyArrays: true } }, // Optional
       {
         $lookup: {
           from: HoroscopeInfo.collection.name,
-          localField: "userId",
+          localField: "_id",
           foreignField: "userId",
           as: "horoscopeInfo",
         },
       },
+      { $unwind: { path: "$horoscopeInfo", preserveNullAndEmptyArrays: true } },
       {
         $project: {
-          _id: 0, // Exclude _id field
-          userId: 1,
-          name: 1,
-          dob: 1,
-          marital_status: 1,
-          educationOccupation: {
-            $arrayElemAt: [
-              {
-                $map: {
-                  input: "$educationOccupation",
-                  as: "educationOccupation",
-                  in: {
-                    education: "$$educationOccupation.education",
-                    occupation: "$$educationOccupation.occupation",
-                  },
-                },
-              },
-              0,
-            ],
-          },
-
-          familyDetails: {
-            $arrayElemAt: [
-              {
-                $map: {
-                  input: "$familyDetails",
-                  as: "familyDetails",
-                  in: {
-                    livingPlace: "$$familyDetails.livingPlace",
-                  },
-                },
-              },
-              0,
-            ],
-          },
-
+          _id: 0,
+          userId: "$_id",
+          name: "$basicInformation.name",
+          dob: "$basicInformation.dob",
+          marital_status: "$basicInformation.marital_status",
           personalDetails: {
-            $arrayElemAt: [
-              {
-                $map: {
-                  input: "$personalInfo",
-                  as: "personalInfo",
-                  in: {
-                    height: "$$personalInfo.height",
-                    kulaDeivam: "$$personalInfo.kula_deivam",
-                    kulam: "$$personalInfo.kulam",
-                  },
-                },
-              },
-              0,
-            ],
+            height: "$personalInfo.height",
+            kulaDeivam: "$personalInfo.kulaDeivam",
+            kulam: "$personalInfo.kulam",
           },
+          "educationOccupation.education": 1,
+          "educationOccupation.occupation": 1,
+          "familyDetails.livingPlace": 1,
           contactInfo: {
-            $arrayElemAt: [
-              {
-                $map: {
-                  input: "$contactInfo",
-                  as: "contactInfo",
-                  in: {
-                    profileImgUrl: "$$contactInfo.photo",
-                  },
-                },
-              },
-              0,
-            ],
+            profileImgUrl: "$contactInfo.photo",
           },
         },
       },
       {
-        $skip: (page - 1) * limit, // Skip documents for pagination
+        $skip: (page - 1) * limit,
       },
       {
-        $limit: limit, // Limit documents per page
+        $limit: limit,
       },
     ]);
 

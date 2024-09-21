@@ -1,4 +1,4 @@
-import { model, models, Schema, Document } from "mongoose";
+import mongoose, { model, models, Schema, Document } from "mongoose";
 
 export interface IFamilyDetails extends Document {
   fatherName: string;
@@ -16,12 +16,12 @@ export interface IFamilyDetails extends Document {
   noOfSistersMarried: number;
   property: string;
   propertyInfo: string;
-  userId: string;
+  userId: mongoose.Schema.Types.ObjectId;
 }
 
 const FamilyDetailsSchema = new Schema<IFamilyDetails>(
   {
-    userId: { type: String, required: true },
+    userId: { type: mongoose.Schema.Types.ObjectId, required: true },
 
     fatherName: {
       type: String,

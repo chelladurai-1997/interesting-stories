@@ -1,4 +1,4 @@
-import { model, models, Schema, Document } from "mongoose";
+import mongoose, { model, models, Schema, Document } from "mongoose";
 
 export interface IProfile extends Document {
   name: string;
@@ -9,7 +9,7 @@ export interface IProfile extends Document {
   children?: string;
   children_living_status?: string;
   profile_bio: string;
-  userId: string;
+  userId: mongoose.Schema.Types.ObjectId;
 }
 
 const ProfileSchema = new Schema<IProfile>(
@@ -22,7 +22,7 @@ const ProfileSchema = new Schema<IProfile>(
       maxlength: 100, // Sets a maximum length
     },
     userId: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
       required: true,
     },
     gender: {

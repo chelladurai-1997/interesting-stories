@@ -1,4 +1,4 @@
-import { model, models, Schema, Document } from "mongoose";
+import mongoose, { model, models, Schema, Document } from "mongoose";
 
 export interface IEducationOccupation extends Document {
   education: string;
@@ -7,12 +7,12 @@ export interface IEducationOccupation extends Document {
   occupationInfo: string;
   workingPlace: string;
   monthlyIncome: string;
-  userId: string;
+  userId: mongoose.Schema.Types.ObjectId;
 }
 
 const EducationOccupationSchema = new Schema<IEducationOccupation>(
   {
-    userId: { type: String, required: true },
+    userId: { type: mongoose.Schema.Types.ObjectId, required: true },
     education: {
       type: String,
       required: true,

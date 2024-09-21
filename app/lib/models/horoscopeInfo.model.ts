@@ -1,4 +1,4 @@
-import { model, models, Schema, Document } from "mongoose";
+import mongoose, { model, models, Schema, Document } from "mongoose";
 
 export interface IHoroscopeDetails extends Document {
   raasi: string;
@@ -7,12 +7,12 @@ export interface IHoroscopeDetails extends Document {
   dhisaiIrupu: string;
   dhosam: string;
   upload: string;
-  userId: string;
+  userId: mongoose.Schema.Types.ObjectId;
 }
 
 const HoroscopeDetailsSchema = new Schema<IHoroscopeDetails>(
   {
-    userId: { type: String, required: true },
+    userId: { type: mongoose.Schema.Types.ObjectId, required: true },
 
     raasi: {
       type: String,

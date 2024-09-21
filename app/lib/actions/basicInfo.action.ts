@@ -25,20 +25,13 @@ export async function handleBasicInfoSubmission(
   _prevData: unknown,
   formData: FormData
 ) {
-  let session: mongoose.ClientSession | null = null;
+  await connectMongo(); // Ensure DB connection before starting session
+  const session = await mongoose.startSession();
 
   try {
-    await connectMongo();
-
-    // Start a session and transaction
-    session = await mongoose.startSession();
-    session.startTransaction();
-
     const { userId, error, message } = getUserIdFromToken();
     if (error) {
-      await session.abortTransaction();
-      session.endSession();
-      return { message, error };
+      return { message, error }; // Handle token error gracefully
     }
 
     // Extract data from formData
@@ -56,32 +49,36 @@ export async function handleBasicInfoSubmission(
       userId: userId,
     };
 
-    // Save the basic information to the database
-    const basicInfo = new BasicInformation(data);
-    await basicInfo.save({ session });
+    // Use withTransaction to handle the transaction
+    await session.withTransaction(
+      async () => {
+        // Save the basic information to the database
+        const basicInfo = new BasicInformation(data);
+        await basicInfo.save({ session });
 
-    // Find and update the user's completedSections
-    const user = await User.findOneAndUpdate(
-      { _id: userId },
-      { $set: { "completedSections.basicInfo": true } },
-      { new: true, session } // Return the updated document
+        // Update the user's completedSections
+        const user = await User.findOneAndUpdate(
+          { _id: userId },
+          { $set: { "completedSections.basicInfo": true } },
+          { new: true, session } // Return the updated document
+        );
+
+        if (!user) {
+          throw new Error("User not found");
+        }
+      },
+      {
+        readConcern: { level: "local" },
+        writeConcern: { w: "majority" },
+        readPreference: "primary",
+      }
     );
 
-    if (!user) {
-      throw new Error("User not found");
-    }
-
-    await session.commitTransaction();
     return { message: "Success", error: false };
   } catch (error) {
-    if (session) {
-      await session.abortTransaction();
-    }
     console.error("Error during basic info submission:", error);
     return { message: "Something went wrong!", error: true };
   } finally {
-    if (session) {
-      session.endSession();
-    }
+    session.endSession(); // Ensure session ends
   }
 }

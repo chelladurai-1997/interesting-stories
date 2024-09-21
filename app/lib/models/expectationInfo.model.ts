@@ -1,4 +1,4 @@
-import { model, models, Schema, Document } from "mongoose";
+import mongoose, { model, models, Schema, Document } from "mongoose";
 
 export interface IExpectations extends Document {
   jaadhagam: string;
@@ -6,12 +6,12 @@ export interface IExpectations extends Document {
   working_place: string;
   expecting_stars: string;
   expectation_info: string;
-  userId: string;
+  userId: mongoose.Schema.Types.ObjectId;
 }
 
 const ExpectationsSchema = new Schema<IExpectations>(
   {
-    userId: { type: String, required: true },
+    userId: { type: mongoose.Schema.Types.ObjectId, required: true },
 
     jaadhagam: {
       type: String,

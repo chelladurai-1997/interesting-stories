@@ -1,4 +1,4 @@
-import { model, models, Schema, Document } from "mongoose";
+import mongoose, { model, models, Schema, Document } from "mongoose";
 
 export interface IContactInfo extends Document {
   mobile: string;
@@ -10,13 +10,13 @@ export interface IContactInfo extends Document {
   address: string;
   photo: string; // Assuming this stores the file path or URL
   pin_code: number;
-  userId: string;
+  userId: mongoose.Schema.Types.ObjectId;
 }
 
 const ContactInfoSchema = new Schema<IContactInfo>(
   {
     userId: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
       required: true,
     },
     mobile: {

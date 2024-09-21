@@ -1,4 +1,4 @@
-import { model, models, Schema, Document } from "mongoose";
+import mongoose, { model, models, Schema, Document } from "mongoose";
 
 export interface IPersonalDetails extends Document {
   religion: string;
@@ -11,12 +11,12 @@ export interface IPersonalDetails extends Document {
   blood_group: string;
   physically_challenged: boolean;
   physical_challenge_details?: string; // Optional field
-  userId: string;
+  userId: mongoose.Schema.Types.ObjectId;
 }
 
 const PersonalDetailsSchema = new Schema<IPersonalDetails>(
   {
-    userId: { type: String, required: true },
+    userId: { type: mongoose.Schema.Types.ObjectId, required: true },
     religion: {
       type: String,
       required: true,

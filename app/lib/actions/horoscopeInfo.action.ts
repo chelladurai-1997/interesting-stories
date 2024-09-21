@@ -14,78 +14,76 @@ export async function handleHoroscopeInfoSubmission(
   formData: FormData
 ) {
   const session = await mongoose.startSession();
-  session.startTransaction();
 
   try {
-    await connectMongo();
+    // Use withTransaction to handle the transaction
+    await session.withTransaction(
+      async () => {
+        await connectMongo(); // Ensure DB connection inside the transaction
 
-    // Extract userId from token
-    const { userId, error, message } = getUserIdFromToken();
-    if (error) {
-      await session.abortTransaction();
-      session.endSession();
-      return { message, error };
-    }
+        // Extract userId from token
+        const { userId, error, message } = getUserIdFromToken();
+        if (error) {
+          throw new Error(message); // Throw an error to abort the transaction
+        }
 
-    // Extract data from formData
-    const data = {
-      raasi: formData.get("raasi"),
-      nachathiram: formData.get("nachathiram"),
-      lagnam: formData.get("lagnam"),
-      dhisaiIrupu: formData.get("dhisai_irupu"),
-      dhosam: formData.get("dhosam"),
-      upload: formData.get("upload") as File,
-    };
+        // Extract data from formData
+        const data = {
+          raasi: formData.get("raasi"),
+          nachathiram: formData.get("nachathiram"),
+          lagnam: formData.get("lagnam"),
+          dhisaiIrupu: formData.get("dhisai_irupu"),
+          dhosam: formData.get("dhosam"),
+          upload: formData.get("upload") as File,
+        };
 
-    // Get the native MongoDB connection for GridFS
-    const db = await getMongoNativeConnection();
-    const bucket = new GridFSBucket(db, { bucketName: "profileImages" });
+        // Get the native MongoDB connection for GridFS
+        const db = await getMongoNativeConnection();
+        const bucket = new GridFSBucket(db, { bucketName: "profileImages" });
 
-    // Upload file to GridFS and get the file URL
-    const imageUrl = await uploadFileToGridFS(data.upload, bucket, userId!);
+        // Upload file to GridFS and get the file URL
+        const imageUrl = await uploadFileToGridFS(data.upload, bucket, userId!);
 
-    // Save horoscope info with the file URL to MongoDB
-    const horoscopeInfo = new HoroscopeInfo({
-      raasi: data.raasi,
-      nachathiram: data.nachathiram,
-      lagnam: data.lagnam,
-      dhisaiIrupu: data.dhisaiIrupu,
-      dhosam: data.dhosam,
-      upload: imageUrl, // Save the GridFS URL instead of the local file path
-      userId,
-    });
+        // Save horoscope info with the file URL to MongoDB
+        const horoscopeInfo = new HoroscopeInfo({
+          raasi: data.raasi,
+          nachathiram: data.nachathiram,
+          lagnam: data.lagnam,
+          dhisaiIrupu: data.dhisaiIrupu,
+          dhosam: data.dhosam,
+          upload: imageUrl, // Save the GridFS URL instead of the local file path
+          userId,
+        });
 
-    await horoscopeInfo.save({ session });
+        await horoscopeInfo.save({ session });
 
-    // Update the user's completedSections
-    await User.findByIdAndUpdate(
-      { _id: userId },
-      { $set: { "completedSections.horoscope": true } },
-      { session }
+        // Update the user's completedSections
+        const user = await User.findByIdAndUpdate(
+          { _id: userId },
+          { $set: { "completedSections.horoscope": true } },
+          { new: true, session } // Return the updated document
+        );
+
+        if (!user) {
+          throw new Error("User not found");
+        }
+      },
+      {
+        readConcern: { level: "local" },
+        writeConcern: { w: "majority" },
+        readPreference: "primary",
+      }
     );
 
-    await session.commitTransaction();
     return { message: "Success", error: false };
   } catch (error) {
-    await session.abortTransaction();
     console.error("Error during horoscope info submission:", error);
 
-    let errorMessage = "An unknown error occurred.";
-
-    if (error instanceof Error) {
-      if (error.message.includes("ENOENT")) {
-        errorMessage = "File not found or path issue.";
-      } else if (error.message.includes("EACCES")) {
-        errorMessage = "Permission denied while accessing file.";
-      } else if (error.message.includes("MongoError")) {
-        errorMessage = "Database error occurred.";
-      } else {
-        errorMessage = error.message;
-      }
-    }
-
-    return { message: errorMessage, error: true };
+    return {
+      message: error instanceof Error ? error.message : "Something went wrong!",
+      error: true,
+    };
   } finally {
-    session.endSession();
+    session.endSession(); // Ensure session ends
   }
 }
