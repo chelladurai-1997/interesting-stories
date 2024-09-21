@@ -3,6 +3,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import Header from "../components/organism/Header/Header";
+import SkeletonLoader from "../components/molecules/SkeletonLoader/SkeletonLoader";
 
 interface CompletedSections {
   basicInfo: boolean;
@@ -103,7 +104,7 @@ const AdminUserApproval: React.FC = () => {
       <Header />
       <div className="p-6">
         {loading ? (
-          <div>Loading users...</div>
+          <SkeletonLoader />
         ) : error ? (
           <div>{error}</div>
         ) : (

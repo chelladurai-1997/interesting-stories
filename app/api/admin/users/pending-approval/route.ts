@@ -9,9 +9,10 @@ export async function GET(request: Request) {
     await connectMongo();
 
     // Query to fetch users pending approval
-    const pendingUsers = await User.find({ adminApproved: false }).select(
-      "_id username mobile completedSections"
-    );
+    const pendingUsers = await User.find({
+      adminApproved: false,
+      isRegistrationComplete: true,
+    }).select("_id username mobile completedSections");
 
     // Create the response with headers to avoid caching
     const response = NextResponse.json({
