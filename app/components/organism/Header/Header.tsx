@@ -53,7 +53,7 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
 
   return (
     <section className="relative bg-gray-900 pb-4">
-      <nav className="border-gray-200 bg-gray-900">
+      <nav className="border-gray-200 bg-gray-900 relative">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <Link href="/" className="flex flex-col items-center md:items-start">
             <span className="text-2xl font-semibold text-[#ffd700]">
@@ -82,7 +82,6 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
                   </div>
                 </button>
 
-                {/* Dropdown menu */}
                 {isDropdownOpen && (
                   <div className="absolute right-0 my-2 w-48 bg-gray-800 border border-gray-700 rounded-lg shadow-lg">
                     <div className="px-4 py-3">
@@ -131,7 +130,7 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
                     Login
                   </button>
                 </Link>
-                <Link href="/signup">
+                <Link href="/signup" className="hidden md:visible">
                   <button className="bg-gray-200 text-gray-700 font-semibold py-2 px-4 rounded hover:bg-gray-400 transition duration-300">
                     Register
                   </button>
@@ -169,7 +168,7 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
           <div
             className={`${
               isMobileMenuOpen ? "block" : "hidden"
-            } w-full bg-gray-800 md:hidden`}
+            } absolute top-full left-0 right-0 bg-gray-800 md:hidden `} // Set min width here
             ref={mobileMenuRef}
           >
             <ul className="flex flex-col font-medium p-4 border rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 bg-gray-800 border-gray-200">
@@ -182,7 +181,6 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
                   Home
                 </a>
               </li>
-
               <li>
                 <a
                   href="#"
