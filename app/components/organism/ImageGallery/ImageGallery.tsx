@@ -25,17 +25,30 @@ const CloseIcon = () => (
 );
 
 const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
-  const [selectedIndex, setSelectedIndex] = useState<number>(0);
+  const [previewIndex, setPreviewIndex] = useState<number>(0);
+  const [modalIndex, setModalIndex] = useState<number>(0);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isTransitioning, setIsTransitioning] = useState<boolean>(false);
   const [modalTransition, setModalTransition] = useState<string>("opacity-0");
   const modalRef = useRef<HTMLDivElement>(null);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null); // Reference for the interval
 
   const [startTouchX, setStartTouchX] = useState<number | null>(null);
 
+  // Change preview image every 3 seconds
+  useEffect(() => {
+    intervalRef.current = setInterval(() => {
+      setPreviewIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 10000); // Change image every 3 seconds
+
+    return () => {
+      clearInterval(intervalRef.current!); // Clear interval on unmount
+    };
+  }, [images.length]);
+
   // Open modal and apply transition
   const openModal = (index: number): void => {
-    setSelectedIndex(index);
+    setModalIndex(index); // Set modal index to clicked image
     setIsOpen(true);
     setModalTransition("opacity-0"); // Reset opacity
     setTimeout(() => {
@@ -71,7 +84,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
   const showNext = (): void => {
     setIsTransitioning(true);
     setTimeout(() => {
-      setSelectedIndex((prevIndex) => (prevIndex + 1) % images.length);
+      setModalIndex((prevIndex) => (prevIndex + 1) % images.length);
       setIsTransitioning(false);
     }, 300); // Wait for fade effect
   };
@@ -80,7 +93,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
   const showPrevious = (): void => {
     setIsTransitioning(true);
     setTimeout(() => {
-      setSelectedIndex((prevIndex) =>
+      setModalIndex((prevIndex) =>
         prevIndex === 0 ? images.length - 1 : prevIndex - 1
       );
       setIsTransitioning(false);
@@ -113,33 +126,38 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
       <button
         key={index}
         className={`w-3 h-3 mx-1 rounded-full ${
-          index === selectedIndex ? "bg-gray-800" : "bg-gray-300"
+          index === modalIndex ? "bg-gray-800" : "bg-gray-300"
         } focus:outline-none`}
         aria-label={`Page ${index + 1}`}
-        onClick={() => setSelectedIndex(index)}
+        onClick={() => {
+          setModalIndex(index);
+          openModal(index); // Open modal for specific image
+        }}
       />
     ));
   };
 
   return (
     <div className="relative">
-      {/* First image preview with "View More" */}
+      {/* Preview image with "View More" */}
       <div
         className="cursor-pointer relative"
-        onClick={() => openModal(0)}
+        onClick={() => openModal(previewIndex)} // Open modal with current previewIndex
         tabIndex={0}
         role="button"
         aria-label="Open image gallery"
-        onKeyDown={(e) => e.key === "Enter" && openModal(0)}
+        onKeyDown={(e) => e.key === "Enter" && openModal(previewIndex)}
       >
-        <Image
-          src={images[0]}
-          alt="Preview of first image"
-          layout="responsive"
-          width={800} // Adjusted width for better visibility
-          height={600} // Adjusted height for better visibility
-          className="w-full h-[250px] md:h-auto object-cover rounded aspect-square md:aspect-auto"
-        />
+        <div className="min-h-[250px]">
+          <Image
+            src={images[previewIndex]} // Use previewIndex for preview
+            alt="Preview of selected image"
+            layout="responsive"
+            width={800}
+            height={600}
+            className="w-full h-[250px] md:h-auto object-cover rounded aspect-square md:aspect-auto"
+          />
+        </div>
         {images.length > 1 && (
           <div className="absolute bottom-2 right-2 flex items-center space-x-2">
             <span className="bg-gray-800 text-white px-2 py-1 text-xs rounded">
@@ -179,12 +197,12 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
               }`}
             >
               <Image
-                src={images[selectedIndex]}
-                alt={`Image ${selectedIndex + 1}`}
+                src={images[modalIndex]} // Use modalIndex for modal
+                alt={`Image ${modalIndex + 1}`}
                 layout="responsive"
                 width={1200}
                 height={800}
-                className="max-w-full max-h-[80vh] object-contain "
+                className="max-w-full max-h-[80vh] object-contain"
               />
             </div>
 
