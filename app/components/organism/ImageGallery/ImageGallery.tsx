@@ -35,11 +35,11 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
 
   const [startTouchX, setStartTouchX] = useState<number | null>(null);
 
-  // Change preview image every 3 seconds
+  // Change preview image every 10 seconds
   useEffect(() => {
     intervalRef.current = setInterval(() => {
       setPreviewIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 10000); // Change image every 3 seconds
+    }, 10000); // Change image every 10 seconds
 
     return () => {
       clearInterval(intervalRef.current!); // Clear interval on unmount
@@ -131,7 +131,8 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
         aria-label={`Page ${index + 1}`}
         onClick={() => {
           setModalIndex(index);
-          openModal(index); // Open modal for specific image
+          setModalTransition("opacity-0"); // Start fade-out
+          setModalTransition("opacity-100"); // Apply fade-in
         }}
       />
     ));
