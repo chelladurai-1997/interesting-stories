@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className} suppressHydrationWarning={true}>
-        <NextTopLoader color="#007BFF" crawl />
+        <NextTopLoader color="#007BFF" showSpinner={false} />
         <UserProvider>
           {children}
           <SessionMonitor />
