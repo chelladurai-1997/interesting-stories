@@ -27,13 +27,13 @@ export async function handleContactInfoSubmission(
   _prevData: unknown,
   formData: FormData
 ): Promise<{ message: string; error: boolean }> {
+  await connectMongo(); // Ensure DB connection inside the transaction
+
   const session = await mongoose.startSession();
 
   try {
     // Use withTransaction to handle the transaction
     await session.withTransaction(async () => {
-      await connectMongo(); // Ensure DB connection inside the transaction
-
       // Extract userId from token
       const { userId, error: tokenError } = getUserIdFromToken();
       if (tokenError || !userId) {
