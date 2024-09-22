@@ -94,6 +94,7 @@ export async function handleContactInfoSubmission(
       );
     });
     router.revalidatePath("/");
+    router.revalidatePath("/admin", "page");
     return { message: "Contact info saved successfully", error: false };
   } catch (error) {
     console.error("Error during contact info submission:", error);
