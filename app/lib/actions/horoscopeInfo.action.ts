@@ -7,6 +7,7 @@ import { GridFSBucket } from "mongodb";
 import { getUserIdFromToken } from "../utils/getUserIdFromToken";
 import User from "../models/user.model";
 import { uploadFileToGridFS } from "../utils/uploadFileToGridFS";
+import { reduceImageSize } from "../utils/compressImageUtils";
 
 // Function to handle horoscope information form submission
 export async function handleHoroscopeInfoSubmission(
@@ -37,12 +38,29 @@ export async function handleHoroscopeInfoSubmission(
           upload: formData.get("upload") as File,
         };
 
+        // Check if upload is present
+        if (!data.upload) {
+          throw new Error("File upload is required"); // Throw an error for missing file
+        }
+
+        // Convert File to Buffer
+        const fileBuffer = Buffer.from(await data.upload.arrayBuffer());
+
+        // Resize and compress the image
+        const reducedBuffer = await reduceImageSize(fileBuffer);
+
         // Get the native MongoDB connection for GridFS
         const db = await getMongoNativeConnection();
         const bucket = new GridFSBucket(db, { bucketName: "profileImages" });
 
-        // Upload file to GridFS and get the file URL
-        const imageUrl = await uploadFileToGridFS(data.upload, bucket, userId!);
+        // Handle file upload to GridFS with the reduced image
+        const imageUrl = await uploadFileToGridFS(
+          new File([reducedBuffer], data.upload.name, {
+            type: data.upload.type,
+          }),
+          bucket,
+          userId!
+        );
 
         // Save horoscope info with the file URL to MongoDB
         const horoscopeInfo = new HoroscopeInfo({

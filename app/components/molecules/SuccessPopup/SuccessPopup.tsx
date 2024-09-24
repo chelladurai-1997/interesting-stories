@@ -40,12 +40,7 @@ const SuccessPopup: React.FC<SuccessPopupProps> = ({ isOpen, onClose }) => {
           for manual verification. Once verified, your profile will be visible
           to others, opening up exciting possibilities for your journey here.
         </p>
-        <p className="text-center text-gray-700 mb-4">
-          Remember, honesty and loyalty are the keys to finding your perfect
-          match. Embrace this journey, and you might just be pleasantly
-          surprised along the way! You're in the right place to find your life
-          partner.
-        </p>
+
         <p className="text-center text-gray-700 mb-4">
           For now, take a moment to relax and browse through profiles while you
           wait. Have a cheerful day! 🌟

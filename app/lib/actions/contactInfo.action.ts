@@ -8,6 +8,7 @@ import { GridFSBucket } from "mongodb";
 import { getUserIdFromToken } from "../utils/getUserIdFromToken";
 import { getStringFromFormData } from "../utils/formUtils";
 import { uploadFileToGridFS } from "../utils/uploadFileToGridFS";
+import { reduceImageSize } from "../utils/compressImageUtils";
 
 // Define an interface for Contact information data
 interface ContactFormData {
@@ -58,12 +59,24 @@ export async function handleContactInfoSubmission(
         throw new Error("File upload is required"); // Throw an error for missing photo
       }
 
+      // Convert File to Buffer
+      const fileBuffer = Buffer.from(await data.photo.arrayBuffer());
+
+      // Resize and compress the image
+      const reducedBuffer = await reduceImageSize(fileBuffer);
+
+      // Create a new File from the reduced Buffer
+      const reducedFile = new File([reducedBuffer], data.photo.name, {
+        type: data.photo.type,
+        lastModified: Date.now(), // Set the last modified date
+      });
+
       // Get the native MongoDB connection for GridFS
       const db = await getMongoNativeConnection();
       const bucket = new GridFSBucket(db, { bucketName: "profileImages" });
 
-      // Handle file upload to GridFS
-      const imageUrl = await uploadFileToGridFS(data.photo, bucket, userId!);
+      // Handle file upload to GridFS with the reduced file
+      const imageUrl = await uploadFileToGridFS(reducedFile, bucket, userId!);
 
       // Save contact info along with the photo URL to MongoDB
       const contactInfo = new ContactInfo({
@@ -93,6 +106,8 @@ export async function handleContactInfoSubmission(
         { session }
       );
     });
+
+    // Revalidate paths for caching
     router.revalidatePath("/");
     router.revalidatePath("/admin", "page");
     return { message: "Contact info saved successfully", error: false };
