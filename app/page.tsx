@@ -6,7 +6,22 @@ export default function Home() {
   return (
     <main>
       <Header showSearchForm />
-      <ProfileList />
+      {/* <ProfileList /> */}
+      <div className="bg-gradient-to-r from-[#fa8072] to-[#ffd700] text-gray-900 py-16 px-8">
+        <div className="max-w-4xl mx-auto text-center">
+          <h1 className="text-4xl font-bold mb-4">
+            Discover Your Perfect Match
+          </h1>
+          <p className="text-xl mb-6">
+            Browse profiles and find the person you've been waiting for. Start
+            your journey today!
+          </p>
+          <button className="bg-gray-900 text-[#ffd700] font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-gray-800 hover:shadow-xl transition-all duration-300 ease-in-out">
+            Browse Profiles
+          </button>
+        </div>
+      </div>
+
       <QuickAccess />
     </main>
   );

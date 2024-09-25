@@ -52,14 +52,18 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
   }, []);
 
   return (
-    <section className="relative bg-gray-900 pb-4">
-      <nav className="border-gray-200 bg-gray-900 relative">
+    <section
+      className={`relative bg-gradient-to-r from-purple-900 to-blue-900 ${
+        showSearchForm ? "pb-4" : ""
+      }`}
+    >
+      <nav className="border-b border-gray-800 bg-gray-900 relative">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <Link href="/" className="flex flex-col items-start">
             <span className="text-2xl font-semibold text-[#ffd700]">
               Linking Hearts
             </span>
-            <span className="text-sm text-[#fa8072]">
+            <span className="text-sm text-[#ff6347]">
               Bringing Families Together
             </span>
           </Link>
@@ -75,7 +79,7 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
                   onClick={toggleDropdown}
                 >
                   <span className="sr-only">Open user menu</span>
-                  <div className="w-8 h-8 rounded-full bg-gray-600 flex items-center justify-center">
+                  <div className="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center">
                     <span className="text-white text-xs">
                       {userProfile.userName?.at(0)}
                     </span>
@@ -96,7 +100,7 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
                       <li>
                         <Link
                           href="/dashboard"
-                          className="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-600"
+                          className="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-700 transition duration-200"
                         >
                           Dashboard
                         </Link>
@@ -105,7 +109,7 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
                         <Link
                           aria-disabled
                           href="#"
-                          className="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-600"
+                          className="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-700 transition duration-200"
                         >
                           Settings
                         </Link>
@@ -113,7 +117,7 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
                       <li>
                         <Link
                           href="#"
-                          className="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-600"
+                          className="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-700 transition duration-200"
                           onClick={() => logout()}
                         >
                           Sign out
@@ -126,12 +130,12 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
             ) : (
               <div className="flex space-x-2">
                 <Link href="/login">
-                  <button className="bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded hover:bg-gray-400 transition duration-300">
+                  <button className="bg-blue-600 text-white font-semibold py-2 px-4 rounded hover:bg-blue-700 transition duration-300">
                     Login
                   </button>
                 </Link>
                 <Link href="/signup" className="hidden md:block">
-                  <button className="bg-gray-200 text-gray-700 font-semibold py-2 px-4 rounded hover:bg-gray-400 transition duration-300">
+                  <button className="bg-blue-600 text-white font-semibold py-2 px-4 rounded hover:bg-blue-700 transition duration-300">
                     Register
                   </button>
                 </Link>
@@ -168,7 +172,7 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
           <div
             className={`${
               isMobileMenuOpen ? "block" : "hidden"
-            } absolute top-full left-0 right-0 bg-gray-800 border border-gray-700 rounded-lg shadow-lg md:hidden min-w-48`} // Set min width here
+            } absolute top-full left-0 right-0 bg-gray-800 border border-gray-700 rounded-lg shadow-lg md:hidden min-w-48`}
             ref={mobileMenuRef}
           >
             <ul className="flex flex-col font-medium p-4 space-y-2">

@@ -10,11 +10,12 @@ import SectionHeader from "../../molecules/SectionHeader/SectionHeader";
 import { useHoroscopeForm } from "@/app/lib/hooks/useHoroscope";
 import ArrowRightIcon from "../../icons/ArrowRightIcon";
 import LoadingIndicator from "../../molecules/LoadingIndicator/LoadingIndicator";
+import FormContainer from "../../molecules/SectionContainer/SectionContainer";
 
 const HoroscopeForm = () => {
   const { isRunning, onSubmit } = useHoroscopeForm();
   return (
-    <section className="bg-white p-6 sm:p-10 border rounded-xl max-w-[800px] mx-auto shadow-lg transition-transform transform  hover:shadow-2xl">
+    <FormContainer>
       <SectionHeader
         subtitle="Astrology, a guiding force from the stars!"
         step="Step 5 of 7"
@@ -96,7 +97,7 @@ const HoroscopeForm = () => {
           </div>
         </form>
       </div>
-    </section>
+    </FormContainer>
   );
 };
 

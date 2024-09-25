@@ -9,11 +9,12 @@ import {
 import SectionHeader from "../../molecules/SectionHeader/SectionHeader";
 import { useEducationOccupationForm } from "@/app/lib/hooks/useEducationOccupationForm";
 import ArrowRightIcon from "../../icons/ArrowRightIcon";
+import FormContainer from "../../molecules/SectionContainer/SectionContainer";
 
 const EducationOccupationForm = () => {
   const { isRunning, onSubmit } = useEducationOccupationForm();
   return (
-    <section className="bg-white p-6 sm:p-10 border rounded-xl max-w-[800px] mx-auto shadow-lg transition-transform transform  hover:shadow-2xl">
+    <FormContainer>
       <SectionHeader
         subtitle="Your information stays private with us!"
         step="Step 3 of 7"
@@ -90,7 +91,7 @@ const EducationOccupationForm = () => {
           </div>
         </form>
       </div>
-    </section>
+    </FormContainer>
   );
 };
 

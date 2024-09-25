@@ -15,12 +15,13 @@ import {
 import SectionHeader from "../../molecules/SectionHeader/SectionHeader";
 import { usePersonalDetailsForm } from "@/app/lib/hooks/usePersonalDetailsForm";
 import ArrowRightIcon from "../../icons/ArrowRightIcon";
+import FormContainer from "../../molecules/SectionContainer/SectionContainer";
 
 const PersonalDetailsForm = () => {
   const { onSubmit, isRunning } = usePersonalDetailsForm();
 
   return (
-    <section className="bg-white p-6 sm:p-10 border rounded-xl max-w-[800px] mx-auto shadow-lg transition-transform transform  hover:shadow-2xl">
+    <FormContainer>
       <SectionHeader
         subtitle="Your information stays secure with us!"
         step="Step 2 of 7"
@@ -148,7 +149,7 @@ const PersonalDetailsForm = () => {
           </div>
         </form>
       </div>
-    </section>
+    </FormContainer>
   );
 };
 

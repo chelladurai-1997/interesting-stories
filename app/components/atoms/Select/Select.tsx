@@ -2,15 +2,16 @@ export interface SelectOption {
   value: string;
   label?: string;
 }
+
 export interface SelectProps {
   id: string;
   name: string;
   options: SelectOption[] | string[];
   placeholder: string;
   className?: string;
-  searchable?: Boolean;
-  multiselect?: Boolean;
-  required?: Boolean;
+  searchable?: boolean; // Changed from Boolean to boolean
+  multiselect?: boolean; // Changed from Boolean to boolean
+  required?: boolean; // Changed from Boolean to boolean
   disabled?: boolean;
   onChange?: (
     event:
@@ -25,7 +26,7 @@ const Select: React.FC<SelectProps> = ({
   name,
   options,
   placeholder,
-  className,
+  className = "",
   searchable = false,
   required = false,
   disabled = false,
@@ -38,10 +39,11 @@ const Select: React.FC<SelectProps> = ({
           id={id + "_search_input"}
           name={name}
           className={
-            "w-full mt-1 p-2 border border-gray-300 rounded" + className
+            "w-full mt-1 bg-white border border-gray-300 rounded-md shadow-sm p-3 focus:outline-none focus:ring-2 focus:ring-yellow-500 " +
+            className
           }
           placeholder={placeholder}
-          required
+          required={required}
           list={name}
           type="search"
           onChange={onChange}
@@ -61,9 +63,12 @@ const Select: React.FC<SelectProps> = ({
       <select
         id={id}
         name={name}
-        className={"w-full mt-1 p-2 border border-gray-300 rounded" + className}
+        className={
+          "w-full mt-1 bg-white border border-gray-300 rounded-md shadow-sm p-3 focus:outline-none focus:ring-2 focus:ring-yellow-500 " +
+          className
+        }
         defaultValue=""
-        required={typeof required === "boolean" ? required : false}
+        required={required}
         onChange={onChange}
         disabled={disabled}
       >

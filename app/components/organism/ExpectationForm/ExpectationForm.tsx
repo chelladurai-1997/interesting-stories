@@ -11,11 +11,12 @@ import SectionHeader from "../../molecules/SectionHeader/SectionHeader";
 
 import { useExpectationForm } from "@/app/lib/hooks/useExpectationForm";
 import ArrowRightIcon from "../../icons/ArrowRightIcon";
+import FormContainer from "../../molecules/SectionContainer/SectionContainer";
 
 const ExpectationForm = () => {
   const { isRunning, onSubmit } = useExpectationForm();
   return (
-    <section className="bg-white p-6 sm:p-10 border rounded-xl max-w-[800px] mx-auto shadow-lg transition-transform transform  hover:shadow-2xl">
+    <FormContainer>
       <SectionHeader
         subtitle="Share Your Expectations with Us"
         step="Step 6 of 7"
@@ -91,7 +92,7 @@ const ExpectationForm = () => {
           </div>
         </form>
       </div>
-    </section>
+    </FormContainer>
   );
 };
 

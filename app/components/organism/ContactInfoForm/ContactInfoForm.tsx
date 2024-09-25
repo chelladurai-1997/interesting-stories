@@ -11,12 +11,13 @@ import { useContactInfoForm } from "@/app/lib/hooks/useContactInfoForm";
 import ArrowRightIcon from "../../icons/ArrowRightIcon";
 import LoadingIndicator from "../../molecules/LoadingIndicator/LoadingIndicator";
 import SuccessPopup from "../../molecules/SuccessPopup/SuccessPopup";
+import FormContainer from "../../molecules/SectionContainer/SectionContainer";
 
 const ContactInfoForm = () => {
   const { isRunning, onSubmit, isSuccessPopupOpen, handleSuccessPopupClose } =
     useContactInfoForm();
   return (
-    <section className="bg-white p-6 sm:p-10 border rounded-xl max-w-[800px] mx-auto shadow-lg transition-transform transform  hover:shadow-2xl">
+    <FormContainer>
       <SectionHeader
         subtitle="This is the last bit of information we require."
         step="Step 7 of 7"
@@ -137,7 +138,7 @@ const ContactInfoForm = () => {
           </div>
         </form>
       </div>
-    </section>
+    </FormContainer>
   );
 };
 

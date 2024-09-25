@@ -4,11 +4,12 @@ import Button from "../../atoms/Button/Button";
 import SectionHeader from "../../molecules/SectionHeader/SectionHeader";
 import { kulamOptions } from "@/app/lib/constants/global.constant";
 import { useFamilyInfoForm } from "@/app/lib/hooks/useFamilyInfoForm";
+import FormContainer from "../../molecules/SectionContainer/SectionContainer";
 
 const FamilyInfoForm = () => {
   const { isRunning, onSubmit } = useFamilyInfoForm();
   return (
-    <section className="bg-white p-6 sm:p-10 border rounded-xl max-w-[800px] mx-auto shadow-lg transition-transform transform  hover:shadow-2xl">
+    <FormContainer>
       <SectionHeader
         subtitle="Tell us a bit about your family!"
         step="Step 4 of 7"
@@ -185,7 +186,7 @@ const FamilyInfoForm = () => {
           </div>
         </form>
       </div>
-    </section>
+    </FormContainer>
   );
 };
 
