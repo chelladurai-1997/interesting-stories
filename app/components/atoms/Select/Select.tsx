@@ -1,91 +1,83 @@
+import React from "react";
+import Select from "react-select";
+import makeAnimated from "react-select/animated";
+
 export interface SelectOption {
   value: string;
-  label?: string;
+  label: string;
 }
 
 export interface SelectProps {
+  options: SelectOption[]; // Options should be an array of SelectOption
+  placeholder: string;
+  required?: boolean;
+  isMulti?: boolean; // For multi-select
+  onChange?: (selected: SelectOption[]) => void; // Callback to handle changes
   id: string;
   name: string;
-  options: SelectOption[] | string[];
-  placeholder: string;
-  className?: string;
-  searchable?: boolean; // Changed from Boolean to boolean
-  multiselect?: boolean; // Changed from Boolean to boolean
-  required?: boolean; // Changed from Boolean to boolean
-  disabled?: boolean;
-  onChange?: (
-    event:
-      | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLTextAreaElement>
-      | React.ChangeEvent<HTMLSelectElement>
-  ) => void;
 }
 
-const Select: React.FC<SelectProps> = ({
-  id,
-  name,
+const animatedComponents = makeAnimated();
+
+const customStyles = {
+  control: (provided: any, state: any) => ({
+    ...provided,
+    width: "100%", // Full width
+    backgroundColor: "white", // Background color
+    borderColor: state.isFocused ? "#FBBF24" : "#D1D5DB", // Border color based on focus
+    borderWidth: "1px", // Border width
+    borderRadius: "0.375rem", // Rounded corners
+    boxShadow: state.isFocused ? "0 0 0 1px #FBBF24" : provided.boxShadow, // Focus ring
+    outline: "none", // Remove default outline
+    "&:hover": {
+      borderColor: "", // Border color on hover
+    },
+  }),
+  dropdownIndicator: (provided: any) => ({
+    ...provided,
+    transition: "transform 0.2s", // Smooth rotation transition
+  }),
+  indicatorSeparator: () => ({
+    display: "none", // Hide the separator
+  }),
+  option: (provided: any, state: any) => ({
+    ...provided,
+    backgroundColor: state.isSelected
+      ? "#FBBF24"
+      : state.isFocused
+      ? "#FEEBC8"
+      : provided.backgroundColor, // Selected and focused colors
+    color: state.isSelected ? "white" : provided.color, // Change text color on select
+    "&:active": {
+      backgroundColor: "#D97706", // Active state color
+    },
+  }),
+};
+
+const CustomSelect: React.FC<SelectProps> = ({
   options,
   placeholder,
-  className = "",
-  searchable = false,
-  required = false,
-  disabled = false,
+  required = true,
+  isMulti = false,
+  id,
+  name,
   onChange,
-}) => (
-  <>
-    {searchable ? (
-      <>
-        <input
-          id={id + "_search_input"}
-          name={name}
-          className={
-            "w-full mt-1 bg-white border border-gray-300 rounded-md shadow-sm p-3 focus:outline-none focus:ring-2 focus:ring-yellow-500 " +
-            className
-          }
-          placeholder={placeholder}
-          required={required}
-          list={name}
-          type="search"
-          onChange={onChange}
-          disabled={disabled}
-        />
-
-        <datalist id={name}>
-          {options.map((option, index) => (
-            <option
-              key={index}
-              value={typeof option === "string" ? option : option.value}
-            />
-          ))}
-        </datalist>
-      </>
-    ) : (
-      <select
+}) => {
+  return (
+    <div className="mt-2">
+      <Select
+        closeMenuOnSelect={!isMulti}
+        components={animatedComponents}
+        options={options}
+        placeholder={placeholder}
+        isMulti={isMulti}
+        required={required}
+        styles={customStyles}
         id={id}
         name={name}
-        className={
-          "w-full mt-1 bg-white border border-gray-300 rounded-md shadow-sm p-3 focus:outline-none focus:ring-2 focus:ring-yellow-500 " +
-          className
-        }
-        defaultValue=""
-        required={required}
-        onChange={onChange}
-        disabled={disabled}
-      >
-        <option value="" disabled>
-          {placeholder}
-        </option>
-        {options.map((option, index) => (
-          <option
-            key={index}
-            value={typeof option === "string" ? option : option.value}
-          >
-            {typeof option === "string" ? option : option.label || option.value}
-          </option>
-        ))}
-      </select>
-    )}
-  </>
-);
+      />
+    </div>
+  );
+};
 
-export default Select;
+export default CustomSelect;

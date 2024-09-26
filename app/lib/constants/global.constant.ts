@@ -12,60 +12,104 @@ export const ageOptions: SelectOption[] = [
   { value: "36-40", label: "36 - 40" },
   { value: "40+", label: "40+" },
 ];
-
-export const educationOptions: string[] = [
-  "Studying - படித்துக்கொண்டு இருக்கிறார்",
-  "Below 10th standard - உயர்நிலைக்கு கீழ்",
-  "10th standard - உயர்நிலைப்படிப்பு",
-  "12th standard - மேல்நிலைப்படிப்பு",
-  "Bachelor's degree - இளங்கலைப்படிப்பு",
-  "Master's degree - முதுகலைப்படிப்பு",
-  "Doctor - மருத்துவப்படிப்பு",
-  "Engineering - பொறியியல் படிப்பு",
-  "Degree course/ diploma - பட்டயப்படிப்பு/தொழில் முறை படிப்பு",
-  "Others - மற்றவை",
-  "No study - படிப்பு இல்லை",
+export const educationOptions: { label: string; value: string }[] = [
+  {
+    label: "Studying - படித்துக்கொண்டு இருக்கிறார்",
+    value: "Studying - படித்துக்கொண்டு இருக்கிறார்",
+  },
+  {
+    label: "Below 10th standard - உயர்நிலைக்கு கீழ்",
+    value: "Below 10th standard - உயர்நிலைக்கு கீழ்",
+  },
+  {
+    label: "10th standard - உயர்நிலைப்படிப்பு",
+    value: "10th standard - உயர்நிலைப்படிப்பு",
+  },
+  {
+    label: "12th standard - மேல்நிலைப்படிப்பு",
+    value: "12th standard - மேல்நிலைப்படிப்பு",
+  },
+  {
+    label: "Bachelor's degree - இளங்கலைப்படிப்பு",
+    value: "Bachelor's degree - இளங்கலைப்படிப்பு",
+  },
+  {
+    label: "Master's degree - முதுகலைப்படிப்பு",
+    value: "Master's degree - முதுகலைப்படிப்பு",
+  },
+  { label: "Doctor - மருத்துவப்படிப்பு", value: "Doctor - மருத்துவப்படிப்பு" },
+  {
+    label: "Engineering - பொறியியல் படிப்பு",
+    value: "Engineering - பொறியியல் படிப்பு",
+  },
+  {
+    label: "Degree course/ diploma - பட்டயப்படிப்பு/தொழில் முறை படிப்பு",
+    value: "Degree course/ diploma - பட்டயப்படிப்பு/தொழில் முறை படிப்பு",
+  },
+  { label: "Others - மற்றவை", value: "Others - மற்றவை" },
+  { label: "No study - படிப்பு இல்லை", value: "No study - படிப்பு இல்லை" },
 ];
 
-export const districtOptions: string[] = [
-  "Ariyalur - அரியலூர்",
-  "Chengalpattu - செங்கல்பட்டு",
-  "Chennai - சென்னை",
-  "Coimbatore - கோயம்புத்தூர்",
-  "Cuddalore - கடலூர்",
-  "Dharmapuri - தர்மபுரி",
-  "Dindigul - திண்டுக்கல்",
-  "Erode - ஈரோடு",
-  "Kallakurichi - கள்ளக்குறிச்சி",
-  "Kanchipuram - காஞ்சிபுரம்",
-  "Kanyakumari - கன்னியாகுமரி",
-  "Karur - கரூர்",
-  "Krishnagiri - கிருஷ்ணகிரி",
-  "Madurai - மதுரை",
-  "Mayiladuthurai - மயிலாடுதுறை",
-  "Nagapattinam - நாகப்பட்டினம்",
-  "Namakkal - நாமக்கல்",
-  "Nilgiris - நீலகிரி",
-  "Perambalur - பெரம்பலூர்",
-  "Pudukkottai - புதுக்கோட்டை",
-  "Ramanathapuram - இராமநாதபுரம்",
-  "Ranipet - இராணிப்பேட்டை",
-  "Salem - சேலம்",
-  "Sivagangai - சிவகங்கை",
-  "Tenkasi - தென்காசி",
-  "Thanjavur - தஞ்சாவூர்",
-  "Theni - தேனி",
-  "Thoothukudi - தூத்துக்குடி",
-  "Tiruchirappalli - திருச்சிராப்பள்ளி",
-  "Tirunelveli - திருநெல்வேலி",
-  "Tirupathur - திருப்பத்தூர்",
-  "Tiruppur - திருப்பூர்",
-  "Tiruvallur - திருவள்ளூர்",
-  "Tiruvannamalai - திருவண்ணாமலை",
-  "Tiruvarur - திருவாரூர்",
-  "Vellore - வேலூர்",
-  "Viluppuram - விழுப்புரம்",
-  "Virudhunagar - விருதுநகர்",
+export const districtOptions: { label: string; value: string }[] = [
+  { label: "Ariyalur - அரியலூர்", value: "Ariyalur - அரியலூர்" },
+  {
+    label: "Chengalpattu - செங்கல்பட்டு",
+    value: "Chengalpattu - செங்கல்பட்டு",
+  },
+  { label: "Chennai - சென்னை", value: "Chennai - சென்னை" },
+  { label: "Coimbatore - கோயம்புத்தூர்", value: "Coimbatore - கோயம்புத்தூர்" },
+  { label: "Cuddalore - கடலூர்", value: "Cuddalore - கடலூர்" },
+  { label: "Dharmapuri - தர்மபுரி", value: "Dharmapuri - தர்மபுரி" },
+  { label: "Dindigul - திண்டுக்கல்", value: "Dindigul - திண்டுக்கல்" },
+  { label: "Erode - ஈரோடு", value: "Erode - ஈரோடு" },
+  {
+    label: "Kallakurichi - கள்ளக்குறிச்சி",
+    value: "Kallakurichi - கள்ளக்குறிச்சி",
+  },
+  { label: "Kanchipuram - காஞ்சிபுரம்", value: "Kanchipuram - காஞ்சிபுரம்" },
+  { label: "Kanyakumari - கன்னியாகுமரி", value: "Kanyakumari - கன்னியாகுமரி" },
+  { label: "Karur - கரூர்", value: "Karur - கரூர்" },
+  { label: "Krishnagiri - கிருஷ்ணகிரி", value: "Krishnagiri - கிருஷ்ணகிரி" },
+  { label: "Madurai - மதுரை", value: "Madurai - மதுரை" },
+  {
+    label: "Mayiladuthurai - மயிலாடுதுறை",
+    value: "Mayiladuthurai - மயிலாடுதுறை",
+  },
+  {
+    label: "Nagapattinam - நாகப்பட்டினம்",
+    value: "Nagapattinam - நாகப்பட்டினம்",
+  },
+  { label: "Namakkal - நாமக்கல்", value: "Namakkal - நாமக்கல்" },
+  { label: "Nilgiris - நீலகிரி", value: "Nilgiris - நீலகிரி" },
+  { label: "Perambalur - பெரம்பலூர்", value: "Perambalur - பெரம்பலூர்" },
+  { label: "Pudukkottai - புதுக்கோட்டை", value: "Pudukkottai - புதுக்கோட்டை" },
+  {
+    label: "Ramanathapuram - இராமநாதபுரம்",
+    value: "Ramanathapuram - இராமநாதபுரம்",
+  },
+  { label: "Ranipet - இராணிப்பேட்டை", value: "Ranipet - இராணிப்பேட்டை" },
+  { label: "Salem - சேலம்", value: "Salem - சேலம்" },
+  { label: "Sivagangai - சிவகங்கை", value: "Sivagangai - சிவகங்கை" },
+  { label: "Tenkasi - தென்காசி", value: "Tenkasi - தென்காசி" },
+  { label: "Thanjavur - தஞ்சாவூர்", value: "Thanjavur - தஞ்சாவூர்" },
+  { label: "Theni - தேனி", value: "Theni - தேனி" },
+  { label: "Thoothukudi - தூத்துக்குடி", value: "Thoothukudi - தூத்துக்குடி" },
+  {
+    label: "Tiruchirappalli - திருச்சிராப்பள்ளி",
+    value: "Tiruchirappalli - திருச்சிராப்பள்ளி",
+  },
+  { label: "Tirunelveli - திருநெல்வேலி", value: "Tirunelveli - திருநெல்வேலி" },
+  { label: "Tirupathur - திருப்பத்தூர்", value: "Tirupathur - திருப்பத்தூர்" },
+  { label: "Tiruppur - திருப்பூர்", value: "Tiruppur - திருப்பூர்" },
+  { label: "Tiruvallur - திருவள்ளூர்", value: "Tiruvallur - திருவள்ளூர்" },
+  {
+    label: "Tiruvannamalai - திருவண்ணாமலை",
+    value: "Tiruvannamalai - திருவண்ணாமலை",
+  },
+  { label: "Tiruvarur - திருவாரூர்", value: "Tiruvarur - திருவாரூர்" },
+  { label: "Vellore - வேலூர்", value: "Vellore - வேலூர்" },
+  { label: "Viluppuram - விழுப்புரம்", value: "Viluppuram - விழுப்புரம்" },
+  { label: "Virudhunagar - விருதுநகர்", value: "Virudhunagar - விருதுநகர்" },
 ];
 
 export const stateOptions = [
@@ -115,34 +159,29 @@ export const childrenLivingStatusOptions = [
 export const genderLabelOptions = ["Male", "Female"];
 
 // Dropdown options
-export const EDUCATION_OPTIONS = [
-  "High School",
-  "Associate Degree",
-  "Bachelor's Degree",
-  "Master's Degree",
-  "PhD",
+export const EDUCATION_OPTIONS: { label: string; value: string }[] = [
+  { label: "High School", value: "High School" },
+  { label: "Associate Degree", value: "Associate Degree" },
+  { label: "Bachelor's Degree", value: "Bachelor's Degree" },
+  { label: "Master's Degree", value: "Master's Degree" },
+  { label: "PhD", value: "PhD" },
 ];
 
-export const OCCUPATION_OPTIONS = [
-  "Engineer",
-  "Doctor",
-  "Teacher",
-  "Manager",
-  "Others",
+export const OCCUPATION_OPTIONS: { label: string; value: string }[] = [
+  { label: "Engineer", value: "Engineer" },
+  { label: "Doctor", value: "Doctor" },
+  { label: "Teacher", value: "Teacher" },
+  { label: "Manager", value: "Manager" },
+  { label: "Others", value: "Others" },
 ];
 
-export const MONTHLY_INCOME_OPTIONS = [
-  "Below 10,000",
-  "10,000 - 25,000",
-  "25,000 - 50,000",
-  "50,000 - 1,00,000",
-  "Above 1,00,000",
+export const MONTHLY_INCOME_OPTIONS: { label: string; value: string }[] = [
+  { label: "Below 10,000", value: "Below 10,000" },
+  { label: "10,000 - 25,000", value: "10,000 - 25,000" },
+  { label: "25,000 - 50,000", value: "25,000 - 50,000" },
+  { label: "50,000 - 1,00,000", value: "50,000 - 1,00,000" },
+  { label: "Above 1,00,000", value: "Above 1,00,000" },
 ];
-
-export const jaadhagamOptions = {
-  jaadhagamOptions: ["Option 1", "Option 2", "Option 3"],
-  expectingStarsOptions: ["Option 1", "Option 2", "Option 3"],
-};
 
 export const workingPlaceOptions = [
   { value: "Tamil nadu - தமிழ்நாடு", label: "Tamil Nadu - தமிழ்நாடு" },
