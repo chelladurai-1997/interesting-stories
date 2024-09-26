@@ -139,14 +139,10 @@ const FormField: React.FC<FormFieldProps> = ({
             <Select
               id={id}
               name={name}
-              options={options || []}
+              options={options}
               placeholder={placeholder || ""}
-              searchable={searchable}
-              multiselect={multiselect}
+              isMulti={multiselect}
               required={required}
-              onChange={handleChange}
-              disabled={disabled}
-              className="block w-full bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 p-3 sm:text-sm mt-2"
             />
           ) : (
             <Input

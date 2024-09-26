@@ -8,7 +8,7 @@ export interface SelectOption {
 }
 
 export interface SelectProps {
-  options: SelectOption[]; // Options should be an array of SelectOption
+  options?: SelectOption[] | string[];
   placeholder: string;
   required?: boolean;
   isMulti?: boolean; // For multi-select
