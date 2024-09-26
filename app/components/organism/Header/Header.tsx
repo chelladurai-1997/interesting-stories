@@ -83,13 +83,13 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
                 </button>
 
                 {isDropdownOpen && (
-                  <div className="absolute right-0 my-2 w-48 bg-gray-800 border border-gray-700 rounded-lg shadow-lg">
+                  <div className="absolute right-0 my-2 w-48 bg-gray-800 border border-gray-700 rounded-lg shadow-lg z-[99999]">
                     <div className="px-4 py-3">
                       <span className="block text-sm text-white">
                         {userProfile?.userName}
                       </span>
                       <span className="block text-sm truncate text-gray-400">
-                        {userProfile.userId}
+                        {userProfile.userId.slice(0, 10)}
                       </span>
                     </div>
                     <ul className="py-2" aria-labelledby="user-menu-button">
@@ -168,7 +168,7 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
           <div
             className={`${
               isMobileMenuOpen ? "block" : "hidden"
-            } absolute top-full left-0 right-0 bg-gray-800 border border-gray-700 rounded-lg shadow-lg md:hidden min-w-48`} // Set min width here
+            } absolute top-full left-0 right-0 bg-gray-800 border border-gray-700 rounded-lg shadow-lg md:hidden min-w-48m z-[99999]`} // Set min width here
             ref={mobileMenuRef}
           >
             <ul className="flex flex-col font-medium p-4 space-y-2">
