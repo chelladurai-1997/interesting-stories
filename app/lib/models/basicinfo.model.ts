@@ -24,6 +24,7 @@ const ProfileSchema = new Schema<IProfile>(
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
+      index: true,
     },
     gender: {
       type: String,

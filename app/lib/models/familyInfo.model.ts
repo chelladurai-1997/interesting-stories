@@ -21,7 +21,11 @@ export interface IFamilyDetails extends Document {
 
 const FamilyDetailsSchema = new Schema<IFamilyDetails>(
   {
-    userId: { type: mongoose.Schema.Types.ObjectId, required: true },
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      index: true,
+    },
 
     fatherName: {
       type: String,

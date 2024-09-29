@@ -12,7 +12,11 @@ export interface IHoroscopeDetails extends Document {
 
 const HoroscopeDetailsSchema = new Schema<IHoroscopeDetails>(
   {
-    userId: { type: mongoose.Schema.Types.ObjectId, required: true },
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      index: true,
+    },
 
     raasi: {
       type: String,

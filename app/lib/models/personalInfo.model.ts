@@ -16,7 +16,11 @@ export interface IPersonalDetails extends Document {
 
 const PersonalDetailsSchema = new Schema<IPersonalDetails>(
   {
-    userId: { type: mongoose.Schema.Types.ObjectId, required: true },
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      index: true,
+    },
     religion: {
       type: String,
       required: true,

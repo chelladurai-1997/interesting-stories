@@ -12,7 +12,11 @@ export interface IEducationOccupation extends Document {
 
 const EducationOccupationSchema = new Schema<IEducationOccupation>(
   {
-    userId: { type: mongoose.Schema.Types.ObjectId, required: true },
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      index: true,
+    },
     education: {
       type: String,
       required: true,

@@ -7,7 +7,6 @@ export interface IUser extends Document {
   agreeToTermsAndConditions: boolean;
   isRegistrationComplete: boolean;
   adminApproved: boolean;
-  lastCompletedStep: number;
 
   completedSections: {
     basicInfo: boolean;
@@ -28,8 +27,7 @@ const UserSchema = new Schema<IUser>(
     password: { type: String, required: true },
     agreeToTermsAndConditions: { type: Boolean, required: true },
     isRegistrationComplete: { type: Boolean, default: false },
-    adminApproved: { type: Boolean, default: false },
-    lastCompletedStep: { type: Number },
+    adminApproved: { type: Boolean, default: false, index: true },
 
     completedSections: {
       basicInfo: { type: Boolean, default: false },

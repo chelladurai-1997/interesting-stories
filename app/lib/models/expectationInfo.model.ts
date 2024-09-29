@@ -11,7 +11,11 @@ export interface IExpectations extends Document {
 
 const ExpectationsSchema = new Schema<IExpectations>(
   {
-    userId: { type: mongoose.Schema.Types.ObjectId, required: true },
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      index: true,
+    },
 
     jaadhagam: {
       type: String,

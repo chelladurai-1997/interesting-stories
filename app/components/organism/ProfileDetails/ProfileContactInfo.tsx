@@ -30,12 +30,14 @@ const ProfileContactInfo: React.FC<ProfileContactInfoProps> = ({
           value={contactInfo.mobile ?? ""}
           backgroundColor="bg-blue-200"
           textColor="text-blue-800"
+          isPhoneNumber
         />
         <StyledChip
           label="WhatsApp"
           value={contactInfo.whatsapp ?? ""}
           backgroundColor="bg-green-200"
           textColor="text-green-800"
+          isPhoneNumber
         />
         <StyledChip
           label="Country"

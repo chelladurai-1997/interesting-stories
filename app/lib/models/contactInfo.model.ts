@@ -18,6 +18,7 @@ const ContactInfoSchema = new Schema<IContactInfo>(
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
+      index: true,
     },
     mobile: {
       type: String,
