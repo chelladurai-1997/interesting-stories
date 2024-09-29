@@ -28,9 +28,13 @@ interface FormFieldProps {
   multiselect?: boolean;
   required?: boolean;
   onChange?: (
-    event: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    event:
+      | React.ChangeEvent<
+          HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+        >
+      | SelectOption[]
+      | SelectOption
+      | null
   ) => void;
   disabled?: boolean;
 }
@@ -55,11 +59,20 @@ const FormField: React.FC<FormFieldProps> = ({
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) => {
-    // Call the onChange function with the correct event type
     if (onChange) {
       onChange(event);
     }
   };
+
+  // Convert string[] to SelectOption[]
+  const normalizedOptions: SelectOption[] | undefined = Array.isArray(options)
+    ? typeof options[0] === "string"
+      ? (options as string[]).map((opt) => ({
+          value: opt,
+          label: opt,
+        }))
+      : (options as SelectOption[])
+    : undefined;
 
   return (
     <div className={`w-full ${type === "checkbox" ? "flex items-center" : ""}`}>
@@ -87,7 +100,7 @@ const FormField: React.FC<FormFieldProps> = ({
             disabled={disabled}
           />
           <div className="flex flex-row mt-2">
-            {options?.map((option, index) => (
+            {normalizedOptions?.map((option, index) => (
               <div className="form-check me-4" key={index}>
                 <input
                   className="form-check-input mr-2"
@@ -95,12 +108,12 @@ const FormField: React.FC<FormFieldProps> = ({
                   name={name}
                   id={`${id}${index}`}
                   required={required}
-                  value={option.toString()}
+                  value={option.value}
                   onChange={handleChange}
                   disabled={disabled}
                 />
                 <Label
-                  text={typeof option === "string" ? option : ""}
+                  text={option.label}
                   htmlFor={`${id}${index}`}
                   className="form-check-label"
                   disabled={disabled}
@@ -139,10 +152,12 @@ const FormField: React.FC<FormFieldProps> = ({
             <Select
               id={id}
               name={name}
-              options={options}
+              options={normalizedOptions}
               placeholder={placeholder || ""}
               isMulti={multiselect}
               required={required}
+              onChange={onChange}
+              isSearchable={searchable}
             />
           ) : (
             <Input

@@ -1,5 +1,5 @@
 import React from "react";
-import Select from "react-select";
+import Select, { ActionMeta, SingleValue, MultiValue } from "react-select";
 import makeAnimated from "react-select/animated";
 
 export interface SelectOption {
@@ -12,9 +12,10 @@ export interface SelectProps {
   placeholder: string;
   required?: boolean;
   isMulti?: boolean; // For multi-select
-  onChange?: (selected: SelectOption[]) => void; // Callback to handle changes
+  onChange?: (selected: SelectOption[] | SelectOption | null) => void; // Callback to handle changes
   id: string;
   name: string;
+  isSearchable?: boolean;
 }
 
 const animatedComponents = makeAnimated();
@@ -26,6 +27,8 @@ const customStyles = {
     backgroundColor: "white", // Background color
     borderColor: state.isFocused ? "#FBBF24" : "#D1D5DB", // Border color based on focus
     borderWidth: "1px", // Border width
+    paddingTop: "6px",
+    paddingBottom: "6px",
     borderRadius: "0.375rem", // Rounded corners
     boxShadow: state.isFocused ? "0 0 0 1px #FBBF24" : provided.boxShadow, // Focus ring
     outline: "none", // Remove default outline
@@ -62,19 +65,44 @@ const CustomSelect: React.FC<SelectProps> = ({
   id,
   name,
   onChange,
+  isSearchable = true,
 }) => {
+  // Transform string[] into SelectOption[] if necessary
+  const transformedOptions = options?.map((option) =>
+    typeof option === "string"
+      ? { value: option, label: option } // Convert string to SelectOption
+      : option
+  ) as SelectOption[];
+
+  // Handle the onChange event for react-select
+  const handleChange = (
+    newValue: SingleValue<SelectOption> | MultiValue<SelectOption>,
+    actionMeta: ActionMeta<SelectOption>
+  ) => {
+    if (onChange) {
+      // If it's multi-select, newValue will be an array (MultiValue), otherwise SingleValue
+      if (isMulti) {
+        onChange(newValue as SelectOption[]); // Cast newValue as SelectOption[]
+      } else {
+        onChange(newValue as SelectOption); // Cast newValue as SelectOption (single)
+      }
+    }
+  };
+
   return (
     <div className="mt-2">
       <Select
         closeMenuOnSelect={!isMulti}
         components={animatedComponents}
-        options={options}
+        options={transformedOptions} // Use the transformed options
         placeholder={placeholder}
         isMulti={isMulti}
         required={required}
         styles={customStyles}
         id={id}
         name={name}
+        isSearchable={isSearchable}
+        onChange={handleChange} // Updated handler
       />
     </div>
   );
