@@ -35,6 +35,7 @@ const ExpectationForm = () => {
                 type="select"
                 options={jathagamStatusOptions}
                 placeholder="Select Jaadhagam"
+                searchable={false}
               />
 
               {/* Marital Status */}
@@ -45,6 +46,7 @@ const ExpectationForm = () => {
                 type="select"
                 options={maritalStatusOptions}
                 placeholder="Select Marital Status"
+                searchable={false}
               />
             </div>
 
@@ -57,6 +59,7 @@ const ExpectationForm = () => {
                 type="select"
                 options={workingPlaceOptions}
                 placeholder="Select Working Place"
+                searchable={false}
               />
 
               {/* Expecting Stars */}

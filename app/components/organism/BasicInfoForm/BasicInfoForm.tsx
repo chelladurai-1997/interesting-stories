@@ -53,6 +53,7 @@ const BasicInfoForm = () => {
                   id="gender"
                   options={genderLabelOptions}
                   placeholder="Select Gender"
+                  searchable={false}
                 />
               </ResponsiveGridContainer>
 
@@ -73,6 +74,7 @@ const BasicInfoForm = () => {
                   type="select"
                   options={profileCreatedByOptions}
                   placeholder="Select Created by"
+                  searchable={false}
                 />
               </ResponsiveGridContainer>
 
@@ -83,6 +85,7 @@ const BasicInfoForm = () => {
                 options={maritalStatusOptions}
                 placeholder="Select Marital Status"
                 type="select"
+                searchable={false}
                 onChange={handleMaritalStatusChange}
               />
 
@@ -95,6 +98,7 @@ const BasicInfoForm = () => {
                     options={noOfChildrensOptions}
                     placeholder="Select No. of. Children"
                     type="select"
+                    searchable={false}
                   />
 
                   <FormField

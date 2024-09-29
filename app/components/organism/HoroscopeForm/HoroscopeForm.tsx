@@ -75,6 +75,7 @@ const HoroscopeForm = () => {
                 placeholder="Select Dhosam"
                 options={jathagamStatusOptions}
                 type="select"
+                searchable={false}
               />
               <FormField
                 label="Upload Horoscope (ஜாதகம் பதிவேற்றம்)"

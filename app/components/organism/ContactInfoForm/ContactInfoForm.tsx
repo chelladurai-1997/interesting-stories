@@ -34,7 +34,6 @@ const ContactInfoForm = () => {
                 id="mobile"
                 name="mobile"
                 placeholder="Mobile number"
-                className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
               />
 
               <FormField
@@ -42,7 +41,6 @@ const ContactInfoForm = () => {
                 name="sameAsMobile"
                 type="checkbox"
                 label="WhatsApp number same as Mobile"
-                className="mt-1 block w-full"
               />
             </div>
 
@@ -52,7 +50,6 @@ const ContactInfoForm = () => {
                 id="whatsapp"
                 name="whatsapp"
                 placeholder="WhatsApp number"
-                className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
               />
               <FormField
                 label="Country (நாடு):"
@@ -61,7 +58,7 @@ const ContactInfoForm = () => {
                 placeholder="Select Country"
                 options={countriesOptions}
                 type="select"
-                className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
+                searchable={false}
               />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -72,7 +69,6 @@ const ContactInfoForm = () => {
                 placeholder="Select State"
                 options={stateOptions}
                 type="select"
-                className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
               />
 
               <FormField
@@ -82,7 +78,6 @@ const ContactInfoForm = () => {
                 placeholder="Select District"
                 options={districtOptions}
                 type="select"
-                className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
               />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -93,7 +88,6 @@ const ContactInfoForm = () => {
                 name="address"
                 placeholder="Full Address"
                 type="textarea"
-                className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
               />
 
               <FormField
@@ -109,7 +103,6 @@ const ContactInfoForm = () => {
                 name="pin_code"
                 placeholder="Pincode"
                 type="number"
-                className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
               /> */}
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -119,7 +112,6 @@ const ContactInfoForm = () => {
                 name="pin_code"
                 placeholder="Pincode"
                 type="number"
-                className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
               />
             </div>
           </div>

@@ -4,6 +4,14 @@ import Select, { SelectOption } from "../../atoms/Select/Select";
 import Input from "../../atoms/Input/Input";
 import Checkbox from "../../atoms/Checkbox/Checkbox";
 
+export type InputPropEvent =
+  | React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  | SelectOption[]
+  | SelectOption
+  | null;
+
 interface FormFieldProps {
   label: string;
   id: string;
@@ -27,15 +35,7 @@ interface FormFieldProps {
   searchable?: boolean;
   multiselect?: boolean;
   required?: boolean;
-  onChange?: (
-    event:
-      | React.ChangeEvent<
-          HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-        >
-      | SelectOption[]
-      | SelectOption
-      | null
-  ) => void;
+  onChange?: (event: InputPropEvent) => void;
   disabled?: boolean;
 }
 

@@ -94,6 +94,7 @@ const PersonalDetailsForm = () => {
                 name="complexion"
                 placeholder="Select Complexion"
                 options={complexionOptions}
+                searchable={false}
               />
             </div>
 

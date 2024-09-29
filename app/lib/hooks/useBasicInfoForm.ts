@@ -4,7 +4,7 @@ import { useServerAction } from "@/app/lib/hooks/useServerAction";
 import toast from "react-hot-toast";
 import { useState } from "react";
 import { useUser } from "../contexts/UserContext";
-import { SelectOption } from "@/app/components/atoms/Select/Select";
+import { InputPropEvent } from "@/app/components/molecules/FormField/FormField";
 
 export const useBasicInfoForm = () => {
   const router = useRouter();
@@ -35,8 +35,10 @@ export const useBasicInfoForm = () => {
     }
   };
 
-  const handleMaritalStatusChange = (selectedOption: SelectOption) => {
-    setMaritalStatus(selectedOption.value);
+  const handleMaritalStatusChange = (selectedOption: InputPropEvent) => {
+    if (selectedOption && "value" in selectedOption) {
+      setMaritalStatus(selectedOption?.value);
+    }
   };
 
   const isMaritalStatusSingle = maritalStatus === "Single - (திருமணம் ஆகாதவர்)";

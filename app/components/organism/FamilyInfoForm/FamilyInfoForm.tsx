@@ -5,6 +5,7 @@ import SectionHeader from "../../molecules/SectionHeader/SectionHeader";
 import { kulamOptions } from "@/app/lib/constants/global.constant";
 import { useFamilyInfoForm } from "@/app/lib/hooks/useFamilyInfoForm";
 import FormContainer from "../../molecules/SectionContainer/SectionContainer";
+import ArrowRightIcon from "../../icons/ArrowRightIcon";
 
 const FamilyInfoForm = () => {
   const { isRunning, onSubmit } = useFamilyInfoForm();
@@ -26,7 +27,6 @@ const FamilyInfoForm = () => {
                 name="father_name"
                 type="text"
                 placeholder="Father Name"
-                className="form-select mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
               />
 
               <FormField
@@ -35,7 +35,6 @@ const FamilyInfoForm = () => {
                 name="father_status"
                 type="radio"
                 options={["Yes", "No"]}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
               />
             </div>
 
@@ -46,7 +45,6 @@ const FamilyInfoForm = () => {
                 name="mother_name"
                 type="text"
                 placeholder="Mother Name"
-                className="form-select mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
               />
 
               <FormField
@@ -55,7 +53,6 @@ const FamilyInfoForm = () => {
                 name="mother_status"
                 type="radio"
                 options={["Yes", "No"]}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
               />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -65,7 +62,6 @@ const FamilyInfoForm = () => {
                 name="father_occupation"
                 type="text"
                 placeholder="Father Occupation"
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
               />
 
               <FormField
@@ -74,7 +70,6 @@ const FamilyInfoForm = () => {
                 name="mother_occupation"
                 type="text"
                 placeholder="Mother Occupation"
-                className="form-select mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
               />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -86,7 +81,6 @@ const FamilyInfoForm = () => {
                 placeholder="Select Mother Kulam"
                 options={kulamOptions}
                 searchable
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
               />
 
               <FormField
@@ -95,7 +89,6 @@ const FamilyInfoForm = () => {
                 name="living_place"
                 type="text"
                 placeholder="Family Living Place"
-                className="form-select mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
               />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -105,7 +98,6 @@ const FamilyInfoForm = () => {
                 name="native_place"
                 type="text"
                 placeholder="Native Place"
-                className="form-select mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
               />
               <FormField
                 label="No of Brothers (சகோதரர்களின் எண்ணிக்கை): *"
@@ -113,7 +105,6 @@ const FamilyInfoForm = () => {
                 name="no_of_brothers"
                 type="number"
                 placeholder="No of Brothers"
-                className="form-select mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
               />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -123,7 +114,6 @@ const FamilyInfoForm = () => {
                 name="no_of_brothers_married"
                 type="number"
                 placeholder="No of Brothers Married"
-                className="form-select mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
               />
               <FormField
                 label="No of Sisters (சகோதரிகளின் எண்ணிக்கை): *"
@@ -131,7 +121,6 @@ const FamilyInfoForm = () => {
                 name="no_of_sisters"
                 type="number"
                 placeholder="No of Sisters"
-                className="form-select mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
               />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -141,7 +130,6 @@ const FamilyInfoForm = () => {
                 name="no_of_sisters_married"
                 type="number"
                 placeholder="No of Sisters Married"
-                className="form-select mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
               />
               <FormField
                 label="Property (சொத்து): *"
@@ -149,7 +137,6 @@ const FamilyInfoForm = () => {
                 name="property"
                 type="text"
                 placeholder="Property"
-                className="form-select mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
               />
               <FormField
                 label="Property Info (சொத்து விபரம்): *"
@@ -157,31 +144,16 @@ const FamilyInfoForm = () => {
                 name="property"
                 type="textarea"
                 placeholder="Enter Property Info"
-                className="form-select mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
               />
             </div>
           </div>
 
           <div className="flex justify-end mt-8">
             <Button
-              text={
-                isRunning ? "Almost done, few seconds left !" : "Save & Proceed"
-              }
+              text={"Save & Proceed"}
               type="submit"
-              icon={
-                !isRunning && (
-                  <svg
-                    stroke="currentColor"
-                    fill="currentColor"
-                    strokeWidth="0"
-                    viewBox="0 0 448 512"
-                    className="h-5 w-5"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"></path>
-                  </svg>
-                )
-              }
+              icon={<ArrowRightIcon />}
+              isPending={isRunning}
             />
           </div>
         </form>
