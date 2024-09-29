@@ -50,29 +50,22 @@ export async function handleBasicInfoSubmission(
     };
 
     // Use withTransaction to handle the transaction
-    await session.withTransaction(
-      async () => {
-        // Save the basic information to the database
-        const basicInfo = new BasicInformation(data);
-        await basicInfo.save({ session });
+    await session.withTransaction(async () => {
+      // Save the basic information to the database
+      const basicInfo = new BasicInformation(data);
+      await basicInfo.save({ session });
 
-        // Update the user's completedSections
-        const user = await User.findOneAndUpdate(
-          { _id: userId },
-          { $set: { "completedSections.basicInfo": true } },
-          { new: true, session } // Return the updated document
-        );
+      // Update the user's completedSections
+      const user = await User.findOneAndUpdate(
+        { _id: userId },
+        { $set: { "completedSections.basicInfo": true } },
+        { new: true, session } // Return the updated document
+      );
 
-        if (!user) {
-          throw new Error("User not found");
-        }
-      },
-      {
-        readConcern: { level: "local" },
-        writeConcern: { w: "majority" },
-        readPreference: "primary",
+      if (!user) {
+        throw new Error("User not found");
       }
-    );
+    });
 
     return { message: "Success", error: false };
   } catch (error) {

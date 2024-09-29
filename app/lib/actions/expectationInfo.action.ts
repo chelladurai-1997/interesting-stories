@@ -15,47 +15,40 @@ export async function handleExpectationsInfoSubmission(
 
   try {
     // Use withTransaction to handle the transaction
-    await session.withTransaction(
-      async () => {
-        await connectMongo(); // Ensure DB connection inside the transaction
+    await session.withTransaction(async () => {
+      await connectMongo(); // Ensure DB connection inside the transaction
 
-        // Extract userId from token
-        const { userId, error, message } = getUserIdFromToken();
-        if (error) {
-          throw new Error(message); // Throw an error to abort the transaction
-        }
-
-        // Extract data from formData
-        const data = {
-          jaadhagam: formData.get("jaadhagam"),
-          marital_status: formData.get("marital_status"),
-          working_place: formData.get("working_place"),
-          expecting_stars: formData.get("expecting_stars"),
-          expectation_info: formData.get("expectation_info"),
-          userId,
-        };
-
-        // Save the expectations info to the database
-        const expectationsInfo = new Expectations(data);
-        await expectationsInfo.save({ session });
-
-        // Update the user's completedSections
-        const user = await User.findByIdAndUpdate(
-          userId,
-          { $set: { "completedSections.expectation": true } },
-          { new: true, session } // Return the updated document
-        );
-
-        if (!user) {
-          throw new Error("User not found");
-        }
-      },
-      {
-        readConcern: { level: "local" },
-        writeConcern: { w: "majority" },
-        readPreference: "primary",
+      // Extract userId from token
+      const { userId, error, message } = getUserIdFromToken();
+      if (error) {
+        throw new Error(message); // Throw an error to abort the transaction
       }
-    );
+
+      // Extract data from formData
+      const data = {
+        jaadhagam: formData.get("jaadhagam"),
+        marital_status: formData.get("marital_status"),
+        working_place: formData.get("working_place"),
+        expecting_stars: formData.get("expecting_stars"),
+        expectation_info: formData.get("expectation_info"),
+        userId,
+      };
+
+      // Save the expectations info to the database
+      const expectationsInfo = new Expectations(data);
+      await expectationsInfo.save({ session });
+
+      // Update the user's completedSections
+      const user = await User.findByIdAndUpdate(
+        userId,
+        { $set: { "completedSections.expectation": true } },
+        { new: true, session } // Return the updated document
+      );
+
+      if (!user) {
+        throw new Error("User not found");
+      }
+    });
 
     return { message: "Success", error: false };
   } catch (error) {

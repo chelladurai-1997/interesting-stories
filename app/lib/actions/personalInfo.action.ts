@@ -56,29 +56,22 @@ export async function handlePersonalInfoFormSubmit(
     };
 
     // Use withTransaction to handle the transaction
-    await session.withTransaction(
-      async () => {
-        // Save the personal information to the database
-        const personalInfo = new PersonalDetails(data);
-        await personalInfo.save({ session });
+    await session.withTransaction(async () => {
+      // Save the personal information to the database
+      const personalInfo = new PersonalDetails(data);
+      await personalInfo.save({ session });
 
-        // Update the user's completedSections
-        const user = await User.findByIdAndUpdate(
-          { _id: userId },
-          { $set: { "completedSections.personalDetails": true } },
-          { session }
-        );
+      // Update the user's completedSections
+      const user = await User.findByIdAndUpdate(
+        { _id: userId },
+        { $set: { "completedSections.personalDetails": true } },
+        { session }
+      );
 
-        if (!user) {
-          throw new Error("User not found");
-        }
-      },
-      {
-        readConcern: { level: "local" },
-        writeConcern: { w: "majority" },
-        readPreference: "primary",
+      if (!user) {
+        throw new Error("User not found");
       }
-    );
+    });
 
     return { message: "Success", error: false };
   } catch (error) {

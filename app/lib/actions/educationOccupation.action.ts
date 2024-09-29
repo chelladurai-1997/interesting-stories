@@ -27,48 +27,41 @@ export async function handleEducationOccupationFormSubmit(
 
   try {
     // Start the session transaction
-    await session.withTransaction(
-      async () => {
-        await connectMongo(); // Ensure DB connection inside the transaction
+    await session.withTransaction(async () => {
+      await connectMongo(); // Ensure DB connection inside the transaction
 
-        // Extract userId from token
-        const { userId, error, message } = getUserIdFromToken();
-        if (error) {
-          throw new Error(message); // Throw an error to abort the transaction
-        }
-
-        // Extract data from formData
-        const data: EducationOccupationData = {
-          education: getStringFromFormData(formData, "education"),
-          educationInfo: getStringFromFormData(formData, "educationInfo"),
-          occupation: getStringFromFormData(formData, "occupation"),
-          occupationInfo: getStringFromFormData(formData, "occupationInfo"),
-          workingPlace: getStringFromFormData(formData, "workingPlace"),
-          monthlyIncome: getStringFromFormData(formData, "monthlyIncome"),
-          userId: userId,
-        };
-
-        // Save the education and occupation information to the database
-        const educationOccupation = new EducationOccupation(data);
-        await educationOccupation.save({ session });
-
-        // Update the user's completedSections
-        const user = await User.findByIdAndUpdate(
-          { _id: userId },
-          { $set: { "completedSections.educationOccupation": true } },
-          { new: true, session } // Return the updated document
-        );
-
-        if (!user) {
-          throw new Error("User not found");
-        }
-      },
-      {
-        readConcern: { level: "local" },
-        writeConcern: { w: "majority" },
-        readPreference: "primary",
+      // Extract userId from token
+      const { userId, error, message } = getUserIdFromToken();
+      if (error) {
+        throw new Error(message); // Throw an error to abort the transaction
       }
-    );
+
+      // Extract data from formData
+      const data: EducationOccupationData = {
+        education: getStringFromFormData(formData, "education"),
+        educationInfo: getStringFromFormData(formData, "educationInfo"),
+        occupation: getStringFromFormData(formData, "occupation"),
+        occupationInfo: getStringFromFormData(formData, "occupationInfo"),
+        workingPlace: getStringFromFormData(formData, "workingPlace"),
+        monthlyIncome: getStringFromFormData(formData, "monthlyIncome"),
+        userId: userId,
+      };
+
+      // Save the education and occupation information to the database
+      const educationOccupation = new EducationOccupation(data);
+      await educationOccupation.save({ session });
+
+      // Update the user's completedSections
+      const user = await User.findByIdAndUpdate(
+        { _id: userId },
+        { $set: { "completedSections.educationOccupation": true } },
+        { new: true, session } // Return the updated document
+      );
+
+      if (!user) {
+        throw new Error("User not found");
+      }
+    });
 
     return { message: "Success", error: false };
   } catch (error) {
