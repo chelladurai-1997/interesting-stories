@@ -18,6 +18,7 @@ const SearchForm: React.FC = () => {
           placeholder="I'm looking for"
           type="select"
           name="gender"
+          searchable={false}
         />
         <FormField
           label="Age"
@@ -26,6 +27,7 @@ const SearchForm: React.FC = () => {
           placeholder="Age"
           type="select"
           name="age"
+          searchable={false}
         />
         <FormField
           label="Education"
@@ -34,6 +36,7 @@ const SearchForm: React.FC = () => {
           placeholder="Education"
           type="select"
           name="education"
+          searchable={false}
         />
         <FormField
           label="District"

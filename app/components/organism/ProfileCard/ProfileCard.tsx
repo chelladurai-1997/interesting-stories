@@ -32,19 +32,21 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
     <div className="w-full max-w-md bg-white shadow-lg rounded-lg overflow-hidden border border-gray-200 mx-auto">
       {/* Profile Image Section */}
       <div className="relative w-full h-48">
-        <Image
-          src={profileImgUrl}
-          alt={`${name}'s Profile Picture`}
-          className="w-full h-full object-cover"
-          width={400}
-          height={267} // Adjusted height for a good aspect ratio
-          quality={90}
-          loading="lazy"
-        />
+        <Link href={"/profiles/" + userId}>
+          <Image
+            src={profileImgUrl}
+            alt={`${name}'s Profile Picture`}
+            className="w-full h-full object-cover"
+            width={400}
+            height={267} // Adjusted height for a good aspect ratio
+            quality={90}
+            loading="lazy"
+          />
+        </Link>
       </div>
 
       {/* Profile Details Section */}
-      <div className="p-4">
+      <div className="p-3">
         {/* Name */}
         <div className="text-xl font-bold text-gray-900 ">
           <span>{name}</span>
