@@ -66,8 +66,8 @@ const LoadingIndicator: React.FC = () => {
             }}
           />
           <p className="text-sm font-medium text-gray-800 mt-2">
-            Almost there! Your image is a bit of a heavyweight, so it's taking a
-            little extra time.
+            Hold on, your image is taking a little longer because it's extra
+            special!
           </p>
         </div>
       </div>

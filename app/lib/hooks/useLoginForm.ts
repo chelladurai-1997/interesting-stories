@@ -26,8 +26,9 @@ export const useLoginForm = () => {
           completedSections: formStatus,
         });
         toast.success(
-          `Welcome, ${response?.userName}! We're glad to have you here. Enjoy exploring! 😊`
+          `Welcome, ${response?.userName}! 🚀 We can't wait for you to explore everything we have to offer!`
         );
+
         navigateToNextStep(formStatus);
       }
     } catch (error) {

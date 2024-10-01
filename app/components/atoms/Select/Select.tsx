@@ -27,8 +27,8 @@ const customStyles = {
     backgroundColor: "white", // Background color
     borderColor: state.isFocused ? "#FBBF24" : "#D1D5DB", // Border color based on focus
     borderWidth: "1px", // Border width
-    paddingTop: "6px",
-    paddingBottom: "6px",
+    paddingTop: "3px",
+    paddingBottom: "3px",
     borderRadius: "0.375rem", // Rounded corners
     boxShadow: state.isFocused ? "0 0 0 1px #FBBF24" : provided.boxShadow, // Focus ring
     outline: "none", // Remove default outline
@@ -65,7 +65,7 @@ const CustomSelect: React.FC<SelectProps> = ({
   id,
   name,
   onChange,
-  isSearchable = true,
+  isSearchable = false,
 }) => {
   // Transform string[] into SelectOption[] if necessary
   const transformedOptions = options?.map((option) =>
@@ -94,7 +94,7 @@ const CustomSelect: React.FC<SelectProps> = ({
       <Select
         closeMenuOnSelect={!isMulti}
         components={animatedComponents}
-        options={transformedOptions} // Use the transformed options
+        options={transformedOptions}
         placeholder={placeholder}
         isMulti={isMulti}
         required={required}
@@ -103,6 +103,8 @@ const CustomSelect: React.FC<SelectProps> = ({
         name={name}
         isSearchable={isSearchable}
         onChange={handleChange} // Updated handler
+        menuPlacement="top"
+        menuShouldScrollIntoView
       />
     </div>
   );

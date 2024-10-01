@@ -2,7 +2,8 @@ import React from "react";
 import Image from "next/image";
 import { calculateAge } from "@/app/lib/utils/calculateAge";
 import Link from "next/link";
-import toast from "react-hot-toast";
+import { useUser } from "@/app/lib/contexts/UserContext";
+import useSendInterest from "@/app/lib/hooks/services/useSendInterest";
 
 type ProfileCardProps = {
   name: string;
@@ -25,20 +26,26 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
   profileImgUrl,
   userId,
 }) => {
+  const { userProfile } = useUser();
+  const currentUserId = userProfile?.userId;
+
   // Calculate age
   const age = calculateAge(dob);
 
+  // Use the custom hook to manage sending interest
+  const { isInterestSent, sendInterest } = useSendInterest(currentUserId);
+
   return (
-    <div className="w-full max-w-md bg-white shadow-lg rounded-lg overflow-hidden border border-gray-200 mx-auto">
+    <div className="w-full min-w-[300px] max-w-[400px] md:max-w-[480px] lg:max-w-[600px] bg-white shadow-lg rounded-lg overflow-hidden border border-gray-200 mx-auto p-4 transition-transform duration-300 transform hover:scale-105">
       {/* Profile Image Section */}
-      <div className="relative w-full h-48">
+      <div className="relative w-full h-64">
         <Link href={"/profiles/" + userId}>
           <Image
             src={profileImgUrl}
             alt={`${name}'s Profile Picture`}
             className="w-full h-full object-cover"
             width={400}
-            height={267} // Adjusted height for a good aspect ratio
+            height={267}
             quality={90}
             loading="lazy"
           />
@@ -46,9 +53,9 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
       </div>
 
       {/* Profile Details Section */}
-      <div className="p-3">
+      <div className="mt-4">
         {/* Name */}
-        <div className="text-xl font-bold text-gray-900 ">
+        <div className="text-2xl font-bold text-gray-900">
           <span>{name}</span>
         </div>
 
@@ -67,18 +74,19 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
         {/* Buttons */}
         <div className="flex gap-2">
           <button
-            className="bg-teal-100 text-teal-600 px-4 py-2 rounded-lg hover:bg-teal-200 transition-colors duration-300 ease-in-out flex-grow"
-            onClick={() => {
-              toast.success(
-                `Hey! We're thrilled to have you here. Stay tuned, exciting features are coming soon!`
-              );
-            }}
+            className={`${
+              isInterestSent
+                ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                : "bg-teal-100 text-teal-600 hover:bg-teal-200"
+            } px-6 py-2 rounded-lg transition-colors duration-300 ease-in-out flex-grow`}
+            onClick={() => sendInterest(userId)}
+            disabled={isInterestSent}
           >
-            Send Interest
+            {isInterestSent ? "Interest Sent" : "Send Interest"}
           </button>
           <Link
             href={"/profiles/" + userId}
-            className="bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-700 transition-colors duration-300 ease-in-out flex-grow text-center"
+            className="bg-teal-600 text-white px-6 py-2 rounded-lg hover:bg-teal-700 transition-colors duration-300 ease-in-out flex-grow text-center"
           >
             View More
           </Link>
