@@ -70,7 +70,6 @@ export const useRegistrationNavigation = () => {
 
   const navigateToNextStep = (completedSections: Record<string, boolean>) => {
     const nextStep = getNextIncompleteStep(completedSections);
-    console.log("nextStep", nextStep);
     const route = stepToRouteMap[nextStep] || ProfileRoutes.BasicDetails;
     router.push(route);
   };

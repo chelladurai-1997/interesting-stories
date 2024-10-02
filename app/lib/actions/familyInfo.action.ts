@@ -61,7 +61,6 @@ export async function handleFamilyInfoSubmission(
         { $set: { "completedSections.familyDetails": true } },
         { new: true, session } // Return the updated document
       );
-      console.log("user", user);
 
       if (!user) {
         throw new Error("User not found");

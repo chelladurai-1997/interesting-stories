@@ -87,7 +87,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       // Fetch access token from headers
       const fetchAccessToken = async () => {
         const { accessToken, error } = await getAccessTokenFromHeaders();
-        console.log("accessToken==>", accessToken);
+
         if (!error && accessToken) {
           // Update the user profile with the access token
           setUserProfile((prevProfile) => ({

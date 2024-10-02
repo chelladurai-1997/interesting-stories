@@ -43,11 +43,7 @@ export const updateUserLastCompletedStep = ({
         // If we haven't exhausted our retry attempts yet, let's prepare for another round.
         if (retryCount < maxRetries) {
           const retryDelay = Math.pow(2, retryCount) * baseDelay; // Exponential backoff: 1s, 2s, 4s...
-          console.log(
-            `Retrying in ${retryDelay / 1000} seconds... (${
-              retryCount + 1
-            }/${maxRetries})`
-          );
+
           setTimeout(() => tryUpdate(retryCount + 1), retryDelay); // Wait and retry
         } else {
           // At this point, we have tried our best. Time to accept defeat.
