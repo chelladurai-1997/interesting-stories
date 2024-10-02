@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import ProfileCard from "../ProfileCard/ProfileCard";
 import SkeletonLoader from "../../molecules/SkeletonLoader/SkeletonLoader";
 import { useUser } from "@/app/lib/contexts/UserContext";
+import { InterestStatus } from "@/app/lib/hooks/services/useFetchInterests";
 
 type Profile = {
   name: string;
@@ -88,9 +89,10 @@ const ProfileList: React.FC = () => {
           const isInterestSent = sentInterests.some(
             (interest) => interest.receiverId === profile?.userId
           );
-          const interestStatus = sentInterests.find(
-            (interest) => interest.receiverId === profile?.userId
-          )?.status;
+          const interestStatus =
+            sentInterests.find(
+              (interest) => interest.receiverId === profile?.userId
+            )?.status ?? InterestStatus.PENDING;
 
           return (
             <ProfileCard
