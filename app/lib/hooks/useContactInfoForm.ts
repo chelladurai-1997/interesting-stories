@@ -2,8 +2,8 @@ import { useRouter } from "next/navigation";
 import { useServerAction } from "@/app/lib/hooks/useServerAction";
 import { handleContactInfoSubmission } from "@/app/lib/actions/contactInfo.action";
 import toast from "react-hot-toast";
-import { useUser } from "../contexts/UserContext";
 import { useState } from "react";
+import { useUser } from "./useUser";
 
 export const useContactInfoForm = () => {
   const router = useRouter();

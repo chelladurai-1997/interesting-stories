@@ -2,8 +2,8 @@
 import React, { useEffect, useState } from "react";
 import ProfileCard from "../ProfileCard/ProfileCard";
 import SkeletonLoader from "../../molecules/SkeletonLoader/SkeletonLoader";
-import { useUser } from "@/app/lib/contexts/UserContext";
 import { InterestStatus } from "@/app/lib/hooks/services/useFetchInterests";
+import { useUser } from "@/app/lib/hooks/useUser";
 
 type Profile = {
   name: string;

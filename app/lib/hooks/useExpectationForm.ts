@@ -2,7 +2,7 @@ import { useRouter } from "next/navigation";
 import { useServerAction } from "@/app/lib/hooks/useServerAction";
 import { handleExpectationsInfoSubmission } from "@/app/lib/actions/expectationInfo.action";
 import toast from "react-hot-toast";
-import { useUser } from "../contexts/UserContext";
+import { useUser } from "./useUser";
 
 export const useExpectationForm = () => {
   const router = useRouter();

@@ -2,9 +2,9 @@ import React from "react";
 import Image from "next/image";
 import { calculateAge } from "@/app/lib/utils/calculateAge";
 import Link from "next/link";
-import { useUser } from "@/app/lib/contexts/UserContext";
 import useSendInterest from "@/app/lib/hooks/services/useSendInterest";
 import { InterestStatus } from "@/app/lib/hooks/services/useFetchInterests";
+import { useUser } from "@/app/lib/hooks/useUser";
 
 type ProfileCardProps = {
   name: string;

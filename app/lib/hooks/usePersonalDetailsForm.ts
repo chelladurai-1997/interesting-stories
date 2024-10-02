@@ -2,7 +2,7 @@ import { useServerAction } from "@/app/lib/hooks/useServerAction";
 import { handlePersonalInfoFormSubmit } from "@/app/lib/actions/personalInfo.action";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { useUser } from "../contexts/UserContext";
+import { useUser } from "./useUser";
 
 export const usePersonalDetailsForm = () => {
   const [runAction, isRunning] = useServerAction(handlePersonalInfoFormSubmit);

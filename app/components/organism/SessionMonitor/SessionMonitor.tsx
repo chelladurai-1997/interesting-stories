@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from "react";
 import SessionExpiryPopup from "../SessionExpiryPopup/SessionExpiryPopup";
-import { useUser } from "@/app/lib/contexts/UserContext";
 import { getExpiryTimeFromToken } from "@/app/lib/utils/getExpiryInfoFromToken";
 import { useRouter } from "next/navigation";
+import { useUser } from "@/app/lib/hooks/useUser";
 
 const SessionMonitor: React.FC = () => {
   const { userProfile, logout } = useUser();

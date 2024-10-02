@@ -3,8 +3,8 @@ import { handleBasicInfoSubmission } from "@/app/lib/actions/basicInfo.action";
 import { useServerAction } from "@/app/lib/hooks/useServerAction";
 import toast from "react-hot-toast";
 import { useState } from "react";
-import { useUser } from "../contexts/UserContext";
 import { InputPropEvent } from "@/app/components/molecules/FormField/FormField";
+import { useUser } from "./useUser";
 
 export const useBasicInfoForm = () => {
   const router = useRouter();

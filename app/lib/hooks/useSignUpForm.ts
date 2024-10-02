@@ -1,9 +1,9 @@
 import { useRouter } from "next/navigation";
 import { onSignUpFormSubmit } from "@/app/lib/actions/signup.action";
 import { useServerAction } from "@/app/lib/hooks/useServerAction";
-import { useUser } from "@/app/lib/contexts/UserContext";
 import toast from "react-hot-toast";
 import { formSectionDefaultState } from "../constants/global.constant";
+import { useUser } from "./useUser";
 
 export const useSignUpForm = () => {
   const router = useRouter();

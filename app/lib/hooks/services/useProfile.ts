@@ -1,7 +1,7 @@
 // hooks/useProfile.ts
 import { Profile } from "@/app/profiles/profile.types";
 import { useState, useEffect } from "react";
-import { useUser } from "../../contexts/UserContext";
+import { useUser } from "../useUser";
 
 const useProfile = (id: string) => {
   const [profile, setProfile] = useState<Profile | null>(null);

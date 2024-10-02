@@ -1,8 +1,8 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { useUser } from "@/app/lib/contexts/UserContext";
 import SearchForm from "../SearchForm/SearchForm";
+import { useUser } from "@/app/lib/hooks/useUser";
 
 interface HeaderProps {
   showSearchForm?: boolean;

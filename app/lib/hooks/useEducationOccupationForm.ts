@@ -2,7 +2,7 @@ import { useServerAction } from "@/app/lib/hooks/useServerAction";
 import { handleEducationOccupationFormSubmit } from "@/app/lib/actions/educationOccupation.action";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { useUser } from "../contexts/UserContext";
+import { useUser } from "./useUser";
 
 export const useEducationOccupationForm = () => {
   const [runAction, isRunning] = useServerAction(

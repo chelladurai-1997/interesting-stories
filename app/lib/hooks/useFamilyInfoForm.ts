@@ -2,7 +2,7 @@ import { useRouter } from "next/navigation";
 import { useServerAction } from "@/app/lib/hooks/useServerAction";
 import { handleFamilyInfoSubmission } from "@/app/lib/actions/familyInfo.action";
 import toast from "react-hot-toast";
-import { useUser } from "../contexts/UserContext";
+import { useUser } from "./useUser";
 
 export const useFamilyInfoForm = () => {
   const router = useRouter();

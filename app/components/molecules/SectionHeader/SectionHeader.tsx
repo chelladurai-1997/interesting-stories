@@ -1,4 +1,4 @@
-import { useUser } from "@/app/lib/contexts/UserContext";
+import { useUser } from "@/app/lib/hooks/useUser";
 import React from "react";
 
 interface SectionHeaderProps {

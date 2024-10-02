@@ -2,7 +2,7 @@ import { useRouter } from "next/navigation";
 import { useServerAction } from "@/app/lib/hooks/useServerAction";
 import { handleHoroscopeInfoSubmission } from "@/app/lib/actions/horoscopeInfo.action";
 import toast from "react-hot-toast";
-import { useUser } from "../contexts/UserContext";
+import { useUser } from "./useUser";
 
 export const useHoroscopeForm = () => {
   const router = useRouter();

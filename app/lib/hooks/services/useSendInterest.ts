@@ -1,6 +1,6 @@
 // useSendInterest.ts
 import toast from "react-hot-toast";
-import { useUser } from "../../contexts/UserContext";
+import { useUser } from "../useUser";
 
 // Define a type for the body of the request
 interface InterestBody {

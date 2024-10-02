@@ -2,11 +2,8 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { useUser } from "@/app/lib/contexts/UserContext";
-import {
-  InterestStatus,
-  useFetchInterests,
-} from "@/app/lib/hooks/services/useFetchInterests";
+import { InterestStatus } from "@/app/lib/hooks/services/useFetchInterests";
+import { useUser } from "@/app/lib/hooks/useUser";
 
 // Type definitions
 interface Interest {
@@ -20,7 +17,6 @@ interface Interest {
 const Dashboard: React.FC = () => {
   const router = useRouter();
   const { userProfile } = useUser();
-  const userId = userProfile?.userId;
 
   const {
     receivedInterests,

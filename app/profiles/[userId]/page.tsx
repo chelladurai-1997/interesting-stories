@@ -15,8 +15,8 @@ import useProfile from "@/app/lib/hooks/services/useProfile";
 import useSendInterest from "@/app/lib/hooks/services/useSendInterest";
 import Container from "@/app/components/molecules/Container/Container";
 import Header from "@/app/components/organism/Header/Header";
-import { useUser } from "@/app/lib/contexts/UserContext";
 import { InterestStatus } from "@/app/lib/hooks/services/useFetchInterests";
+import { useUser } from "@/app/lib/hooks/useUser";
 
 const Page: React.FC = () => {
   const params = useParams();

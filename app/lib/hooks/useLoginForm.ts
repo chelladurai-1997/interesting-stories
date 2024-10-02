@@ -1,9 +1,10 @@
 import toast from "react-hot-toast";
-import { useUser } from "@/app/lib/contexts/UserContext";
 import { useServerAction } from "@/app/lib/hooks/useServerAction";
 import { onSignInFormSubmit } from "@/app/lib/actions/signin.action";
 import { useRegistrationNavigation } from "@/app/lib/hooks/useRegistrationNavigation";
 import { formSectionDefaultState } from "../constants/global.constant";
+import { useUser } from "./useUser";
+import { getTimeOfDayGreeting } from "../utils/getTimeOfDayGreeting";
 
 export const useLoginForm = () => {
   const { updateUserProfile } = useUser();
@@ -25,7 +26,9 @@ export const useLoginForm = () => {
           completedSections: formStatus,
         });
         toast.success(
-          `Welcome, ${response?.userName}! 🚀 We can't wait for you to explore everything we have to offer!`
+          `Welcome, ${
+            response?.userName ?? "Guest"
+          }, ${getTimeOfDayGreeting()}! `
         );
 
         navigateToNextStep(formStatus);
