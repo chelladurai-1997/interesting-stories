@@ -60,7 +60,7 @@ function FilterModal() {
 
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="relative bg-white text-gray-900 py-8 px-8 w-full max-w-lg md:max-w-3xl md:mx-auto rounded-lg shadow-lg overflow-auto h-full md:h-auto">
+          <div className="relative bg-white text-gray-900 py-8 px-8 w-full max-w-lg md:max-w-3xl md:mx-auto md:rounded-lg shadow-lg overflow-auto h-full md:h-auto">
             {/* Close button with inline SVG */}
             <button
               onClick={closeModal}

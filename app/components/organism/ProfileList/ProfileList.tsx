@@ -84,32 +84,49 @@ const ProfileList: React.FC = () => {
 
   return (
     <div className="flex justify-center mx-auto">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-screen-xl w-full p-4">
-        {profiles.map((profile) => {
-          const isInterestSent = sentInterests.some(
-            (interest) => interest.receiverId === profile?.userId
-          );
-          const interestStatus =
-            sentInterests.find(
+      <div className="max-w-screen-xl w-full p-4">
+        <h1 className="text-4xl font-bold mb-4 text-teal-600 text-center">
+          Profiles
+        </h1>
+        <div className="text-right mb-4">
+          <a
+            href="#"
+            className="text-teal-600 underline hover:text-teal-800 transition-colors duration-300"
+            onClick={() => {
+              // Logic to reset filters can be added here
+              console.log("Filters reset");
+            }}
+          >
+            Reset Filters
+          </a>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          {profiles.map((profile) => {
+            const isInterestSent = sentInterests.some(
               (interest) => interest.receiverId === profile?.userId
-            )?.status ?? InterestStatus.PENDING;
+            );
+            const interestStatus =
+              sentInterests.find(
+                (interest) => interest.receiverId === profile?.userId
+              )?.status ?? InterestStatus.PENDING;
 
-          return (
-            <ProfileCard
-              key={profile.userId} // Use userId for unique key
-              name={profile.name}
-              dob={profile.dob}
-              occupation={profile.educationOccupation?.occupation}
-              livingPlace={profile.familyDetails?.livingPlace}
-              height={profile.personalDetails?.height}
-              kulam={profile.personalDetails?.kulam}
-              profileImgUrl={profile.contactInfo?.profileImgUrl}
-              userId={profile.userId}
-              isInterestSent={isInterestSent}
-              interestStatus={interestStatus}
-            />
-          );
-        })}
+            return (
+              <ProfileCard
+                key={profile.userId} // Use userId for unique key
+                name={profile.name}
+                dob={profile.dob}
+                occupation={profile.educationOccupation?.occupation}
+                livingPlace={profile.familyDetails?.livingPlace}
+                height={profile.personalDetails?.height}
+                kulam={profile.personalDetails?.kulam}
+                profileImgUrl={profile.contactInfo?.profileImgUrl}
+                userId={profile.userId}
+                isInterestSent={isInterestSent}
+                interestStatus={interestStatus}
+              />
+            );
+          })}
+        </div>
       </div>
     </div>
   );
