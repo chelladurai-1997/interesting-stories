@@ -7,12 +7,25 @@ import HoroscopeInfo from "@/app/lib/models/horoscopeInfo.model";
 import PersonalDetails from "@/app/lib/models/personalInfo.model";
 import User from "@/app/lib/models/user.model";
 import { NextResponse } from "next/server";
+import { Types } from "mongoose"; // Import for handling ObjectId conversions
 
-// Handler for fetching paginated profiles data
+// Handler for fetching paginated or specific user profiles
 export async function GET(request: Request) {
   const url = new URL(request.url);
   const page = parseInt(url.searchParams.get("page") || "1", 10);
   const limit = parseInt(url.searchParams.get("limit") || "10", 10);
+
+  // Get the `userIds` query parameter (optional)
+  const userIds = url.searchParams.get("userIds");
+  let filter: Record<string, any> = { adminApproved: true }; // Default filter for admin-approved users
+
+  if (userIds) {
+    // Convert userIds string into an array of MongoDB ObjectIds
+    const idsArray = userIds
+      .split(",")
+      .map((id) => new Types.ObjectId(id.trim()));
+    filter = { ...filter, _id: { $in: idsArray } };
+  }
 
   try {
     // Connect to MongoDB
@@ -21,9 +34,7 @@ export async function GET(request: Request) {
     // Aggregation pipeline to join data from multiple collections and format the output
     const profiles = await User.aggregate([
       {
-        $match: {
-          adminApproved: true,
-        },
+        $match: filter, // Apply the filter (either default or with userIds)
       },
       {
         $lookup: {
@@ -120,7 +131,6 @@ export async function GET(request: Request) {
       limit,
       error: false,
     });
-    // response.headers.set("Cache-Control", "public, max-age=900");
 
     return response;
   } catch (error) {

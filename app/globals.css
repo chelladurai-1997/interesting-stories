@@ -28,3 +28,38 @@
     }
   }
   
+
+  /* For WebKit browsers */
+::-webkit-scrollbar {
+  width: 4px; /* Width of the scrollbar */
+  height: 4px; /* Height of the scrollbar */
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Background of the scrollbar track */
+  border-radius: 10px; /* Rounded edges */
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; /* Color of the scrollbar handle */
+  border-radius: 10px; /* Rounded edges */
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Darker color on hover */
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin; /* Thin scrollbar */
+  scrollbar-color: #888 #f1f1f1; /* Handle color and track color */
+}
+
+/* You can also use this to apply the styles to a specific container */
+.scrollable-container {
+  overflow-y: scroll; /* Enable vertical scrolling */
+  height: 400px; /* Set a height for the container */
+}

@@ -26,7 +26,7 @@ export const useLoginForm = () => {
           completedSections: formStatus,
         });
         toast.success(
-          `Welcome, ${
+          `Welcome ${
             response?.userName ?? "Guest"
           }, ${getTimeOfDayGreeting()}! `
         );
