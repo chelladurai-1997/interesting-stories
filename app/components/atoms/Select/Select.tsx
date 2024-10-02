@@ -103,7 +103,6 @@ const CustomSelect: React.FC<SelectProps> = ({
         name={name}
         isSearchable={isSearchable}
         onChange={handleChange} // Updated handler
-        menuPlacement="top"
         menuShouldScrollIntoView
       />
     </div>

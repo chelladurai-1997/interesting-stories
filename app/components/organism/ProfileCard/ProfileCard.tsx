@@ -4,6 +4,7 @@ import { calculateAge } from "@/app/lib/utils/calculateAge";
 import Link from "next/link";
 import { useUser } from "@/app/lib/contexts/UserContext";
 import useSendInterest from "@/app/lib/hooks/services/useSendInterest";
+import { InterestStatus } from "@/app/lib/hooks/services/useFetchInterests";
 
 type ProfileCardProps = {
   name: string;
@@ -14,6 +15,8 @@ type ProfileCardProps = {
   kulam: string;
   profileImgUrl: string;
   userId: string;
+  interestStatus: string;
+  isInterestSent: boolean;
 };
 
 const ProfileCard: React.FC<ProfileCardProps> = ({
@@ -25,6 +28,8 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
   kulam,
   profileImgUrl,
   userId,
+  isInterestSent,
+  interestStatus,
 }) => {
   const { userProfile } = useUser();
   const currentUserId = userProfile?.userId;
@@ -33,7 +38,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
   const age = calculateAge(dob);
 
   // Use the custom hook to manage sending interest
-  const { isInterestSent, sendInterest } = useSendInterest(currentUserId);
+  const { sendInterest } = useSendInterest(currentUserId);
 
   return (
     <div className="w-full min-w-[300px] max-w-[400px] md:max-w-[480px] lg:max-w-[600px] bg-white shadow-lg rounded-lg overflow-hidden border border-gray-200 mx-auto p-4 transition-transform duration-300 transform hover:scale-105">
@@ -82,7 +87,13 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
             onClick={() => sendInterest(userId)}
             disabled={isInterestSent}
           >
-            {isInterestSent ? "Interest Sent" : "Send Interest"}
+            {isInterestSent
+              ? interestStatus === InterestStatus.ACCEPTED
+                ? "Accepted"
+                : interestStatus === InterestStatus.REJECTED
+                ? "Declined"
+                : "Interest Sent"
+              : "Send Interest"}
           </button>
           <Link
             href={"/profiles/" + userId}

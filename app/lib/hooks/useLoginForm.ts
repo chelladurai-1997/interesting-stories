@@ -22,7 +22,6 @@ export const useLoginForm = () => {
           userId: response?.userId,
           userName: response?.userName,
           accessToken: response?.accessToken,
-          refreshToken: response?.refreshToken,
           completedSections: formStatus,
         });
         toast.success(

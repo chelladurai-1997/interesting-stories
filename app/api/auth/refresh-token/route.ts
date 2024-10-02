@@ -1,13 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { generateAccessToken, verifyToken } from "@/app/lib/utils/authUtils";
+import { cookies } from "next/headers";
 
 const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET;
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
-    // Parse the JSON body to retrieve the refresh token
-    const body = await request.json();
-    const refreshToken = body.refreshToken;
+    const refreshToken = cookies().get("refreshToken")?.value;
 
     // Check if the refresh token is provided
     if (!refreshToken) {

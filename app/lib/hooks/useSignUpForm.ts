@@ -20,7 +20,6 @@ export const useSignUpForm = () => {
           userId: response?.userId,
           userName: response?.userName,
           accessToken: response?.accessToken,
-          refreshToken: response?.refreshToken,
           completedSections: formSectionDefaultState,
         });
         router.push("/profile-info/basic-details");

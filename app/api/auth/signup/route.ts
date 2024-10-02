@@ -76,13 +76,13 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     // });
 
     // Set access token as HttpOnly cookie
-    response.cookies.set("accessToken", accessToken, {
-      httpOnly: true,
-      maxAge: 15 * 60, // 15 minutes
-      path: "/",
-      secure: true,
-      sameSite: "strict",
-    });
+    // response.cookies.set("accessToken", accessToken, {
+    //   httpOnly: true,
+    //   maxAge: 15 * 60, // 15 minutes
+    //   path: "/",
+    //   secure: true,
+    //   sameSite: "strict",
+    // });
 
     return response;
   } catch (error) {

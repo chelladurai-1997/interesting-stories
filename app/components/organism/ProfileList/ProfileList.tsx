@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import ProfileCard from "../ProfileCard/ProfileCard";
 import SkeletonLoader from "../../molecules/SkeletonLoader/SkeletonLoader";
+import { useUser } from "@/app/lib/contexts/UserContext";
 
 type Profile = {
   name: string;
@@ -27,6 +28,7 @@ const ProfileList: React.FC = () => {
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const { sentInterests, fetchInterests } = useUser();
 
   // Fetch profiles from the API
   useEffect(() => {
@@ -46,6 +48,7 @@ const ProfileList: React.FC = () => {
     };
 
     fetchProfiles();
+    fetchInterests();
   }, []);
 
   if (loading) {
@@ -60,7 +63,7 @@ const ProfileList: React.FC = () => {
     return (
       <div className="text-center p-6">
         <h2 className="text-xl font-bold mb-4">Something went wrong!</h2>
-        <p className="text-gray-600">{error} Please try again later.</p>
+        <p className="text-gray-600"> Please try again later.</p>
       </div>
     );
   }
@@ -81,19 +84,30 @@ const ProfileList: React.FC = () => {
   return (
     <div className="flex justify-center mx-auto">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-screen-xl w-full p-4">
-        {profiles.map((profile) => (
-          <ProfileCard
-            key={profile.userId} // Use userId for unique key
-            name={profile.name}
-            dob={profile.dob}
-            occupation={profile.educationOccupation?.occupation}
-            livingPlace={profile.familyDetails?.livingPlace}
-            height={profile.personalDetails?.height}
-            kulam={profile.personalDetails?.kulam}
-            profileImgUrl={profile.contactInfo?.profileImgUrl}
-            userId={profile.userId}
-          />
-        ))}
+        {profiles.map((profile) => {
+          const isInterestSent = sentInterests.some(
+            (interest) => interest.receiverId === profile?.userId
+          );
+          const interestStatus = sentInterests.find(
+            (interest) => interest.receiverId === profile?.userId
+          )?.status;
+
+          return (
+            <ProfileCard
+              key={profile.userId} // Use userId for unique key
+              name={profile.name}
+              dob={profile.dob}
+              occupation={profile.educationOccupation?.occupation}
+              livingPlace={profile.familyDetails?.livingPlace}
+              height={profile.personalDetails?.height}
+              kulam={profile.personalDetails?.kulam}
+              profileImgUrl={profile.contactInfo?.profileImgUrl}
+              userId={profile.userId}
+              isInterestSent={isInterestSent}
+              interestStatus={interestStatus}
+            />
+          );
+        })}
       </div>
     </div>
   );

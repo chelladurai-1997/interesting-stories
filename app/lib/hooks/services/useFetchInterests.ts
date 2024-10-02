@@ -6,13 +6,12 @@ export enum InterestStatus {
   REJECTED = "rejected",
 }
 
-// Assuming this is the interface you are using for Interest
 export interface Interest {
-  _id: string; // Unique identifier for the interest
-  senderId: string; // ID of the user who sent the interest
-  receiverId: string; // ID of the user who received the interest
-  createdAt: string; // Date when the interest was created
-  status: InterestStatus; // Current status of the interest (e.g., Pending, Accepted, Rejected)
+  _id: string;
+  senderId: string;
+  receiverId: string;
+  createdAt: string;
+  status: InterestStatus;
 }
 
 interface UseFetchInterestsResult {
@@ -20,7 +19,8 @@ interface UseFetchInterestsResult {
   sentInterests: Interest[];
   loading: boolean;
   error: string | null;
-  fetchInterests: () => Promise<void>; // Function to manually fetch data
+  fetchInterests: () => Promise<void>;
+  resetInterests: () => void; // New reset function to clear the state
 }
 
 export const useFetchInterests = (
@@ -38,7 +38,6 @@ export const useFetchInterests = (
     setError(null);
 
     try {
-      // Fetch both sent and received interests in one API call
       const response = await fetch(`/api/interests?userId=${userId}`);
       const {
         data: interests,
@@ -47,7 +46,6 @@ export const useFetchInterests = (
       } = await response.json();
 
       if (!apiError) {
-        // Filter the interests into sent and received
         const received = interests.filter(
           (interest: Interest) => interest.receiverId === userId
         );
@@ -67,6 +65,14 @@ export const useFetchInterests = (
     }
   }, [userId]);
 
+  // Function to reset the state
+  const resetInterests = () => {
+    setReceivedInterests([]);
+    setSentInterests([]);
+    setLoading(false);
+    setError(null);
+  };
+
   useEffect(() => {
     fetchInterests();
   }, [fetchInterests]);
@@ -77,5 +83,6 @@ export const useFetchInterests = (
     loading,
     error,
     fetchInterests,
+    resetInterests, // Expose the reset function
   };
 };

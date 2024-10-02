@@ -72,7 +72,6 @@ export async function onSignInFormSubmit(
       message: data.message,
       error: false,
       accessToken: data.accessToken,
-      refreshToken: data.refreshToken, // In case you need to store or log it
       userId: data.userId,
       userName: data.userName,
       completedSections: data?.completedSections,

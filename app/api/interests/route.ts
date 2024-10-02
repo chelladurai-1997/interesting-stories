@@ -1,18 +1,51 @@
 import connectMongo from "@/app/lib/constants/mongodb";
-
 import { NextResponse } from "next/server";
 import Interests, {
   IInterest,
   InterestStatus,
 } from "@/app/lib/models/interest.model";
 
-// Handler for creating a new interest
+// Handler for creating or updating an interest
 export async function POST(request: Request) {
-  const { senderId, receiverId, status } = await request.json();
+  const { senderId, receiverId, status, interestId } = await request.json();
 
   try {
     // Connect to MongoDB
     await connectMongo();
+
+    // If interestId is provided, update the status
+    if (interestId) {
+      // Check if the status is provided
+      if (!status) {
+        return NextResponse.json(
+          { message: "status is required for updating", error: true },
+          { status: 400 }
+        );
+      }
+
+      // Find the interest by ID and update the status
+      const updatedInterest = await Interests.findByIdAndUpdate(
+        interestId,
+        { status },
+        { new: true } // This option returns the updated document
+      );
+
+      if (!updatedInterest) {
+        return NextResponse.json(
+          { message: "Interest not found", error: true },
+          { status: 404 }
+        );
+      }
+
+      return NextResponse.json(
+        {
+          message: "Interest status updated successfully",
+          data: updatedInterest,
+          error: false,
+        },
+        { status: 200 }
+      );
+    }
 
     // Create a new interest with default status if not provided
     const newInterest: IInterest = new Interests({
@@ -26,14 +59,14 @@ export async function POST(request: Request) {
 
     return NextResponse.json(
       {
-        message: "Interest updated successfully",
+        message: "Interest created successfully",
         data: savedInterest,
         error: false,
       },
       { status: 201 }
     );
   } catch (error) {
-    console.error("Error sending interest:", error);
+    console.error("Error handling interest:", error);
     let errorMessage = "An unknown error occurred.";
 
     if (error instanceof Error) {
@@ -49,6 +82,7 @@ export async function POST(request: Request) {
   }
 }
 
+// Handler for fetching interests
 export async function GET(request: Request) {
   const url = new URL(request.url);
   const userId = url.searchParams.get("userId");

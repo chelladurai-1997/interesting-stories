@@ -22,8 +22,13 @@ const Dashboard: React.FC = () => {
   const { userProfile } = useUser();
   const userId = userProfile?.userId;
 
-  const { receivedInterests, sentInterests, loading, error, fetchInterests } =
-    useFetchInterests(userId);
+  const {
+    receivedInterests,
+    sentInterests,
+    loadingInterests: loading,
+    errorInterests: error,
+    fetchInterests,
+  } = useUser();
 
   const [activeParentTab, setActiveParentTab] = useState<"received" | "sent">(
     "received"

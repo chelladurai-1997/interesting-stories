@@ -55,7 +55,6 @@ export async function onSignUpFormSubmit(
     cookies().set({
       name: "refreshToken", // Name for refresh token
       value: data.refreshToken, // Store the refresh token value
-      maxAge: data, // Expiration time for refresh token (longer, like a day or more)
       path: "/", // Available to all routes
       httpOnly: true, // Only accessible by the server for security
       secure: true, // Use secure cookies for HTTPS
@@ -68,7 +67,6 @@ export async function onSignUpFormSubmit(
       userId: data.userId,
       userName: data.userName,
       accessToken: data.accessToken,
-      refreshToken: data.refreshToken,
     };
   } catch (error) {
     console.error("Error during sign up:", error);

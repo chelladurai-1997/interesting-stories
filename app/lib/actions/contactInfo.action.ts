@@ -107,9 +107,7 @@ export async function handleContactInfoSubmission(
       );
     });
 
-    // Revalidate paths for caching
-    router.revalidatePath("/");
-    router.revalidatePath("/admin", "page");
+    router.revalidatePath("/", "layout");
     return { message: "Contact info saved successfully", error: false };
   } catch (error) {
     console.error("Error during contact info submission:", error);
