@@ -143,6 +143,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
       setUserProfile(null);
       localStorage.removeItem("userProfile");
+      localStorage.removeItem("hasVisited");
       resetInterests?.();
 
       if (!ignoreNavigation) {

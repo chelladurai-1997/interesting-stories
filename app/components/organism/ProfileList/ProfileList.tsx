@@ -6,10 +6,12 @@ import SkeletonLoader from "../../molecules/SkeletonLoader/SkeletonLoader";
 import FilterModal from "../FilterModal/FilterModal";
 import useProfileList from "./useProfileList";
 import { InterestStatus } from "@/app/lib/hooks/services/useFetchInterests";
+import { useUser } from "@/app/lib/hooks/useUser";
 
 const ProfileList: React.FC = () => {
   const { profiles, loading, error, hasSearchParams, sentInterests } =
     useProfileList();
+  const { userProfile } = useUser();
   const router = useRouter(); // For navigation
 
   // State to manage the opacity of the reset button
@@ -78,6 +80,10 @@ const ProfileList: React.FC = () => {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {profiles.map((profile) => {
+            //Don't show own profile
+            if (profile?.userId === userProfile?.userId) {
+              return <></>;
+            }
             const isInterestSent = sentInterests.some(
               (interest) => interest.receiverId === profile?.userId
             );
