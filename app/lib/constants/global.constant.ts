@@ -1,8 +1,8 @@
 import { SelectOption } from "@/app/components/atoms/Select/Select";
 
 export const genderOptions: SelectOption[] = [
-  { value: "male", label: "Men - (ஆண்)" },
-  { value: "female", label: "Women - (பெண்)" },
+  { value: "Men - (ஆண்)", label: "Men - (ஆண்)" },
+  { value: "Women - (பெண்)", label: "Women - (பெண்)" },
 ];
 
 export const ageOptions: SelectOption[] = [

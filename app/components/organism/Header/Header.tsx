@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation"; // Import the usePathname hook
 import SearchForm from "../SearchForm/SearchForm";
 import { useUser } from "@/app/lib/hooks/useUser";
 
@@ -18,6 +19,8 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
 
   const dropdownRef = useRef<HTMLDivElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
+
+  const pathname = usePathname(); // Get the current pathname
 
   const toggleMobileMenu = () => {
     if (isDropdownOpen) setIsDropdownOpen(false);
@@ -51,6 +54,13 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
     };
   }, []);
 
+  const navLinks = [
+    { href: "/", text: "Home" },
+    { href: "/profiles", text: "Browse Profiles" },
+    { href: "#", text: "Services" },
+    { href: "#", text: "Contact" },
+  ];
+
   return (
     <section className="relative bg-gray-900 pb-4">
       <nav className="border-gray-200 bg-gray-900 relative">
@@ -70,8 +80,6 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
                 <button
                   type="button"
                   className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-600"
-                  id="user-menu-button"
-                  aria-expanded={isDropdownOpen}
                   onClick={toggleDropdown}
                 >
                   <span className="sr-only">Open user menu</span>
@@ -92,7 +100,7 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
                         {userProfile.userId.slice(0, 10)}
                       </span>
                     </div>
-                    <ul className="py-2" aria-labelledby="user-menu-button">
+                    <ul className="py-2">
                       <li>
                         <Link
                           href="/dashboard"
@@ -103,7 +111,6 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
                       </li>
                       <li>
                         <Link
-                          aria-disabled
                           href="#"
                           className="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-600"
                         >
@@ -139,11 +146,8 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
             )}
 
             <button
-              data-collapse-toggle="navbar-user"
               type="button"
               className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm rounded-lg md:hidden focus:outline-none focus:ring-2 text-gray-400 hover:bg-gray-700 focus:ring-gray-600"
-              aria-controls="navbar-user"
-              aria-expanded={isMobileMenuOpen ? "true" : "false"}
               onClick={toggleMobileMenu}
             >
               <span className="sr-only">Open main menu</span>
@@ -165,88 +169,48 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
             </button>
           </div>
 
+          {/* Mobile menu */}
           <div
             className={`${
               isMobileMenuOpen ? "block" : "hidden"
-            } absolute top-full left-0 right-0 bg-gray-800 border border-gray-700 rounded-lg shadow-lg md:hidden min-w-48m z-[99999]`} // Set min width here
+            } absolute top-full left-0 right-0 bg-gray-800 border border-gray-700 rounded-lg shadow-lg md:hidden min-w-48m z-[99999]`}
             ref={mobileMenuRef}
           >
             <ul className="flex flex-col font-medium p-4 space-y-2">
-              <li>
-                <a
-                  href="#"
-                  className="block py-2 px-3 text-white hover:bg-gray-600 rounded"
-                  aria-current="page"
-                >
-                  Home
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="block py-2 px-3 text-white hover:bg-gray-600 rounded"
-                  aria-current="page"
-                >
-                  Services
-                </a>
-              </li>
-              <li>
-                <Link
-                  href="/signup"
-                  className="block py-2 px-3 text-white hover:bg-gray-600 rounded"
-                >
-                  Register
-                </Link>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="block py-2 px-3 text-white hover:bg-gray-600 rounded"
-                >
-                  Contact
-                </a>
-              </li>
+              {navLinks.map((link, index) => (
+                <li key={index}>
+                  <Link
+                    href={link.href}
+                    className={`block py-2 px-3 ${
+                      pathname === link.href
+                        ? "text-[#ffd700] hover:text-[#ffd700]"
+                        : "text-white hover:text-[#ffd700]"
+                    } rounded`}
+                  >
+                    {link.text}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          <div
-            className="hidden w-full md:flex md:w-auto md:order-1"
-            id="navbar-user"
-          >
+          {/* Desktop menu */}
+          <div className="hidden w-full md:flex md:w-auto md:order-1">
             <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 bg-gray-800 bg-gray-900 border-gray-700">
-              <li>
-                <a
-                  href="#"
-                  className="block py-2 px-3 text-white hover:text-[#ffd700] rounded md:bg-transparent md:p-0"
-                  aria-current="page"
-                >
-                  Home
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="block py-2 px-3 text-white hover:text-[#ffd700] rounded md:bg-transparent md:p-0"
-                >
-                  Browse Profiles
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="block py-2 px-3 text-white hover:text-[#ffd700] rounded md:bg-transparent md:p-0"
-                >
-                  Services
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="block py-2 px-3 text-white hover:text-[#ffd700] rounded md:bg-transparent md:p-0"
-                >
-                  Contact
-                </a>
-              </li>
+              {navLinks.map((link, index) => (
+                <li key={index}>
+                  <Link
+                    href={link.href}
+                    className={`block py-2 px-3 ${
+                      pathname === link.href
+                        ? "text-[#ffd700] hover:text-[#ffd700]"
+                        : "text-white hover:text-[#ffd700]"
+                    } rounded md:bg-transparent md:p-0`}
+                  >
+                    {link.text}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
         </div>

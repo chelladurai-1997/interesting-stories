@@ -1,23 +1,26 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   ageOptions,
   districtOptions,
-  educationOptions,
-  genderLabelOptions,
   genderOptions,
   jathagamStatusOptions,
   maritalStatusOptions,
   OCCUPATION_OPTIONS,
+  stateOptions,
 } from "@/app/lib/constants/global.constant";
 import FormField from "../../molecules/FormField/FormField";
 import Button from "../../atoms/Button/Button";
 
-function FilterModal() {
-  const [isModalOpen, setModalOpen] = useState(false);
-  const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
-  const [animate, setAnimate] = useState(false);
+const FilterModal: React.FC = () => {
+  const [isModalOpen, setModalOpen] = useState<boolean>(false);
+  const [showAdvancedFilters, setShowAdvancedFilters] =
+    useState<boolean>(false);
+  const [animate, setAnimate] = useState<boolean>(false);
+  const router = useRouter(); // Initialize the router
+  const searchParams = useSearchParams(); // Get search parameters from the URL
 
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
@@ -31,17 +34,46 @@ function FilterModal() {
     return () => clearInterval(animationInterval); // Clean up the interval on component unmount
   }, []);
 
+  // Function to retrieve default values from search params
+  const getDefaultValues = () => {
+    const defaults: Record<string, string> = {};
+    searchParams.forEach((value, key) => {
+      defaults[key] = value; // Map search params to defaults
+    });
+    return defaults;
+  };
+
+  const handleSubmit = () => {
+    const formData = new FormData(
+      document.querySelector("form") as HTMLFormElement
+    );
+    const queryParams = new URLSearchParams();
+
+    // Append form data to URLSearchParams
+    formData.forEach((value, key) => {
+      if (value) {
+        // Avoid adding empty values
+        queryParams.append(key, value.toString());
+      }
+    });
+
+    // Update the URL with new query parameters
+    router.push(`?${queryParams.toString()}`);
+    closeModal(); // Close the modal after submission
+  };
+
+  // Get default values based on search parameters
+  const defaultValues = getDefaultValues();
+
   return (
-    <div className="fixed end-6 bottom-6 group ">
+    <div className="fixed end-6 bottom-6 group">
       {!isModalOpen && (
         <button
           type="button"
           onClick={openModal}
           className={`flex items-center justify-center text-white bg-gray-600 rounded-full w-14 h-14 hover:bg-gray-700 focus:ring-4 ${
             animate ? "ring-4 ring-gray-300 outline-none " : ""
-          } focus:ring-gray-300 focus:outline-none transition-all duration-300 ${
-            animate ? "" : ""
-          }`}
+          } focus:ring-gray-300 focus:outline-none transition-all duration-300`}
         >
           {/* Filter Icon */}
           <svg
@@ -61,12 +93,14 @@ function FilterModal() {
       )}
 
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+        <div
+          className={`fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300 `}
+        >
           <div className="relative bg-white text-gray-900 py-8 px-8 w-full max-w-lg md:max-w-3xl md:mx-auto md:rounded-lg shadow-lg overflow-auto h-full md:h-auto">
             {/* Close button with inline SVG */}
             <button
               onClick={closeModal}
-              className={`absolute top-4 right-4 text-gray-500   hover:text-gray-800`}
+              className={`absolute top-4 right-4 text-gray-500 hover:text-gray-800`}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -100,8 +134,8 @@ function FilterModal() {
                   name="gender"
                   required={false}
                   searchable={false}
+                  defaultValue={defaultValues.gender} // Set default value
                 />
-
                 <FormField
                   label="Age"
                   id="age"
@@ -111,8 +145,8 @@ function FilterModal() {
                   name="age"
                   searchable={false}
                   required={false}
+                  defaultValue={defaultValues.age} // Set default value
                 />
-
                 <FormField
                   label="Jaadhagam (ஜாதகம்):"
                   id="jaadhagam"
@@ -122,9 +156,8 @@ function FilterModal() {
                   placeholder="Select Jaadhagam"
                   searchable={false}
                   required={false}
+                  defaultValue={defaultValues.jaadhagam} // Set default value
                 />
-
-                {/* Marital Status */}
                 <FormField
                   label="Marital Status (திருமண நிலை):"
                   id="marital_status"
@@ -134,6 +167,7 @@ function FilterModal() {
                   placeholder="Select Marital Status"
                   searchable={false}
                   required={false}
+                  defaultValue={defaultValues.marital_status} // Set default value
                 />
 
                 {/* Advanced Filters Link */}
@@ -162,15 +196,17 @@ function FilterModal() {
                       type="select"
                       options={OCCUPATION_OPTIONS}
                       placeholder="Select Occupation"
+                      defaultValue={defaultValues.occupation} // Set default value
                     />
                     <FormField
                       label="State (மாநிலம்):"
                       id="state"
                       name="state"
                       placeholder="Select State"
-                      options={districtOptions} // Assuming districtOptions also includes states
+                      options={stateOptions} // Assuming districtOptions also includes states
                       type="select"
                       required={false}
+                      defaultValue={defaultValues.state} // Set default value
                     />
                     <FormField
                       label="District (மாவட்டம்):"
@@ -180,12 +216,13 @@ function FilterModal() {
                       options={districtOptions}
                       type="select"
                       required={false}
+                      defaultValue={defaultValues.district} // Set default value
                     />
                   </>
                 )}
 
                 <div className="text-center md:col-span-2">
-                  <Button text="Search" />
+                  <Button text="Search" onClick={handleSubmit} type="button" />
                 </div>
               </form>
             </div>
@@ -194,6 +231,6 @@ function FilterModal() {
       )}
     </div>
   );
-}
+};
 
 export default FilterModal;

@@ -1,57 +1,28 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react"; // Import useState and useEffect
+import { useRouter } from "next/navigation";
 import ProfileCard from "../ProfileCard/ProfileCard";
 import SkeletonLoader from "../../molecules/SkeletonLoader/SkeletonLoader";
-import { InterestStatus } from "@/app/lib/hooks/services/useFetchInterests";
-import { useUser } from "@/app/lib/hooks/useUser";
 import FilterModal from "../FilterModal/FilterModal";
-
-type Profile = {
-  name: string;
-  dob: string;
-  educationOccupation: {
-    education: string;
-    occupation: string;
-  };
-  familyDetails: {
-    livingPlace: string;
-  };
-  personalDetails: {
-    height: string;
-    kulam: string;
-  };
-  contactInfo: {
-    profileImgUrl: string;
-  };
-  userId: string;
-};
+import useProfileList from "./useProfileList";
+import { InterestStatus } from "@/app/lib/hooks/services/useFetchInterests";
 
 const ProfileList: React.FC = () => {
-  const [profiles, setProfiles] = useState<Profile[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-  const { sentInterests, fetchInterests } = useUser();
+  const { profiles, loading, error, hasSearchParams, sentInterests } =
+    useProfileList();
+  const router = useRouter(); // For navigation
 
-  const fetchProfiles = async () => {
-    try {
-      const response = await fetch("/api/profiles");
-      if (!response.ok) {
-        throw new Error("Failed to fetch profiles");
-      }
-      const result = await response.json();
-      setProfiles(result.data);
-      setLoading(false);
-    } catch (err) {
-      setError("Something went wrong. Please try again later.");
-      setLoading(false);
-    }
-  };
+  // State to manage the opacity of the reset button
+  const [showResetButton, setShowResetButton] = useState(false);
 
-  // Fetch profiles from the API
   useEffect(() => {
-    fetchProfiles();
-    fetchInterests();
-  }, []);
+    // Set button visibility based on hasSearchParams
+    if (hasSearchParams) {
+      setShowResetButton(true);
+    } else {
+      setShowResetButton(false);
+    }
+  }, [hasSearchParams]);
 
   if (loading) {
     return (
@@ -65,7 +36,7 @@ const ProfileList: React.FC = () => {
     return (
       <div className="text-center p-6">
         <h2 className="text-xl font-bold mb-4">Something went wrong!</h2>
-        <p className="text-gray-600"> Please try again later.</p>
+        <p className="text-gray-600">Please try again later.</p>
       </div>
     );
   }
@@ -89,16 +60,21 @@ const ProfileList: React.FC = () => {
         <h1 className="text-4xl font-bold mb-4 text-teal-600 text-center">
           Profiles
         </h1>
-        <div className="text-center mb-4">
-          <button
-            className="text-teal-600 underline hover:text-teal-800 transition-colors duration-300"
-            onClick={() => {
-              // Logic to reset filters can be added here
-              console.log("Filters reset");
-            }}
-          >
-            Reset Filters
-          </button>
+        <div className="text-right mb-4">
+          {/* Conditionally render the reset button with transition effects */}
+          {showResetButton && (
+            <button
+              className={`text-teal-600 underline hover:text-teal-800 transition-opacity duration-300 ${
+                showResetButton ? "opacity-100" : "opacity-0"
+              }`}
+              onClick={() => {
+                router.push("/profiles"); // Reset filters by navigating to /profiles
+              }}
+              style={{ transition: "opacity 0.3s ease-in-out" }}
+            >
+              Reset Filters
+            </button>
+          )}
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {profiles.map((profile) => {

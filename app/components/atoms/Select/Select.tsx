@@ -16,6 +16,7 @@ export interface SelectProps {
   id: string;
   name: string;
   isSearchable?: boolean;
+  defaultValue?: string;
 }
 
 const animatedComponents = makeAnimated();
@@ -66,6 +67,7 @@ const CustomSelect: React.FC<SelectProps> = ({
   name,
   onChange,
   isSearchable = false,
+  defaultValue,
 }) => {
   // Transform string[] into SelectOption[] if necessary
   const transformedOptions = options?.map((option) =>
@@ -104,6 +106,9 @@ const CustomSelect: React.FC<SelectProps> = ({
         isSearchable={isSearchable}
         onChange={handleChange} // Updated handler
         menuShouldScrollIntoView
+        {...(defaultValue
+          ? { defaultValue: { label: defaultValue, value: defaultValue } }
+          : {})}
       />
     </div>
   );

@@ -37,6 +37,7 @@ interface FormFieldProps {
   required?: boolean;
   onChange?: (event: InputPropEvent) => void;
   disabled?: boolean;
+  defaultValue?: string;
 }
 
 const FormField: React.FC<FormFieldProps> = ({
@@ -53,6 +54,7 @@ const FormField: React.FC<FormFieldProps> = ({
   required = true,
   onChange,
   disabled,
+  defaultValue,
 }) => {
   const handleChange = (
     event: React.ChangeEvent<
@@ -158,6 +160,7 @@ const FormField: React.FC<FormFieldProps> = ({
               required={required}
               onChange={onChange}
               isSearchable={searchable}
+              defaultValue={defaultValue}
             />
           ) : (
             <Input
