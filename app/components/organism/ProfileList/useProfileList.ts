@@ -77,7 +77,10 @@ const useProfileList = () => {
     const currentQuery = queryParams.toString();
 
     // Only fetch profiles if the query string has changed
-    if (currentQuery !== previousQuery.current) {
+    if (
+      currentQuery !== previousQuery.current ||
+      previousQuery.current === ""
+    ) {
       previousQuery.current = currentQuery; // Update the previous query
       setLoading(true); // Set loading state
       fetchProfiles(currentQuery); // Fetch profiles
