@@ -26,14 +26,14 @@ const StyledChip: React.FC<StyledChipProps> = ({
 
   // Conditionally render phone number as a clickable link if it's not masked
   return (
-    <p className={`inline-block px-3 py-1 rounded-sm mr-3 ${backgroundColor}`}>
-      <strong className={`${textColor}`}>{label}:</strong>{" "}
+    <p className={`inline-block px-3 py-1 rounded-sm mr-3 border`}>
+      <strong className={`text-green-800`}>{label}:</strong>{" "}
       {isPhoneNumber && !isMasked ? (
-        <Link href={`tel:${value}`} className={`${textColor} underline`}>
+        <Link href={`tel:${value}`} className={`text-green-800 underline`}>
           {value}
         </Link>
       ) : (
-        <span className={textColor}>{value}</span>
+        <span className={"text-green-800"}>{value}</span>
       )}
     </p>
   );
