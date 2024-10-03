@@ -1,8 +1,6 @@
-// hooks/useProfiles.ts
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import { useUser } from "@/app/lib/hooks/useUser";
-import { InterestStatus } from "@/app/lib/hooks/services/useFetchInterests";
 
 type Profile = {
   name: string;
@@ -30,35 +28,10 @@ const useProfileList = () => {
   const [error, setError] = useState<string | null>(null);
   const { sentInterests, fetchInterests } = useUser();
   const searchParams = useSearchParams();
+  const previousQuery = useRef<string>(""); // To store the previous query string
 
-  const fetchProfiles = async () => {
+  const fetchProfiles = async (queryString: string) => {
     try {
-      const queryParams = new URLSearchParams();
-
-      // Capture and conditionally add each query parameter only if it has a value
-      const gender = searchParams.get("gender");
-      if (gender) queryParams.append("gender", gender);
-
-      const age = searchParams.get("age");
-      if (age) queryParams.append("age", age);
-
-      const jaadhagam = searchParams.get("jaadhagam");
-      if (jaadhagam) queryParams.append("jaadhagam", jaadhagam);
-
-      const maritalStatus = searchParams.get("marital_status");
-      if (maritalStatus) queryParams.append("marital_status", maritalStatus);
-
-      const occupation = searchParams.get("occupation");
-      if (occupation) queryParams.append("occupation", occupation);
-
-      const state = searchParams.get("state");
-      if (state) queryParams.append("state", state);
-
-      const district = searchParams.get("district");
-      if (district) queryParams.append("district", district);
-
-      // Construct the full API URL with the query parameters
-      const queryString = queryParams.toString();
       const apiUrl = queryString
         ? `/api/profiles?${queryString}`
         : "/api/profiles";
@@ -77,9 +50,41 @@ const useProfileList = () => {
   };
 
   useEffect(() => {
-    fetchProfiles();
-    fetchInterests();
-  }, [searchParams]); // Add searchParams as a dependency to re-fetch on query change
+    const queryParams = new URLSearchParams();
+
+    // Capture and conditionally add each query parameter only if it has a value
+    const gender = searchParams.get("gender");
+    if (gender) queryParams.append("gender", gender);
+
+    const age = searchParams.get("age");
+    if (age) queryParams.append("age", age);
+
+    const jaadhagam = searchParams.get("jaadhagam");
+    if (jaadhagam) queryParams.append("jaadhagam", jaadhagam);
+
+    const maritalStatus = searchParams.get("marital_status");
+    if (maritalStatus) queryParams.append("marital_status", maritalStatus);
+
+    const occupation = searchParams.get("occupation");
+    if (occupation) queryParams.append("occupation", occupation);
+
+    const state = searchParams.get("state");
+    if (state) queryParams.append("state", state);
+
+    const district = searchParams.get("district");
+    if (district) queryParams.append("district", district);
+
+    const currentQuery = queryParams.toString();
+
+    // Only fetch profiles if the query string has changed
+    if (currentQuery !== previousQuery.current) {
+      previousQuery.current = currentQuery; // Update the previous query
+      setLoading(true); // Set loading state
+      fetchProfiles(currentQuery); // Fetch profiles
+    }
+
+    fetchInterests(); // Fetch interests regardless of the query
+  }, [searchParams, fetchInterests]); // Add fetchInterests to dependencies to avoid linting errors
 
   const hasSearchParams = Array.from(searchParams.entries()).length > 0;
 

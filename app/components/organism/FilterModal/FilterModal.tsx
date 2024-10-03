@@ -19,8 +19,8 @@ const FilterModal: React.FC = () => {
   const [showAdvancedFilters, setShowAdvancedFilters] =
     useState<boolean>(false);
   const [animate, setAnimate] = useState<boolean>(false);
-  const router = useRouter(); // Initialize the router
-  const searchParams = useSearchParams(); // Get search parameters from the URL
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
@@ -28,17 +28,17 @@ const FilterModal: React.FC = () => {
   // Toggle the animation every 3 seconds
   useEffect(() => {
     const animationInterval = setInterval(() => {
-      setAnimate((prev) => !prev); // Toggle animation class
-    }, 3000); // Every 3 seconds
+      setAnimate((prev) => !prev);
+    }, 3000);
 
-    return () => clearInterval(animationInterval); // Clean up the interval on component unmount
+    return () => clearInterval(animationInterval);
   }, []);
 
   // Function to retrieve default values from search params
   const getDefaultValues = () => {
     const defaults: Record<string, string> = {};
     searchParams.forEach((value, key) => {
-      defaults[key] = value; // Map search params to defaults
+      defaults[key] = value;
     });
     return defaults;
   };
@@ -52,14 +52,12 @@ const FilterModal: React.FC = () => {
     // Append form data to URLSearchParams
     formData.forEach((value, key) => {
       if (value) {
-        // Avoid adding empty values
         queryParams.append(key, value.toString());
       }
     });
 
-    // Update the URL with new query parameters
     router.push(`?${queryParams.toString()}`);
-    closeModal(); // Close the modal after submission
+    closeModal();
   };
 
   // Get default values based on search parameters
@@ -72,7 +70,7 @@ const FilterModal: React.FC = () => {
           type="button"
           onClick={openModal}
           className={`flex items-center justify-center text-white bg-gray-600 rounded-full w-14 h-14 hover:bg-gray-700 focus:ring-4 ${
-            animate ? "ring-4 ring-gray-300 outline-none " : ""
+            animate ? "ring-4 ring-gray-300 outline-none" : ""
           } focus:ring-gray-300 focus:outline-none transition-all duration-300`}
         >
           {/* Filter Icon */}
@@ -94,7 +92,7 @@ const FilterModal: React.FC = () => {
 
       {isModalOpen && (
         <div
-          className={`fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300 `}
+          className={`fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300`}
         >
           <div className="relative bg-white text-gray-900 py-8 px-8 w-full max-w-lg md:max-w-3xl md:mx-auto md:rounded-lg shadow-lg overflow-auto h-full md:h-auto">
             {/* Close button with inline SVG */}
@@ -134,7 +132,7 @@ const FilterModal: React.FC = () => {
                   name="gender"
                   required={false}
                   searchable={false}
-                  defaultValue={defaultValues.gender} // Set default value
+                  defaultValue={defaultValues.gender}
                 />
                 <FormField
                   label="Age"
@@ -145,7 +143,7 @@ const FilterModal: React.FC = () => {
                   name="age"
                   searchable={false}
                   required={false}
-                  defaultValue={defaultValues.age} // Set default value
+                  defaultValue={defaultValues.age}
                 />
                 <FormField
                   label="Jaadhagam (ஜாதகம்):"
@@ -156,7 +154,7 @@ const FilterModal: React.FC = () => {
                   placeholder="Select Jaadhagam"
                   searchable={false}
                   required={false}
-                  defaultValue={defaultValues.jaadhagam} // Set default value
+                  defaultValue={defaultValues.jaadhagam}
                 />
                 <FormField
                   label="Marital Status (திருமண நிலை):"
@@ -167,19 +165,14 @@ const FilterModal: React.FC = () => {
                   placeholder="Select Marital Status"
                   searchable={false}
                   required={false}
-                  defaultValue={defaultValues.marital_status} // Set default value
+                  defaultValue={defaultValues.marital_status}
                 />
 
                 {/* Advanced Filters Link */}
                 <button
                   type="button"
                   onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
-                  className="text-gray-500 hover:underline underline mb-2 md:col-span-2"
-                  style={{
-                    color: "#202124",
-                    textDecoration: "underline",
-                    textDecorationColor: "#5e5e5e",
-                  }}
+                  className="text-gray-500 hover:underline mb-2 md:col-span-2"
                 >
                   {showAdvancedFilters
                     ? "Hide Advanced Filters"
@@ -196,17 +189,17 @@ const FilterModal: React.FC = () => {
                       type="select"
                       options={OCCUPATION_OPTIONS}
                       placeholder="Select Occupation"
-                      defaultValue={defaultValues.occupation} // Set default value
+                      defaultValue={defaultValues.occupation}
                     />
                     <FormField
                       label="State (மாநிலம்):"
                       id="state"
                       name="state"
                       placeholder="Select State"
-                      options={stateOptions} // Assuming districtOptions also includes states
+                      options={stateOptions}
                       type="select"
                       required={false}
-                      defaultValue={defaultValues.state} // Set default value
+                      defaultValue={defaultValues.state}
                     />
                     <FormField
                       label="District (மாவட்டம்):"
@@ -216,7 +209,7 @@ const FilterModal: React.FC = () => {
                       options={districtOptions}
                       type="select"
                       required={false}
-                      defaultValue={defaultValues.district} // Set default value
+                      defaultValue={defaultValues.district}
                     />
                   </>
                 )}
