@@ -4,6 +4,7 @@ import ProfileCard from "../ProfileCard/ProfileCard";
 import SkeletonLoader from "../../molecules/SkeletonLoader/SkeletonLoader";
 import { InterestStatus } from "@/app/lib/hooks/services/useFetchInterests";
 import { useUser } from "@/app/lib/hooks/useUser";
+import FilterModal from "../FilterModal/FilterModal";
 
 type Profile = {
   name: string;
@@ -31,23 +32,23 @@ const ProfileList: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const { sentInterests, fetchInterests } = useUser();
 
+  const fetchProfiles = async () => {
+    try {
+      const response = await fetch("/api/profiles");
+      if (!response.ok) {
+        throw new Error("Failed to fetch profiles");
+      }
+      const result = await response.json();
+      setProfiles(result.data);
+      setLoading(false);
+    } catch (err) {
+      setError("Something went wrong. Please try again later.");
+      setLoading(false);
+    }
+  };
+
   // Fetch profiles from the API
   useEffect(() => {
-    const fetchProfiles = async () => {
-      try {
-        const response = await fetch("/api/profiles");
-        if (!response.ok) {
-          throw new Error("Failed to fetch profiles");
-        }
-        const result = await response.json();
-        setProfiles(result.data);
-        setLoading(false);
-      } catch (err) {
-        setError("Something went wrong. Please try again later.");
-        setLoading(false);
-      }
-    };
-
     fetchProfiles();
     fetchInterests();
   }, []);
@@ -88,9 +89,8 @@ const ProfileList: React.FC = () => {
         <h1 className="text-4xl font-bold mb-4 text-teal-600 text-center">
           Profiles
         </h1>
-        <div className="text-right mb-4">
-          <a
-            href="#"
+        <div className="text-center mb-4">
+          <button
             className="text-teal-600 underline hover:text-teal-800 transition-colors duration-300"
             onClick={() => {
               // Logic to reset filters can be added here
@@ -98,7 +98,7 @@ const ProfileList: React.FC = () => {
             }}
           >
             Reset Filters
-          </a>
+          </button>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {profiles.map((profile) => {
@@ -127,6 +127,7 @@ const ProfileList: React.FC = () => {
             );
           })}
         </div>
+        <FilterModal />
       </div>
     </div>
   );

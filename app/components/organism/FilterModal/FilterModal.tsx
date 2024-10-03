@@ -22,11 +22,11 @@ function FilterModal() {
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
 
-  // Toggle the animation every 5 seconds
+  // Toggle the animation every 3 seconds
   useEffect(() => {
     const animationInterval = setInterval(() => {
       setAnimate((prev) => !prev); // Toggle animation class
-    }, 5000); // Every 5 seconds
+    }, 3000); // Every 3 seconds
 
     return () => clearInterval(animationInterval); // Clean up the interval on component unmount
   }, []);
@@ -37,8 +37,10 @@ function FilterModal() {
         <button
           type="button"
           onClick={openModal}
-          className={`flex items-center justify-center text-white bg-gray-600 rounded-full w-14 h-14 hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 focus:outline-none transition-all duration-300 ${
-            animate ? "animate-bounce" : ""
+          className={`flex items-center justify-center text-white bg-gray-600 rounded-full w-14 h-14 hover:bg-gray-700 focus:ring-4 ${
+            animate ? "ring-4 ring-gray-300 outline-none " : ""
+          } focus:ring-gray-300 focus:outline-none transition-all duration-300 ${
+            animate ? "" : ""
           }`}
         >
           {/* Filter Icon */}
@@ -64,7 +66,7 @@ function FilterModal() {
             {/* Close button with inline SVG */}
             <button
               onClick={closeModal}
-              className="absolute top-4 right-4 text-gray-500 hover:text-gray-800"
+              className={`absolute top-4 right-4 text-gray-500   hover:text-gray-800`}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
