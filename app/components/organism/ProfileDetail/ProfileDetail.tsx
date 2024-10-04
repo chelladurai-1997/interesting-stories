@@ -33,12 +33,10 @@ const ProfileDetail: React.FC = () => {
     fetchInterests?.();
   }, []);
 
-  // Check for any received interests for this user
   const currentInterest = receivedInterests.find(
     (interest) => interest.senderId === id
   );
 
-  // Check for any sent interests for this user
   const currentSentInterest = sentInterests.find(
     (interest) => interest.receiverId === id
   );
@@ -61,7 +59,6 @@ const ProfileDetail: React.FC = () => {
     }
   };
 
-  // Format the received date
   const formatReceivedDate = (dateString: string) => {
     const date = new Date(dateString);
     const formattedDate = `${date.getDate().toString().padStart(2, "0")}-${(
@@ -156,9 +153,9 @@ const ProfileDetail: React.FC = () => {
     }
 
     return (
-      <div className="flex flex-col lg:flex-row lg:space-x-4 p-6">
-        <div className="lg:w-1/4 lg:sticky lg:top-6 lg:space-y-4 mb-4 lg:mb-0 relative">
-          <div className="max-h-96 overflow-hidden">
+      <div className="flex flex-col lg:flex-row lg:space-x-4 p-6 lg:overflow-visible">
+        <div className="lg:w-1/4 lg:sticky lg:top-6 lg:space-y-4 mb-4 lg:mb-0">
+          <div className="overflow-auto">
             <ImageGallery
               images={[
                 profile?.contactInfo?.photo,
@@ -167,7 +164,6 @@ const ProfileDetail: React.FC = () => {
             />
           </div>
 
-          {/* Action buttons and received date */}
           <div className="flex flex-col items-center mt-4">
             {renderInterestButtons()}
           </div>

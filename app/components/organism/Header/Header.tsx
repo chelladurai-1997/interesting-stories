@@ -57,7 +57,7 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
   const navLinks = [
     { href: "/", text: "Home" },
     { href: "/profiles", text: "Browse Profiles" },
-    { href: "#", text: "Services" },
+    { href: "#", text: "How it works!" },
     { href: "#", text: "Contact" },
   ];
 
