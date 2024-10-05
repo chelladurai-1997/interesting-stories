@@ -149,14 +149,13 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
         aria-label="Open image gallery"
         onKeyDown={(e) => e.key === "Enter" && openModal(previewIndex)}
       >
-        <div className="min-h-[250px]">
+        <div className="h-[250px]">
           <Image
             src={images[previewIndex]} // Use previewIndex for preview
             alt="Preview of selected image"
-            layout="responsive"
-            width={800}
-            height={600}
-            className="w-full h-[250px] md:h-auto object-cover rounded aspect-square md:aspect-auto"
+            fill
+            objectFit="cover"
+            className="rounded"
           />
         </div>
         {images.length > 1 && (

@@ -1,5 +1,3 @@
-// app/api/profiles/[userId]/route.ts
-
 import connectMongo from "@/app/lib/constants/mongodb";
 import BasicInformation from "@/app/lib/models/basicinfo.model";
 import ContactInfo from "@/app/lib/models/contactInfo.model";
@@ -7,32 +5,30 @@ import EducationOccupation from "@/app/lib/models/educationOccupation.model";
 import Expectations from "@/app/lib/models/expectationInfo.model";
 import FamilyDetails from "@/app/lib/models/familyInfo.model";
 import HoroscopeInfo from "@/app/lib/models/horoscopeInfo.model";
+import Interests, { InterestStatus } from "@/app/lib/models/interest.model";
 import PersonalDetails from "@/app/lib/models/personalInfo.model";
 import User from "@/app/lib/models/user.model";
 import { getUserIdFromToken } from "@/app/lib/utils/getUserIdFromToken";
 import { maskAddress } from "@/app/lib/utils/maskAddress";
 import { maskNumber } from "@/app/lib/utils/maskMobileNumber";
+import mongoose from "mongoose";
 import { NextResponse } from "next/server";
 
-// Handler for fetching profile data for a specific user
 export async function GET(
   request: Request,
   { params }: { params: { userId: string } }
 ) {
   const { userId } = params;
-
   let isUserLoggedIn = false;
   let isAdminApproved = false;
+  let isInterestAccepted = false;
 
-  // Extract user Id from access token, This will return null which means invalid user id or token expired.
-  const { userId: loggedInUserId } = getUserIdFromToken();
+  // Extract the token from headers
+  const authHeader = request.headers.get("Authorization");
+  const token = authHeader ? authHeader.split(" ")[1] : null;
 
-  // Check if the user is approved by admin
-  if (loggedInUserId) {
-    isUserLoggedIn = true;
-    const user = await User.findById(userId).select("adminApproved");
-    isAdminApproved = user ? user.adminApproved : false;
-  }
+  // Extract user Id from token
+  const { userId: loggedInUserId } = getUserIdFromToken(token);
 
   if (!userId) {
     return NextResponse.json(
@@ -42,10 +38,31 @@ export async function GET(
   }
 
   try {
-    // Connect to MongoDB
-    await connectMongo();
+    await connectMongo(); // Ensure database connection
 
-    // Fetch profile data from multiple collections
+    if (loggedInUserId) {
+      isUserLoggedIn = true;
+      const user = await User.findById(userId).select("adminApproved");
+      isAdminApproved = user ? user.adminApproved : false;
+
+      const senderObjectId = new mongoose.Types.ObjectId(
+        loggedInUserId as string
+      );
+      const receiverObjectId = new mongoose.Types.ObjectId(userId as string);
+
+      const interest = await Interests.findOne({
+        senderId: senderObjectId,
+        receiverId: receiverObjectId,
+      });
+
+      isInterestAccepted = interest
+        ? interest.status === InterestStatus.ACCEPTED
+        : false;
+    }
+
+    const isMaskingRequired =
+      !isUserLoggedIn || !isAdminApproved || !isInterestAccepted;
+
     const [
       basicInfo,
       contactInfo,
@@ -64,8 +81,7 @@ export async function GET(
       PersonalDetails.findOne({ userId }).select("-userId"),
     ]);
 
-    // Mask mobile and WhatsApp numbers for non-logged in users
-    if (contactInfo && (!isUserLoggedIn || !isAdminApproved)) {
+    if (contactInfo && isMaskingRequired) {
       contactInfo.mobile = maskNumber(contactInfo.mobile);
       contactInfo.whatsapp = maskNumber(contactInfo.whatsapp);
       contactInfo.address = maskAddress(contactInfo.address);
@@ -86,18 +102,15 @@ export async function GET(
       error: false,
     });
 
-    // response.headers.set("Cache-Control", "public, max-age=3600");
     return response;
   } catch (error) {
     console.error("Error fetching profile data:", error);
 
     let errorMessage = "An unknown error occurred.";
-    if (error instanceof Error) {
-      if (error.message.includes("MongoError")) {
-        errorMessage = "Database error occurred.";
-      } else {
-        errorMessage = error.message;
-      }
+    if (error instanceof mongoose.Error) {
+      errorMessage = "A database error occurred.";
+    } else if (error instanceof Error) {
+      errorMessage = error.message;
     }
 
     return NextResponse.json(
