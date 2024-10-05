@@ -13,6 +13,7 @@ const QuickAccess: React.FC = () => (
             <li>✅ Profile Registration</li>
             <li>✅ Manual Verification Via Call</li>
             <li>✅ Send Unlimited Interests</li>
+            <li>✅ Unlimited Accept or Reject profiles</li>
             <li>✅ View Unlimited Contact Details After Acceptance</li>
             <li>✅ Get Visitor Insights</li>
           </ul>
@@ -24,11 +25,25 @@ const QuickAccess: React.FC = () => (
             💼 Paid Support
           </h3>
           <ul className="text-left text-gray-700 space-y-3">
-            <li>🤝 Personalized Assistance</li>
+            <li>
+              🤝 Arrange Field Visits and Help Communicate Between Both Parties
+            </li>
             <li>📝 Handle All Communication on Your Behalf</li>
-            <li>📅 Schedule Visits as Needed</li>
+            <li>
+              📅 Schedule Visits or Perform On-Site Verification and Behavior
+              Checks
+            </li>
             <li>💰 Flexible Payment Options</li>
             <li>✅ Ensure Genuine Interactions</li>
+            <li>
+              📱 WhatsApp Support:{" "}
+              <a
+                href="https://wa.me/6384322665"
+                className="text-blue-600 underline"
+              >
+                +91 6384322665
+              </a>
+            </li>
           </ul>
         </div>
       </div>
