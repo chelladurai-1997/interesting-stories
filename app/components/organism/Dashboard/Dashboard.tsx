@@ -29,9 +29,7 @@ const Dashboard: React.FC = () => {
   const [activeParentTab, setActiveParentTab] = useState<"received" | "sent">(
     "received"
   );
-  const [activeChildTab, setActiveChildTab] = useState<InterestStatus>(
-    InterestStatus.PENDING
-  );
+  const [activeChildTab, setActiveChildTab] = useState<InterestStatus>("ALL");
 
   const handleViewSender = useCallback(
     (senderId: string) => {
@@ -61,9 +59,11 @@ const Dashboard: React.FC = () => {
         activeParentTab={activeParentTab}
         setActiveParentTab={setActiveParentTab}
         setActiveChildTab={setActiveChildTab}
+        receivedCount={receivedInterests.length}
+        sentCount={sentInterests.length}
       />
 
-      <ChildTabs
+      <FilterDropdown
         activeChildTab={activeChildTab}
         setActiveChildTab={setActiveChildTab}
       />
@@ -87,25 +87,40 @@ const getFilteredInterests = (
   sentInterests: Interest[]
 ): Interest[] => {
   return activeParentTab === "sent"
-    ? sentInterests.filter((interest) => interest.status === activeChildTab)
+    ? sentInterests.filter(
+        (interest) =>
+          activeChildTab === "ALL" || interest.status === activeChildTab
+      )
     : receivedInterests.filter(
-        (interest) => interest.status === activeChildTab
+        (interest) =>
+          activeChildTab === "ALL" || interest.status === activeChildTab
       );
 };
 
-// Tabs Component
+// Tabs Component with badge counts
 const Tabs: React.FC<{
   activeParentTab: "received" | "sent";
   setActiveParentTab: React.Dispatch<React.SetStateAction<"received" | "sent">>;
   setActiveChildTab: React.Dispatch<React.SetStateAction<InterestStatus>>;
-}> = ({ activeParentTab, setActiveParentTab, setActiveChildTab }) => {
+  receivedCount: number;
+  sentCount: number;
+}> = ({
+  activeParentTab,
+  setActiveParentTab,
+  setActiveChildTab,
+  receivedCount,
+  sentCount,
+}) => {
   return (
     <div className="mb-4 border-b border-gray-200 dark:border-gray-700">
       <ul
         className="flex flex-wrap -mb-px text-sm font-medium text-center"
         role="tablist"
       >
-        {["received", "sent"].map((tab) => (
+        {[
+          { tab: "received", label: "Received", count: receivedCount },
+          { tab: "sent", label: "Sent", count: sentCount },
+        ].map(({ tab, label, count }) => (
           <li className="me-2" role="presentation" key={tab}>
             <button
               className={`inline-block p-4 border-b-2 rounded-t-lg ${
@@ -115,12 +130,17 @@ const Tabs: React.FC<{
               }`}
               onClick={() => {
                 setActiveParentTab(tab as "received" | "sent");
-                setActiveChildTab(InterestStatus.PENDING);
+                setActiveChildTab("ALL"); // Reset to ALL when changing tabs
               }}
               role="tab"
               aria-selected={activeParentTab === tab}
             >
-              {tab.charAt(0).toUpperCase() + tab.slice(1)}
+              {label}{" "}
+              {count > 0 && (
+                <span className="inline-flex items-center justify-center px-2 py-1 ml-2 text-xs font-bold leading-none text-white bg-blue-600 rounded-full">
+                  {count}
+                </span>
+              )}
             </button>
           </li>
         ))}
@@ -129,28 +149,29 @@ const Tabs: React.FC<{
   );
 };
 
-// Child Tabs Component
-const ChildTabs: React.FC<{
+// Filter Dropdown Component
+const FilterDropdown: React.FC<{
   activeChildTab: InterestStatus;
   setActiveChildTab: React.Dispatch<React.SetStateAction<InterestStatus>>;
 }> = ({ activeChildTab, setActiveChildTab }) => {
   return (
-    <div className="tabs mb-4 flex justify-center">
-      {Object.values(InterestStatus).map((status) => (
-        <button
-          key={status}
-          className={`px-6 py-2 mx-1 rounded-lg transition-colors duration-300 ease-in-out ${
-            activeChildTab === status
-              ? "bg-blue-600 text-white shadow-lg"
-              : "bg-gray-200 text-gray-700 hover:bg-blue-500 hover:text-white"
-          }`}
-          onClick={() => setActiveChildTab(status)}
-          role="tab"
-          aria-selected={activeChildTab === status}
-        >
-          {status.charAt(0).toUpperCase() + status.slice(1)}
-        </button>
-      ))}
+    <div className="mb-4">
+      <label htmlFor="status-filter" className="mr-2 text-gray-700">
+        Filter by status:
+      </label>
+      <select
+        id="status-filter"
+        value={activeChildTab}
+        onChange={(e) => setActiveChildTab(e.target.value as InterestStatus)}
+        className="p-2 border border-gray-300 rounded-md"
+      >
+        <option value="ALL">All</option>
+        {Object.values(InterestStatus).map((status) => (
+          <option key={status} value={status}>
+            {status.charAt(0).toUpperCase() + status.slice(1)}
+          </option>
+        ))}
+      </select>
     </div>
   );
 };
@@ -179,70 +200,48 @@ const InterestSection: React.FC<{
         </p>
       )}
       {!loading && !error && filteredInterests.length > 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredInterests.map((interest) => (
-            <InterestCard
-              key={interest._id}
-              interest={interest}
-              activeParentTab={activeParentTab}
-              handleViewSender={handleViewSender}
-            />
-          ))}
-        </div>
+        <table className="min-w-full border border-gray-300">
+          <thead>
+            <tr>
+              <th className="border border-gray-300 p-2">Profile</th>
+              <th className="border border-gray-300 p-2">Status</th>
+              <th className="border border-gray-300 p-2">Created At</th>
+              <th className="border border-gray-300 p-2">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredInterests.map((interest) => (
+              <tr key={interest._id}>
+                <td className="border border-gray-300 p-2 text-center">
+                  <button
+                    onClick={() =>
+                      handleViewSender(
+                        activeParentTab === "received"
+                          ? interest.senderId
+                          : interest.receiverId
+                      )
+                    }
+                    className="text-blue-600 hover:underline"
+                  >
+                    View Profile
+                  </button>
+                </td>
+                <td className="border border-gray-300 p-2 text-center">
+                  {interest.status}
+                </td>
+                <td className="border border-gray-300 p-2 text-center">
+                  {new Date(interest.createdAt).toLocaleString()}
+                </td>
+                <td className="border border-gray-300 p-2 text-center">
+                  <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-300">
+                    Action
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       )}
-    </div>
-  );
-};
-
-// Interest Card Component
-const InterestCard: React.FC<{
-  interest: Interest;
-  activeParentTab: "received" | "sent";
-  handleViewSender: (senderId: string) => void;
-}> = ({ interest, activeParentTab, handleViewSender }) => {
-  return (
-    <div className="p-6 border border-gray-200 rounded-lg shadow-lg transition-transform duration-300 hover:scale-105">
-      <div className="flex justify-center items-center">
-        {/* Placeholder for profile photo */}
-        <div className="w-24 h-24 rounded-full bg-gray-300 flex items-center justify-center text-gray-600 text-2xl font-bold">
-          ?
-        </div>
-      </div>
-      <p className="font-semibold mt-4 text-lg text-gray-800">
-        A secret admirer has sent you an interest!
-      </p>
-      <p className="text-sm text-gray-500 mt-2">
-        Someone is intrigued by your profile, but their identity is hidden for
-        now. Want to know who it is? Click below!
-      </p>
-      <p className="text-sm mt-2">
-        <span className="text-gray-500">
-          {activeParentTab === "received" ? "Received at:" : "Sent at:"}
-        </span>{" "}
-        <span className="text-blue-600">
-          {new Date(interest.createdAt).toLocaleDateString()}
-        </span>{" "}
-        <span className="text-green-600">
-          {new Date(interest.createdAt).toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-          })}
-        </span>
-      </p>
-      <div className="mt-4">
-        <button
-          className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-300"
-          onClick={() =>
-            handleViewSender(
-              activeParentTab === "received"
-                ? interest.senderId
-                : interest.receiverId
-            )
-          }
-        >
-          View Profile
-        </button>
-      </div>
     </div>
   );
 };

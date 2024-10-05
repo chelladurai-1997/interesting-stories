@@ -22,7 +22,7 @@ const useSendInterest = (currentUserId: string | undefined) => {
     if (!currentUserId) {
       // Show toast if user is not logged in
       toast.error(
-        "Oops! Looks like you're not logged in yet. Please log in to send an interest."
+        "Looks like you're not logged in. Please log in to send an interest."
       );
       return;
     }

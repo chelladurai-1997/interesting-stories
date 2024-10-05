@@ -27,7 +27,7 @@ const Button: React.FC<ButtonProps> = ({
     {isPending ? (
       <div className="flex items-center">
         <div className="w-5 h-5 border-4 border-t-transparent border-white rounded-full animate-spin"></div>
-        <span className="ml-2">Working...</span>
+        <span className="ml-2">Processing...</span>
       </div>
     ) : (
       <>

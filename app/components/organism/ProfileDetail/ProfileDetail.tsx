@@ -49,75 +49,96 @@ const ProfileDetail: React.FC = () => {
 
   const handleAcceptInterest = () => {
     if (currentInterest) {
-      sendInterest(currentInterest.senderId, currentInterest._id, "accepted");
+      sendInterest(
+        currentInterest.senderId,
+        currentInterest._id,
+        InterestStatus.ACCEPTED
+      );
     }
   };
 
   const handleDeclineInterest = () => {
     if (currentInterest) {
-      sendInterest(currentInterest.senderId, currentInterest._id, "declined");
+      sendInterest(
+        currentInterest.senderId,
+        currentInterest._id,
+        InterestStatus.REJECTED
+      );
     }
   };
 
   const formatReceivedDate = (dateString: string) => {
     const date = new Date(dateString);
-    const formattedDate = `${date.getDate().toString().padStart(2, "0")}-${(
+    const formattedDate = `${date.getDate().toString().padStart(2, "0")}/${(
       date.getMonth() + 1
     )
       .toString()
-      .padStart(2, "0")}-${date.getFullYear()} ${date.toLocaleTimeString([], {
+      .padStart(2, "0")}/${date.getFullYear()} ${date.toLocaleTimeString([], {
       hour: "2-digit",
       minute: "2-digit",
     })}`;
-    return `Received Interest on: ${formattedDate}`;
+    return formattedDate; // Return the formatted date string for display
   };
 
   const renderInterestButtons = () => {
-    if (currentInterest) {
-      if (currentInterest.status === "pending") {
-        return (
-          <div className="flex space-x-2 mb-2">
-            <button
-              onClick={handleDeclineInterest}
-              className="px-4 py-2 bg-red-500 rounded text-white hover:bg-red-600"
-              aria-label="Decline interest"
-            >
-              Decline
-            </button>
-            <button
-              onClick={handleAcceptInterest}
-              className="px-4 py-2 bg-green-500 rounded text-white hover:bg-green-600"
-              aria-label="Accept interest"
-            >
-              Accept
-            </button>
-          </div>
-        );
-      } else {
-        return (
-          <p className="text-gray-500 text-sm text-center">
-            {currentInterest.status === InterestStatus.ACCEPTED
-              ? `You have accepted the interest from ${profile?.basicInfo?.name}.`
-              : currentInterest.status === InterestStatus.REJECTED
-              ? `You have declined the interest from ${profile?.basicInfo?.name}.`
-              : `The interest from ${profile?.basicInfo?.name} is pending.`}
+    const currentInterestStatus = currentInterest?.status;
+    const currentSentInterestStatus = currentSentInterest?.status;
 
-            {formatReceivedDate(interestReceivedAt!)}
-          </p>
-        );
-      }
-    } else if (currentSentInterest) {
+    // If interest is received and is pending
+    if (currentInterestStatus === InterestStatus.PENDING) {
       return (
-        <p className="text-gray-500 text-sm text-center">
-          {currentSentInterest.status === InterestStatus.ACCEPTED
-            ? `${profile?.basicInfo?.name} has accepted your interest.`
-            : currentSentInterest.status === InterestStatus.REJECTED
-            ? `${profile?.basicInfo?.name} has declined your interest.`
-            : `Your interest to ${profile?.basicInfo?.name} is pending.`}
-        </p>
+        <div className="flex space-x-2 mb-2">
+          <button
+            onClick={handleDeclineInterest}
+            className="px-4 py-2 bg-red-500 rounded text-white hover:bg-red-600"
+            aria-label="Decline interest"
+          >
+            Decline
+          </button>
+          <button
+            onClick={handleAcceptInterest}
+            className="px-4 py-2 bg-green-500 rounded text-white hover:bg-green-600"
+            aria-label="Accept interest"
+          >
+            Accept
+          </button>
+        </div>
       );
-    } else {
+    }
+
+    // Show the status for sent interest
+    if (currentSentInterest) {
+      let message = "";
+
+      switch (currentSentInterestStatus) {
+        case InterestStatus.ACCEPTED:
+          message = `Your interest has been accepted.`;
+          break;
+        case InterestStatus.PENDING:
+          message = `Your interest is pending.`;
+          break;
+        case InterestStatus.REJECTED:
+          message = `Your interest has been declined.`;
+          break;
+        default:
+          message = ""; // Handles unexpected status
+      }
+
       return (
+        <p className="text-gray-500 text-sm text-center mb-2">{message}</p>
+      );
+    }
+
+    // If no interests exist, show the send interest button
+    return (
+      <div className="text-center mb-2">
+        {currentInterestStatus === InterestStatus.REJECTED && (
+          <p className="text-gray-500 text-sm mb-2">
+            You previously declined an interest on{" "}
+            {formatReceivedDate(currentInterest?.createdAt!).toUpperCase()}. If
+            you want to try again, feel free to send an interest!
+          </p>
+        )}
         <button
           onClick={handleSendInterest}
           className="px-4 py-2 bg-blue-500 rounded text-white hover:bg-blue-600"
@@ -125,8 +146,23 @@ const ProfileDetail: React.FC = () => {
         >
           Send Interest
         </button>
-      );
-    }
+
+        {/* Reminder for past actions */}
+        {/* {currentInterestStatus === InterestStatus.REJECTED && (
+          <p className="text-gray-500 text-sm mt-2">
+            You declined an interest on{" "}
+            {formatReceivedDate(currentInterest?.createdAt!)}.
+          </p>
+        )} */}
+
+        {currentInterestStatus === InterestStatus.ACCEPTED && (
+          <p className="text-gray-500 text-sm mt-2">
+            You accepted an interest on{" "}
+            {formatReceivedDate(currentInterest?.createdAt!)}.
+          </p>
+        )}
+      </div>
+    );
   };
 
   const renderContent = () => {

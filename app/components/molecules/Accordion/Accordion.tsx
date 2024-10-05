@@ -11,7 +11,7 @@ export const Accordion: React.FC<{
     <div className="border-b border-gray-300">
       <button
         onClick={onClick}
-        className={`flex justify-between w-full p-4 font-medium text-left text-gray-900 focus:outline-none focus-visible:ring focus-visible:ring-gray-500 transition-colors duration-300 ${
+        className={`flex justify-between w-full p-4 font-medium text-left text-gray-900 focus:outline-none focus-visible:ring focus-visible:ring-gray-500 ${
           isOpen ? "bg-gray-200" : "hover:bg-gray-200"
         }`}
       >
@@ -19,11 +19,11 @@ export const Accordion: React.FC<{
         {isOpen ? <UpIcon /> : <DownIcon />}
       </button>
       <div
-        className={`transition-all duration-500 ease-in-out overflow-hidden ${
-          isOpen ? "max-h-[1000px] py-4" : "max-h-0 p-0"
+        className={`transition-all duration-300 ease-in-out ${
+          isOpen ? "py-4" : "max-h-0 overflow-hidden"
         }`}
       >
-        {children}
+        {isOpen && children}
       </div>
     </div>
   );
