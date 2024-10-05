@@ -10,7 +10,6 @@ export default function Home() {
       <Suspense>
         <ProfileList />
       </Suspense>
-      <QuickAccess />
     </main>
   );
 }

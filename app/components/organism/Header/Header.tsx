@@ -57,8 +57,7 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
   const navLinks = [
     { href: "/", text: "Home" },
     { href: "/profiles", text: "Browse Profiles" },
-    { href: "#", text: "How it works!" },
-    { href: "#", text: "Contact" },
+    { href: "#", text: "About us" },
   ];
 
   return (
@@ -196,7 +195,7 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
 
           {/* Desktop menu */}
           <div className="hidden w-full md:flex md:w-auto md:order-1">
-            <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 bg-gray-800 bg-gray-900 border-gray-700">
+            <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 bg-gray-900  border-gray-700">
               {navLinks.map((link, index) => (
                 <li key={index}>
                   <Link

@@ -58,7 +58,7 @@ const ProfileList: React.FC = () => {
 
   return (
     <div className="flex justify-center mx-auto">
-      <div className="max-w-screen-xl w-full p-4">
+      <div className="max-w-screen-xl w-full p-4 ">
         <h1 className="text-4xl font-bold mb-4 text-teal-600 text-center">
           Profiles
         </h1>

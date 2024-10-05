@@ -34,7 +34,7 @@ const WelcomeBanner = () => {
           href={"/profiles"}
           className="mt-4 bg-gray-900 text-white px-6 py-3 rounded hover:bg-gray-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-gray-400"
         >
-          {hasVisited ? "View Profiles" : "Get Started"}
+          {hasVisited ? "Explore Profiles" : "Get Started"}
         </Link>
       </div>
 
