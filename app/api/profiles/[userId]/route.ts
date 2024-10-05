@@ -23,12 +23,8 @@ export async function GET(
   let isAdminApproved = false;
   let isInterestAccepted = false;
 
-  // Extract the token from headers
-  const authHeader = request.headers.get("Authorization");
-  const token = authHeader ? authHeader.split(" ")[1] : null;
-
   // Extract user Id from token
-  const { userId: loggedInUserId } = getUserIdFromToken(token);
+  const { userId: loggedInUserId } = getUserIdFromToken();
 
   if (!userId) {
     return NextResponse.json(
