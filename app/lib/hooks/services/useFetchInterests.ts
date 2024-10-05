@@ -4,6 +4,7 @@ export enum InterestStatus {
   PENDING = "pending",
   ACCEPTED = "accepted",
   REJECTED = "rejected",
+  ALL = "all",
 }
 
 export interface Interest {

@@ -29,7 +29,9 @@ const Dashboard: React.FC = () => {
   const [activeParentTab, setActiveParentTab] = useState<"received" | "sent">(
     "received"
   );
-  const [activeChildTab, setActiveChildTab] = useState<InterestStatus>("ALL");
+  const [activeChildTab, setActiveChildTab] = useState<InterestStatus>(
+    InterestStatus.ALL // Initialize with a valid InterestStatus value
+  );
 
   const handleViewSender = useCallback(
     (senderId: string) => {
@@ -89,11 +91,13 @@ const getFilteredInterests = (
   return activeParentTab === "sent"
     ? sentInterests.filter(
         (interest) =>
-          activeChildTab === "ALL" || interest.status === activeChildTab
+          activeChildTab === InterestStatus.ALL ||
+          interest.status === activeChildTab
       )
     : receivedInterests.filter(
         (interest) =>
-          activeChildTab === "ALL" || interest.status === activeChildTab
+          activeChildTab === InterestStatus.ALL ||
+          interest.status === activeChildTab
       );
 };
 
@@ -130,7 +134,7 @@ const Tabs: React.FC<{
               }`}
               onClick={() => {
                 setActiveParentTab(tab as "received" | "sent");
-                setActiveChildTab("ALL"); // Reset to ALL when changing tabs
+                setActiveChildTab(InterestStatus.ALL); // Reset to ALL when changing tabs
               }}
               role="tab"
               aria-selected={activeParentTab === tab}
@@ -165,7 +169,7 @@ const FilterDropdown: React.FC<{
         onChange={(e) => setActiveChildTab(e.target.value as InterestStatus)}
         className="p-2 border border-gray-300 rounded-md"
       >
-        <option value="ALL">All</option>
+        <option value={InterestStatus.ALL}>All</option>
         {Object.values(InterestStatus).map((status) => (
           <option key={status} value={status}>
             {status.charAt(0).toUpperCase() + status.slice(1)}
