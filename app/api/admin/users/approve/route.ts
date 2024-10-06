@@ -36,7 +36,7 @@ export async function POST(request: Request) {
         { status: 404 }
       );
     }
-    router.revalidatePath("/");
+    router.revalidatePath("/", "layout");
     return NextResponse.json({
       message: `User has been ${status}.`,
       error: false,
