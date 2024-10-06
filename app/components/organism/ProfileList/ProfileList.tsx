@@ -14,16 +14,12 @@ const ProfileList: React.FC = () => {
   const { userProfile } = useUser();
   const router = useRouter(); // For navigation
 
-  // State to manage the opacity of the reset button
+  // State to manage the visibility of the reset button
   const [showResetButton, setShowResetButton] = useState(false);
 
   useEffect(() => {
     // Set button visibility based on hasSearchParams
-    if (hasSearchParams) {
-      setShowResetButton(true);
-    } else {
-      setShowResetButton(false);
-    }
+    setShowResetButton(hasSearchParams);
   }, [hasSearchParams]);
 
   if (loading) {
@@ -43,18 +39,7 @@ const ProfileList: React.FC = () => {
     );
   }
 
-  if (profiles.length === 0) {
-    return (
-      <div className="text-center p-6">
-        <h2 className="text-xl font-bold mb-4">Uh-oh! No Profiles Found!</h2>
-        <p className="text-gray-600">
-          It seems like the profiles are on a coffee break. ☕
-          <br />
-          Don’t worry, check back later to meet some awesome people!
-        </p>
-      </div>
-    );
-  }
+  const noProfilesFound = profiles.length === 0;
 
   return (
     <div className="flex justify-center mx-auto">
@@ -62,9 +47,10 @@ const ProfileList: React.FC = () => {
         <h1 className="text-4xl font-bold mb-4 text-teal-600 text-center">
           Profiles
         </h1>
+
         <div className="text-right mb-4">
-          {/* Conditionally render the reset button with transition effects */}
-          {showResetButton && (
+          {/* Show the reset button only if no profiles are found and filters are applied */}
+          {noProfilesFound && showResetButton && (
             <button
               className={`text-teal-600 underline hover:text-teal-800 transition-opacity duration-300 ${
                 showResetButton ? "opacity-100" : "opacity-0"
@@ -78,37 +64,51 @@ const ProfileList: React.FC = () => {
             </button>
           )}
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {profiles.map((profile) => {
-            //Don't show own profile
-            if (profile?.userId === userProfile?.userId) {
-              return <></>;
-            }
-            const isInterestSent = sentInterests.some(
-              (interest) => interest.receiverId === profile?.userId
-            );
-            const interestStatus =
-              sentInterests.find(
-                (interest) => interest.receiverId === profile?.userId
-              )?.status ?? InterestStatus.PENDING;
 
-            return (
-              <ProfileCard
-                key={profile.userId} // Use userId for unique key
-                name={profile.name}
-                dob={profile.dob}
-                occupation={profile.educationOccupation?.occupation}
-                livingPlace={profile.familyDetails?.livingPlace}
-                height={profile.personalDetails?.height}
-                kulam={profile.personalDetails?.kulam}
-                profileImgUrl={profile.contactInfo?.profileImgUrl}
-                userId={profile.userId}
-                isInterestSent={isInterestSent}
-                interestStatus={interestStatus}
-              />
-            );
-          })}
-        </div>
+        {noProfilesFound ? (
+          <div className="text-center p-6">
+            <h2 className="text-xl font-bold mb-4">
+              Uh-oh! No Profiles Found!
+            </h2>
+            <p className="text-gray-600">
+              It seems like the profiles are on a coffee break. ☕
+              <br />
+              Don’t worry, check back later to meet some awesome people!
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {profiles.map((profile) => {
+              // Don't show own profile
+              if (profile?.userId === userProfile?.userId) {
+                return null;
+              }
+              const isInterestSent = sentInterests.some(
+                (interest) => interest.receiverId === profile?.userId
+              );
+              const interestStatus =
+                sentInterests.find(
+                  (interest) => interest.receiverId === profile?.userId
+                )?.status ?? InterestStatus.PENDING;
+
+              return (
+                <ProfileCard
+                  key={profile.userId} // Use userId for unique key
+                  name={profile.name}
+                  dob={profile.dob}
+                  occupation={profile.educationOccupation?.occupation}
+                  livingPlace={profile.familyDetails?.livingPlace}
+                  height={profile.personalDetails?.height}
+                  kulam={profile.personalDetails?.kulam}
+                  profileImgUrl={profile.contactInfo?.profileImgUrl}
+                  userId={profile.userId}
+                  isInterestSent={isInterestSent}
+                  interestStatus={interestStatus}
+                />
+              );
+            })}
+          </div>
+        )}
         <FilterModal />
       </div>
     </div>

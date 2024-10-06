@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import {
   ageOptions,
   districtOptions,
+  genderLabelOptions,
   genderOptions,
   jathagamStatusOptions,
   maritalStatusOptions,
@@ -124,9 +125,9 @@ const FilterModal: React.FC = () => {
             <div>
               <form className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <FormField
-                  label="I'm looking for"
+                  label="Gender (பாலினம்)"
                   id="gender"
-                  options={genderOptions}
+                  options={genderLabelOptions}
                   placeholder="I'm looking for"
                   type="select"
                   name="gender"
@@ -135,7 +136,7 @@ const FilterModal: React.FC = () => {
                   defaultValue={defaultValues.gender}
                 />
                 <FormField
-                  label="Age"
+                  label="Age (வயது)"
                   id="age"
                   options={ageOptions}
                   placeholder="Age"
@@ -146,25 +147,23 @@ const FilterModal: React.FC = () => {
                   defaultValue={defaultValues.age}
                 />
                 <FormField
-                  label="Jaadhagam (ஜாதகம்):"
+                  label="Jaadhagam (ஜாதகம்)"
                   id="jaadhagam"
                   name="jaadhagam"
-                  type="select"
-                  options={jathagamStatusOptions}
                   placeholder="Select Jaadhagam"
+                  options={jathagamStatusOptions}
+                  type="select"
                   searchable={false}
-                  required={false}
-                  defaultValue={defaultValues.jaadhagam}
+                  defaultValue={defaultValues.dhosam}
                 />
                 <FormField
-                  label="Marital Status (திருமண நிலை):"
+                  label="Marital Status (திருமண நிலை)"
                   id="marital_status"
                   name="marital_status"
-                  type="select"
                   options={maritalStatusOptions}
                   placeholder="Select Marital Status"
+                  type="select"
                   searchable={false}
-                  required={false}
                   defaultValue={defaultValues.marital_status}
                 />
 
@@ -183,7 +182,7 @@ const FilterModal: React.FC = () => {
                 {showAdvancedFilters && (
                   <>
                     <FormField
-                      label="Occupation (தொழில் வகை):"
+                      label="Occupation (தொழில்)"
                       id="occupation"
                       name="occupation"
                       type="select"
@@ -192,7 +191,7 @@ const FilterModal: React.FC = () => {
                       defaultValue={defaultValues.occupation}
                     />
                     <FormField
-                      label="State (மாநிலம்):"
+                      label="State (மாநிலம்)"
                       id="state"
                       name="state"
                       placeholder="Select State"
@@ -202,7 +201,7 @@ const FilterModal: React.FC = () => {
                       defaultValue={defaultValues.state}
                     />
                     <FormField
-                      label="District (மாவட்டம்):"
+                      label="District (மாவட்டம்)"
                       id="district"
                       name="district"
                       placeholder="Select District"
