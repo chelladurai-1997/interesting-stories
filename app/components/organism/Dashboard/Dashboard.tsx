@@ -118,14 +118,14 @@ const Tabs: React.FC<{
   return (
     <div className="mb-4 border-b border-gray-200 dark:border-gray-700">
       <ul
-        className="flex flex-wrap -mb-px text-sm font-medium text-center"
+        className="flex justify-center flex-wrap -mb-px text-sm font-medium"
         role="tablist"
       >
         {[
           { tab: "received", label: "Received", count: receivedCount },
           { tab: "sent", label: "Sent", count: sentCount },
         ].map(({ tab, label, count }) => (
-          <li className="me-2" role="presentation" key={tab}>
+          <li role="presentation" key={tab} className="mx-2">
             <button
               className={`inline-block p-4 border-b-2 rounded-t-lg ${
                 activeParentTab === tab
@@ -210,7 +210,6 @@ const InterestSection: React.FC<{
               <th className="border border-gray-300 p-2">Profile</th>
               <th className="border border-gray-300 p-2">Status</th>
               <th className="border border-gray-300 p-2">Created At</th>
-              <th className="border border-gray-300 p-2">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -235,11 +234,6 @@ const InterestSection: React.FC<{
                 </td>
                 <td className="border border-gray-300 p-2 text-center">
                   {new Date(interest.createdAt).toLocaleString()}
-                </td>
-                <td className="border border-gray-300 p-2 text-center">
-                  <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-300">
-                    Action
-                  </button>
                 </td>
               </tr>
             ))}

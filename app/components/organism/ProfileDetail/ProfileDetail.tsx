@@ -120,7 +120,7 @@ const ProfileDetail: React.FC = () => {
 
       switch (currentSentInterestStatus) {
         case InterestStatus.ACCEPTED:
-          message = `Your interest has been accepted 🎉 You can now view the mobile number 📱 and address 🏡 in the contact information section✨`;
+          message = `Great news! Your interest has been accepted 🎉. You can now view the mobile number 📱 and address 🏡 in the contact information section. Exciting times ahead! ✨`;
           break;
         case InterestStatus.PENDING:
           message = `Your interest is pending.`;
