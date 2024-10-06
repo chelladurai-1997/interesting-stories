@@ -154,7 +154,7 @@ const FilterModal: React.FC = () => {
                   options={jathagamStatusOptions}
                   type="select"
                   searchable={false}
-                  defaultValue={defaultValues.dhosam}
+                  defaultValue={defaultValues.jaadhagam}
                 />
                 <FormField
                   label="Marital Status (திருமண நிலை)"
