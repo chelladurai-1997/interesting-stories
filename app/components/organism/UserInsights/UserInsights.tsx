@@ -202,7 +202,7 @@ const UserInsights: React.FC = () => {
 
   if (!userProfile?.userId) return null;
   return (
-    <div className="max-w-4xl mx-auto my-8 p-6 bg-white rounded-lg shadow-lg">
+    <div className="max-w-4xl mx-auto mt-8 md:my-8 p-6 bg-white rounded-lg shadow-lg">
       <h2 className="text-2xl font-bold mb-4">Your Insights</h2>
 
       {/* Tab Navigation */}
@@ -256,10 +256,10 @@ const UserInsights: React.FC = () => {
       {/* Link to View More Information */}
       <div className="mt-6">
         <Link
-          href="/dashboard"
+          href="/profiles"
           className="inline-block text-blue-600 hover:underline"
         >
-          View More Insights on Dashboard
+          Browse Profiles
         </Link>
       </div>
     </div>
