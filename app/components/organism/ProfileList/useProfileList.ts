@@ -91,7 +91,14 @@ const useProfileList = () => {
 
   const hasSearchParams = Array.from(searchParams.entries()).length > 0;
 
-  return { profiles, loading, error, hasSearchParams, sentInterests };
+  return {
+    profiles,
+    loading,
+    error,
+    hasSearchParams,
+    sentInterests,
+    fetchProfiles,
+  }; // Expose fetchProfiles
 };
 
 export default useProfileList;

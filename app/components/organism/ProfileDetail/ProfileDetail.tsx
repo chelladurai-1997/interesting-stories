@@ -21,8 +21,13 @@ import { useUser } from "@/app/lib/hooks/useUser";
 const ProfileDetail: React.FC = () => {
   const params = useParams();
   const router = useRouter();
-  const { userProfile, receivedInterests, sentInterests, fetchInterests } =
-    useUser();
+  const {
+    userProfile,
+    receivedInterests,
+    sentInterests,
+    fetchInterests,
+    registerVisit,
+  } = useUser();
   const id = params?.userId as string;
 
   const [openSection, setOpenSection] = useState<string>("basicInfo");
@@ -31,6 +36,9 @@ const ProfileDetail: React.FC = () => {
 
   useEffect(() => {
     fetchInterests?.();
+    if (params?.userId && typeof params?.userId === "string") {
+      registerVisit(params?.userId);
+    }
   }, []);
 
   const currentInterest = receivedInterests.find(

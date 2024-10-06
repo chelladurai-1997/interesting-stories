@@ -10,6 +10,7 @@ import {
 } from "../hooks/services/useFetchInterests";
 import { handleLogout } from "../actions/logout.action";
 import { getAccessTokenFromHeaders } from "../actions/authHelper/getAccessTokenFromHeaders";
+import { useVisitorTracker, VisitorProfile } from "../hooks/useVisitorTracker"; // Import the hook
 
 // User profile interface
 interface UserProfile {
@@ -39,6 +40,10 @@ export interface UserContextType {
   loadingInterests: boolean;
   errorInterests: string | null;
   fetchInterests: () => Promise<void>;
+  registerVisit: (profileOwnerId: string) => Promise<void>; // Add registerVisit
+  userVisits: VisitorProfile[] | []; // Add userVisits
+  loadingUserVisits: boolean; // Loading state for user visits
+  errorUserVisits: string | null; // Error state for user visits
 }
 
 // Create context
@@ -64,6 +69,14 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     fetchInterests,
     resetInterests,
   } = useFetchInterests(userId);
+
+  // Use the visitor tracker hook
+  const {
+    registerVisit,
+    userVisits,
+    loading: loadingUserVisits,
+    error: errorUserVisits,
+  } = useVisitorTracker(userId); // Pass loggedInUserId from userProfile
 
   useEffect(() => {
     const storedUser = localStorage.getItem("userProfile");
@@ -166,6 +179,10 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         loadingInterests,
         errorInterests,
         fetchInterests,
+        registerVisit, // Pass down the registerVisit function
+        userVisits, // Pass down userVisits
+        loadingUserVisits, // Pass down loading state for user visits
+        errorUserVisits, // Pass down error state for user visits
       }}
     >
       {children}
