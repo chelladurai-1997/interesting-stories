@@ -70,12 +70,12 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
         <h4 className="font-semibold text-gray-900">{name ?? "Unknown"}</h4>
 
         {/* Age, Height, Occupation */}
-        <p className="text-sm text-gray-700">
-          {age} years old • {height} tall
+        <p className="text-sm text-gray-600">
+          {age} years old • {height}
         </p>
 
         {/* Living Place */}
-        <p className="text-gray-600">
+        <p className="text-gray-700">
           Lives in {livingPlace ?? "Location not specified"}
         </p>
 
