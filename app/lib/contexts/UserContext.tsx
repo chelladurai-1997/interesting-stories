@@ -146,7 +146,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
   const handleLogoutError = () => {
     toast.error("Session refresh failed. Please log in again.");
-    logout();
+    logout(true);
   };
 
   const logout = async (ignoreNavigation = false) => {
@@ -162,6 +162,8 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       if (!ignoreNavigation) {
         router.push("/login");
       }
+
+      router.refresh();
     } catch (error) {
       console.error("Error during logout:", error);
     }

@@ -28,7 +28,7 @@ const useProfile = (id: string) => {
     };
 
     fetchProfile();
-  }, [id]);
+  }, [id, userProfile?.accessToken]);
 
   return { profile, loading, error };
 };
