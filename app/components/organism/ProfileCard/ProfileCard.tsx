@@ -17,15 +17,14 @@ type ProfileCardProps = {
   userId: string;
   interestStatus: string;
   isInterestSent: boolean;
+  updatedAt?: string; // Add updatedAt for visit info
 };
 
 const ProfileCard: React.FC<ProfileCardProps> = ({
   name,
   dob,
-  occupation,
   livingPlace,
   height,
-  kulam,
   profileImgUrl,
   userId,
   isInterestSent,
@@ -40,50 +39,52 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
   // Use the custom hook to manage sending interest
   const { sendInterest } = useSendInterest(currentUserId);
 
+  const getButtonClasses = () => {
+    if (isInterestSent) {
+      switch (interestStatus) {
+        case InterestStatus.ACCEPTED:
+          return "bg-green-500 text-white hover:bg-green-700"; // Accepted
+        case InterestStatus.REJECTED:
+          return "bg-red-500 text-white hover:bg-red-700"; // Declined
+        default:
+          return "bg-yellow-500 text-white hover:bg-yellow-600"; // Pending
+      }
+    }
+    return "bg-blue-100 text-blue-600 hover:bg-blue-200"; // Default for "Send Interest"
+  };
+
   return (
-    <div className="w-full min-w-[300px] max-w-[400px] md:max-w-[480px] lg:max-w-[600px] bg-white shadow-lg rounded-lg overflow-hidden border border-gray-200 mx-auto p-4 transition-transform duration-300 transform hover:scale-105">
-      {/* Profile Image Section */}
-      <div className="relative w-full h-64">
-        <Link href={"/profiles/" + userId}>
-          <Image
-            src={profileImgUrl}
-            alt={`${name}'s Profile Picture`}
-            className="w-full h-full object-cover"
-            width={400}
-            height={267}
-            quality={90}
-            loading="lazy"
-          />
-        </Link>
-      </div>
+    <li className="flex items-start p-4 bg-gray-100 rounded transition duration-300 hover:bg-gray-200">
+      {/* Profile Image */}
+      <Image
+        src={profileImgUrl ?? "/default-profile.png"}
+        alt={`${name}'s profile`}
+        width={64} // Provide width (in pixels)
+        height={64} // Provide height (in pixels)
+        className="w-16 h-16 rounded-full mr-4 object-cover"
+      />
 
-      {/* Profile Details Section */}
-      <div className="mt-4">
+      {/* Profile Details */}
+      <div className="flex-grow">
         {/* Name */}
-        <div className="text-2xl font-bold text-gray-900">
-          <span>{name}</span>
-        </div>
+        <h4 className="font-semibold text-gray-900">{name ?? "Unknown"}</h4>
 
-        {/* Age and Height */}
-        <p className="text-sm text-gray-800 mb-1">
-          {age} years old • {height}
+        {/* Age, Height, Occupation */}
+        <p className="text-sm text-gray-700">
+          {age} years old • {height} tall
         </p>
 
-        {/* Other Information */}
-        <p className="text-sm text-gray-800 mb-4">
-          <span className="font-medium text-gray-700">{occupation}, </span>
-          <span className="font-medium text-gray-700">{livingPlace}, </span>
-          <span className="font-medium text-gray-700">{kulam}</span>
+        {/* Living Place */}
+        <p className="text-gray-600">
+          Lives in {livingPlace ?? "Location not specified"}
         </p>
 
-        {/* Buttons */}
-        <div className="flex gap-2">
+        {/* Buttons Section */}
+        {/* Buttons Section */}
+        <div className="flex gap-2 mt-2 items-center">
+          {/* Add items-center here */}
           <button
-            className={`${
-              isInterestSent
-                ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                : "bg-teal-100 text-teal-600 hover:bg-teal-200"
-            } px-6 py-2 rounded-lg transition-colors duration-300 ease-in-out flex-grow`}
+            className={`${getButtonClasses()} px-3 py-1 rounded-md text-sm transition-colors duration-300 ease-in-out`}
             onClick={() => sendInterest(userId)}
             disabled={isInterestSent}
           >
@@ -96,14 +97,14 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
               : "Send Interest"}
           </button>
           <Link
-            href={"/profiles/" + userId}
-            className="bg-teal-600 text-white px-6 py-2 rounded-lg hover:bg-teal-700 transition-colors duration-300 ease-in-out flex-grow text-center"
+            href={`/profiles/${userId}`}
+            className="text-blue-500 hover:underline text-sm"
           >
-            View More
+            View Profile
           </Link>
         </div>
       </div>
-    </div>
+    </li>
   );
 };
 
