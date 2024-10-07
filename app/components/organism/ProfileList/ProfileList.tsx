@@ -104,7 +104,7 @@ const ProfileList: React.FC = () => {
               sentInterests.find(
                 (interest) => interest.receiverId === profile?.userId
               )?.status ?? InterestStatus.PENDING;
-
+            if (interestStatus === InterestStatus.REJECTED) return null;
             return (
               <ProfileCard
                 key={profile.userId} // Use userId for unique key

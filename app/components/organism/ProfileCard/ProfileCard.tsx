@@ -5,6 +5,7 @@ import Link from "next/link";
 import useSendInterest from "@/app/lib/hooks/services/useSendInterest";
 import { InterestStatus } from "@/app/lib/hooks/services/useFetchInterests";
 import { useUser } from "@/app/lib/hooks/useUser";
+import { formatDate } from "@/app/lib/utils/dateUtils";
 
 type ProfileCardProps = {
   name: string;
@@ -18,6 +19,8 @@ type ProfileCardProps = {
   interestStatus: string;
   isInterestSent: boolean;
   updatedAt?: string;
+  hideSendInterestBtn?: boolean;
+  timestamp?: string; // Add this property for timestamp
 };
 
 const ProfileCard: React.FC<ProfileCardProps> = ({
@@ -29,6 +32,9 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
   userId,
   isInterestSent,
   interestStatus,
+  updatedAt,
+  hideSendInterestBtn = false,
+  timestamp, // Destructure the timestamp prop
 }) => {
   const { userProfile } = useUser();
   const currentUserId = userProfile?.userId;
@@ -54,7 +60,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
   };
 
   return (
-    <li className="flex items-center p-4 bg-gray-100 rounded  hover:bg-gray-200  duration-300">
+    <li className="flex items-center p-4 bg-gray-100 rounded hover:bg-gray-200 duration-300">
       {/* Profile Image */}
       <div className="flex-shrink-0 w-24 h-24 relative rounded overflow-hidden">
         <Image
@@ -86,19 +92,21 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
         {/* Buttons Section */}
         <div className="flex gap-2 mt-2 items-center">
           {/* Send Interest Button */}
-          <button
-            className={`${getButtonClasses()} px-3 py-1 rounded-md text-sm border transition-colors duration-300 ease-in-out`}
-            onClick={() => sendInterest(userId)}
-            disabled={isInterestSent}
-          >
-            {isInterestSent
-              ? interestStatus === InterestStatus.ACCEPTED
-                ? "Accepted"
-                : interestStatus === InterestStatus.REJECTED
-                ? "Declined"
-                : "Interest Sent"
-              : "Like 💖"}
-          </button>
+          {!hideSendInterestBtn && (
+            <button
+              className={`${getButtonClasses()} px-3 py-1 rounded-md text-sm border transition-colors duration-300 ease-in-out`}
+              onClick={() => sendInterest(userId)}
+              disabled={isInterestSent}
+            >
+              {isInterestSent
+                ? interestStatus === InterestStatus.ACCEPTED
+                  ? "Accepted"
+                  : interestStatus === InterestStatus.REJECTED
+                  ? "Declined"
+                  : "Interest Sent"
+                : "Like 💖"}
+            </button>
+          )}
 
           {/* View Profile Link */}
           <Link

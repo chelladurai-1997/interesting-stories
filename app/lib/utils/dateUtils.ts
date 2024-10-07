@@ -35,3 +35,29 @@ export const formatDate = (dateString: string | undefined): string => {
   // Replace '/' with '-' for DD-MM-YYYY
   return formattedDate.replace(/\//g, "-");
 };
+
+export enum DateVariation {
+  Sent = "Sent",
+  Received = "Received",
+  Updated = "Updated",
+}
+
+export const formatDateForCards = (
+  date: Date,
+  variation: DateVariation
+): string => {
+  const options: Intl.DateTimeFormatOptions = {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
+  };
+
+  // Format the date according to the specified options
+  const formattedDate = date.toLocaleString("en-US", options).replace(",", "");
+
+  // Return the formatted string with the variation
+  return `${variation} on ${formattedDate}`;
+};

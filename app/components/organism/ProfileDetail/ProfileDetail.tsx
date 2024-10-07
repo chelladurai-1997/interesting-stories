@@ -29,8 +29,19 @@ const ProfileDetail: React.FC = () => {
     registerVisit,
   } = useUser();
   const id = params?.userId as string;
+  const currentInterest = receivedInterests.find(
+    (interest) => interest.senderId === id
+  );
 
-  const [openSection, setOpenSection] = useState<string>("basicInfo");
+  const currentSentInterest = sentInterests.find(
+    (interest) => interest.receiverId === id
+  );
+
+  const [openSection, setOpenSection] = useState<string>(
+    currentInterest?.status === InterestStatus.ACCEPTED
+      ? "contactInfo"
+      : "basicInfo"
+  );
   const { profile, loading, error } = useProfile(id);
   const { sendInterest } = useSendInterest(userProfile?.userId);
 
@@ -40,14 +51,6 @@ const ProfileDetail: React.FC = () => {
       registerVisit(params?.userId);
     }
   }, []);
-
-  const currentInterest = receivedInterests.find(
-    (interest) => interest.senderId === id
-  );
-
-  const currentSentInterest = sentInterests.find(
-    (interest) => interest.receiverId === id
-  );
 
   const interestReceivedAt = currentInterest?.createdAt;
 
@@ -120,10 +123,10 @@ const ProfileDetail: React.FC = () => {
 
       switch (currentSentInterestStatus) {
         case InterestStatus.ACCEPTED:
-          message = `Great news! Your interest has been accepted 🎉. You can now view the mobile number 📱 and address 🏡 in the contact information section. Exciting times ahead! ✨`;
+          message = `Your interest is accepted 🎉. Check the contact information section now! Exciting times ahead!`;
           break;
         case InterestStatus.PENDING:
-          message = `Your interest is pending.`;
+          message = `Your interest is pending. Thank you for your patience and we'll update you soon. 🌟`;
           break;
         case InterestStatus.REJECTED:
           message = `Your interest has been declined.`;
