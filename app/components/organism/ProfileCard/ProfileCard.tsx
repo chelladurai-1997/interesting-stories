@@ -17,7 +17,7 @@ type ProfileCardProps = {
   userId: string;
   interestStatus: string;
   isInterestSent: boolean;
-  updatedAt?: string; // Add updatedAt for visit info
+  updatedAt?: string;
 };
 
 const ProfileCard: React.FC<ProfileCardProps> = ({
@@ -43,46 +43,48 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
     if (isInterestSent) {
       switch (interestStatus) {
         case InterestStatus.ACCEPTED:
-          return "bg-green-500 text-white hover:bg-green-700"; // Accepted
+          return "bg-green-500 text-white hover:bg-green-700"; // Accepted (green)
         case InterestStatus.REJECTED:
-          return "bg-red-500 text-white hover:bg-red-700"; // Declined
+          return "bg-red-500 text-white hover:bg-red-700"; // Declined (red)
         default:
-          return "bg-yellow-500 text-white hover:bg-yellow-600"; // Pending
+          return "bg-yellow-500 text-white hover:bg-yellow-600"; // Pending (yellow)
       }
     }
-    return "bg-blue-100 text-blue-600 hover:bg-blue-200"; // Default for "Send Interest"
+    return "bg-blue-100 text-blue-600 hover:bg-blue-200"; // Default (blue)
   };
 
   return (
-    <li className="flex items-start p-4 bg-gray-100 rounded transition duration-300 hover:bg-gray-200">
+    <li className="flex items-center p-4 bg-gray-100 rounded  hover:bg-gray-200  duration-300">
       {/* Profile Image */}
-      <Image
-        src={profileImgUrl ?? "/default-profile.png"}
-        alt={`${name}'s profile`}
-        width={64} // Provide width (in pixels)
-        height={64} // Provide height (in pixels)
-        className="w-16 h-16 rounded-full mr-4 object-cover"
-      />
+      <div className="flex-shrink-0 w-24 h-24 relative rounded overflow-hidden">
+        <Image
+          src={profileImgUrl}
+          alt={`${name}'s profile`}
+          layout="fill"
+          objectFit="cover"
+          className="rounded"
+        />
+      </div>
 
       {/* Profile Details */}
-      <div className="flex-grow">
+      <div className="flex-grow ml-4 flex flex-col justify-between line-clamp-1">
         {/* Name */}
-        <h4 className="font-semibold text-gray-900">{name ?? "Unknown"}</h4>
+        <h4 className="font-semibold text-gray-900 line-clamp-1">
+          {name ?? "Unknown"}
+        </h4>
 
-        {/* Age, Height, Occupation */}
-        <p className="text-sm text-gray-700">
+        {/* Age, Height */}
+        <p className="text-sm text-gray-600 line-clamp-1">
           {age} years • {height}
         </p>
 
         {/* Living Place */}
-        <p className="text-gray-600">
+        <p className="text-gray-700 line-clamp-1">
           Lives in {livingPlace ?? "Location not specified"}
         </p>
 
         {/* Buttons Section */}
-        {/* Buttons Section */}
         <div className="flex gap-2 mt-2 items-center">
-          {/* Add items-center here */}
           <button
             className={`${getButtonClasses()} px-3 py-1 rounded-md text-sm transition-colors duration-300 ease-in-out`}
             onClick={() => sendInterest(userId)}
@@ -100,7 +102,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
             href={`/profiles/${userId}`}
             className="text-blue-500 hover:underline text-sm"
           >
-            View Profile
+            View
           </Link>
         </div>
       </div>
