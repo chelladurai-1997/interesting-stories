@@ -134,11 +134,11 @@ const UserInsights: React.FC = () => {
                   userId={visitor.userId}
                   interestStatus={""}
                   isInterestSent={false}
-                  timestamp={
+                  additionalInfo={
                     updatedAt
                       ? formatDateForCards(
                           new Date(updatedAt),
-                          DateVariation.Updated
+                          DateVariation.Visited
                         )
                       : ""
                   }

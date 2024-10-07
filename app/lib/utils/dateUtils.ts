@@ -40,6 +40,7 @@ export enum DateVariation {
   Sent = "Sent",
   Received = "Received",
   Updated = "Updated",
+  Visited = "Visited",
 }
 
 export const formatDateForCards = (
