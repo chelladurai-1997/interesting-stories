@@ -43,14 +43,14 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
     if (isInterestSent) {
       switch (interestStatus) {
         case InterestStatus.ACCEPTED:
-          return "bg-green-500 text-white hover:bg-green-700"; // Accepted (green)
+          return "border-green-500 text-green-500 hover:border-green-700"; // Accepted (green border)
         case InterestStatus.REJECTED:
-          return "bg-red-500 text-white hover:bg-red-700"; // Declined (red)
+          return "border-red-500 text-red-500 hover:border-red-700"; // Declined (red border)
         default:
-          return "bg-yellow-500 text-white hover:bg-yellow-600"; // Pending (yellow)
+          return "border-yellow-500 text-yellow-500 hover:border-yellow-600"; // Pending (yellow border)
       }
     }
-    return "bg-blue-100 text-blue-600 hover:bg-blue-200"; // Default (blue)
+    return "border-blue-500 text-blue-500 hover:border-blue-700"; // Default (blue border)
   };
 
   return (
@@ -85,8 +85,9 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
 
         {/* Buttons Section */}
         <div className="flex gap-2 mt-2 items-center">
+          {/* Send Interest Button */}
           <button
-            className={`${getButtonClasses()} px-3 py-1 rounded-md text-sm transition-colors duration-300 ease-in-out`}
+            className={`${getButtonClasses()} px-3 py-1 rounded-md text-sm border transition-colors duration-300 ease-in-out`}
             onClick={() => sendInterest(userId)}
             disabled={isInterestSent}
           >
@@ -98,9 +99,11 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
                 : "Interest Sent"
               : "Like 💖"}
           </button>
+
+          {/* View Profile Link */}
           <Link
             href={`/profiles/${userId}`}
-            className="text-blue-500 hover:underline text-sm"
+            className="bg-blue-500 text-white px-3 py-1 rounded-md text-sm hover:bg-blue-700 transition-colors duration-300 ease-in-out"
           >
             View
           </Link>
