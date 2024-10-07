@@ -96,7 +96,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
                 : interestStatus === InterestStatus.REJECTED
                 ? "Declined"
                 : "Interest Sent"
-              : "Send Interest"}
+              : "Like 💖"}
           </button>
           <Link
             href={`/profiles/${userId}`}
