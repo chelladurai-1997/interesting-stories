@@ -11,6 +11,7 @@ import {
 import { handleLogout } from "../actions/logout.action";
 import { getAccessTokenFromHeaders } from "../actions/authHelper/getAccessTokenFromHeaders";
 import { useVisitorTracker, VisitorProfile } from "../hooks/useVisitorTracker"; // Import the hook
+import { refreshAccessTokenAction } from "../actions/refreshToken.action";
 
 // User profile interface
 interface UserProfile {
@@ -116,28 +117,17 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   };
 
   const refreshAccessToken = async (): Promise<void> => {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-    const apiUrl = `${baseUrl}/api/auth/refresh-token`;
-
     try {
-      const response = await fetch(apiUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({}),
-      });
+      const data = await refreshAccessTokenAction();
 
-      const data = await response.json();
-
-      if (response.ok && data?.accessToken) {
+      if (data?.error) {
+        handleLogoutError();
+      } else {
         setUserProfile((prevProfile) => ({
           ...prevProfile!,
           accessToken: data.accessToken,
         }));
         toast.success("Session refreshed successfully!");
-      } else {
-        handleLogoutError();
       }
     } catch {
       handleLogoutError();

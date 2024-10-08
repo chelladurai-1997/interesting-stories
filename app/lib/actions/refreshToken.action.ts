@@ -2,11 +2,11 @@
 
 import { cookies } from "next/headers";
 
-export async function refreshAccessToken() {
+export async function refreshAccessTokenAction() {
   try {
     // Get the refresh token from cookies
     const cookieStore = cookies();
-    const refreshToken = cookieStore.get("refreshToken"); // Adjust if using a different cookie name
+    const refreshToken = cookieStore.get("refreshToken")?.value;
 
     if (!refreshToken) {
       return { message: "No refresh token found", error: true };
@@ -36,14 +36,15 @@ export async function refreshAccessToken() {
     }
 
     // Update the access token cookie
-    const cookieExpirationTime = 60 * 60; // 1 hour in seconds
+    const accessTokenExpirationTime = 15 * 60; // 15 minutes in seconds
     cookies().set({
       name: "accessToken",
-      value: data.accessToken, // Store the new access token
-      maxAge: cookieExpirationTime,
+      value: data.accessToken,
+      maxAge: accessTokenExpirationTime, // 15 minutes
       path: "/",
-      httpOnly: true,
-      secure: true,
+      httpOnly: true, // Accessible only by the server (for security)
+      secure: process.env.NODE_ENV === "production", // Use secure cookies in production (HTTPS)
+      sameSite: "strict", // Prevent CSRF attacks
     });
 
     // Return successful response
