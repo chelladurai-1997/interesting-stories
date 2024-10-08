@@ -5,6 +5,7 @@ import NoticePopup from "./components/molecules/NoticePopup/NoticePopup";
 import UserInsights from "./components/organism/UserInsights/UserInsights";
 import { cookies } from "next/headers";
 import WelcomeMessage from "./components/molecules/WelcomeMessage/WelcomeMessage";
+import Chat from "./components/molecules/Chat/MyChat";
 
 export default async function Home() {
   const isLoggedInUser = !!cookies().get("accessToken")?.value;
@@ -15,6 +16,7 @@ export default async function Home() {
       {isLoggedInUser ? (
         <>
           <WelcomeMessage />
+          <Chat />
           <UserInsights />
         </>
       ) : (
