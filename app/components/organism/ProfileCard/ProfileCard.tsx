@@ -5,6 +5,7 @@ import Link from "next/link";
 import useSendInterest from "@/app/lib/hooks/services/useSendInterest";
 import { InterestStatus } from "@/app/lib/hooks/services/useFetchInterests";
 import { useUser } from "@/app/lib/hooks/useUser";
+import { useRouter } from "next/navigation";
 
 type ProfileCardProps = {
   name: string;
@@ -35,6 +36,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
   additionalInfo, // Destructure the timestamp prop
 }) => {
   const { userProfile } = useUser();
+  const router = useRouter();
   const currentUserId = userProfile?.userId;
 
   // Calculate age
@@ -58,7 +60,10 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
   };
 
   return (
-    <li className="flex flex-col p-4 bg-gray-100 rounded hover:bg-gray-200 duration-300">
+    <li
+      className="flex flex-col p-4 bg-gray-100 rounded hover:bg-gray-200 duration-300"
+      onDoubleClick={() => router.push(`/profiles/${userId}`)}
+    >
       {/* Row 1: Profile Image and Details */}
       <div className="flex items-center">
         {/* Profile Image */}

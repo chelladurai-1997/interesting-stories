@@ -40,25 +40,47 @@ export enum DateVariation {
   Sent = "Sent",
   Received = "Received",
   Updated = "Updated",
-  Visited = "Visited",
+  Visited = "Last visited", // Updated to make it more readable
 }
 
 export const formatDateForCards = (
   date: Date,
   variation: DateVariation
 ): string => {
-  const options: Intl.DateTimeFormatOptions = {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-    hour12: true,
-  };
+  const now = new Date();
+  const diffInMs = now.getTime() - date.getTime();
+  const diffInSeconds = Math.floor(diffInMs / 1000);
+  const diffInMinutes = Math.floor(diffInSeconds / 60);
+  const diffInHours = Math.floor(diffInMinutes / 60);
+  const diffInDays = Math.floor(diffInHours / 24);
+  const diffInWeeks = Math.floor(diffInDays / 7);
 
-  // Format the date according to the specified options
-  const formattedDate = date.toLocaleString("en-US", options).replace(",", "");
+  let timeAgo: string;
 
-  // Return the formatted string with the variation
-  return `${variation} on ${formattedDate}`;
+  if (diffInSeconds < 60) {
+    timeAgo =
+      diffInSeconds <= 1 ? "a second ago" : `${diffInSeconds} seconds ago`;
+  } else if (diffInMinutes < 60) {
+    timeAgo =
+      diffInMinutes === 1 ? "a minute ago" : `${diffInMinutes} minutes ago`;
+  } else if (diffInHours < 24) {
+    timeAgo = diffInHours === 1 ? "an hour ago" : `${diffInHours} hours ago`;
+  } else if (diffInDays < 7) {
+    timeAgo = diffInDays === 1 ? "a day ago" : `${diffInDays} days ago`;
+  } else if (diffInWeeks < 5) {
+    timeAgo = diffInWeeks === 1 ? "a week ago" : `${diffInWeeks} weeks ago`;
+  } else {
+    // Fallback for dates more than 1 month ago - format the date
+    const options: Intl.DateTimeFormatOptions = {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
+    };
+    timeAgo = date.toLocaleString("en-US", options).replace(",", "");
+  }
+
+  return `${variation} ${timeAgo}`;
 };
