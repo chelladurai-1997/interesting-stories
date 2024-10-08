@@ -68,13 +68,15 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
       <div className="flex items-center">
         {/* Profile Image */}
         <div className="flex-shrink-0 w-24 h-24 relative rounded overflow-hidden">
-          <Image
-            src={profileImgUrl}
-            alt={`${name}'s profile`}
-            layout="fill"
-            objectFit="cover"
-            className="rounded"
-          />
+          <Link href={`/profiles/${userId}`}>
+            <Image
+              src={profileImgUrl}
+              alt={`${name}'s profile`}
+              layout="fill"
+              objectFit="cover"
+              className="rounded"
+            />
+          </Link>
         </div>
 
         {/* Profile Details */}
@@ -92,7 +94,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
             </p>
 
             {/* Living Place */}
-            <p className="text-gray-700 line-clamp-1">
+            <p className="text-gray-700 line-clamp-1 text-sm">
               Lives in {livingPlace ?? "Location not specified"}
             </p>
 
