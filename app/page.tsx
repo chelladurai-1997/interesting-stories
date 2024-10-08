@@ -16,7 +16,6 @@ export default async function Home() {
       {isLoggedInUser ? (
         <>
           <WelcomeMessage />
-          <Chat />
           <UserInsights />
         </>
       ) : (

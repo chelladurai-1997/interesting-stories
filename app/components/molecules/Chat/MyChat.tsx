@@ -153,7 +153,20 @@ const Chat: React.FC = () => {
           <div className="bg-gray-200 p-4 flex justify-between items-center">
             <h2 className="text-lg font-bold">Messages</h2>
             <button onClick={closePreviewList} className="text-red-500">
-              ✖
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="2" // Adjust strokeWidth for better visibility with the new size
+                stroke="currentColor"
+                className="w-6 h-6 text-red-600" // Adjusted size here
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
             </button>
           </div>
           <div className="overflow-y-auto flex-1">
@@ -175,20 +188,6 @@ const Chat: React.FC = () => {
           </div>
         </div>
       )}
-
-      {/* Chat Icon */}
-      {/* {!showChat && (
-        <div className="fixed bottom-4 right-4 z-50">
-          <button
-            className="bg-green-600 text-white rounded-full p-3 shadow-lg hover:bg-green-700 transition duration-200"
-            onClick={() => {
-              setShowChat(true);
-            }} // Example chat name and last seen
-          >
-            💬
-          </button>
-        </div>
-      )} */}
 
       {!showChat && (
         <button

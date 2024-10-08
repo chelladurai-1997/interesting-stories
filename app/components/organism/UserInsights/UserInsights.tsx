@@ -6,6 +6,7 @@ import { InterestStatus } from "@/app/lib/hooks/services/useFetchInterests";
 import OverviewSection from "../OverviewSection/OverviewSection";
 import ProfileCard from "../ProfileCard/ProfileCard"; // Import ProfileCard
 import { DateVariation, formatDateForCards } from "@/app/lib/utils/dateUtils";
+import Chat from "../../molecules/Chat/MyChat";
 
 const UserInsights: React.FC = () => {
   const { userVisits, receivedInterests, sentInterests, userProfile } =
@@ -159,6 +160,7 @@ const UserInsights: React.FC = () => {
           )}
         </section>
       )}
+      <Chat />
     </div>
   );
 };
