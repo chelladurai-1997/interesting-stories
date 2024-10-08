@@ -25,7 +25,7 @@ export const Accordion: React.FC<{
           isOpen ? "max-h-[1000px] py-4" : "max-h-0 p-0"
         }`}
       >
-        <div className="px-4">{children}</div>
+        <div>{children}</div>
       </div>
     </div>
   );
