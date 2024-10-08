@@ -11,11 +11,13 @@ export const Accordion: React.FC<{
     <div className="border-b border-gray-300">
       <button
         onClick={onClick}
-        className={`flex justify-between w-full p-4 font-medium text-left text-gray-900 focus:outline-none focus-visible:ring focus-visible:ring-gray-500 transition-colors duration-300 ${
-          isOpen ? "bg-gray-200" : "hover:bg-gray-200"
+        className={`flex justify-between w-full p-4 font-medium text-left focus:outline-none focus-visible:ring focus-visible:ring-gray-500 transition-colors duration-300 ${
+          isOpen
+            ? "bg-gray-200 text-gray-900"
+            : "hover:bg-gray-200 text-gray-800"
         }`}
       >
-        {title}
+        <span className="text-lg text-cool-gray-500">{title}</span>
         {isOpen ? <UpIcon /> : <DownIcon />}
       </button>
       <div
@@ -23,7 +25,7 @@ export const Accordion: React.FC<{
           isOpen ? "max-h-[1000px] py-4" : "max-h-0 p-0"
         }`}
       >
-        {children}
+        <div className="px-4">{children}</div>
       </div>
     </div>
   );

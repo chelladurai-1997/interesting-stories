@@ -25,16 +25,15 @@ const StyledChip: React.FC<StyledChipProps> = ({
   const isMasked = typeof value === "string" && value.includes("*");
 
   return (
-    <p
-      className={`inline-block px-3 py-1 rounded-sm mr-3 ${"bg-gray-100"} border`}
-    >
-      <strong className={`text-gray-500`}>{label}:</strong>{" "}
+    <p className="inline-block px-3 py-1 rounded-sm mr-3 border ">
+      {/* Apply dynamic label color */}
+      <strong className={`text-cool-gray-500`}>{label}:</strong>{" "}
       {isPhoneNumber && !isMasked ? (
-        <Link href={`tel:${value}`} className={`text-blue-600 underline`}>
+        <Link href={`tel:${value}`} className="text-blue-600 underline">
           {value}
         </Link>
       ) : (
-        <span className={`${"text-gray-800"} font-medium`}>{value}</span>
+        <span className="text-gray-800 font-medium">{value}</span>
       )}
     </p>
   );
