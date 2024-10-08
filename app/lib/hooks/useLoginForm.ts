@@ -25,11 +25,6 @@ export const useLoginForm = () => {
           accessToken: response?.accessToken,
           completedSections: formStatus,
         });
-        toast.success(
-          `Welcome ${
-            response?.userName ?? "Guest"
-          }, ${getTimeOfDayGreeting()}! `
-        );
 
         navigateToNextStep(formStatus);
       }

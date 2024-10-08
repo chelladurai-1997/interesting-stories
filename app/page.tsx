@@ -5,10 +5,11 @@ import NoticePopup from "./components/molecules/NoticePopup/NoticePopup";
 import UserInsights from "./components/organism/UserInsights/UserInsights";
 import { cookies } from "next/headers";
 import WelcomeMessage from "./components/molecules/WelcomeMessage/WelcomeMessage";
+import connectMongo from "./lib/constants/mongodb";
 
-export default function Home() {
+export default async function Home() {
   const isLoggedInUser = !!cookies().get("accessToken")?.value;
-
+  connectMongo();
   return (
     <main>
       <Header />
