@@ -1,9 +1,9 @@
+import { useUser } from "@/app/lib/hooks/useUser";
 import { useState, useRef, useEffect } from "react";
+import { ChatMessage } from "./useChat";
 
 type Message = {
   text: string;
-  isSent: boolean; // true if sent, false if received
-  timestamp?: string; // to store the timestamp of the message
 };
 
 export const ChatInterface: React.FC<{
@@ -11,11 +11,13 @@ export const ChatInterface: React.FC<{
   lastSeen: string;
   backToChatList: () => void;
   countdown: number;
-  messages: Message[];
+  messages: ChatMessage[];
   sendMessage: (message: Message) => void;
 }> = ({ messages, sendMessage }) => {
   const [inputMessage, setInputMessage] = useState<string>("");
   const [sendingStatus, setSendingStatus] = useState<string>("");
+  const { userProfile } = useUser();
+  const currUserId = userProfile?.userId;
 
   const chatEndRef = useRef<HTMLDivElement | null>(null); // Ref to track the chat end
 
@@ -32,14 +34,12 @@ export const ChatInterface: React.FC<{
   }, [messages]);
 
   const handleSendMessage = () => {
+    setSendingStatus("Sending...");
     if (inputMessage.trim()) {
       const messageToSend = {
         text: inputMessage,
-        isSent: true,
-        timestamp: new Date().toLocaleTimeString(), // Get current time as a timestamp
       };
 
-      setSendingStatus("Sending...");
       sendMessage(messageToSend);
 
       // Clear the input immediately after sending the message
@@ -47,7 +47,7 @@ export const ChatInterface: React.FC<{
 
       // Simulate sending with delay (to show "Sending..." state)
       setTimeout(() => {
-        setSendingStatus("Sent");
+        setSendingStatus("");
       }, 1000);
     }
   };
@@ -55,21 +55,23 @@ export const ChatInterface: React.FC<{
   return (
     <div className="flex flex-col h-full">
       {/* Chat messages display */}
-      <div className="flex-grow p-4 overflow-y-auto pb-20">
+      <div className="flex-grow p-4 overflow-y-auto pb-2">
         {messages.length === 0 ? (
           <div className="text-center text-gray-400">No messages yet.</div>
         ) : (
           <>
-            {messages.map((msg, index) => (
+            {(messages ?? [])?.map((msg, index) => (
               <div
                 key={index}
                 className={`mb-2 flex ${
-                  msg.isSent ? "justify-end" : "justify-start"
+                  currUserId === msg?.senderId ? "justify-end" : "justify-start"
                 }`}
               >
                 <div
                   className={`p-2 rounded-lg inline-block max-w-[75%] break-words ${
-                    msg.isSent ? "bg-green-100 pb-2" : "bg-gray-100"
+                    currUserId === msg?.senderId
+                      ? "bg-green-100 pb-2"
+                      : "bg-gray-100"
                   }`}
                   style={{
                     whiteSpace: "normal",
@@ -78,9 +80,11 @@ export const ChatInterface: React.FC<{
                     textAlign: "left", // Text left aligned inside the bubble
                   }}
                 >
-                  <div>{msg.text}</div>
+                  <div>{msg.message}</div>
                   <div className="text-xs text-gray-500">
-                    {msg.timestamp}
+                    {msg.updatedAt
+                      ? new Date(msg.updatedAt).toLocaleTimeString()
+                      : ""}
                   </div>{" "}
                   {/* Timestamp */}
                 </div>
@@ -90,9 +94,8 @@ export const ChatInterface: React.FC<{
             <div ref={chatEndRef} />
           </>
         )}
-        {sendingStatus && (
-          <div className="text-end text-gray-600">{sendingStatus}</div> // Show sending status
-        )}
+
+        <div className="text-end text-gray-600">{sendingStatus}</div>
       </div>
 
       {/* Sticky Input Block */}
@@ -102,7 +105,7 @@ export const ChatInterface: React.FC<{
           value={inputMessage}
           onChange={(e) => setInputMessage(e.target.value)}
           placeholder="Type a message..."
-          className="flex-grow p-2 border border-gray-300 rounded-lg"
+          className="flex-grow p-2 border border-gray-300 rounded-lg outline-none"
           onKeyPress={(e) => {
             if (e.key === "Enter") {
               handleSendMessage();

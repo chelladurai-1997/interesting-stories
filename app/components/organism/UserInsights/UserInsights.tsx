@@ -160,7 +160,7 @@ const UserInsights: React.FC = () => {
           )}
         </section>
       )}
-      <Chat />
+      {acceptedInterestsCount > 0 && <Chat />}
     </div>
   );
 };

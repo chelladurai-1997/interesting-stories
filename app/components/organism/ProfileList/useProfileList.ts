@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import { useUser } from "@/app/lib/hooks/useUser";
 
-type Profile = {
+export type ProfileListItem = {
   name: string;
   dob: string;
   educationOccupation: {
@@ -23,7 +23,7 @@ type Profile = {
 };
 
 const useProfileList = () => {
-  const [profiles, setProfiles] = useState<Profile[]>([]);
+  const [profiles, setProfiles] = useState<ProfileListItem[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const { sentInterests, fetchInterests } = useUser();
