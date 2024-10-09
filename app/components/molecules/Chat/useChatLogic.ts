@@ -48,10 +48,10 @@ const useChatLogic = () => {
   }, []);
 
   const showChatInterface = async (name: string, receiverUserId: string) => {
-    await fetchMsgs();
     setShowPreview(false);
     setCurrentReceiverId(receiverUserId);
     setChatName(name);
+    await fetchMsgs();
   };
 
   const backToChatList = () => {
