@@ -1,6 +1,7 @@
 import { useUser } from "@/app/lib/hooks/useUser";
 import { useState, useRef, useEffect } from "react";
 import { ChatMessage } from "./useChat";
+import { formatChatTimestamp } from "@/app/lib/utils/dateUtils";
 
 type Message = {
   text: string;
@@ -82,9 +83,7 @@ export const ChatInterface: React.FC<{
                 >
                   <div>{msg.message}</div>
                   <div className="text-xs text-gray-500">
-                    {msg.updatedAt
-                      ? new Date(msg.updatedAt).toLocaleTimeString()
-                      : ""}
+                    {msg.updatedAt ? formatChatTimestamp(msg.updatedAt) : ""}
                   </div>{" "}
                   {/* Timestamp */}
                 </div>

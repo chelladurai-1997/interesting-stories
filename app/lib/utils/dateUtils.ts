@@ -35,6 +35,36 @@ export const formatDate = (dateString: string | undefined): string => {
   // Replace '/' with '-' for DD-MM-YYYY
   return formattedDate.replace(/\//g, "-");
 };
+// Function to format chat sent timestamp from an ISO string
+export function formatChatTimestamp(isoString: string): string {
+  const timestamp = new Date(isoString); // Parse the ISO string to a Date object
+  const now = new Date();
+  const diffInSeconds = Math.floor(
+    (now.getTime() - timestamp.getTime()) / 1000
+  );
+
+  let formattedTime: string;
+
+  if (diffInSeconds < 60) {
+    formattedTime = "Just now";
+  } else if (diffInSeconds < 3600) {
+    const minutes = Math.floor(diffInSeconds / 60);
+    formattedTime = `${minutes} minute${minutes > 1 ? "s" : ""} ago`;
+  } else if (diffInSeconds < 86400) {
+    const hours = Math.floor(diffInSeconds / 3600);
+    formattedTime = `${hours} hour${hours > 1 ? "s" : ""} ago`;
+  } else {
+    // For older timestamps, format as 'MMM D, YYYY'
+    const options: Intl.DateTimeFormatOptions = {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    };
+    formattedTime = timestamp.toLocaleDateString(undefined, options);
+  }
+
+  return formattedTime;
+}
 
 export enum DateVariation {
   Sent = "Sent",
