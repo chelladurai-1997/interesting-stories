@@ -96,7 +96,7 @@ const useChatLogic = () => {
         message.text
       );
       setSendingStatus(success ? "Sent" : "Failed to send message");
-      fetchMsgs();
+      fetchMsgs(currentReceiverId);
     }
   };
 

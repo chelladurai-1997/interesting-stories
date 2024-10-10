@@ -33,12 +33,12 @@ const useUserActivity = (fetchData: FetchDataFunction, skip: boolean): void => {
       const timeSinceLastActive = currentTime - lastActiveTime;
 
       if (timeSinceLastActive < 32000) {
-        // Check if last active time is less than 60 seconds
+        // Check if last active time is less than 32 seconds
         if (!skip) {
           fetchData();
         }
       } else {
-        console.log("User is idle for more than 30 seconds, skipping fetch"); // Log when skipping fetch
+        console.log("User is idle for more than 32 seconds, skipping fetch"); // Log when skipping fetch
       }
     }, 8000); // Poll every 15 seconds
 
