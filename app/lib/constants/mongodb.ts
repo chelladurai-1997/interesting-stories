@@ -7,6 +7,7 @@ export const MONGO_URI = process.env.MONGODB_URI;
 export async function getMongoNativeConnection() {
   const client = new MongoClient(MONGO_URI as string, {
     useUnifiedTopology: true,
+    readPreference: "primary",
   });
   await client.connect();
   console.log("Connected to MongoDB for GridFS");
