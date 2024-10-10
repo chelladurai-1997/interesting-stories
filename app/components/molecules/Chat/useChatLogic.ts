@@ -8,7 +8,7 @@ import { Message } from "../ChatModal/ChatModal";
 import useUserActivity from "@/app/lib/hooks/useUserActivity";
 
 const useChatLogic = () => {
-  const { sentInterests, userProfile } = useUser();
+  const { sentInterests, receivedInterests, userProfile } = useUser();
   const { fetchMessages, sendMessage: sendMsgAPI } = useChat();
 
   const [showChat, setShowChat] = useState(false);
@@ -19,23 +19,47 @@ const useChatLogic = () => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [sendingStatus, setSendingStatus] = useState("");
   const [currentReceiverId, setCurrentReceiverId] = useState("");
-  const lastSeen = "Nothing wrong with making the first move";
-  const fetchMsgs = useCallback(async () => {
-    if (userProfile?.userId) {
-      const fetchedMessages = await fetchMessages(userProfile.userId);
-      setMessages(fetchedMessages?.data ?? []);
-    }
-  }, [userProfile?.userId]);
+  const lastSeen = "Tap the profile image for a closer look!";
+  const fetchMsgs = useCallback(
+    async (receiverId: string) => {
+      if (userProfile?.userId && receiverId) {
+        const fetchedMessages = await fetchMessages(
+          userProfile.userId,
+          receiverId
+        );
 
-  useUserActivity(fetchMsgs, !showChat);
+        const newMessages = fetchedMessages?.data ?? [];
+
+        // Compare the _id of the last message in both current and fetched messages
+        const lastCurrentMessageId = messages?.at(-1)?._id;
+        const lastFetchedMessageId = newMessages?.at(-1)?._id;
+
+        console.log("first=====>", {
+          lastCurrentMessageId,
+          lastFetchedMessageId,
+        });
+        if (lastCurrentMessageId !== lastFetchedMessageId) {
+          setMessages(newMessages);
+        }
+      }
+    },
+    [userProfile?.userId, messages]
+  );
+
+  useUserActivity(() => fetchMsgs(currentReceiverId), !showChat);
 
   // useUserOnlineTracker(messages?.at(-1)?.updatedAt || null, fetchMsgs);
+  const accpetedUserIds = sentInterests
+    .filter((c) => c.status === InterestStatus.ACCEPTED)
+    .map((interest) => interest.receiverId);
+  const meAccpetedUserIds = receivedInterests
+    .filter((c) => c.status === InterestStatus.ACCEPTED)
+    .map((interest) => interest.senderId);
 
-  const result = useProfilesByUserIds(
-    sentInterests
-      .filter((c) => c.status === InterestStatus.ACCEPTED)
-      .map((interest) => interest.receiverId)
-  );
+  const result = useProfilesByUserIds([
+    ...accpetedUserIds,
+    ...meAccpetedUserIds,
+  ]);
 
   const chatPreviewUsers = result?.profiles;
 
@@ -51,7 +75,7 @@ const useChatLogic = () => {
     setShowPreview(false);
     setCurrentReceiverId(receiverUserId);
     setChatName(name);
-    await fetchMsgs();
+    await fetchMsgs(receiverUserId);
   };
 
   const backToChatList = () => {

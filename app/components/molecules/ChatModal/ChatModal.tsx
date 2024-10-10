@@ -4,6 +4,7 @@ import { ChatInterface } from "../Chat/ChatInterface";
 import { ChatMessage } from "../Chat/useChat";
 import useProfile from "@/app/lib/hooks/services/useProfile";
 import Image from "next/image";
+import { Profile } from "@/app/profiles/profile.types";
 
 // Define Message type
 export type Message = {
@@ -19,6 +20,7 @@ export const ChatModal: React.FC<{
   countdown: number;
   messages: ChatMessage[];
   sendMessage: (message: Message) => void;
+  activeChatUserProfile: Profile | null;
 }> = ({
   chatName,
   lastSeen,
@@ -27,8 +29,8 @@ export const ChatModal: React.FC<{
   messages,
   sendMessage,
   showingChatUserId,
+  activeChatUserProfile,
 }) => {
-  const { profile } = useProfile(showingChatUserId);
   return (
     <div className="fixed top-0 right-0 h-full flex flex-col w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl mx-auto z-40 bg-white">
       {/* Sticky Header */}
@@ -39,7 +41,7 @@ export const ChatModal: React.FC<{
         </button>
         <Link href={"profiles/" + showingChatUserId}>
           <Image
-            src={profile?.contactInfo?.photo!}
+            src={activeChatUserProfile?.contactInfo?.photo!}
             alt=""
             width={10}
             height={10}

@@ -1,3 +1,4 @@
+import { useUser } from "@/app/lib/hooks/useUser";
 import { useState } from "react";
 
 interface SendMessageResponse {
@@ -26,6 +27,7 @@ export interface ChatMessage {
 export const useChat = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const { userProfile } = useUser();
 
   // Function to send a new chat message (POST)
   const sendMessage = async (
@@ -40,6 +42,7 @@ export const useChat = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${userProfile?.accessToken}`,
         },
         body: JSON.stringify({ senderId, receiverId, message }),
       });
@@ -61,13 +64,17 @@ export const useChat = () => {
 
   // Function to fetch chat messages (GET)
   const fetchMessages = async (
-    userId: string
+    userId: string,
+    chatUserId: string
   ): Promise<FetchMessagesResponse | undefined> => {
     setLoading(true);
     setError(null); // Reset error state
     try {
-      const res = await fetch(`/api/chat?userId=${userId}`, {
+      const res = await fetch(`/api/chat?chatUserId=${chatUserId}`, {
         method: "GET",
+        headers: {
+          Authorization: `Bearer ${userProfile?.accessToken}`,
+        },
       });
 
       const data: FetchMessagesResponse = await res.json();

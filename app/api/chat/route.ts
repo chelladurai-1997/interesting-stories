@@ -1,11 +1,20 @@
 import connectMongo from "@/app/lib/constants/mongodb";
 import ChatMessages from "@/app/lib/models/chatMessages.model";
+import { getUserIdFromToken } from "@/app/lib/utils/getUserIdFromToken";
 
 import { NextResponse } from "next/server";
 
 // Handler for storing a new chat message
 export async function POST(request: Request) {
   try {
+    const { userId: loggedInUserId } = getUserIdFromToken();
+
+    if (!loggedInUserId) {
+      return NextResponse.json(
+        { message: "User ID is required", error: true },
+        { status: 400 }
+      );
+    }
     // Parse the incoming request body
     const { senderId, receiverId, message } = await request.json();
 
@@ -61,12 +70,14 @@ export async function POST(request: Request) {
 // Handler for fetching chat messages by userId
 export async function GET(request: Request) {
   const url = new URL(request.url);
-  const userId = url.searchParams.get("userId");
+  const chatUserId = url.searchParams.get("chatUserId");
+  const { userId: loggedInUserId } = getUserIdFromToken();
+  console.log("loggedInUserId", loggedInUserId);
 
   // Validate required fields
-  if (!userId) {
+  if (!loggedInUserId || !chatUserId) {
     return NextResponse.json(
-      { message: "userId is required", error: true },
+      { message: "userId or chatUserId is required", error: true },
       { status: 400 }
     );
   }
@@ -77,7 +88,10 @@ export async function GET(request: Request) {
 
     // Query for messages where the user is either sender or receiver
     const messages = await ChatMessages.find({
-      $or: [{ senderId: userId }, { receiverId: userId }],
+      $or: [
+        { senderId: loggedInUserId, receiverId: chatUserId },
+        { senderId: chatUserId, receiverId: loggedInUserId },
+      ],
     }).sort({ createdAt: 1 }); // Sort by createdAt in ascending order (oldest to newest)
 
     return NextResponse.json(

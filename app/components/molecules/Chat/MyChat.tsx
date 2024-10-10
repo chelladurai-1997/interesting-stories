@@ -7,6 +7,7 @@ import useBodyScrollLock from "@/app/lib/hooks/useBodyScrollLock";
 import { ChatButton } from "../ChatButton/ChatButton";
 import { UserPreviewList } from "../UserPreviewList/UserPreviewList";
 import { ChatModal } from "../ChatModal/ChatModal";
+import useProfile from "@/app/lib/hooks/services/useProfile";
 
 const Chat: React.FC = () => {
   const {
@@ -27,6 +28,7 @@ const Chat: React.FC = () => {
   } = useChatLogic();
   const animate = useAnimateToggle();
   useBodyScrollLock(showChat);
+  const { profile: activeChatUserProfile } = useProfile(currentReceiverId);
 
   return (
     <div className="fixed end-6 bottom-6 group">
@@ -41,6 +43,7 @@ const Chat: React.FC = () => {
           sendMessage={sendMessage}
           sendingStatus={sendingStatus}
           showingChatUserId={currentReceiverId}
+          activeChatUserProfile={activeChatUserProfile}
         />
       )}
       {showChat && showPreview && (
