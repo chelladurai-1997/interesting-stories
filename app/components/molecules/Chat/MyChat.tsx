@@ -25,6 +25,7 @@ const Chat: React.FC = () => {
     sendMessage,
     sendingStatus,
     currentReceiverId,
+    chatApiLoading,
   } = useChatLogic();
   const animate = useAnimateToggle();
   useBodyScrollLock(showChat);
@@ -44,6 +45,7 @@ const Chat: React.FC = () => {
           sendingStatus={sendingStatus}
           showingChatUserId={currentReceiverId}
           activeChatUserProfile={activeChatUserProfile}
+          chatApiLoading={chatApiLoading}
         />
       )}
       {showChat && showPreview && (
@@ -51,6 +53,7 @@ const Chat: React.FC = () => {
           chatPreviewUsers={chatPreviewUsers}
           closePreviewList={closePreviewList}
           showChatInterface={showChatInterface}
+          chatApiLoading={chatApiLoading}
         />
       )}
       {!showChat && (

@@ -18,6 +18,7 @@ export const ChatModal: React.FC<{
   sendingStatus: string;
   backToChatList: () => void;
   countdown: number;
+  chatApiLoading: boolean;
   messages: ChatMessage[];
   sendMessage: (message: Message) => void;
   activeChatUserProfile: Profile | null;
@@ -30,6 +31,7 @@ export const ChatModal: React.FC<{
   sendMessage,
   showingChatUserId,
   activeChatUserProfile,
+  chatApiLoading,
 }) => {
   return (
     <div className="fixed top-0 right-0 h-full flex flex-col w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl mx-auto z-40 bg-white">
@@ -63,6 +65,7 @@ export const ChatModal: React.FC<{
           countdown={countdown}
           messages={messages}
           sendMessage={sendMessage}
+          chatApiLoading={chatApiLoading}
         />
       </div>
     </div>

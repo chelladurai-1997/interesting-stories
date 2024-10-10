@@ -12,9 +12,10 @@ export const ChatInterface: React.FC<{
   lastSeen: string;
   backToChatList: () => void;
   countdown: number;
+  chatApiLoading: boolean;
   messages: ChatMessage[];
   sendMessage: (message: Message) => void;
-}> = ({ messages, sendMessage }) => {
+}> = ({ messages, sendMessage, chatApiLoading }) => {
   const [inputMessage, setInputMessage] = useState<string>("");
   const [sendingStatus, setSendingStatus] = useState<string>("");
   const { userProfile } = useUser();
@@ -57,7 +58,9 @@ export const ChatInterface: React.FC<{
     <div className="flex flex-col h-full">
       {/* Chat messages display */}
       <div className="flex-grow p-4 overflow-y-auto pb-2">
-        {messages.length === 0 ? (
+        {chatApiLoading ? (
+          <div className="text-center text-gray-400">Loading your chat...</div>
+        ) : messages.length === 0 ? (
           <div className="text-center text-gray-400">No messages yet.</div>
         ) : (
           <>

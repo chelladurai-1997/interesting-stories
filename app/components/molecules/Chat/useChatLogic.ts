@@ -9,7 +9,11 @@ import useUserActivity from "@/app/lib/hooks/useUserActivity";
 
 const useChatLogic = () => {
   const { sentInterests, receivedInterests, userProfile } = useUser();
-  const { fetchMessages, sendMessage: sendMsgAPI } = useChat();
+  const {
+    fetchMessages,
+    loading: chatApiLoading,
+    sendMessage: sendMsgAPI,
+  } = useChat();
 
   const [showChat, setShowChat] = useState(false);
   const [showPreview, setShowPreview] = useState(true);
@@ -116,6 +120,7 @@ const useChatLogic = () => {
     backToChatList,
     closePreviewList,
     sendMessage,
+    chatApiLoading,
   };
 };
 

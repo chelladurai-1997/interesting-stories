@@ -31,6 +31,9 @@ const UserInsights: React.FC = () => {
   const pendingInterestsCount = receivedInterests.filter(
     (c) => c.status === InterestStatus.PENDING
   ).length;
+  const meAccpetedCount = receivedInterests.filter(
+    (c) => c.status === InterestStatus.ACCEPTED
+  ).length;
   const acceptedInterestsCount = sentInterests.filter(
     (c) => c.status === InterestStatus.ACCEPTED
   ).length;
@@ -160,7 +163,7 @@ const UserInsights: React.FC = () => {
           )}
         </section>
       )}
-      {acceptedInterestsCount > 0 && <Chat />}
+      {(acceptedInterestsCount > 0 || meAccpetedCount > 0) && <Chat />}
     </div>
   );
 };
