@@ -58,7 +58,7 @@ export const ChatInterface: React.FC<{
     <div className="flex flex-col h-full">
       {/* Chat messages display */}
       <div className="flex-grow p-4 overflow-y-auto pb-2">
-        {chatApiLoading ? (
+        {chatApiLoading && messages.length === 0 ? (
           <div className="text-center text-gray-400">Loading your chat...</div>
         ) : messages.length === 0 ? (
           <div className="text-center text-gray-400">No messages yet.</div>
