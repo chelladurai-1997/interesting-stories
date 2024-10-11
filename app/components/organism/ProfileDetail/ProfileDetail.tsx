@@ -14,9 +14,9 @@ import ProfilePersonalDetails from "@/app/components/organism/ProfileDetails/Pro
 import useProfile from "@/app/lib/hooks/services/useProfile";
 import useSendInterest from "@/app/lib/hooks/services/useSendInterest";
 import Container from "@/app/components/molecules/Container/Container";
-import Header from "@/app/components/organism/Header/Header";
 import { InterestStatus } from "@/app/lib/hooks/services/useFetchInterests";
 import { useUser } from "@/app/lib/hooks/useUser";
+import { startConfetti } from "@/app/lib/utils/confettiAnimation";
 
 const ProfileDetail: React.FC = () => {
   const params = useParams();
@@ -38,7 +38,7 @@ const ProfileDetail: React.FC = () => {
   );
 
   const [openSection, setOpenSection] = useState<string>(
-    currentInterest?.status === InterestStatus.ACCEPTED
+    currentSentInterest?.status === InterestStatus.ACCEPTED
       ? "contactInfo"
       : "basicInfo"
   );
@@ -51,6 +51,16 @@ const ProfileDetail: React.FC = () => {
       registerVisit(params?.userId);
     }
   }, []);
+
+  useEffect(() => {
+    console.log("currentInterest?.status", currentSentInterest?.status);
+    if (
+      currentSentInterest?.status === InterestStatus.ACCEPTED &&
+      "name" in (profile?.basicInfo ?? {})
+    ) {
+      startConfetti(5000, "myConfettiKey");
+    }
+  }, [currentSentInterest?.status, params?.userId, profile?.basicInfo?.name]);
 
   const interestReceivedAt = currentInterest?.createdAt;
 
