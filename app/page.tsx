@@ -21,19 +21,23 @@ export default async function Home() {
         </>
       ) : (
         <>
-          <WelcomeBanner />
-          <MarqueeCarousel
-            images={movingImages.reverse()}
-            duplicateCount={1}
-            direction="left"
-            speed={35}
-          />
-          <MarqueeCarousel
-            images={movingImages}
-            duplicateCount={1}
-            speed={20}
-            direction="right"
-          />
+          <div className="relative">
+            <WelcomeBanner />
+            {/* Wrapper div for the overlay */}
+            <div className="relative">
+              {/* Overlay with absolute positioning */}
+              <div className="absolute inset-0 bg-black/50 z-10"></div>
+              {/* MarqueeCarousel positioned above the overlay */}
+              <div className="relative z-20">
+                <MarqueeCarousel
+                  images={movingImages}
+                  duplicateCount={1}
+                  direction="left"
+                  speed={35}
+                />
+              </div>
+            </div>
+          </div>
 
           <NoticePopup />
           <QuickAccess />

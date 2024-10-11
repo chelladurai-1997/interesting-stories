@@ -22,7 +22,7 @@ const MarqueeCarousel: React.FC<MovingImagesCarouselProps> = ({
 
   return (
     <Container>
-      <div className="overflow-hidden w-full bg-gradient-to-br py-3">
+      <div className="overflow-hidden w-full bg-white py-4">
         <Marquee gradient={false} speed={speed} direction={direction} loop={0}>
           {repeatedImages.map((image, index) => (
             <div key={index} className="mr-4">
@@ -30,7 +30,7 @@ const MarqueeCarousel: React.FC<MovingImagesCarouselProps> = ({
                 src={image}
                 alt={`carousel-image-${index}`}
                 width={192} // Set your desired width
-                height={260} // Set your desired height
+                height={200} // Set your desired height
                 className="w-48 h-[260px] md:h-[295px] object-cover rounded-lg shadow-md" // Ensure to maintain the exact styles
               />
             </div>
