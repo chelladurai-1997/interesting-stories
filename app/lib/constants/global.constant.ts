@@ -1194,3 +1194,18 @@ export const formSectionDefaultState = {
   familyDetails: false,
   contactDetails: false,
 };
+
+export const movingImages = [
+  "https://i.pinimg.com/236x/bf/26/96/bf26969479445c129329ceccaabecc52.jpg",
+  "https://i.pinimg.com/236x/2b/3a/36/2b3a36b6a63832ac10081c62d7842a95.jpg",
+  "https://i.pinimg.com/236x/28/2f/9d/282f9de8bf803207bc96b1d8cd4058ac.jpg",
+  "https://i.pinimg.com/236x/c4/c6/1d/c4c61d14eca632476766d3448a485d18.jpg",
+  "https://i.pinimg.com/236x/70/33/92/703392772705e01d8eaf831209befcf8.jpg",
+  "https://i.pinimg.com/236x/40/8b/9b/408b9b074ef454dd62505490e88c21f3.jpg",
+  "https://i.pinimg.com/236x/82/0b/08/820b0863009ef80348e8374cb291a15d.jpg",
+  "https://i.pinimg.com/736x/dc/07/df/dc07df1afc22e0992ec50396a617ef95.jpg",
+  "https://i.pinimg.com/236x/f3/9d/6a/f39d6aaafc43ec466e7f24a4f0651954.jpg",
+  "https://i.pinimg.com/236x/cd/73/9f/cd739f9fa9934608d59ec67d481adabf.jpg",
+  "https://i.pinimg.com/236x/ae/2a/40/ae2a40e4637973997a8266b1f822f3b4.jpg",
+  "https://i.pinimg.com/236x/04/c8/53/04c853e88a245b7c816d7b2e6dc7f705.jpg",
+];

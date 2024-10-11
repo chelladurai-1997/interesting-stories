@@ -1,5 +1,5 @@
 const QuickAccess: React.FC = () => (
-  <section className="bg-gray-100 py-12">
+  <section className="bg-gray-100 py-12 px-10">
     <div className="container mx-auto text-center">
       <h2 className="text-4xl font-bold text-gray-800 mb-12">Our Services</h2>
 
@@ -10,11 +10,12 @@ const QuickAccess: React.FC = () => (
             🎉 Free Services
           </h3>
           <ul className="text-left text-gray-700 space-y-3">
-            <li>✅ Profile Registration</li>
-            <li>✅ Manual Verification Via Call</li>
+            <li>✅ Register Your Profile</li>
+            <li>✅ Manual Verification Call</li>
             <li>✅ Send Unlimited Interests</li>
-            <li>✅ Unlimited Accept or Reject profiles</li>
-            <li>✅ View Unlimited Contact Details After Acceptance</li>
+            <li>✅ Send Unlimited Messages</li>
+            <li>✅ Unlimted Accept or Reject Profiles Freely</li>
+            <li>✅ View Contact Details After Acceptance</li>
             <li>✅ Get Visitor Insights</li>
           </ul>
         </div>
@@ -25,14 +26,9 @@ const QuickAccess: React.FC = () => (
             💼 Paid Support
           </h3>
           <ul className="text-left text-gray-700 space-y-3">
-            <li>
-              🤝 Arrange Field Visits and Help Communicate Between Both Parties
-            </li>
-            <li>📝 Handle All Communication on Your Behalf</li>
-            <li>
-              📅 Schedule Visits or Perform On-Site Verification and Behavior
-              Checks
-            </li>
+            <li>🤝 Arrange Visits & Facilitate Communication</li>
+            <li>📝 Manage All Your Communications</li>
+            <li>📅 Schedule Visits & Conduct Verifications</li>
             <li>💰 Flexible Payment Options</li>
             <li>✅ Ensure Genuine Interactions</li>
             <li>

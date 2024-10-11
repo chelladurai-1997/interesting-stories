@@ -10,7 +10,7 @@ const SessionMonitor: React.FC = () => {
   const { userProfile, logout } = useUser();
   const [expiryTime, setExpiryTime] = useState<number | null>(null);
   const route = useRouter();
-  console.log("userProfile?.accessToken", userProfile?.accessToken);
+
   useEffect(() => {
     if (userProfile?.accessToken) {
       setExpiryTime(getExpiryTimeFromToken(userProfile?.accessToken));
