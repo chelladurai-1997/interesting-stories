@@ -1194,10 +1194,14 @@ export const formSectionDefaultState = {
   familyDetails: false,
   contactDetails: false,
 };
-
 export const movingImages = [
+  "https://i.pinimg.com/236x/39/01/8c/39018c6032e27478d58caf8c2106c1b8.jpg",
   "https://i.pinimg.com/236x/bf/26/96/bf26969479445c129329ceccaabecc52.jpg",
+  "https://i.pinimg.com/236x/c8/a5/25/c8a5259da00409ee393e77b093660436.jpg",
+
   "https://i.pinimg.com/236x/2b/3a/36/2b3a36b6a63832ac10081c62d7842a95.jpg",
+  "https://i.pinimg.com/236x/dc/c5/87/dcc5876fd0a1efa8ccdf07b47c1d0463.jpg",
+
   "https://i.pinimg.com/236x/28/2f/9d/282f9de8bf803207bc96b1d8cd4058ac.jpg",
   "https://i.pinimg.com/236x/c4/c6/1d/c4c61d14eca632476766d3448a485d18.jpg",
   "https://i.pinimg.com/236x/70/33/92/703392772705e01d8eaf831209befcf8.jpg",
@@ -1208,4 +1212,16 @@ export const movingImages = [
   "https://i.pinimg.com/236x/cd/73/9f/cd739f9fa9934608d59ec67d481adabf.jpg",
   "https://i.pinimg.com/236x/ae/2a/40/ae2a40e4637973997a8266b1f822f3b4.jpg",
   "https://i.pinimg.com/236x/04/c8/53/04c853e88a245b7c816d7b2e6dc7f705.jpg",
+  "https://i.pinimg.com/236x/f1/f1/12/f1f1120ccad8bd5335db501e26e37f66.jpg",
+  "https://i.pinimg.com/236x/25/96/1f/25961fb841be57813db043d9615f98e8.jpg",
+  "https://i.pinimg.com/236x/98/6b/2e/986b2ea951b1a17ddcfd75925a7328c0.jpg",
+  "https://i.pinimg.com/236x/66/54/f9/6654f9ef616a81f3181207d58c2a775e.jpg",
+  "https://i.pinimg.com/236x/88/60/e4/8860e472512df77466bed9c699bf1f88.jpg",
+  "https://i.pinimg.com/236x/f9/38/99/f938999a2a026027c0ed4b6c10262ca3.jpg",
+  "https://i.pinimg.com/236x/5e/bb/4e/5ebb4edca1743188272bb0f6d5310715.jpg",
+  "https://i.pinimg.com/236x/c8/12/00/c81200fee949536054cebeb1885a962f.jpg",
+  "https://i.pinimg.com/236x/b0/93/0c/b0930c0a57e861c1187e1150befe3b5d.jpg",
+  "https://i.pinimg.com/236x/5f/db/f4/5fdbf4965534da85854d7bef1162bd23.jpg",
+  "https://i.pinimg.com/236x/ab/c3/d9/abc3d9fdff65cd8956600ca004046875.jpg",
+  "https://i.pinimg.com/736x/56/7b/8b/567b8b053d0d3d83915c90c3485032ce.jpg",
 ];
