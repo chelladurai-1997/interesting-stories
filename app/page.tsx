@@ -7,6 +7,7 @@ import { cookies } from "next/headers";
 import WelcomeMessage from "./components/molecules/WelcomeMessage/WelcomeMessage";
 import { movingImages } from "./lib/constants/global.constant";
 import MarqueeCarousel from "./components/molecules/MarqueeCarousel/MarqueeCarousel";
+import { HowItWorks } from "./components/molecules/HowItWorks/HowItWorks";
 
 export default async function Home() {
   const isLoggedInUser = !!cookies().get("accessToken")?.value;
@@ -23,6 +24,7 @@ export default async function Home() {
         <>
           <div className="relative">
             <WelcomeBanner />
+
             {/* Wrapper div for the overlay */}
             <div className="relative">
               {/* Overlay with absolute positioning */}
@@ -38,7 +40,7 @@ export default async function Home() {
               </div>
             </div>
           </div>
-
+          <HowItWorks />
           <NoticePopup />
           <QuickAccess />
         </>
