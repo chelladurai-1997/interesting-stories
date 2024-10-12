@@ -9,6 +9,17 @@ export async function POST(request: Request) {
   const { visitorId, profileOwnerId } = await request.json();
 
   try {
+    // Don't record it as a visit if user visits their own profile
+    if (visitorId === profileOwnerId) {
+      return NextResponse.json(
+        {
+          message: "You visited your own profile.",
+          data: null,
+          error: false,
+        },
+        { status: 200 } // OK
+      );
+    }
     // Connect to MongoDB
     await connectMongo();
 

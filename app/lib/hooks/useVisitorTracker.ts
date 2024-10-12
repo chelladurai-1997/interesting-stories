@@ -39,6 +39,9 @@ export const useVisitorTracker = (loggedInUserId?: string) => {
     async (profileOwnerId: string) => {
       if (!loggedInUserId || !profileOwnerId) return;
 
+      // Don't register a vistit when own profile was viewed
+      if (loggedInUserId === profileOwnerId) return;
+
       // Clear any existing debounce timeout
       if (debounceTimeoutRef.current) {
         clearTimeout(debounceTimeoutRef.current);

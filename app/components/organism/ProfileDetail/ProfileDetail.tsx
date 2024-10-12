@@ -47,10 +47,14 @@ const ProfileDetail: React.FC = () => {
 
   useEffect(() => {
     fetchInterests?.();
-    if (params?.userId && typeof params?.userId === "string") {
+    if (
+      params?.userId &&
+      typeof params?.userId === "string" &&
+      userProfile?.userId
+    ) {
       registerVisit(params?.userId);
     }
-  }, []);
+  }, [userProfile?.userId, userProfile?.userId]);
 
   useEffect(() => {
     console.log("currentInterest?.status", currentSentInterest?.status);

@@ -27,6 +27,14 @@ const useSendInterest = (currentUserId: string | undefined) => {
       return;
     }
 
+    if (receiverId === currentUserId) {
+      // Show toast if user is not logged in
+      toast.error(
+        "You can't send interest to yourself—try reaching out to others!"
+      );
+      return;
+    }
+
     try {
       // Prepare the body for the API call
       const body: InterestBody = {
