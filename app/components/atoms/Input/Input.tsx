@@ -29,7 +29,7 @@ const Input: React.FC<InputProps> = ({
     type={type}
     max={max}
     className={
-      "mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 p-2.5 sm:text-sm " +
+      "mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-yellow-500 focus:border-yellow-500 p-2 sm:text-sm " +
       className
     }
     autoComplete="off"

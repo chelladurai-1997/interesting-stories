@@ -5,6 +5,7 @@ import {
   countriesOptions,
   stateOptions,
   districtOptions,
+  contactsharingpreference,
 } from "@/app/lib/constants/global.constant";
 import SectionHeader from "../../molecules/SectionHeader/SectionHeader";
 import { useContactInfoForm } from "@/app/lib/hooks/useContactInfoForm";
@@ -25,7 +26,7 @@ const ContactInfoForm = () => {
       />
       <div className="form-login">
         <form autoComplete="off" action={onSubmit}>
-          <div className="space-y-6">
+          <div className="space-y-4">
             {/* 2 columns on medium screens and up, 1 column on smaller screens */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Mobile No */}
@@ -97,6 +98,15 @@ const ContactInfoForm = () => {
                 type="file"
                 className="border border-gray-300 rounded-md p-2"
               />
+              <FormField
+                label="Pincode (அஞ்சல் குறியீடு):"
+                id="pin_code"
+                name="pin_code"
+                placeholder="Pincode"
+                type="number"
+              />
+            </div>
+            <div className="grid grid-cols-1 gap-6">
               {/* <FormField
                 label="Pincode (அஞ்சல் குறியீடு):"
                 id="pin_code"
@@ -104,14 +114,13 @@ const ContactInfoForm = () => {
                 placeholder="Pincode"
                 type="number"
               /> */}
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
               <FormField
-                label="Pincode (அஞ்சல் குறியீடு):"
-                id="pin_code"
-                name="pin_code"
-                placeholder="Pincode"
-                type="number"
+                label="How would you like to share your contact details?"
+                type="radio"
+                id="contactsharingpreference"
+                name="contactsharingpreference"
+                options={contactsharingpreference}
               />
             </div>
           </div>

@@ -255,6 +255,10 @@ export const countriesOptions = [
 ];
 
 export const physicallyChallengedOptions = ["Yes", "No"];
+export const contactsharingpreference = [
+  "I allow sharing my contact details once a mutual interest is accepted.",
+  "I will chat within the platform and share my contact details after the conversation.",
+];
 
 export const bloodGroupOptions = [
   { value: "A+", label: "A+" },
@@ -1194,14 +1198,10 @@ export const formSectionDefaultState = {
   familyDetails: false,
   contactDetails: false,
 };
+
 export const movingImages = [
-  "https://i.pinimg.com/236x/39/01/8c/39018c6032e27478d58caf8c2106c1b8.jpg",
   "https://i.pinimg.com/236x/bf/26/96/bf26969479445c129329ceccaabecc52.jpg",
-  "https://i.pinimg.com/236x/c8/a5/25/c8a5259da00409ee393e77b093660436.jpg",
-
   "https://i.pinimg.com/236x/2b/3a/36/2b3a36b6a63832ac10081c62d7842a95.jpg",
-  "https://i.pinimg.com/236x/dc/c5/87/dcc5876fd0a1efa8ccdf07b47c1d0463.jpg",
-
   "https://i.pinimg.com/236x/28/2f/9d/282f9de8bf803207bc96b1d8cd4058ac.jpg",
   "https://i.pinimg.com/236x/c4/c6/1d/c4c61d14eca632476766d3448a485d18.jpg",
   "https://i.pinimg.com/236x/70/33/92/703392772705e01d8eaf831209befcf8.jpg",

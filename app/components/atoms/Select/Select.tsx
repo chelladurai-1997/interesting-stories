@@ -28,8 +28,8 @@ const customStyles = {
     backgroundColor: "white", // Background color
     borderColor: state.isFocused ? "#FBBF24" : "#D1D5DB", // Border color based on focus
     borderWidth: "1px", // Border width
-    paddingTop: "3px",
-    paddingBottom: "3px",
+    // paddingTop: "1px",
+    // paddingBottom: "1px",
     borderRadius: "0.375rem", // Rounded corners
     boxShadow: state.isFocused ? "0 0 0 1px #FBBF24" : provided.boxShadow, // Focus ring
     outline: "none", // Remove default outline
@@ -52,9 +52,6 @@ const customStyles = {
       ? "#FEEBC8"
       : provided.backgroundColor, // Selected and focused colors
     color: state.isSelected ? "white" : provided.color, // Change text color on select
-    "&:active": {
-      backgroundColor: "#D97706", // Active state color
-    },
   }),
 };
 
@@ -92,7 +89,7 @@ const CustomSelect: React.FC<SelectProps> = ({
   };
 
   return (
-    <div className="mt-2">
+    <div className="pt-2">
       <Select
         closeMenuOnSelect={!isMulti}
         components={animatedComponents}

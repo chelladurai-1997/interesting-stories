@@ -29,22 +29,20 @@ const PersonalDetailsForm = () => {
       />
       <div className="form-login">
         <form autoComplete="off" action={onSubmit}>
-          <div className="space-y-6">
+          <div className="space-y-4">
             {/* 2 columns on medium screens and up, 1 column on smaller screens */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <FormField
-                label="Religion (மதம்): *"
+                label="Religion (மதம்): "
                 id="religion"
                 name="religion"
                 placeholder="Select Religion"
                 type="select"
                 options={religionOptions}
-                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
               />
 
               <FormField
-                label="Caste (சாதி): *"
-                className="form-select mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
+                label="Caste (சாதி): "
                 type="select"
                 name="caste"
                 id="caste"
@@ -55,19 +53,17 @@ const PersonalDetailsForm = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <FormField
-                label="Kulam (குலம்): *"
+                label="Kulam (குலம்): "
                 id="kulam"
                 name="kulam"
                 placeholder="Select Caste"
                 type="select"
                 options={kulamOptions}
                 searchable
-                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
               />
 
               <FormField
-                label="Kula Deivam (கோயில்): *"
-                className="form-select mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
+                label="Kula Deivam (கோயில்): "
                 id="kula_deivam"
                 name="kula_deivam"
                 type="select"
@@ -78,8 +74,7 @@ const PersonalDetailsForm = () => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <FormField
-                label="Height (உயரம்): *"
-                className="form-select mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
+                label="Height (உயரம்): "
                 id="height"
                 name="height"
                 options={heightOptions}
@@ -87,9 +82,8 @@ const PersonalDetailsForm = () => {
                 type="select"
               />
               <FormField
-                label="Complexion (நிறம்): *"
+                label="Complexion (நிறம்): "
                 type="select"
-                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
                 id="complexion"
                 name="complexion"
                 placeholder="Select Complexion"
@@ -100,8 +94,7 @@ const PersonalDetailsForm = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <FormField
-                label="Weight (in kg) (எடை): *"
-                className="form-select mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
+                label="Weight (in kg) (எடை): "
                 id="weight"
                 name="weight"
                 options={weightOptions}
@@ -111,8 +104,7 @@ const PersonalDetailsForm = () => {
 
               <FormField
                 id="blood_group"
-                label="Blood Group (இரத்த வகை): *"
-                className="form-select mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
+                label="Blood Group (இரத்த வகை): "
                 type="select"
                 name="blood_group"
                 options={bloodGroupOptions}
@@ -121,17 +113,15 @@ const PersonalDetailsForm = () => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <FormField
-                label="Are you Physically Challenged Person? (மாற்றுத் திறனாளி): *"
+                label="Are you Physically Challenged Person? (மாற்றுத் திறனாளி): "
                 type="radio"
-                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
                 id="physically_challenged"
                 name="physically_challenged"
                 options={physicallyChallengedOptions}
               />
               <FormField
-                label="Specify details: *"
+                label="Specify details: "
                 type="text"
-                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
                 id="physical_challenge_details"
                 name="physical_challenge_details"
                 options={physicallyChallengedOptions}

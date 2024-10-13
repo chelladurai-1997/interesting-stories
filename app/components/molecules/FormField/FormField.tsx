@@ -133,7 +133,7 @@ const FormField: React.FC<FormFieldProps> = ({
             disabled={disabled}
           />
           <textarea
-            className="mt-2 block w-full bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 p-3 sm:text-sm"
+            className="mt-2 block w-full bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-yellow-500 focus:border-yellow-500 p-2 sm:text-sm"
             id={id}
             name={name}
             placeholder={placeholder}
@@ -172,7 +172,7 @@ const FormField: React.FC<FormFieldProps> = ({
               {...(type === "file" ? { accept: "image/*" } : {})}
               required={required}
               disabled={disabled}
-              className="block w-full bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 p-3 sm:text-sm mt-2"
+              className="block w-full bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-yellow-500 focus:border-yellow-500 p-2 sm:text-sm mt-2"
             />
           )}
         </>

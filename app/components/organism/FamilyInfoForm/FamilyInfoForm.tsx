@@ -18,11 +18,11 @@ const FamilyInfoForm = () => {
       />
       <div className="form-login">
         <form autoComplete="off" action={onSubmit}>
-          <div className="space-y-6">
+          <div className="space-y-4">
             {/* 2 columns on medium screens and up, 1 column on smaller screens */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <FormField
-                label="Father Name (தந்தை பெயர்): *"
+                label="Father Name (தந்தை பெயர்):"
                 id="father_name"
                 name="father_name"
                 type="text"
@@ -30,7 +30,7 @@ const FamilyInfoForm = () => {
               />
 
               <FormField
-                label="Father Status (தந்தை நிலை): *"
+                label="Father Status (தந்தை நிலை):"
                 id="father_status"
                 name="father_status"
                 type="radio"
@@ -40,7 +40,7 @@ const FamilyInfoForm = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <FormField
-                label="Mother Name (தாய் பெயர்): *"
+                label="Mother Name (தாய் பெயர்):"
                 id="mother_name"
                 name="mother_name"
                 type="text"
@@ -48,7 +48,7 @@ const FamilyInfoForm = () => {
               />
 
               <FormField
-                label="Mother Status (தாய் நிலை): *"
+                label="Mother Status (தாய் நிலை):"
                 id="mother_status"
                 name="mother_status"
                 type="radio"
@@ -57,7 +57,7 @@ const FamilyInfoForm = () => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <FormField
-                label="Father Occupation (தந்தை தொழில்): *"
+                label="Father Occupation (தந்தை தொழில்):"
                 id="father_occupation"
                 name="father_occupation"
                 type="text"
@@ -65,7 +65,7 @@ const FamilyInfoForm = () => {
               />
 
               <FormField
-                label="Mother Occupation (தாய் தொழில்): *"
+                label="Mother Occupation (தாய் தொழில்):"
                 id="mother_occupation"
                 name="mother_occupation"
                 type="text"
@@ -74,7 +74,7 @@ const FamilyInfoForm = () => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <FormField
-                label="Mother Kulam (தாய் பிறந்த குலம்): *"
+                label="Mother Kulam (தாய் பிறந்த குலம்):"
                 id="mother_kulam"
                 name="mother_kulam"
                 type="select"
@@ -84,7 +84,7 @@ const FamilyInfoForm = () => {
               />
 
               <FormField
-                label="Family Living Place (இருப்பிடம்): *"
+                label="Family Living Place (இருப்பிடம்):"
                 id="living_place"
                 name="living_place"
                 type="text"
@@ -93,14 +93,14 @@ const FamilyInfoForm = () => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <FormField
-                label="Native Place (பூர்வீகம்): *"
+                label="Native Place (பூர்வீகம்):"
                 id="native_place"
                 name="native_place"
                 type="text"
                 placeholder="Native Place"
               />
               <FormField
-                label="No of Brothers (சகோதரர்களின் எண்ணிக்கை): *"
+                label="No of Brothers (சகோதரர்களின் எண்ணிக்கை):"
                 id="no_of_brothers"
                 name="no_of_brothers"
                 type="number"
@@ -109,14 +109,14 @@ const FamilyInfoForm = () => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <FormField
-                label="No of Brothers Married (திருமணமான சகோதரர்களின் எண்ணிக்கை): *"
+                label="No of Brothers Married (திருமணமான சகோதரர்களின் எண்ணிக்கை):"
                 id="no_of_brothers_married"
                 name="no_of_brothers_married"
                 type="number"
                 placeholder="No of Brothers Married"
               />
               <FormField
-                label="No of Sisters (சகோதரிகளின் எண்ணிக்கை): *"
+                label="No of Sisters (சகோதரிகளின் எண்ணிக்கை):"
                 id="no_of_sisters"
                 name="no_of_sisters"
                 type="number"
@@ -125,21 +125,21 @@ const FamilyInfoForm = () => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <FormField
-                label="No of Sisters Married (திருமணமான சகோதரிகளின் எண்ணிக்கை): *"
+                label="No of Sisters Married (திருமணமான சகோதரிகளின் எண்ணிக்கை):"
                 id="no_of_sisters_married"
                 name="no_of_sisters_married"
                 type="number"
                 placeholder="No of Sisters Married"
               />
               <FormField
-                label="Property (சொத்து): *"
+                label="Property (சொத்து):"
                 id="property"
                 name="property"
                 type="text"
                 placeholder="Property"
               />
               <FormField
-                label="Property Info (சொத்து விபரம்): *"
+                label="Property Info (சொத்து விபரம்):"
                 id="property"
                 name="property"
                 type="textarea"

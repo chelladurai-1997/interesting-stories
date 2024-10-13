@@ -21,7 +21,7 @@ const Button: React.FC<ButtonProps> = ({
       ${
         isPending
           ? "cursor-not-allowed bg-gray-400"
-          : "hover:bg-yellow-600 focus:ring-2 focus:ring-yellow-300"
+          : "hover:bg-yellow-600 focus:ring-1 focus:ring-yellow-300"
       }`}
   >
     {isPending ? (

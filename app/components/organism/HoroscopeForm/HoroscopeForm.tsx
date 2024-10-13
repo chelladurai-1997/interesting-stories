@@ -23,7 +23,7 @@ const HoroscopeForm = () => {
       />
       <div className="form-login">
         <form autoComplete="off" action={onSubmit}>
-          <div className="space-y-6">
+          <div className="space-y-4">
             {/* 2 columns on medium screens and up, 1 column on smaller screens */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Raasi */}

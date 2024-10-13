@@ -37,7 +37,7 @@ const BasicInfoForm = () => {
         />
         <div className="form-login">
           <form autoComplete="off" action={onSubmit}>
-            <div className="space-y-6">
+            <div className="space-y-4">
               <ResponsiveGridContainer>
                 <FormField
                   label="Display Name (முழு பெயர்):"

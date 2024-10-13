@@ -68,8 +68,8 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
             <span className="text-2xl font-semibold text-[#ffd700]">
               Linking Hearts
             </span>
-            <span className="text-sm text-[#fa8072]">
-              Bringing Families Together
+            <span className="text-sm text-[#f5f5dc]">
+              Meet Your Soulmate<span className="animate-pulse">💛</span>
             </span>
           </Link>
 
@@ -146,7 +146,7 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
 
             <button
               type="button"
-              className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm rounded-lg md:hidden focus:outline-none focus:ring-2 text-gray-400 hover:bg-gray-700 focus:ring-gray-600"
+              className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm rounded-lg md:hidden focus:outline-none focus:ring-1 text-gray-400 hover:bg-gray-700 focus:ring-gray-600"
               onClick={toggleMobileMenu}
             >
               <span className="sr-only">Open main menu</span>
