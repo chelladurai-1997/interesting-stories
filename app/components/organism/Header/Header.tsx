@@ -69,7 +69,7 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
               Linking Hearts
             </span>
             <span className="text-sm text-[#f5f5dc]">
-              Meet Your Soulmate<span className="animate-pulse">💛</span>
+              Meet Your Soulmate<span className="animate-pulse">❤️</span>
             </span>
           </Link>
 
