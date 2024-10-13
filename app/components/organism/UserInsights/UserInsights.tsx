@@ -6,19 +6,22 @@ import { InterestStatus } from "@/app/lib/hooks/services/useFetchInterests";
 import OverviewSection from "../OverviewSection/OverviewSection";
 import ProfileCard from "../ProfileCard/ProfileCard"; // Import ProfileCard
 import { DateVariation, formatDateForCards } from "@/app/lib/utils/dateUtils";
-import Chat from "../../molecules/Chat/MyChat";
+import useGetInterestCounts from "@/app/lib/hooks/useGetInterestCounts";
 
 const UserInsights: React.FC = () => {
   const { userVisits, receivedInterests, sentInterests, userProfile } =
     useUser();
-  const { profiles: recentVisitors } = useProfilesByUserIds(
-    userVisits.map((visit) => visit.visitorId)
-  );
+  const { totalAcceptedInterestsSent } = useGetInterestCounts();
+  const recentVistorsIds = userVisits.map((visit) => visit.visitorId);
+  const pendingInterestsReceived = receivedInterests
+    .filter((c) => c.status === InterestStatus.PENDING)
+    .map((interest) => interest.senderId);
+
+  const { profiles: recentVisitors } = useProfilesByUserIds(recentVistorsIds);
   const { profiles: pendingInterests } = useProfilesByUserIds(
-    receivedInterests
-      .filter((c) => c.status === InterestStatus.PENDING)
-      .map((interest) => interest.senderId)
+    pendingInterestsReceived
   );
+
   const { profiles: acceptedInterests } = useProfilesByUserIds(
     sentInterests
       .filter((c) => c.status === InterestStatus.ACCEPTED)
@@ -31,12 +34,6 @@ const UserInsights: React.FC = () => {
   const pendingInterestsCount = receivedInterests.filter(
     (c) => c.status === InterestStatus.PENDING
   ).length;
-  const meAccpetedCount = receivedInterests.filter(
-    (c) => c.status === InterestStatus.ACCEPTED
-  ).length;
-  const acceptedInterestsCount = sentInterests.filter(
-    (c) => c.status === InterestStatus.ACCEPTED
-  ).length;
 
   return (
     <div className="max-w-4xl mx-auto md:my-8 p-6 bg-white rounded-lg shadow-lg">
@@ -46,15 +43,15 @@ const UserInsights: React.FC = () => {
       <OverviewSection
         recentVisitorsCount={recentVisitorsCount}
         pendingInterestsCount={pendingInterestsCount}
-        acceptedInterestsCount={acceptedInterestsCount}
+        acceptedInterestsCount={totalAcceptedInterestsSent}
       />
 
       {/* Accepted Interests Section */}
-      {acceptedInterestsCount > 0 && (
+      {totalAcceptedInterestsSent > 0 && (
         <section className="mt-8">
           <h3 className="text-xl font-semibold pb-4">
-            {acceptedInterestsCount} member
-            {acceptedInterestsCount > 1 ? "s" : ""} accepted your interest
+            {totalAcceptedInterestsSent} member
+            {totalAcceptedInterestsSent > 1 ? "s" : ""} accepted your interest
           </h3>
           {acceptedInterests?.length > 0 ? (
             <ul className="space-y-4">
@@ -163,7 +160,6 @@ const UserInsights: React.FC = () => {
           )}
         </section>
       )}
-      {(acceptedInterestsCount > 0 || meAccpetedCount > 0) && <Chat />}
     </div>
   );
 };

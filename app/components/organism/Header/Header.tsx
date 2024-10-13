@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation"; // Import the usePathname hook
 import SearchForm from "../SearchForm/SearchForm";
 import { useUser } from "@/app/lib/hooks/useUser";
+import Chat from "../../molecules/Chat/MyChat";
+import useGetInterestCounts from "@/app/lib/hooks/useGetInterestCounts";
 
 interface HeaderProps {
   showSearchForm?: boolean;
@@ -14,6 +16,8 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
   const { userProfile, logout } = useUser();
+  const { totalAcceptedInterestsReceived, totalAcceptedInterestsSent } =
+    useGetInterestCounts();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -21,6 +25,8 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
   const mobileMenuRef = useRef<HTMLDivElement>(null);
 
   const pathname = usePathname(); // Get the current pathname
+  const showChatIcon =
+    totalAcceptedInterestsReceived > 0 && totalAcceptedInterestsSent > 0;
 
   const toggleMobileMenu = () => {
     if (isDropdownOpen) setIsDropdownOpen(false);
@@ -69,15 +75,19 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
               Linking Hearts
             </span>
             <span className="text-sm text-[#f5f5dc]">
-              Meet Your Soulmate<span className="animate-pulse">❤️</span>
+              Meet Your Soulmate<span>❤️</span>
             </span>
           </Link>
 
           <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+            {/* Message Icon */}
+            {showChatIcon && <Chat />}
+
             {userProfile ? (
               <div className="relative" ref={dropdownRef}>
                 <button
                   type="button"
+                  title="Profile Menu"
                   className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-600"
                   onClick={toggleDropdown}
                 >
@@ -176,20 +186,22 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
             ref={mobileMenuRef}
           >
             <ul className="flex flex-col font-medium p-4 space-y-2">
-              {navLinks.map((link, index) => (
-                <li key={index}>
-                  <Link
-                    href={link.href}
-                    className={`block py-2 px-3 ${
-                      pathname === link.href
-                        ? "text-[#ffd700] hover:text-[#ffd700]"
-                        : "text-white hover:text-[#ffd700]"
-                    } rounded`}
-                  >
-                    {link.text}
-                  </Link>
-                </li>
-              ))}
+              <ul className="flex flex-col font-medium p-4 space-y-2">
+                {navLinks.map((link, index) => (
+                  <li key={index}>
+                    <Link
+                      href={link.href}
+                      className={`block py-2 px-3 ${
+                        pathname === link.href
+                          ? "text-[#ffd700] hover:text-[#ffd700]"
+                          : "text-white hover:text-[#ffd700]"
+                      } rounded flex items-center`}
+                    >
+                      {link.text}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </ul>
           </div>
 

@@ -2,9 +2,10 @@ import Link from "next/link";
 import { BackArrowIcon } from "../../icons/BackArrowIcon";
 import { ChatInterface } from "../Chat/ChatInterface";
 import { ChatMessage } from "../Chat/useChat";
-import useProfile from "@/app/lib/hooks/services/useProfile";
 import Image from "next/image";
 import { Profile } from "@/app/profiles/profile.types";
+import toast from "react-hot-toast";
+import { usePathname } from "next/navigation";
 
 // Define Message type
 export type Message = {
@@ -33,6 +34,8 @@ export const ChatModal: React.FC<{
   activeChatUserProfile,
   chatApiLoading,
 }) => {
+  const pathname = usePathname();
+  const profileDetailHref = "/profiles/" + showingChatUserId;
   return (
     <div className="fixed top-0 right-0 h-full flex flex-col w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl mx-auto z-40 bg-white">
       {/* Sticky Header */}
@@ -41,7 +44,16 @@ export const ChatModal: React.FC<{
         <button className="text-white mr-3" onClick={backToChatList}>
           <BackArrowIcon />
         </button>
-        <Link href={"profiles/" + showingChatUserId}>
+        <Link
+          href={profileDetailHref}
+          onClick={() => {
+            if (pathname === profileDetailHref)
+              toast.success(
+                "Dear User, You are already at the requested profile details page",
+                { icon: undefined, duration: 2000 }
+              );
+          }}
+        >
           <Image
             src={activeChatUserProfile?.contactInfo?.photo!}
             alt=""

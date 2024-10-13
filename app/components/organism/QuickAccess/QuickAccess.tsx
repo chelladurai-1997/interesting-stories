@@ -10,13 +10,18 @@ const QuickAccess: React.FC = () => (
             🎉 Free Services
           </h3>
           <ul className="text-left text-gray-700 space-y-3">
-            <li>✅ Register Your Profile</li>
-            <li>✅ Manual Verification Call</li>
-            <li>✅ Send Unlimited Interests</li>
-            <li>✅ Send Unlimited Messages</li>
-            <li>✅ Unlimted Accept or Reject Profiles Freely</li>
-            <li>✅ View Contact Details After Acceptance</li>
-            <li>✅ Get Visitor Insights</li>
+            <li>✅ Register Your Profile for Free</li>
+            <li>
+              ✅ Phone verification before profile is displayed in listings
+            </li>
+            <li>✅ Send Unlimited Interest Requests</li>
+            <li>✅ Send Unlimited Messages Once Mutual Interest Is Accepted</li>
+            <li>✅ No Limits on Accepting or Rejecting Profiles - It's Free</li>
+            <li>
+              ✅ Access their contact information if they allow viewing; this is
+              also unlimited.
+            </li>
+            <li>✅ Explore Visitor Insights</li>
           </ul>
         </div>
 
@@ -26,13 +31,24 @@ const QuickAccess: React.FC = () => (
             💼 Paid Support
           </h3>
           <ul className="text-left text-gray-700 space-y-3">
-            <li>🤝 Arrange Visits & Facilitate Communication</li>
-            <li>📝 Manage All Your Communications</li>
-            <li>📅 Schedule Visits & Conduct Verifications</li>
-            <li>💰 Flexible Payment Options</li>
-            <li>✅ Ensure Genuine Interactions</li>
             <li>
-              📱 WhatsApp Support:{" "}
+              📅 Set Up Personal Visits and Verify Details of Mutual Interests
+            </li>
+            <li>🤝 Assisting in Initiating Communication</li>
+            <li>📝 Travel with You for Direct Visits and Conversations</li>
+
+            <li>
+              💰 Easy Payment Options: Payments are Based on Your Financial
+              Capability, as this is Paid Support. You have the flexibility to
+              decide what you can afford.
+            </li>
+
+            <li>
+              ✅ Personal Support Tailored to You, Like a Dedicated Family
+              Member
+            </li>
+            <li>
+              📱 WhatsApp me:{" "}
               <a
                 href="https://wa.me/6384322665"
                 className="text-blue-600 underline"

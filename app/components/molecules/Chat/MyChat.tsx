@@ -32,34 +32,36 @@ const Chat: React.FC = () => {
   const { profile: activeChatUserProfile } = useProfile(currentReceiverId);
 
   return (
-    <div className="fixed end-6 bottom-6 group">
-      {showChat && <div className="fixed inset-0 bg-black opacity-50 z-30" />}
-      {showChat && !showPreview && (
-        <ChatModal
-          chatName={chatName}
-          lastSeen={lastSeen}
-          backToChatList={backToChatList}
-          countdown={countdown}
-          messages={messages}
-          sendMessage={sendMessage}
-          sendingStatus={sendingStatus}
-          showingChatUserId={currentReceiverId}
-          activeChatUserProfile={activeChatUserProfile}
-          chatApiLoading={chatApiLoading}
-        />
-      )}
-      {showChat && showPreview && (
-        <UserPreviewList
-          chatPreviewUsers={chatPreviewUsers}
-          closePreviewList={closePreviewList}
-          showChatInterface={showChatInterface}
-          chatApiLoading={chatApiLoading}
-        />
-      )}
+    <>
       {!showChat && (
         <ChatButton onClick={() => setShowChat(true)} animate={animate} />
       )}
-    </div>
+      <div className="fixed end-6 bottom-6 group z-50">
+        {showChat && <div className="fixed inset-0 bg-black opacity-50 z-30" />}
+        {showChat && !showPreview && (
+          <ChatModal
+            chatName={chatName}
+            lastSeen={lastSeen}
+            backToChatList={backToChatList}
+            countdown={countdown}
+            messages={messages}
+            sendMessage={sendMessage}
+            sendingStatus={sendingStatus}
+            showingChatUserId={currentReceiverId}
+            activeChatUserProfile={activeChatUserProfile}
+            chatApiLoading={chatApiLoading}
+          />
+        )}
+        {showChat && showPreview && (
+          <UserPreviewList
+            chatPreviewUsers={chatPreviewUsers}
+            closePreviewList={closePreviewList}
+            showChatInterface={showChatInterface}
+            chatApiLoading={chatApiLoading}
+          />
+        )}
+      </div>
+    </>
   );
 };
 
