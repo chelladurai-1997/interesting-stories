@@ -4,6 +4,7 @@ import { handleContactInfoSubmission } from "@/app/lib/actions/contactInfo.actio
 import toast from "react-hot-toast";
 import { useState } from "react";
 import { useUser } from "./useUser";
+import { startConfetti } from "../utils/confettiAnimation";
 
 export const useContactInfoForm = () => {
   const router = useRouter();
@@ -31,6 +32,7 @@ export const useContactInfoForm = () => {
             },
           });
         }
+        startConfetti(5000);
         setIsSuccessPopupOpen(true);
       }
     } catch (error) {

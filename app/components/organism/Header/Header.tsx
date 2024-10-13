@@ -106,7 +106,7 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
                         {userProfile?.userName}
                       </span>
                       <span className="block text-sm truncate text-gray-400">
-                        {userProfile.userId.slice(0, 10)}
+                        {userProfile?.userId?.slice(0, 10)}
                       </span>
                     </div>
                     <ul className="py-2">
