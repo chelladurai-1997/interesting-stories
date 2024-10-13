@@ -23,7 +23,7 @@ const useChatLogic = () => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [sendingStatus, setSendingStatus] = useState("");
   const [currentReceiverId, setCurrentReceiverId] = useState("");
-  const lastSeen = "Tap the profile image for a closer look!";
+  const lastSeen = "Select for contact info";
   const fetchMsgs = useCallback(
     async (receiverId: string) => {
       if (userProfile?.userId && receiverId) {

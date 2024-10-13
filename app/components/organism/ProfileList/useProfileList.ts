@@ -28,9 +28,12 @@ const useProfileList = () => {
   const [error, setError] = useState<string | null>(null);
   const { sentInterests, fetchInterests } = useUser();
   const searchParams = useSearchParams();
-  const previousQuery = useRef<string>(""); // To store the previous query string
+  // Use a ref to track if a fetch is in progress
+  const isFetching = useRef<boolean>(false);
 
   const fetchProfiles = async (queryString: string) => {
+    if (isFetching.current) return; // Prevent multiple fetches
+    isFetching.current = true; // Mark as fetching
     try {
       const apiUrl = queryString
         ? `/api/profiles?${queryString}`
@@ -43,6 +46,7 @@ const useProfileList = () => {
       const result = await response.json();
       setProfiles(result.data);
       setLoading(false);
+      isFetching.current = false;
     } catch (err) {
       setError("Something went wrong. Please try again later.");
       setLoading(false);
