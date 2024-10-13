@@ -26,7 +26,7 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
 
   const pathname = usePathname(); // Get the current pathname
   const showChatIcon =
-    totalAcceptedInterestsReceived > 0 && totalAcceptedInterestsSent > 0;
+    totalAcceptedInterestsReceived > 0 || totalAcceptedInterestsSent > 0;
 
   const toggleMobileMenu = () => {
     if (isDropdownOpen) setIsDropdownOpen(false);
