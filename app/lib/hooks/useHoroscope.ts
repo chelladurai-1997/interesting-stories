@@ -3,11 +3,22 @@ import { useServerAction } from "@/app/lib/hooks/useServerAction";
 import { handleHoroscopeInfoSubmission } from "@/app/lib/actions/horoscopeInfo.action";
 import toast from "react-hot-toast";
 import { useUser } from "./useUser";
+import { useEffect } from "react";
 
 export const useHoroscopeForm = () => {
   const router = useRouter();
   const [runAction, isRunning] = useServerAction(handleHoroscopeInfoSubmission);
   const { userProfile, updateUserProfile } = useUser();
+
+  useEffect(() => {
+    if (isRunning) {
+      window.scrollTo({
+        top: window.innerHeight / 2,
+        behavior: "instant",
+      });
+    }
+  }, [isRunning]);
+
   const onSubmit = async (formData: FormData) => {
     try {
       const response = await runAction(null, formData);

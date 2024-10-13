@@ -2,7 +2,7 @@ import { useRouter } from "next/navigation";
 import { useServerAction } from "@/app/lib/hooks/useServerAction";
 import { handleContactInfoSubmission } from "@/app/lib/actions/contactInfo.action";
 import toast from "react-hot-toast";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useUser } from "./useUser";
 import { startConfetti } from "../utils/confettiAnimation";
 
@@ -16,6 +16,15 @@ export const useContactInfoForm = () => {
     setIsSuccessPopupOpen(false);
     router.push("/");
   };
+
+  useEffect(() => {
+    if (isRunning) {
+      window.scrollTo({
+        top: window.innerHeight / 2,
+        behavior: "instant",
+      });
+    }
+  }, [isRunning]);
 
   const onSubmit = async (formData: FormData) => {
     try {
@@ -33,6 +42,12 @@ export const useContactInfoForm = () => {
           });
         }
         startConfetti(5000);
+
+        // Scroll to the calculated position
+        window.scrollTo({
+          top: window.innerHeight / 2,
+          behavior: "instant",
+        });
         setIsSuccessPopupOpen(true);
       }
     } catch (error) {
