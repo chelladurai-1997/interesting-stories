@@ -137,7 +137,7 @@ const ProfileDetail: React.FC = () => {
 
       switch (currentSentInterestStatus) {
         case InterestStatus.ACCEPTED:
-          message = `Your interest is accepted 🎉. Check the contact information section now! Exciting times ahead!`;
+          message = `Your interest is accepted 🎉. Start chat now. Exciting times ahead!`;
           break;
         case InterestStatus.PENDING:
           message = `Your interest is pending. Thank you for your patience and we'll update you soon. 🌟`;
@@ -164,26 +164,20 @@ const ProfileDetail: React.FC = () => {
             you want to try again, feel free to send an interest!
           </p>
         )}
-        <button
-          onClick={handleSendInterest}
-          className="px-4 py-2 bg-blue-500 rounded text-white hover:bg-blue-600"
-          aria-label="Send interest"
-        >
-          Send Interest
-        </button>
-
-        {/* Reminder for past actions */}
-        {/* {currentInterestStatus === InterestStatus.REJECTED && (
-          <p className="text-gray-500 text-sm mt-2">
-            You declined an interest on{" "}
-            {formatReceivedDate(currentInterest?.createdAt!)}.
-          </p>
-        )} */}
+        {!currentInterestStatus && !currentSentInterestStatus && (
+          <button
+            onClick={handleSendInterest}
+            className="px-4 py-2 bg-blue-500 rounded text-white hover:bg-blue-600"
+            aria-label="Send interest"
+          >
+            Send Interest
+          </button>
+        )}
 
         {currentInterestStatus === InterestStatus.ACCEPTED && (
           <p className="text-gray-500 text-sm mt-2">
-            You accepted an interest on{" "}
-            {formatReceivedDate(currentInterest?.createdAt!)}.
+            Your mutual interest has been accepted 🎉 Start chat now. Exciting
+            times ahead!
           </p>
         )}
       </div>

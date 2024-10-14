@@ -13,6 +13,7 @@ export interface IInterest extends Document {
   receiverId: mongoose.Schema.Types.ObjectId; // User ID of the receiver (stored as a string)
   status: InterestStatus; // Status of the interest
   createdAt: Date; // Timestamp of when the interest was sent
+  updatedAt: Date;
 }
 
 // Create the Interest schema

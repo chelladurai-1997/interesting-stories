@@ -50,6 +50,7 @@ const Chat: React.FC = () => {
             showingChatUserId={currentReceiverId}
             activeChatUserProfile={activeChatUserProfile}
             chatApiLoading={chatApiLoading}
+            closeChat={closePreviewList}
           />
         )}
         {showChat && showPreview && (

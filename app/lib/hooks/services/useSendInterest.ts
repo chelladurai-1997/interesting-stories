@@ -11,7 +11,7 @@ interface InterestBody {
 }
 
 const useSendInterest = (currentUserId: string | undefined) => {
-  const { fetchInterests } = useUser();
+  const { fetchInterests, userProfile } = useUser();
 
   // Function to send a new interest or update an existing interest
   const sendInterest = async (
@@ -53,6 +53,7 @@ const useSendInterest = (currentUserId: string | undefined) => {
         method: "POST", // We still use POST for both sending and updating
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${userProfile?.accessToken}`,
         },
         body: JSON.stringify(body),
       });

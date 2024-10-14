@@ -4,7 +4,6 @@ import { ChatInterface } from "../Chat/ChatInterface";
 import { ChatMessage } from "../Chat/useChat";
 import Image from "next/image";
 import { Profile } from "@/app/profiles/profile.types";
-import toast from "react-hot-toast";
 import { usePathname } from "next/navigation";
 
 // Define Message type
@@ -22,6 +21,7 @@ export const ChatModal: React.FC<{
   chatApiLoading: boolean;
   messages: ChatMessage[];
   sendMessage: (message: Message) => void;
+  closeChat: () => void;
   activeChatUserProfile: Profile | null;
 }> = ({
   chatName,
@@ -33,6 +33,7 @@ export const ChatModal: React.FC<{
   showingChatUserId,
   activeChatUserProfile,
   chatApiLoading,
+  closeChat,
 }) => {
   const pathname = usePathname();
   const profileDetailHref = "/profiles/" + showingChatUserId;
@@ -47,11 +48,9 @@ export const ChatModal: React.FC<{
         <Link
           href={profileDetailHref}
           onClick={() => {
-            if (pathname === profileDetailHref)
-              toast.success(
-                "Dear User, You are already at the requested profile details page",
-                { icon: undefined, duration: 2000 }
-              );
+            if (pathname === profileDetailHref) {
+              closeChat?.();
+            }
           }}
         >
           <Image
