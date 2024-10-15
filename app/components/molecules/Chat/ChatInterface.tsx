@@ -26,7 +26,7 @@ export const ChatInterface: React.FC<{
   // Function to scroll to the bottom of the chat
   const scrollToBottom = () => {
     if (chatEndRef.current) {
-      chatEndRef.current.scrollIntoView({ behavior: "smooth" });
+      chatEndRef.current.scrollIntoView({ behavior: "instant" });
     }
   };
 
