@@ -6,6 +6,7 @@ import SearchForm from "../SearchForm/SearchForm";
 import { useUser } from "@/app/lib/hooks/useUser";
 import Chat from "../../molecules/Chat/MyChat";
 import useGetInterestCounts from "@/app/lib/hooks/useGetInterestCounts";
+import RegistrationNoticePopup from "../../molecules/RegistrationNoticePopup/RegistrationNoticePopup";
 
 interface HeaderProps {
   showSearchForm?: boolean;
@@ -227,6 +228,7 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
         </div>
       </nav>
       {showSearchForm && <SearchForm />}
+      <RegistrationNoticePopup />
     </section>
   );
 };
