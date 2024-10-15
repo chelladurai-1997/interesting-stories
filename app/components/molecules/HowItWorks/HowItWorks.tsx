@@ -60,9 +60,9 @@ export const HowItWorks = () => {
           5. Declining Interest
         </h3>
         <p className="text-gray-600 mt-2">
-          If you decline someone’s interest, they can send it again in the
-          future. However, if someone declines your interest, you will not be
-          able to send another interest to them.
+          If someone declines your interest, you won’t be able to send another.
+          However, they can still reconsider and change their decision to accept
+          your interest at any point of time, even after declining it.
         </p>
       </div>
     </div>

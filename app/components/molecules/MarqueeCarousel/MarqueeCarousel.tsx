@@ -18,26 +18,24 @@ const MarqueeCarousel: React.FC<MovingImagesCarouselProps> = ({
   speed = 40,
 }) => {
   // Flatten the images array to repeat them
-  const repeatedImages = Array(duplicateCount).fill(images).flat();
+  const repeatedImages = Array(duplicateCount).fill(images).flat().reverse();
 
   return (
-    <Container>
-      <div className="overflow-hidden w-full bg-white py-4">
-        <Marquee gradient={false} speed={speed} direction={direction} loop={0}>
-          {repeatedImages.map((image, index) => (
-            <div key={index} className="mr-4">
-              <Image
-                src={image}
-                alt={`carousel-image-${index}`}
-                width={192} // Set your desired width
-                height={200} // Set your desired height
-                className="w-48 h-[260px] md:h-[295px] object-cover rounded-lg shadow-md" // Ensure to maintain the exact styles
-              />
-            </div>
-          ))}
-        </Marquee>
-      </div>
-    </Container>
+    <div className="overflow-hidden w-full bg-white py-4">
+      <Marquee gradient={false} speed={speed} direction={direction} loop={0}>
+        {repeatedImages.map((image, index) => (
+          <div key={index} className="mr-4">
+            <Image
+              src={image}
+              alt={`carousel-image-${index}`}
+              width={192}
+              height={200}
+              className="w-48 h-[260px] md:h-[295px] object-cover rounded-lg shadow-md" // Ensure to maintain the exact styles
+            />
+          </div>
+        ))}
+      </Marquee>
+    </div>
   );
 };
 

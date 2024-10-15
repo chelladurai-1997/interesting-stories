@@ -11,7 +11,8 @@ import useGetInterestCounts from "@/app/lib/hooks/useGetInterestCounts";
 const UserInsights: React.FC = () => {
   const { userVisits, receivedInterests, sentInterests, userProfile } =
     useUser();
-  const { totalAcceptedInterestsSent } = useGetInterestCounts();
+  const { totalAcceptedInterestsSent, totalAcceptedInterestsReceived } =
+    useGetInterestCounts();
   const recentVistorsIds = userVisits.map((visit) => visit.visitorId);
   const pendingInterestsReceived = receivedInterests
     .filter((c) => c.status === InterestStatus.PENDING)
@@ -21,12 +22,17 @@ const UserInsights: React.FC = () => {
   const { profiles: pendingInterests } = useProfilesByUserIds(
     pendingInterestsReceived
   );
+  const sentAccpetedIds = sentInterests
+    .filter((c) => c.status === InterestStatus.ACCEPTED)
+    .map((interest) => interest.receiverId);
 
-  const { profiles: acceptedInterests } = useProfilesByUserIds(
-    sentInterests
-      .filter((c) => c.status === InterestStatus.ACCEPTED)
-      .map((interest) => interest.receiverId)
-  );
+  const receivedAccpetedIds = receivedInterests
+    .filter((c) => c.status === InterestStatus.ACCEPTED)
+    .map((interest) => interest.senderId);
+
+  const connectedProfileIds = [...receivedAccpetedIds, ...sentAccpetedIds];
+  const { profiles: acceptedInterests } =
+    useProfilesByUserIds(connectedProfileIds);
 
   if (!userProfile?.userId) return null;
 
@@ -34,6 +40,9 @@ const UserInsights: React.FC = () => {
   const pendingInterestsCount = receivedInterests.filter(
     (c) => c.status === InterestStatus.PENDING
   ).length;
+
+  const connectionsCount =
+    totalAcceptedInterestsReceived + totalAcceptedInterestsSent;
 
   return (
     <div className="max-w-4xl mx-auto md:my-8 p-6 bg-white rounded-lg shadow-lg">
@@ -43,15 +52,15 @@ const UserInsights: React.FC = () => {
       <OverviewSection
         recentVisitorsCount={recentVisitorsCount}
         pendingInterestsCount={pendingInterestsCount}
-        acceptedInterestsCount={totalAcceptedInterestsSent}
+        acceptedInterestsCount={connectionsCount}
       />
 
       {/* Accepted Interests Section */}
-      {totalAcceptedInterestsSent > 0 && (
+      {connectionsCount > 0 && (
         <section className="mt-8">
           <h3 className="text-xl font-semibold pb-4">
-            {totalAcceptedInterestsSent} member
-            {totalAcceptedInterestsSent > 1 ? "s" : ""} accepted your interest
+            You have made connections with {connectionsCount} member
+            {connectionsCount > 1 ? "s" : ""}
           </h3>
           {acceptedInterests?.length > 0 ? (
             <ul className="space-y-4">
