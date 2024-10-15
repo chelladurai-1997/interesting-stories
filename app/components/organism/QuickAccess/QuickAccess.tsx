@@ -1,5 +1,5 @@
 const QuickAccess: React.FC = () => (
-  <section className="bg-gray-100 py-12 px-10">
+  <section className="bg-gray-100 py-12 md:px-10">
     <div className="container mx-auto text-center">
       <h2 className="text-4xl font-bold text-gray-800 mb-12">Our Services</h2>
 
