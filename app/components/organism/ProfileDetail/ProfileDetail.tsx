@@ -4,13 +4,13 @@ import { useParams, useRouter } from "next/navigation";
 
 import SkeletonLoader from "@/app/components/molecules/SkeletonLoader/SkeletonLoader";
 import ImageGallery from "@/app/components/organism/ImageGallery/ImageGallery";
-import ProfileBasicInfo from "@/app/components/organism/ProfileDetails/ProfileBasicInfo";
-import ProfileContactInfo from "@/app/components/organism/ProfileDetails/ProfileContactInfo";
-import ProfileEducationOccupation from "@/app/components/organism/ProfileDetails/ProfileEducationOccupation";
-import ProfileExpectations from "@/app/components/organism/ProfileDetails/ProfileExpectations";
-import ProfileFamilyDetails from "@/app/components/organism/ProfileDetails/ProfileFamilyDetails";
-import ProfileHoroscopeInfo from "@/app/components/organism/ProfileDetails/ProfileHoroscopeInfo";
-import ProfilePersonalDetails from "@/app/components/organism/ProfileDetails/ProfilePersonalDetails";
+import ProfileBasicInfo from "@/app/components/organism/ProfileDetailSections/ProfileBasicInfo";
+import ProfileContactInfo from "@/app/components/organism/ProfileDetailSections/ProfileContactInfo";
+import ProfileEducationOccupation from "@/app/components/organism/ProfileDetailSections/ProfileEducationOccupation";
+import ProfileExpectations from "@/app/components/organism/ProfileDetailSections/ProfileExpectations";
+import ProfileFamilyDetails from "@/app/components/organism/ProfileDetailSections/ProfileFamilyDetails";
+import ProfileHoroscopeInfo from "@/app/components/organism/ProfileDetailSections/ProfileHoroscopeInfo";
+import ProfilePersonalDetails from "@/app/components/organism/ProfileDetailSections/ProfilePersonalDetails";
 import useProfile from "@/app/lib/hooks/services/useProfile";
 import useSendInterest from "@/app/lib/hooks/services/useSendInterest";
 import Container from "@/app/components/molecules/Container/Container";
@@ -36,9 +36,13 @@ const ProfileDetail: React.FC = () => {
   const currentSentInterest = sentInterests.find(
     (interest) => interest.receiverId === id
   );
+  const currentRecivedInterest = receivedInterests.find(
+    (interest) => interest.senderId === id
+  );
 
   const [openSection, setOpenSection] = useState<string>(
-    currentSentInterest?.status === InterestStatus.ACCEPTED
+    currentSentInterest?.status === InterestStatus.ACCEPTED ||
+      currentRecivedInterest?.status === InterestStatus.ACCEPTED
       ? "contactInfo"
       : "basicInfo"
   );
@@ -59,12 +63,18 @@ const ProfileDetail: React.FC = () => {
   useEffect(() => {
     console.log("currentInterest?.status", currentSentInterest?.status);
     if (
-      currentSentInterest?.status === InterestStatus.ACCEPTED &&
+      (currentSentInterest?.status === InterestStatus.ACCEPTED ||
+        currentRecivedInterest?.status === InterestStatus.ACCEPTED) &&
       "name" in (profile?.basicInfo ?? {})
     ) {
       startConfetti(5000, "myConfettiKey");
     }
-  }, [currentSentInterest?.status, params?.userId, profile?.basicInfo?.name]);
+  }, [
+    currentSentInterest?.status,
+    params?.userId,
+    profile?.basicInfo?.name,
+    currentRecivedInterest?.status,
+  ]);
 
   const interestReceivedAt = currentInterest?.createdAt;
 

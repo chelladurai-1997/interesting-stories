@@ -1,48 +1,25 @@
 "use client";
 import React from "react";
-import { useUser } from "@/app/lib/hooks/useUser";
-import useProfilesByUserIds from "@/app/lib/hooks/services/useProfilesByUserIds";
 import { InterestStatus } from "@/app/lib/hooks/services/useFetchInterests";
 import OverviewSection from "../OverviewSection/OverviewSection";
 import ProfileCard from "../ProfileCard/ProfileCard"; // Import ProfileCard
 import { DateVariation, formatDateForCards } from "@/app/lib/utils/dateUtils";
 import useGetInterestCounts from "@/app/lib/hooks/useGetInterestCounts";
+import useUserInsights from "./useUserInsights";
 
 const UserInsights: React.FC = () => {
-  const { userVisits, receivedInterests, sentInterests, userProfile } =
-    useUser();
-  const { totalAcceptedInterestsSent, totalAcceptedInterestsReceived } =
-    useGetInterestCounts();
-  const recentVistorsIds = userVisits.map((visit) => visit.visitorId);
-  const pendingInterestsReceived = receivedInterests
-    .filter((c) => c.status === InterestStatus.PENDING)
-    .map((interest) => interest.senderId);
-
-  const { profiles: recentVisitors } = useProfilesByUserIds(recentVistorsIds);
-  const { profiles: pendingInterests } = useProfilesByUserIds(
-    pendingInterestsReceived
-  );
-  const sentAccpetedIds = sentInterests
-    .filter((c) => c.status === InterestStatus.ACCEPTED)
-    .map((interest) => interest.receiverId);
-
-  const receivedAccpetedIds = receivedInterests
-    .filter((c) => c.status === InterestStatus.ACCEPTED)
-    .map((interest) => interest.senderId);
-
-  const connectedProfileIds = [...receivedAccpetedIds, ...sentAccpetedIds];
-  const { profiles: acceptedInterests } =
-    useProfilesByUserIds(connectedProfileIds);
+  const {
+    userProfile,
+    recentVisitors,
+    pendingInterests,
+    acceptedInterests,
+    userVisits,
+    recentVisitorsCount,
+    pendingInterestsCount,
+    connectionsCount,
+  } = useUserInsights();
 
   if (!userProfile?.userId) return null;
-
-  const recentVisitorsCount = userVisits.length;
-  const pendingInterestsCount = receivedInterests.filter(
-    (c) => c.status === InterestStatus.PENDING
-  ).length;
-
-  const connectionsCount =
-    totalAcceptedInterestsReceived + totalAcceptedInterestsSent;
 
   return (
     <div className="max-w-4xl mx-auto md:my-8 p-6 bg-white rounded-lg shadow-lg">
