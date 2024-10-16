@@ -110,12 +110,14 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
                 {isDropdownOpen && (
                   <div className="absolute right-0 my-2 w-48 bg-gray-800 border border-gray-700 rounded-lg shadow-lg z-[99999]">
                     <div className="px-4 py-3">
-                      <span className="block text-sm text-white">
-                        {userProfile?.userName}
-                      </span>
-                      <span className="block text-sm truncate text-gray-400">
-                        {userProfile?.userId?.slice(0, 10)}
-                      </span>
+                      <Link href={`/profiles/${userProfile?.userId}`}>
+                        <span className="block text-sm text-white">
+                          {userProfile?.userName}
+                        </span>
+                        <span className="block text-sm truncate text-gray-400">
+                          {userProfile?.userId?.slice(0, 10)}
+                        </span>
+                      </Link>
                     </div>
                     <ul className="py-2">
                       <li>

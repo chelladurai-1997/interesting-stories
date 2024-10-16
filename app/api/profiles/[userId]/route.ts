@@ -55,9 +55,10 @@ export async function GET(
         ? interest.status === InterestStatus.ACCEPTED
         : false;
     }
-
-    const isMaskingRequired =
-      !isUserLoggedIn || !isAdminApproved || !isInterestAccepted;
+    const isUserViewingOwnProfile = isUserLoggedIn && userId === loggedInUserId;
+    const isMaskingRequired = isUserViewingOwnProfile
+      ? false
+      : !isUserLoggedIn || !isAdminApproved || !isInterestAccepted;
 
     const [
       basicInfo,

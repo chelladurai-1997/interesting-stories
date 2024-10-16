@@ -29,6 +29,7 @@ const ProfileDetail: React.FC = () => {
     registerVisit,
   } = useUser();
   const id = params?.userId as string;
+  const isUserViewingOwnProfile = params?.userId === userProfile?.userId;
   const currentInterest = receivedInterests.find(
     (interest) => interest.senderId === id
   );
@@ -118,6 +119,10 @@ const ProfileDetail: React.FC = () => {
   const renderInterestButtons = () => {
     const currentInterestStatus = currentInterest?.status;
     const currentSentInterestStatus = currentSentInterest?.status;
+    const showSendInterestButton =
+      !isUserViewingOwnProfile &&
+      !currentInterestStatus &&
+      !currentSentInterestStatus;
 
     // If interest is received and is pending
     if (currentInterestStatus === InterestStatus.PENDING) {
@@ -174,7 +179,7 @@ const ProfileDetail: React.FC = () => {
             you want to try again, feel free to send an interest!
           </p>
         )}
-        {!currentInterestStatus && !currentSentInterestStatus && (
+        {showSendInterestButton && (
           <button
             onClick={handleSendInterest}
             className="px-4 py-2 bg-blue-500 rounded text-white hover:bg-blue-600"
