@@ -8,7 +8,7 @@ export interface IContactInfo extends Document {
   state: string;
   district: string;
   address: string;
-  photo: string; // Assuming this stores the file path or URL
+  photo: string;
   pin_code: number;
   userId: mongoose.Schema.Types.ObjectId;
 }

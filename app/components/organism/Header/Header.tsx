@@ -7,6 +7,7 @@ import { useUser } from "@/app/lib/hooks/useUser";
 import Chat from "../../molecules/Chat/MyChat";
 import useGetInterestCounts from "@/app/lib/hooks/useGetInterestCounts";
 import RegistrationNoticePopup from "../../molecules/RegistrationNoticePopup/RegistrationNoticePopup";
+import LogoutConfirmationPopup from "../../molecules/LogoutConfirmationPopup/LogoutConfirmationPopup";
 
 interface HeaderProps {
   showSearchForm?: boolean;
@@ -21,6 +22,7 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
     useGetInterestCounts();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isLogoutPopupOpen, setIsLogoutPopupOpen] = useState(false);
 
   const dropdownRef = useRef<HTMLDivElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
@@ -28,6 +30,11 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
   const pathname = usePathname(); // Get the current pathname
   const showChatIcon =
     totalAcceptedInterestsReceived > 0 || totalAcceptedInterestsSent > 0;
+
+  const openLogoutPopup = () => {
+    setIsDropdownOpen(false);
+    setIsLogoutPopupOpen(true); // Open the popup
+  };
 
   const toggleMobileMenu = () => {
     if (isDropdownOpen) setIsDropdownOpen(false);
@@ -64,7 +71,7 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
   const navLinks = [
     { href: "/", text: "Home" },
     { href: "/profiles", text: "Browse Profiles" },
-    { href: "#", text: "About us" },
+    { href: "about-me", text: "About me" },
   ];
 
   return (
@@ -131,7 +138,7 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
                         <Link
                           href="#"
                           className="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-600"
-                          onClick={() => logout(true)}
+                          onClick={openLogoutPopup}
                         >
                           Sign out
                         </Link>
@@ -229,6 +236,11 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
       </nav>
       {showSearchForm && <SearchForm />}
       <RegistrationNoticePopup />
+      {/* Pass control to LogoutConfirmationPopup */}
+      <LogoutConfirmationPopup
+        isOpen={isLogoutPopupOpen}
+        setIsOpen={setIsLogoutPopupOpen}
+      />
     </section>
   );
 };
