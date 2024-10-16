@@ -1,7 +1,8 @@
 import { useUser } from "@/app/lib/hooks/useUser";
-import { useState, useRef, useEffect } from "react";
-import { ChatMessage } from "./useChat";
+import { useChatScroll } from "./helpers/useChatScroll";
+import { ChatMessage } from "../../../lib/hooks/services/useChat";
 import { formatChatTimestamp } from "@/app/lib/utils/dateUtils";
+import { useSendMessage } from "./helpers/useSendMessage";
 
 type Message = {
   text: string;
@@ -16,43 +17,12 @@ export const ChatInterface: React.FC<{
   messages: ChatMessage[];
   sendMessage: (message: Message) => void;
 }> = ({ messages, sendMessage, chatApiLoading }) => {
-  const [inputMessage, setInputMessage] = useState<string>("");
-  const [sendingStatus, setSendingStatus] = useState<string>("");
   const { userProfile } = useUser();
   const currUserId = userProfile?.userId;
 
-  const chatEndRef = useRef<HTMLDivElement | null>(null); // Ref to track the chat end
-
-  // Function to scroll to the bottom of the chat
-  const scrollToBottom = () => {
-    if (chatEndRef.current) {
-      chatEndRef.current.scrollIntoView({ behavior: "instant" });
-    }
-  };
-
-  // Scroll to bottom when a new message is added
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
-  const handleSendMessage = () => {
-    setSendingStatus("Sending...");
-    if (inputMessage.trim()) {
-      const messageToSend = {
-        text: inputMessage,
-      };
-
-      sendMessage(messageToSend);
-
-      // Clear the input immediately after sending the message
-      setInputMessage("");
-
-      // Simulate sending with delay (to show "Sending..." state)
-      setTimeout(() => {
-        setSendingStatus("");
-      }, 1000);
-    }
-  };
+  const { chatEndRef } = useChatScroll(messages); // Using chat scroll hook
+  const { inputMessage, sendingStatus, setInputMessage, handleSendMessage } =
+    useSendMessage(sendMessage); // Using send message hook
 
   return (
     <div className="flex flex-col h-full">
@@ -64,7 +34,7 @@ export const ChatInterface: React.FC<{
           <div className="text-center text-gray-400">No messages yet.</div>
         ) : (
           <>
-            {(messages ?? [])?.map((msg, index) => (
+            {messages.map((msg, index) => (
               <div
                 key={index}
                 className={`mb-2 flex ${
@@ -87,8 +57,7 @@ export const ChatInterface: React.FC<{
                   <div>{msg.message}</div>
                   <div className="text-xs text-gray-500">
                     {msg.updatedAt ? formatChatTimestamp(msg.updatedAt) : ""}
-                  </div>{" "}
-                  {/* Timestamp */}
+                  </div>
                 </div>
               </div>
             ))}
@@ -108,7 +77,7 @@ export const ChatInterface: React.FC<{
           onChange={(e) => setInputMessage(e.target.value)}
           placeholder="Type a message..."
           className="flex-grow p-2 border border-gray-300 rounded-lg outline-none"
-          onKeyPress={(e) => {
+          onKeyDown={(e) => {
             if (e.key === "Enter") {
               handleSendMessage();
               e.preventDefault();

@@ -76,81 +76,91 @@ const FormField: React.FC<FormFieldProps> = ({
       : (options as SelectOption[])
     : undefined;
 
-  return (
-    <div className={`w-full ${type === "checkbox" ? "flex items-center" : ""}`}>
-      {type === "checkbox" ? (
-        <>
-          <Checkbox
-            id={id}
-            name={name}
-            onChange={handleChange}
-            disabled={disabled}
-          />
-          <Label
-            text={label}
-            htmlFor={id}
-            className={labelClassName}
-            disabled={disabled}
-          />
-        </>
-      ) : type === "radio" ? (
-        <div className="flex flex-col">
-          <Label
-            text={label}
-            htmlFor={id}
-            className={labelClassName}
-            disabled={disabled}
-          />
-          <div className="flex flex-row mt-2">
-            {normalizedOptions?.map((option, index) => (
-              <div className="form-check me-4" key={index}>
-                <input
-                  className="form-check-input mr-2"
-                  type="radio"
-                  name={name}
-                  id={`${id}${index}`}
-                  required={required}
-                  value={option.value}
-                  onChange={handleChange}
-                  disabled={disabled}
-                />
-                <Label
-                  text={option.label}
-                  htmlFor={`${id}${index}`}
-                  className="form-check-label"
-                  disabled={disabled}
-                />
-              </div>
-            ))}
+  const renderField = () => {
+    switch (type) {
+      case "checkbox":
+        return (
+          <>
+            <Checkbox
+              id={id}
+              name={name}
+              onChange={handleChange}
+              disabled={disabled}
+            />
+            <Label
+              text={label}
+              htmlFor={id}
+              className={labelClassName}
+              disabled={disabled}
+            />
+          </>
+        );
+
+      case "radio":
+        return (
+          <div className="flex flex-col">
+            <Label
+              text={label}
+              htmlFor={id}
+              className={labelClassName}
+              disabled={disabled}
+            />
+            <div className="flex flex-row mt-2">
+              {normalizedOptions?.map((option, index) => (
+                <div className="form-check me-4" key={index}>
+                  <input
+                    className="form-check-input mr-2"
+                    type="radio"
+                    name={name}
+                    id={`${id}${index}`}
+                    required={required}
+                    value={option.value}
+                    onChange={handleChange}
+                    disabled={disabled}
+                  />
+                  <Label
+                    text={option.label}
+                    htmlFor={`${id}${index}`}
+                    className="form-check-label"
+                    disabled={disabled}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      ) : type === "textarea" ? (
-        <>
-          <Label
-            text={label}
-            htmlFor={id}
-            className={labelClassName}
-            disabled={disabled}
-          />
-          <textarea
-            className="mt-2 block w-full bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-yellow-500 focus:border-yellow-500 p-2 sm:text-sm"
-            id={id}
-            name={name}
-            placeholder={placeholder}
-            required={required}
-            onChange={handleChange}
-            disabled={disabled}
-          />
-        </>
-      ) : (
-        <>
-          <Label
-            text={label}
-            htmlFor={id}
-            className={labelClassName}
-            disabled={disabled}
-          />
-          {type === "select" ? (
+        );
+
+      case "textarea":
+        return (
+          <>
+            <Label
+              text={label}
+              htmlFor={id}
+              className={labelClassName}
+              disabled={disabled}
+            />
+            <textarea
+              className="mt-2 block w-full bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-yellow-500 focus:border-yellow-500 p-2 sm:text-sm"
+              id={id}
+              name={name}
+              placeholder={placeholder}
+              required={required}
+              onChange={handleChange}
+              disabled={disabled}
+            />
+          </>
+        );
+
+      case "select":
+        return (
+          <>
+            {" "}
+            <Label
+              text={label}
+              htmlFor={id}
+              className={labelClassName}
+              disabled={disabled}
+            />
             <Select
               id={id}
               name={name}
@@ -162,7 +172,23 @@ const FormField: React.FC<FormFieldProps> = ({
               isSearchable={searchable}
               defaultValue={defaultValue}
             />
-          ) : (
+          </>
+        );
+
+      case "file":
+      case "text":
+      case "password":
+      case "number":
+      case "datetime-local":
+      case "date":
+        return (
+          <>
+            <Label
+              text={label}
+              htmlFor={id}
+              className={labelClassName}
+              disabled={disabled}
+            />
             <Input
               id={id}
               name={name}
@@ -174,9 +200,17 @@ const FormField: React.FC<FormFieldProps> = ({
               disabled={disabled}
               className="block w-full bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-yellow-500 focus:border-yellow-500 p-2 sm:text-sm mt-2"
             />
-          )}
-        </>
-      )}
+          </>
+        );
+
+      default:
+        return null; // Handle unexpected type
+    }
+  };
+
+  return (
+    <div className={`w-full ${type === "checkbox" ? "flex items-center" : ""}`}>
+      {renderField()}
     </div>
   );
 };

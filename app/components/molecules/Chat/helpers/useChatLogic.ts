@@ -3,8 +3,8 @@ import { useState, useEffect, useCallback } from "react";
 import { useUser } from "@/app/lib/hooks/useUser";
 import useProfilesByUserIds from "@/app/lib/hooks/services/useProfilesByUserIds";
 import { InterestStatus } from "@/app/lib/hooks/services/useFetchInterests";
-import { ChatMessage, useChat } from "./useChat";
-import { Message } from "../ChatModal/ChatModal";
+import { ChatMessage, useChat } from "../../../../lib/hooks/services/useChat";
+import { Message } from "../../ChatModal/ChatModal";
 import useUserActivity from "@/app/lib/hooks/useUserActivity";
 
 const useChatLogic = () => {
@@ -38,10 +38,6 @@ const useChatLogic = () => {
         const lastCurrentMessageId = messages?.at(-1)?._id;
         const lastFetchedMessageId = newMessages?.at(-1)?._id;
 
-        console.log("first=====>", {
-          lastCurrentMessageId,
-          lastFetchedMessageId,
-        });
         if (lastCurrentMessageId !== lastFetchedMessageId) {
           setMessages(newMessages);
         }

@@ -1,13 +1,13 @@
 "use client";
 import React from "react";
 
-import useChatLogic from "./useChatLogic";
-import useAnimateToggle from "@/app/lib/hooks/useAnimateToggle";
+import useChatLogic from "./helpers/useChatLogic";
 import useBodyScrollLock from "@/app/lib/hooks/useBodyScrollLock";
-import { ChatButton } from "../ChatButton/ChatButton";
+import { IconButton } from "../IconButton/IconButton";
 import { UserPreviewList } from "../UserPreviewList/UserPreviewList";
 import { ChatModal } from "../ChatModal/ChatModal";
 import useProfile from "@/app/lib/hooks/services/useProfile";
+import { ChatIcon } from "../../icons/ChatIcon";
 
 const Chat: React.FC = () => {
   const {
@@ -27,14 +27,17 @@ const Chat: React.FC = () => {
     currentReceiverId,
     chatApiLoading,
   } = useChatLogic();
-  const animate = useAnimateToggle();
   useBodyScrollLock(showChat);
   const { profile: activeChatUserProfile } = useProfile(currentReceiverId);
 
   return (
     <>
       {!showChat && (
-        <ChatButton onClick={() => setShowChat(true)} animate={animate} />
+        <IconButton
+          onClick={() => setShowChat(true)}
+          // animate={animate} Enable when required
+          icon={<ChatIcon />}
+        />
       )}
       <div className="fixed end-6 bottom-6 group z-50">
         {showChat && <div className="fixed inset-0 bg-black opacity-50 z-30" />}

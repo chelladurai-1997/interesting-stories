@@ -1,6 +1,6 @@
 export const ChatIcon = () => (
   <svg
-    className="w-6 h-6 text-white"
+    className="w-4 h-4 text-white" // Reduced size here
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"

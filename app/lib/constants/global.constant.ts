@@ -256,7 +256,7 @@ export const countriesOptions = [
 
 export const physicallyChallengedOptions = ["Yes", "No"];
 export const contactsharingpreference = [
-  "I allow sharing my contact details once a mutual interest is accepted.",
+  "I allow to view once a mutual interest is accepted.",
   "I will chat within the platform and share my contact details after the conversation.",
 ];
 
