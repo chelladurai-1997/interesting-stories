@@ -5,6 +5,7 @@ import Interests, {
   InterestStatus,
 } from "@/app/lib/models/interest.model";
 import { handleServerError } from "@/app/lib/utils/handleServerError";
+import User from "@/app/lib/models/user.model";
 
 // Handler for creating or updating an interest
 export async function POST(request: Request) {
@@ -13,6 +14,19 @@ export async function POST(request: Request) {
   try {
     // Connect to MongoDB
     await connectMongo();
+
+    const user = await User.findById(senderId).select("adminApproved");
+    // Prevent activities for unapproved profiles
+    if (!user.adminApproved) {
+      return NextResponse.json(
+        {
+          message:
+            "Your request is still pending approval from the admin. Please check back shortly!",
+          error: true,
+        },
+        { status: 400 }
+      );
+    }
 
     // Ensure senderId and receiverId are provided
     if (!senderId || !receiverId) {

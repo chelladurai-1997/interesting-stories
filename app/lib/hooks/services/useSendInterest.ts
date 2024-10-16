@@ -77,7 +77,11 @@ const useSendInterest = (currentUserId: string | undefined) => {
         throw new Error(data.message || "Failed to send interest.");
       }
     } catch (error) {
-      toast.error("Failed to process interest. Please try again.");
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Failed to process interest. Please try again."
+      );
     }
   };
 
