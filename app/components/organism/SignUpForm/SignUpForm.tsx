@@ -4,9 +4,17 @@ import FormField from "../../molecules/FormField/FormField";
 import Container from "../../molecules/Container/Container";
 import { useSignUpForm } from "@/app/lib/hooks/useSignUpForm";
 import Button from "../../atoms/Button/Button";
+import TermsConditionsPopup from "../../molecules/TermsConditionsPopup/TermsConditionsPopup";
 
 const SignUpForm = () => {
-  const { onSubmit, isRunning } = useSignUpForm();
+  const {
+    onSubmit,
+    isRunning,
+    setIsTermsPopupOpen,
+    isTermsPopupOpen,
+    isTermsAccepted,
+    setIsTermsAccepted,
+  } = useSignUpForm();
 
   return (
     <Container>
@@ -56,13 +64,21 @@ const SignUpForm = () => {
               id="agree"
               name="agree"
               required
-              className="form-check-input"
+              checked={isTermsAccepted}
+              onClick={(e) => setIsTermsAccepted(e?.currentTarget.checked)}
             />
             <label htmlFor="agree" className="ml-2 text-sm text-gray-700">
               I agree to the{" "}
-              <a href="#" className="text-yellow-500 hover:underline">
+              <button
+                className="text-yellow-500 hover:underline"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsTermsPopupOpen(true);
+                }}
+                type="button"
+              >
                 Terms and Conditions
-              </a>
+              </button>
               .
             </label>
           </div>
@@ -81,6 +97,14 @@ const SignUpForm = () => {
               Skip and Browse Profiles
             </Link>
           </p>
+
+          <TermsConditionsPopup
+            isOpen={isTermsPopupOpen}
+            onClose={() => {
+              setIsTermsPopupOpen(false);
+              setIsTermsAccepted(true);
+            }}
+          />
         </form>
       </div>
     </Container>

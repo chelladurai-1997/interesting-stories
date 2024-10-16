@@ -4,11 +4,14 @@ import { useServerAction } from "@/app/lib/hooks/useServerAction";
 import toast from "react-hot-toast";
 import { formSectionDefaultState } from "../constants/global.constant";
 import { useUser } from "./useUser";
+import { useState } from "react";
 
 export const useSignUpForm = () => {
   const router = useRouter();
   const { updateUserProfile } = useUser();
   const [runAction, isRunning] = useServerAction(onSignUpFormSubmit);
+  const [isTermsPopupOpen, setIsTermsPopupOpen] = useState(false);
+  const [isTermsAccepted, setIsTermsAccepted] = useState<boolean>(false);
 
   const onSubmit = async (formData: FormData) => {
     try {
@@ -32,5 +35,9 @@ export const useSignUpForm = () => {
   return {
     onSubmit,
     isRunning,
+    isTermsPopupOpen,
+    setIsTermsPopupOpen,
+    setIsTermsAccepted,
+    isTermsAccepted,
   };
 };
