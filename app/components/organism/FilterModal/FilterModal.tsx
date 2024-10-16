@@ -14,6 +14,8 @@ import {
 } from "@/app/lib/constants/global.constant";
 import FormField from "../../molecules/FormField/FormField";
 import Button from "../../atoms/Button/Button";
+import { IconButton } from "../../molecules/IconButton/IconButton";
+import FilterIcon from "../../icons/FilterIcon";
 
 const FilterModal: React.FC = () => {
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
@@ -67,28 +69,20 @@ const FilterModal: React.FC = () => {
   return (
     <div className="fixed end-6 bottom-6 group">
       {!isModalOpen && (
-        <button
-          type="button"
-          onClick={openModal}
-          className={`flex items-center justify-center text-white bg-gray-600 rounded-full w-14 h-14 hover:bg-gray-700 focus:ring-4 ${
-            animate ? "ring-4 ring-gray-300 outline-none" : ""
-          } focus:ring-gray-300 focus:outline-none transition-all duration-300`}
-        >
-          {/* Filter Icon */}
-          <svg
-            className="w-6 h-6 text-white"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M4 4h16M4 10h12M4 16h8" />
-          </svg>
-          <span className="sr-only">Open filters</span>
-        </button>
+        <>
+          <IconButton
+            onClick={openModal}
+            animate={animate}
+            bgColor="bg-gray-600"
+            hoverBgColor="hover:bg-gray-700"
+            focusRing="focus:ring-gray-300"
+            width="w-12"
+            height="h-12"
+            iconSize="w-6 h-6"
+            ariaLabel="Open filters"
+            icon={<FilterIcon />}
+          />
+        </>
       )}
 
       {isModalOpen && (

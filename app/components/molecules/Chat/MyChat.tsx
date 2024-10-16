@@ -35,7 +35,9 @@ const Chat: React.FC = () => {
       {!showChat && (
         <IconButton
           onClick={() => setShowChat(true)}
-          // animate={animate} Enable when required
+          bgColor="bg-gray-600 mr-2 "
+          width="w-8"
+          height="h-8"
           icon={<ChatIcon />}
         />
       )}

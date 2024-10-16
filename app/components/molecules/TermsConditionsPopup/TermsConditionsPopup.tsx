@@ -13,7 +13,7 @@ const TermsConditionsPopup: React.FC<TermsConditionsPopupProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[9999]">
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm z-50">
       {" "}
       {/* Increased z-index */}
       <div className="bg-white rounded-lg p-6 shadow-lg max-w-lg w-full relative z-[10000]">
