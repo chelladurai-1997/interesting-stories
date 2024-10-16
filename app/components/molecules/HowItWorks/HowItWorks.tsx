@@ -1,34 +1,40 @@
+import ChatBubbleIcon from "../../icons/ChatBubbleIcon";
+import DocumentIcon from "../../icons/DocumentIcon";
+import InterestIcon from "../../icons/InterestIcon";
+import LoveChatIcon from "../../icons/LoveChatIcon";
+import ShareIcon from "../../icons/ShareIcon";
+
 export const HowItWorks = () => {
   const steps = [
     {
       title: "1. Sending Interest",
       description:
         "You can send interest to other users you're interested in. If they haven't previously declined your request, the interest will be sent successfully.",
-      icon: "🔗", // Replace with an appropriate icon or image
+      icon: <LoveChatIcon />,
     },
     {
       title: "2. Accepting Interest",
       description:
         "When a user receives your interest, they can either accept or decline it. If accepted, both of you will have established a mutual interest and can move forward.",
-      icon: "✅", // Replace with an appropriate icon or image
+      icon: <InterestIcon />,
     },
     {
       title: "3. Sharing Contact Information",
       description:
         "After mutual interest is established, sharing contact details is optional. During registration, you can choose to share contact info right away or keep it private until you're ready.",
-      icon: "📞", // Replace with an appropriate icon or image
+      icon: <ShareIcon />,
     },
     {
       title: "4. Chat to Know Each Other",
       description:
         "Once mutual interest is established, the chat feature will be enabled. You can now message each other directly on the platform to get to know one another better before deciding to share contact details.",
-      icon: "💬", // Replace with an appropriate icon or image
+      icon: <ChatBubbleIcon />,
     },
     {
       title: "5. Declining Interest",
       description:
         "If someone declines your interest, you won’t be able to send another. However, they can still reconsider and change their decision to accept your interest at any point of time, even after declining it.",
-      icon: "🚫", // Replace with an appropriate icon or image
+      icon: <DocumentIcon />,
     },
   ];
 
