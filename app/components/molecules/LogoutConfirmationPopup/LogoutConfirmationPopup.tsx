@@ -39,13 +39,13 @@ const LogoutConfirmationPopup: React.FC<LogoutConfirmationPopupProps> = ({
                 className="px-4 py-2 bg-red-600 text-white font-semibold rounded-md transition hover:bg-red-700"
                 onClick={handleConfirmLogout}
               >
-                Yes, Log me out
+                Log me out
               </button>
               <button
                 className="px-4 py-2 bg-gray-600 text-white font-semibold rounded-md transition hover:bg-gray-700"
                 onClick={handleCancelLogout}
               >
-                No, Stay logged in
+                Stay logged in
               </button>
             </div>
           </div>
