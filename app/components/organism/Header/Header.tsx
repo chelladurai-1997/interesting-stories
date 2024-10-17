@@ -8,6 +8,7 @@ import Chat from "../../molecules/Chat/MyChat";
 import useGetInterestCounts from "@/app/lib/hooks/useGetInterestCounts";
 import RegistrationNoticePopup from "../../molecules/RegistrationNoticePopup/RegistrationNoticePopup";
 import LogoutConfirmationPopup from "../../molecules/LogoutConfirmationPopup/LogoutConfirmationPopup";
+import MobileMenuIcon from "../../icons/MobileMenuIcon";
 
 interface HeaderProps {
   showSearchForm?: boolean;
@@ -170,21 +171,7 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
               onClick={toggleMobileMenu}
             >
               <span className="sr-only">Open main menu</span>
-              <svg
-                className="w-5 h-5"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 17 14"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M1 1h15M1 7h15M1 13h15"
-                />
-              </svg>
+              <MobileMenuIcon />
             </button>
           </div>
 
@@ -192,7 +179,7 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
           <div
             className={`${
               isMobileMenuOpen ? "block" : "hidden"
-            } absolute top-full left-0 right-0 bg-gray-800 border border-gray-700 rounded-lg shadow-lg md:hidden min-w-48m z-[99999]`}
+            } absolute top-full left-0 right-0 bg-gray-800 border border-gray-700  shadow-lg md:hidden min-w-48m z-[99999]`}
             ref={mobileMenuRef}
           >
             <ul className="flex flex-col font-medium p-4 space-y-2">
