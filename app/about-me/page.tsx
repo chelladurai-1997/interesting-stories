@@ -111,7 +111,7 @@ const PortfolioSection: React.FC = () => {
         {/* Experience Section */}
         <div className="bg-white shadow-lg rounded-lg p-6 mb-12">
           <h2 className="text-xl sm:text-2xl font-bold text-blue-600 mb-4">
-            Professional Experience 🌱
+            Experience 🌱
           </h2>
           <div className="space-y-6">
             <div>
