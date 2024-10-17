@@ -8,15 +8,15 @@ const PortfolioSection: React.FC = () => {
     startConfetti(5000, "myConfettiKey");
   }, []);
   return (
-    <section className="bg-gradient-to-r from-blue-600 to-purple-500 text-white py-16 px-8 lg:px-24">
+    <section className="bg-gradient-to-r from-blue-600 to-purple-500 text-white py-16 px-6 sm:px-8 lg:px-24">
       <div className="max-w-7xl mx-auto">
         {/* Header Section */}
         <div className="text-center mb-12">
-          <h1 className="text-5xl font-bold mb-4">CHELLADURAI</h1>
-          <p className="text-xl font-semibold">
+          <h1 className="text-4xl sm:text-5xl font-bold mb-4">CHELLADURAI</h1>
+          <p className="text-lg sm:text-xl font-semibold">
             🌿 Software Engineer - React & React Native Specialist 🌿
           </p>
-          <p className="mt-2 text-md opacity-80">
+          <p className="mt-2 text-sm sm:text-md opacity-80">
             Dindugul, TN | <span className="underline">6384322665</span> |{" "}
             <span className="underline">mechelladurai97@gmail.com</span>
           </p>
@@ -34,8 +34,10 @@ const PortfolioSection: React.FC = () => {
 
         {/* Professional Summary */}
         <div className="bg-white shadow-lg rounded-lg p-6 mb-12">
-          <h2 className="text-2xl font-bold text-blue-600 mb-4">Myself 🌱</h2>
-          <p className="text-gray-700 text-lg">
+          <h2 className="text-xl sm:text-2xl font-bold text-blue-600 mb-4">
+            Myself 🌱
+          </h2>
+          <p className="text-gray-700 text-base sm:text-lg">
             I am a skilled and experienced React and React Native developer with
             5+ years of expertise, primarily focused on frontend technologies.
             Recently, my work on a Next.js and TypeScript project has allowed me
@@ -43,9 +45,9 @@ const PortfolioSection: React.FC = () => {
             passionate about building scalable applications, writing clean code,
             and optimizing performance. If you are interested, I am happy to
             provide a demo of the functionalities I’ve implemented and techs I
-            have used on this end to end project. 🌱
+            have used on this end-to-end project. 🌱
           </p>
-          <p className="text-gray-700 text-lg">
+          <p className="text-gray-700 text-base sm:text-lg">
             Click{" "}
             <Link href="/" className="text-blue-600 underline">
               here
@@ -55,20 +57,18 @@ const PortfolioSection: React.FC = () => {
         </div>
 
         {/* Skills Section */}
-        <div className="grid lg:grid-cols-2 gap-8 mb-12">
+        <div className="grid gap-6 sm:gap-8 lg:grid-cols-2 mb-12">
           <div className="bg-white shadow-lg rounded-lg p-6">
-            <h2 className="text-2xl font-bold text-blue-600 mb-4">
+            <h2 className="text-xl sm:text-2xl font-bold text-blue-600 mb-4">
               Key Skills 🌿
             </h2>
-            <ul className="list-disc list-inside text-gray-700 text-lg">
+            <ul className="list-disc list-inside text-gray-700 text-base sm:text-lg">
               <li>
                 ReactJS, NextJs, JavaScript/TypeScript (ES5+), TailwindCSS,
                 Redux Toolkit, React Query, MongoDB, MongoDB GridFS, React
                 Native, ExpressJS, RXJS
               </li>
-
               <li>HTML5, CSS3</li>
-
               <li>Asynchronous Requests, Promises</li>
               <li>Cross-browser Compatibility</li>
               <li>Unit Testing: Jest, Build Tools: Webpack</li>
@@ -80,10 +80,10 @@ const PortfolioSection: React.FC = () => {
             </ul>
           </div>
           <div className="bg-white shadow-lg rounded-lg p-6">
-            <h2 className="text-2xl font-bold text-blue-600 mb-4">
+            <h2 className="text-xl sm:text-2xl font-bold text-blue-600 mb-4">
               Additional Skills 🌿
             </h2>
-            <ul className="list-disc list-inside text-gray-700 text-lg">
+            <ul className="list-disc list-inside text-gray-700 text-base sm:text-lg">
               <li>
                 <strong>NextJS:</strong> Experience with the new App Router and
                 Layouts API
@@ -110,19 +110,19 @@ const PortfolioSection: React.FC = () => {
 
         {/* Experience Section */}
         <div className="bg-white shadow-lg rounded-lg p-6 mb-12">
-          <h2 className="text-2xl font-bold text-blue-600 mb-4">
+          <h2 className="text-xl sm:text-2xl font-bold text-blue-600 mb-4">
             Professional Experience 🌱
           </h2>
           <div className="space-y-6">
             <div>
-              <h3 className="text-xl font-semibold text-purple-600">
+              <h3 className="text-lg sm:text-xl font-semibold text-purple-600">
                 Accenture, Coimbatore
               </h3>
-              <p className="text-md font-light text-gray-600">
+              <p className="text-sm sm:text-md font-light text-gray-600">
                 Multiplatform Front End Development React-Application Developer
                 | Mar 2022 – Present
               </p>
-              <ul className="list-disc list-inside text-gray-700 text-lg mt-2">
+              <ul className="list-disc list-inside text-gray-700 text-base sm:text-lg mt-2">
                 <li>
                   Developed an ecommerce app for a jewelry retailer with React &
                   NodeJS.
@@ -136,13 +136,13 @@ const PortfolioSection: React.FC = () => {
               </ul>
             </div>
             <div>
-              <h3 className="text-xl font-semibold text-purple-600">
+              <h3 className="text-lg sm:text-xl font-semibold text-purple-600">
                 Mindtree, Bengaluru
               </h3>
-              <p className="text-md font-light text-gray-600">
+              <p className="text-sm sm:text-md font-light text-gray-600">
                 Senior Software Engineer | Dec 2020 - Mar 2022
               </p>
-              <ul className="list-disc list-inside text-gray-700 text-lg mt-2">
+              <ul className="list-disc list-inside text-gray-700 text-base sm:text-lg mt-2">
                 <li>
                   Developed networking apps to streamline workflow automation.
                 </li>
@@ -156,13 +156,13 @@ const PortfolioSection: React.FC = () => {
               </ul>
             </div>
             <div>
-              <h3 className="text-xl font-semibold text-purple-600">
+              <h3 className="text-lg sm:text-xl font-semibold text-purple-600">
                 Smitiv Mobiles Technologies Pte Ltd
               </h3>
-              <p className="text-md font-light text-gray-600">
+              <p className="text-sm sm:text-md font-light text-gray-600">
                 Junior React Developer | Sep 2019 - Nov 2020
               </p>
-              <ul className="list-disc list-inside text-gray-700 text-lg mt-2">
+              <ul className="list-disc list-inside text-gray-700 text-base sm:text-lg mt-2">
                 <li>
                   Designed UIs for financial management tools for small
                   businesses.
@@ -182,10 +182,10 @@ const PortfolioSection: React.FC = () => {
 
         {/* Education Section */}
         <div className="bg-white shadow-lg rounded-lg p-6 mb-12">
-          <h2 className="text-2xl font-bold text-blue-600 mb-4">
+          <h2 className="text-xl sm:text-2xl font-bold text-blue-600 mb-4">
             Education 🌱
           </h2>
-          <ul className="text-gray-700 text-lg">
+          <ul className="text-gray-700 text-base sm:text-lg">
             <li>
               B.E Mechanical Engineering, VSB College of Engineering Technical
               Campus – 70%
@@ -201,7 +201,7 @@ const PortfolioSection: React.FC = () => {
 
         {/* Call to Action Section */}
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-white mb-4">
+          <h2 className="text-xl sm:text-2xl font-bold text-white mb-4">
             Get in Touch 🌿
           </h2>
           <p className="text-md text-white mb-6">
@@ -209,20 +209,13 @@ const PortfolioSection: React.FC = () => {
             <span className="underline">mechelladurai97@gmail.com</span>
           </p>
           <Link
-            href="https://www.linkedin.com/in/chelladurai-s-83997b14b"
-            className="text-purple-300 underline mb-4 block"
+            href="https://drive.google.com/file/d/1FlnI6zCUr5L9ZRVO0wXg9EuDK2TzaU8H/view?usp=drive_link"
+            className="bg-white text-blue-600 px-4 py-2 rounded-full hover:bg-gray-100 transition"
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            LinkedIn Profile
+            View My Resume
           </Link>
-          <div className="space-x-4">
-            {/* Portfolio Button */}
-            <Link
-              href="/"
-              className="inline-block px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white text-lg font-semibold rounded-lg transition-colors"
-            >
-              Visit My Portfolio 🌱
-            </Link>
-          </div>
         </div>
       </div>
     </section>
