@@ -17,7 +17,7 @@ const ProfileDetailsTable: React.FC<ProfileDetailsTableProps> = ({
   rows,
 }) => {
   return (
-    <div className="p-4 border rounded-lg shadow-md bg-white">
+    <div className="p-4 border rounded  bg-white">
       <h2 className="text-2xl font-bold text-blue-600 mb-4">{title}</h2>
       <table className="w-full text-left">
         <tbody className="divide-y divide-gray-200">
