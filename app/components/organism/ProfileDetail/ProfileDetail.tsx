@@ -239,54 +239,58 @@ const ProfileDetail: React.FC = () => {
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-4 bg-white shadow-lg rounded-lg">
+        <div className="flex-1 overflow-y-auto  bg-white ">
           <button
             onClick={router.back}
-            className="mb-4 px-2 py-2 bg-gray-300 rounded text-gray-700 hover:bg-gray-400"
+            className="mb-4 px-2 py-2 bg-gray-300 rounded  text-gray-700"
             aria-label="Go back"
           >
-            &larr; {/* This is the left arrow entity */}
+            &larr;
+            {/* This is the left arrow entity */}
           </button>
 
           <h1 className="text-2xl font-extrabold text-gray-800 mb-6 text-center">
             Profile Details
           </h1>
+          <div className="grid grid-cols-1 md:grid-cols-2  gap-4">
+            <ProfileBasicInfo
+              profile={profile}
+              openSection={openSection}
+              setOpenSection={setOpenSection}
+            />
+            <ProfilePersonalDetails
+              profile={profile}
+              openSection={openSection}
+              setOpenSection={setOpenSection}
+            />
+            <ProfileContactInfo
+              profile={profile}
+              openSection={openSection}
+              setOpenSection={setOpenSection}
+            />
+            <ProfileEducationOccupation
+              profile={profile}
+              openSection={openSection}
+              setOpenSection={setOpenSection}
+            />
+            <ProfileExpectations
+              profile={profile}
+              openSection={openSection}
+              setOpenSection={setOpenSection}
+            />
 
-          <ProfileBasicInfo
-            profile={profile}
-            openSection={openSection}
-            setOpenSection={setOpenSection}
-          />
-          <ProfileContactInfo
-            profile={profile}
-            openSection={openSection}
-            setOpenSection={setOpenSection}
-          />
-          <ProfileEducationOccupation
-            profile={profile}
-            openSection={openSection}
-            setOpenSection={setOpenSection}
-          />
-          <ProfileExpectations
-            profile={profile}
-            openSection={openSection}
-            setOpenSection={setOpenSection}
-          />
-          <ProfileFamilyDetails
-            profile={profile}
-            openSection={openSection}
-            setOpenSection={setOpenSection}
-          />
-          <ProfileHoroscopeInfo
-            profile={profile}
-            openSection={openSection}
-            setOpenSection={setOpenSection}
-          />
-          <ProfilePersonalDetails
-            profile={profile}
-            openSection={openSection}
-            setOpenSection={setOpenSection}
-          />
+            <ProfileHoroscopeInfo
+              profile={profile}
+              openSection={openSection}
+              setOpenSection={setOpenSection}
+            />
+
+            <ProfileFamilyDetails
+              profile={profile}
+              openSection={openSection}
+              setOpenSection={setOpenSection}
+            />
+          </div>
         </div>
       </div>
     );

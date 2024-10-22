@@ -1,7 +1,15 @@
 import React from "react";
-import StyledChip from "../../molecules/StyledChip/StyledChip";
-import { Accordion } from "../../molecules/Accordion/Accordion";
 import { Profile } from "@/app/profiles/profile.types";
+import {
+  PhoneIcon,
+  ChatBubbleOvalLeftIcon,
+  GlobeAltIcon,
+  MapPinIcon,
+  BuildingLibraryIcon,
+  HomeIcon,
+  IdentificationIcon,
+} from "@heroicons/react/24/outline";
+import ProfileDetailsTable from "../../molecules/ProfileDetailsTable/ProfileDetailTable";
 
 interface ProfileContactInfoProps {
   profile: Profile;
@@ -16,62 +24,52 @@ const ProfileContactInfo: React.FC<ProfileContactInfoProps> = ({
 }) => {
   const contactInfo = profile.contactInfo ?? {};
 
-  return (
-    <Accordion
-      title="Contact Information"
-      isOpen={openSection === "contactInfo"}
-      onClick={() =>
-        setOpenSection(openSection === "contactInfo" ? "" : "contactInfo")
-      }
-    >
-      <div className="space-y-2 text-gray-800">
-        <StyledChip
-          label="Mobile"
-          value={contactInfo.mobile ?? ""}
-          backgroundColor="bg-blue-200"
-          textColor="text-blue-800"
-          isPhoneNumber
-        />
-        <StyledChip
-          label="WhatsApp"
-          value={contactInfo.whatsapp ?? ""}
-          backgroundColor="bg-green-200"
-          textColor="text-green-800"
-          isPhoneNumber
-        />
-        <StyledChip
-          label="Country"
-          value={contactInfo.country ?? ""}
-          backgroundColor="bg-yellow-200"
-          textColor="text-yellow-800"
-        />
-        <StyledChip
-          label="State"
-          value={contactInfo.state ?? ""}
-          backgroundColor="bg-indigo-200"
-          textColor="text-indigo-800"
-        />
-        <StyledChip
-          label="District"
-          value={contactInfo.district ?? ""}
-          backgroundColor="bg-purple-200"
-          textColor="text-purple-800"
-        />
-        <StyledChip
-          label="Address"
-          value={contactInfo.address ?? ""}
-          backgroundColor="bg-pink-200"
-          textColor="text-pink-800"
-        />
-        <StyledChip
-          label="Pin Code"
-          value={contactInfo.pin_code ?? ""}
-          backgroundColor="bg-teal-200"
-          textColor="text-teal-800"
-        />
-      </div>
-    </Accordion>
-  );
+  const rows = [
+    {
+      label: "Mobile",
+      value: contactInfo.mobile,
+      icon: PhoneIcon,
+      iconColorClass: "text-blue-500",
+    },
+    {
+      label: "WhatsApp",
+      value: contactInfo.whatsapp,
+      icon: ChatBubbleOvalLeftIcon,
+      iconColorClass: "text-green-500",
+    },
+    {
+      label: "Country",
+      value: contactInfo.country,
+      icon: GlobeAltIcon,
+      iconColorClass: "text-yellow-500",
+    },
+    {
+      label: "State",
+      value: contactInfo.state,
+      icon: MapPinIcon,
+      iconColorClass: "text-indigo-500",
+    },
+    {
+      label: "District",
+      value: contactInfo.district,
+      icon: BuildingLibraryIcon,
+      iconColorClass: "text-purple-500",
+    },
+    {
+      label: "Address",
+      value: contactInfo.address,
+      icon: HomeIcon,
+      iconColorClass: "text-pink-500",
+    },
+    {
+      label: "Pin Code",
+      value: contactInfo.pin_code,
+      icon: IdentificationIcon,
+      iconColorClass: "text-teal-500",
+    },
+  ];
+
+  return <ProfileDetailsTable title="Contact Information" rows={rows} />;
 };
 
 export default ProfileContactInfo;
