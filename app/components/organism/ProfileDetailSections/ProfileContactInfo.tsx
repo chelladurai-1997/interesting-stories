@@ -13,15 +13,9 @@ import ProfileDetailsTable from "../../molecules/ProfileDetailsTable/ProfileDeta
 
 interface ProfileContactInfoProps {
   profile: Profile;
-  openSection: string;
-  setOpenSection: (section: string) => void;
 }
 
-const ProfileContactInfo: React.FC<ProfileContactInfoProps> = ({
-  profile,
-  openSection,
-  setOpenSection,
-}) => {
+const ProfileContactInfo: React.FC<ProfileContactInfoProps> = ({ profile }) => {
   const contactInfo = profile.contactInfo ?? {};
 
   const rows = [

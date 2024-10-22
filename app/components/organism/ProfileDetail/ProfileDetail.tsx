@@ -253,43 +253,13 @@ const ProfileDetail: React.FC = () => {
             Profile Details
           </h1>
           <div className="grid grid-cols-1 md:grid-cols-2  gap-4">
-            <ProfileBasicInfo
-              profile={profile}
-              openSection={openSection}
-              setOpenSection={setOpenSection}
-            />
-            <ProfilePersonalDetails
-              profile={profile}
-              openSection={openSection}
-              setOpenSection={setOpenSection}
-            />
-            <ProfileContactInfo
-              profile={profile}
-              openSection={openSection}
-              setOpenSection={setOpenSection}
-            />
-            <ProfileEducationOccupation
-              profile={profile}
-              openSection={openSection}
-              setOpenSection={setOpenSection}
-            />
-            <ProfileExpectations
-              profile={profile}
-              openSection={openSection}
-              setOpenSection={setOpenSection}
-            />
-
-            <ProfileHoroscopeInfo
-              profile={profile}
-              openSection={openSection}
-              setOpenSection={setOpenSection}
-            />
-
-            <ProfileFamilyDetails
-              profile={profile}
-              openSection={openSection}
-              setOpenSection={setOpenSection}
-            />
+            <ProfileBasicInfo profile={profile} />
+            <ProfilePersonalDetails profile={profile} />
+            <ProfileContactInfo profile={profile} />
+            <ProfileEducationOccupation profile={profile} />
+            <ProfileExpectations profile={profile} />
+            <ProfileHoroscopeInfo profile={profile} />
+            <ProfileFamilyDetails profile={profile} />
           </div>
         </div>
       </div>

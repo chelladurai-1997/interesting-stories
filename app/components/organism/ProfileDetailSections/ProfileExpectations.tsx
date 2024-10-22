@@ -11,8 +11,6 @@ import ProfileDetailsTable from "../../molecules/ProfileDetailsTable/ProfileDeta
 
 interface ProfileExpectationsProps {
   profile: Profile;
-  openSection: string;
-  setOpenSection: (section: string) => void;
 }
 
 const ProfileExpectations: React.FC<ProfileExpectationsProps> = ({
