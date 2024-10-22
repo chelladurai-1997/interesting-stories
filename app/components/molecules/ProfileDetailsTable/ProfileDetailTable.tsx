@@ -24,16 +24,14 @@ const ProfileDetailsTable: React.FC<ProfileDetailsTableProps> = ({
           {rows.map((row, index) => (
             <tr key={index}>
               <td className="py-2 w-2/5">
-                {" "}
-                {/* Set width to 40% */}
                 <div className="flex items-center space-x-2">
-                  <row.icon className={`w-5 h-5 ${row.iconColorClass}`} />
+                  <row.icon
+                    className={`w-6 h-6 ${row.iconColorClass} flex-shrink-0`} // Fixed width and height
+                  />
                   <span className="font-medium">{row.label}:</span>
                 </div>
               </td>
               <td className="py-2 w-3/5">
-                {" "}
-                {/* Set width to 60% */}
                 {row.value ? row.value : "Not provided"}
               </td>
             </tr>
