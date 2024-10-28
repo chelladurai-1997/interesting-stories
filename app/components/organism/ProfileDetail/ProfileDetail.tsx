@@ -200,7 +200,7 @@ const ProfileDetail: React.FC = () => {
   };
 
   const renderContent = () => {
-    if (loading) return <SkeletonLoader type="card" />;
+    if (loading) return <SkeletonLoader type="default" />;
     if (error) {
       return (
         <div className="text-center p-6">
