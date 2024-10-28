@@ -26,7 +26,7 @@ const ProfileDetailsTable: React.FC<ProfileDetailsTableProps> = ({
               <td className="py-2 w-2/5">
                 <div className="flex items-center space-x-2">
                   <row.icon
-                    className={`w-6 h-6 ${row.iconColorClass} flex-shrink-0`} // Fixed width and height
+                    className={`w-4 h-4 ${row.iconColorClass} flex-shrink-0`} // Fixed width and height
                   />
                   <span className="font-medium">{row.label}:</span>
                 </div>
