@@ -133,6 +133,7 @@ const Page: React.FC = () => {
   const handlePageChange = (page: number) => {
     if (page >= 1 && page <= totalPages) {
       setCurrentPage(page);
+      window.scrollTo({ top: 0, behavior: "instant" });
     }
   };
 
@@ -186,70 +187,23 @@ const Page: React.FC = () => {
             Previous
           </button>
 
-          {/* First 5 pages */}
-          {[...Array(5)].map((_, i) => {
-            const page = i + 1;
-            return (
-              <button
-                key={page}
-                onClick={() => handlePageChange(page)}
-                className={`px-3 py-1 rounded ${
-                  currentPage === page
-                    ? "bg-blue-500 text-white"
-                    : "bg-gray-300"
-                }`}
-              >
-                {page}
-              </button>
-            );
-          })}
-
-          {/* Ellipsis if more than 10 total pages and we are past the 5th page */}
-          {totalPages > 10 && currentPage > 5 && (
-            <span className="px-2 text-gray-400">...</span>
-          )}
-
-          {/* Current page if it's in the middle */}
-          {totalPages > 10 &&
-            currentPage > 5 &&
-            currentPage <= totalPages - 5 && (
-              <button
-                className="px-3 py-1 rounded bg-blue-500 text-white"
-                onClick={() => handlePageChange(currentPage)}
-              >
-                {currentPage}
-              </button>
-            )}
-
-          {/* Ellipsis if more than 10 total pages and we're not yet near the end */}
-          {totalPages > 10 && currentPage < totalPages - 4 && (
-            <span className="px-2 text-gray-400">...</span>
-          )}
-
-          {/* Last 5 pages */}
-          {totalPages > 5 &&
-            [...Array(5)].map((_, i) => {
-              const page = totalPages - 4 + i;
-              return (
-                <button
-                  key={page}
-                  onClick={() => handlePageChange(page)}
-                  className={`px-3 py-1 rounded ${
-                    currentPage === page
-                      ? "bg-blue-500 text-white"
-                      : "bg-gray-300"
-                  }`}
-                >
-                  {page}
-                </button>
-              );
-            })}
+          {/* Dropdown for page selection */}
+          <select
+            className="px-4 py-2 rounded bg-gray-300 text-gray-700"
+            value={currentPage}
+            onChange={(e) => handlePageChange(Number(e.target.value))}
+          >
+            {[...Array(totalPages)].map((_, i) => (
+              <option key={i + 1} value={i + 1}>
+                Page {i + 1}
+              </option>
+            ))}
+          </select>
 
           <button
             className="px-4 py-2 bg-gray-300 rounded disabled:opacity-50"
             onClick={() => {
               handlePageChange(currentPage + 1);
-              window.scrollTo({ top: 0, behavior: "instant" });
             }}
             disabled={currentPage === totalPages}
           >
