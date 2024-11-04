@@ -28,7 +28,7 @@ const LandingScreen: FC = () => {
   \`\`\`json
   {
     "question": "<Your Question>",
-    "answer": "<Concise, straight-to-the-point answer explaining the concept in a spoken manner>",
+    "answer": "<Concise, straight-to-the-point answer explaining the concept in a spoken manner like in interview, explain like 10 year experienced developer>",
     "codeExample": "<Example code demonstrating the concept and dont use tripple backtics>", 
     "topicName": "<Relevant Topic>"
   }
