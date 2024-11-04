@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { problems } from "./data";
+import UsefulLinks from "@/app/components/organism/UsefulLinks/UsefulLinks";
+import toast from "react-hot-toast";
 
 interface Problem {
   title: string;
@@ -14,23 +16,25 @@ interface Problem {
 
 interface ProblemCardProps {
   problem: Problem;
+  onCardClick: (title: string) => void;
 }
 
-const ProblemCard: React.FC<ProblemCardProps> = ({ problem }) => {
+const ProblemCard: React.FC<ProblemCardProps> = ({ problem, onCardClick }) => {
   // Step 2: Define the copy function
   const copyPromptToClipboard = () => {
-    const promptText = `  
+    const promptText = `
+    Refer leetcode problems;  
     Problem Title: ${problem.title}
     - Tag: ${problem.tag}
     - Difficulty Level: ${problem.difficulty}
     - Average Time Expected to Solve: ${problem.avgTime}
       
-    explain the problem first like i am 10 year old kid and provide an optimal solution code using JavaScript for the problem and explain what algorithm used and why?
+    explain the problem first like i am 10 year old kid and provide an optimal solution code using JavaScript for the problem and explain what algorithm used and why and give me the ?
   `;
 
     navigator.clipboard
       .writeText(promptText)
-      .then(() => alert("Prompt copied to clipboard!"))
+      .then(() => toast.success(`Prompt copied to clipboard!`))
       .catch((err) => console.error("Failed to copy text: ", err));
   };
 
@@ -71,19 +75,31 @@ const ProblemCard: React.FC<ProblemCardProps> = ({ problem }) => {
       >
         Copy Prompt
       </button>
+
+      {/* Mark Complete Button */}
+      <button
+        onClick={() => onCardClick(problem.title)}
+        className="mt-2 ml-2 py-2 px-4 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors duration-300"
+      >
+        Mark Complete
+      </button>
     </div>
   );
 };
 
 interface ProblemsListProps {
   problems: Problem[];
+  onCardClick: (title: string) => void;
 }
 
-const ProblemsList: React.FC<ProblemsListProps> = ({ problems }) => {
+const ProblemsList: React.FC<ProblemsListProps> = ({
+  problems,
+  onCardClick,
+}) => {
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-      {problems.map((problem, index) => (
-        <ProblemCard key={index} problem={problem} />
+      {problems.map((problem, index: number) => (
+        <ProblemCard key={index} problem={problem} onCardClick={onCardClick} />
       ))}
     </div>
   );
@@ -160,7 +176,7 @@ const Page: React.FC = () => {
       window.scrollTo({ top: 0, behavior: "instant" });
     }
   };
-
+  const handleCardClick = (title: string) => {};
   return (
     <div className="min-h-screen bg-gray-100 p-2 mx-auto">
       <div className="min-h-screen bg-gray-100 p-2">
@@ -230,7 +246,10 @@ const Page: React.FC = () => {
         </p>
 
         {/* Problems list for current page */}
-        <ProblemsList problems={paginatedProblems} />
+        <ProblemsList
+          problems={paginatedProblems}
+          onCardClick={handleCardClick}
+        />
 
         {/* Pagination controls */}
         <div className="flex flex-wrap justify-center items-center mt-6 gap-2">
@@ -266,6 +285,7 @@ const Page: React.FC = () => {
           </button>
         </div>
       </div>
+      <UsefulLinks />
     </div>
   );
 };
