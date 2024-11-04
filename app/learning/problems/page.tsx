@@ -176,7 +176,11 @@ const Page: React.FC = () => {
       window.scrollTo({ top: 0, behavior: "instant" });
     }
   };
-  const handleCardClick = (title: string) => {};
+  const handleCardClick = (title: string) => {
+    toast.success(
+      "Thanks for your patience! We're currently working on this feature."
+    );
+  };
   return (
     <div className="min-h-screen bg-gray-100 p-2 mx-auto">
       <div className="min-h-screen bg-gray-100 p-2">
