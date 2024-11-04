@@ -29,7 +29,7 @@ const LandingScreen: FC = () => {
   {
     "question": "<Your Question>",
     "answer": "<Concise, straight-to-the-point answer explaining the concept in a spoken manner>",
-    "codeExample": "<Example code demonstrating the concept>",
+    "codeExample": "<Example code demonstrating the concept and dont use tripple backtics>", 
     "topicName": "<Relevant Topic>"
   }
   \`\`\`
