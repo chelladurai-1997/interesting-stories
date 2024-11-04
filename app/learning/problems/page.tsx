@@ -92,6 +92,7 @@ const ProblemsList: React.FC<ProblemsListProps> = ({ problems }) => {
 const Page: React.FC = () => {
   const [selectedDifficulty, setSelectedDifficulty] = useState<string>("");
   const [selectedCompany, setSelectedCompany] = useState<string>("");
+  const [selectedTag, setSelectedTag] = useState<string>("");
   const [currentPage, setCurrentPage] = useState<number>(1);
 
   const handleDifficultyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -104,18 +105,41 @@ const Page: React.FC = () => {
     setCurrentPage(1); // Reset to first page when filter changes
   };
 
+  const handleTagChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedTag(e.target.value);
+    setCurrentPage(1); // Reset to first page when filter changes
+  };
+
+  const handleResetFilters = () => {
+    setSelectedDifficulty("");
+    setSelectedCompany("");
+    setSelectedTag("");
+    setCurrentPage(1);
+  };
+
+  // Check if any filter is active
+  const isFilterApplied =
+    selectedDifficulty !== "" || selectedCompany !== "" || selectedTag !== "";
+
+  // Extract companies, tags, and difficulties
   const companies: Record<string, string> = {};
-  problems.forEach((c) => {
-    if (c.company) {
-      companies[c.company] = c.company;
-    }
+  const tags: Record<string, string> = {};
+  const difficulties: Record<string, string> = {};
+
+  problems.forEach((problem) => {
+    if (problem.company) companies[problem.company] = problem.company;
+    if (problem.tag) tags[problem.tag] = problem.tag;
+    if (problem.difficulty)
+      difficulties[problem.difficulty] = problem.difficulty;
   });
 
+  // Filter problems based on selected filters
   const filteredProblems = problems.filter((problem) => {
     return (
       (selectedDifficulty === "" ||
         problem.difficulty === selectedDifficulty) &&
-      (selectedCompany === "" || problem.company === selectedCompany)
+      (selectedCompany === "" || problem.company === selectedCompany) &&
+      (selectedTag === "" || problem.tag === selectedTag)
     );
   });
 
@@ -146,30 +170,61 @@ const Page: React.FC = () => {
 
         {/* Filter section */}
         <div className="flex flex-col md:flex-row justify-center gap-4 mb-6">
+          {/* Difficulty Filter */}
           <select
             className="border p-2 rounded w-full md:w-auto"
             value={selectedDifficulty}
             onChange={handleDifficultyChange}
           >
             <option value="">All Difficulties</option>
-            <option value="Easy">Easy</option>
-            <option value="Medium">Medium</option>
-            <option value="Hard">Hard</option>
+            {Object.values(difficulties).map((difficulty) => (
+              <option key={difficulty} value={difficulty}>
+                {difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}
+              </option>
+            ))}
           </select>
 
+          {/* Company Filter */}
           <select
             className="border p-2 rounded w-full md:w-auto overflow-y-auto max-h-48"
             value={selectedCompany}
             onChange={handleCompanyChange}
           >
             <option value="">All Companies</option>
-            {Object.values(companies).map((c) => (
-              <option key={c} value={c}>
-                {c.charAt(0).toUpperCase() + c.slice(1)}
+            {Object.values(companies).map((company) => (
+              <option key={company} value={company}>
+                {company.charAt(0).toUpperCase() + company.slice(1)}
+              </option>
+            ))}
+          </select>
+
+          {/* Tag Filter */}
+          <select
+            className="border p-2 rounded w-full md:w-auto overflow-y-auto max-h-48"
+            value={selectedTag}
+            onChange={handleTagChange}
+          >
+            <option value="">All Tags</option>
+            {Object.values(tags).map((tag) => (
+              <option key={tag} value={tag}>
+                {tag.charAt(0).toUpperCase() + tag.slice(1)}
               </option>
             ))}
           </select>
         </div>
+
+        {/* Reset Filters link */}
+        {isFilterApplied && (
+          <div className="flex justify-center mb-6">
+            <button
+              className="text-blue-500 underline text-sm"
+              onClick={handleResetFilters}
+            >
+              Reset Filters
+            </button>
+          </div>
+        )}
+
         <p className="text-center mb-6 text-gray-400">
           Showing page {currentPage} of {totalPages}
         </p>
