@@ -77,12 +77,12 @@ const ProblemCard: React.FC<ProblemCardProps> = ({ problem, onCardClick }) => {
       </button>
 
       {/* Mark Complete Button */}
-      <button
+      {/* <button
         onClick={() => onCardClick(problem.title)}
         className="mt-2 ml-2 py-2 px-4 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors duration-300"
       >
         Mark Complete
-      </button>
+      </button> */}
     </div>
   );
 };
