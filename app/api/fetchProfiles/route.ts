@@ -80,7 +80,8 @@ export async function GET(request: Request): Promise<NextResponse<any>> {
   const gender = url.searchParams.get("gender") || "female"; // Default to "female" if not provided
 
   // Construct the base URL for fetching profiles (this can be modified as needed)
-  const baseUrl = `https://www.varam.app/search-profiles?gender=female&jaadhagam=ragu%20kedhu%20sevvai%20-%20இராகு%20கேது%20செவ்வாய்&jaadhagam=ragu%20kedhu%20-%20இராகு%20கேது`;
+  // const baseUrl = `https://www.varam.app/search-profiles?gender=female&jaadhagam=ragu%20kedhu%20sevvai%20-%20இராகு%20கேது%20செவ்வாய்&jaadhagam=ragu%20kedhu%20-%20இராகு%20கேது`;
+  const baseUrl = `https://www.varam.app/search-profiles?gender=female`;
 
   try {
     // Fetch all data from the API
