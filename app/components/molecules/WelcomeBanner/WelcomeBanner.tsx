@@ -5,48 +5,7 @@ import React, { useState, useEffect } from "react";
 
 const WelcomeBanner = () => {
   const [hasVisited, setHasVisited] = useState(false);
-  const [isFullscreen, setIsFullscreen] = useState(false);
-
   const router = useRouter();
-
-  const enableFullscreen = async () => {
-    try {
-      const doc = document.documentElement;
-
-      if (!isFullscreen) {
-        // Enter fullscreen
-        if (doc.requestFullscreen) {
-          await doc.requestFullscreen();
-        } else if (doc.webkitRequestFullscreen) {
-          // Safari
-          await doc.webkitRequestFullscreen();
-        } else if (doc.msRequestFullscreen) {
-          // IE/Edge
-          await doc.msRequestFullscreen();
-        }
-        setIsFullscreen(true);
-      } else {
-        // Exit fullscreen
-        if (document.exitFullscreen) {
-          await document.exitFullscreen();
-        } else if (document.webkitExitFullscreen) {
-          // Safari
-          await document.webkitExitFullscreen();
-        } else if (document.msExitFullscreen) {
-          // IE/Edge
-          await document.msExitFullscreen();
-        }
-        setIsFullscreen(false);
-      }
-    } catch (error) {
-      console.error("Fullscreen failed:", error);
-      alert("Fullscreen permission denied or not supported.");
-    }
-  };
-
-  useEffect(() => {
-    enableFullscreen();
-  }, []);
 
   useEffect(() => {
     if (router) {

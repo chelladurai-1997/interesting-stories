@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { usePathname } from "next/navigation"; // Import the usePathname hook
+import { usePathname } from "next/navigation";
 import SearchForm from "../SearchForm/SearchForm";
 import { useUser } from "@/app/lib/hooks/useUser";
 import Chat from "../../molecules/Chat/MyChat";
@@ -24,11 +24,12 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isLogoutPopupOpen, setIsLogoutPopupOpen] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   const dropdownRef = useRef<HTMLDivElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
 
-  const pathname = usePathname(); // Get the current pathname
+  const pathname = usePathname();
   const showChatIcon =
     totalAcceptedInterestsReceived > 0 || totalAcceptedInterestsSent > 0;
 
@@ -42,9 +43,52 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
+  // Function to check if the user is on a mobile or tablet device
+  const isMobileOrTablet = () => {
+    const userAgent =
+      navigator.userAgent || navigator.vendor || (window as any).opera;
+    return /android|ipad|iphone|ipod|mobile|tablet/i.test(userAgent);
+  };
+
   const toggleDropdown = () => {
     if (isMobileMenuOpen) setIsMobileMenuOpen(false);
     setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const enableFullscreen = async () => {
+    if (!isMobileOrTablet()) return;
+    try {
+      const doc = document.documentElement;
+
+      if (!isFullscreen) {
+        // Enter fullscreen
+        if (doc.requestFullscreen) {
+          await doc.requestFullscreen();
+        } else if ((doc as any).webkitRequestFullscreen) {
+          // Safari
+          await (doc as any).webkitRequestFullscreen();
+        } else if ((doc as any).msRequestFullscreen) {
+          // IE/Edge
+          await (doc as any).msRequestFullscreen();
+        }
+        setIsFullscreen(true);
+      } else {
+        // Exit fullscreen
+        if (document.exitFullscreen) {
+          await document.exitFullscreen();
+        } else if ((document as any).webkitExitFullscreen) {
+          // Safari
+          await (document as any).webkitExitFullscreen();
+        } else if ((document as any).msExitFullscreen) {
+          // IE/Edge
+          await (document as any).msExitFullscreen();
+        }
+        setIsFullscreen(false);
+      }
+    } catch (error) {
+      console.error("Fullscreen failed:", error);
+      alert("Fullscreen permission denied or not supported.");
+    }
   };
 
   const handleClickOutside = (event: MouseEvent) => {
@@ -198,6 +242,14 @@ const Header: React.FC<HeaderProps> = ({ showSearchForm }) => {
                     </Link>
                   </li>
                 ))}
+                <li>
+                  <button
+                    onClick={() => enableFullscreen()}
+                    className="text-white hover:text-[#ffd700] block py-2 px-3 rounded"
+                  >
+                    {isFullscreen ? "Exit Fullscreen" : "Fullscreen"}
+                  </button>
+                </li>
               </ul>
             </ul>
           </div>
