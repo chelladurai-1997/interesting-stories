@@ -31,7 +31,6 @@ async function getDataPageFromApp(
   }
 }
 
-// Function to fetch all data across multiple pages
 async function fetchAllData(url: string): Promise<any[]> {
   let commonArray: any[] = [];
 
@@ -46,22 +45,33 @@ async function fetchAllData(url: string): Promise<any[]> {
     }
 
     // Parse and push data from the first page
-    commonArray.push(...JSON.parse(firstPageData)?.props.profiles.data);
+    const parsedFirstPageData = JSON.parse(firstPageData);
+    commonArray.push(...parsedFirstPageData?.props.profiles.data);
 
     // Extract the last page number from the first page response
-    const lastPage = JSON.parse(firstPageData).props.profiles.last_page;
+    const lastPage = parsedFirstPageData.props.profiles.last_page;
 
-    // Loop through each remaining page starting from page 2
-    for (let page = 2; page <= lastPage; page++) {
+    if (lastPage === 1) {
+      // If there's only one page, return the data
+      return commonArray;
+    }
+
+    // Create an array of promises for all remaining pages (page 2 to lastPage)
+    const pagePromises = Array.from({ length: lastPage - 1 }, (_, index) => {
+      const page = index + 2; // Start from page 2
       const pageUrl = `${url}&page=${page}`;
+      return getDataPageFromApp(pageUrl, "app");
+    });
 
-      const dataPage = await getDataPageFromApp(pageUrl, "app");
+    // Run all promises concurrently and wait for the results
+    const pageResults = await Promise.all(pagePromises);
 
-      if (dataPage) {
-        // Push the result into the common array
-        commonArray.push(...JSON.parse(dataPage)?.props.profiles.data);
+    // Parse and add data from all fetched pages
+    for (const result of pageResults) {
+      if (result) {
+        commonArray.push(...JSON.parse(result)?.props.profiles.data);
       } else {
-        console.log(`No data found on page ${page}`);
+        console.log(`No data found for one of the pages`);
       }
     }
 
