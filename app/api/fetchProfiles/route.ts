@@ -82,7 +82,7 @@ export async function GET(request: Request): Promise<NextResponse<any>> {
   // Construct the base URL for fetching profiles (this can be modified as needed)
   // const baseUrl = `https://www.varam.app/search-profiles?gender=female&jaadhagam=ragu%20kedhu%20sevvai%20-%20இராகு%20கேது%20செவ்வாய்&jaadhagam=ragu%20kedhu%20-%20இராகு%20கேது`;
 
-  const baseUrl = `https://www.varam.app/search-profiles?gender=female&jaadhagam=sevvai%20-%20செவ்வாய்`;
+  const baseUrl = `https://www.varam.app/search-profiles?gender=female&jaadhagam=sevvai%20-%20செவ்வாய்&jaadhagam=sutha%20jathagam%20-%20சுத்த%20ஜாதகம்`;
   // const baseUrl = `https://www.varam.app/search-profiles?gender=female`;
 
   try {
